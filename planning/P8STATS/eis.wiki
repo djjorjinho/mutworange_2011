@@ -1,0 +1,7 @@
+= Executive Information Systems =
+
+Executive Information Systems (EIS) are Information Systems that accesses business information from various sources - internal and external to the organization - and provides decision support mediums to the organizion's senior executives.
+
+These mediums permit the executive managers to highlight patterns in the business process by analysing, comparing and determining trends in the provided mediums - speadsheets, graphic charts, pivot tables, etc.
+
+
