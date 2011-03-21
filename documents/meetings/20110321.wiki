@@ -1,0 +1,42 @@
+= Meeting Report 1 =
+
+Date: 21/03/2011
+Start Hour: 5:05pm GMT
+End Hour:  GMT
+
+== Personnel ==
+Coordinator: Pedro Ferreira
+Transcriber: Daniel Lopes
+
+Attending: Arne Reimer, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stéphan Polet, Aggeliki Katsiampouri, Mountrakis Stefanos,
+Thordur Bjornsson, Gudmundur Hallgrimsson, Ina Ivanova, Zvezdomir Tsvyatkov
+
+Excused: Arne Lipfert
+Absent: 
+
+== Report Themes ==
+
+1. Proposed meeting plan
+
+* Status report (2-3min per country)
+    - what's been done
+    - what's your next step
+    - Questions / issues / problems
+
+* Discussion and final decision of meetings and communication protocols (5-10min)
+
+* Initial presentation of rules of defining future deadlines
+
+* Suggestions and final remarks (5-10min)
+
+* Reminder to set the task list until the next meeting (gantt chart)
+
+* Team discussion about the problems previously presented (5-10min)
+
+== Meeting Outcome ==
+
+1. The proposed meeting plan was accepted
+2. Greece, Belgium and Germany are going to meet to decide the app design and style.
+3. Greece, Belgium and Bulgaria are going to meet to discuss business rules and data model.
+4. Next meeting at monday 6:30 GMT
