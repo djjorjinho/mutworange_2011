@@ -37,6 +37,15 @@ Absent:
 == Meeting Outcome ==
 
 1. The proposed meeting plan was accepted
+
 2. Greece, Belgium and Germany are going to meet to decide the app design and style.
+
 3. Greece, Belgium and Bulgaria are going to meet to discuss business rules and data model.
-4. Next meeting at monday 6:30 GMT
+
+4. Next meeting at monday 6:30 GMT.
+
+5. Continue with Adobe Connect for live communication.
+
+6. Belgium will make the Plonk library availabe in the Git repo.
+
+7. Arne Lipfert is the next meeting coordinator 
