@@ -1,327 +1,327 @@
-Pedro (PT): (3/21/2011 17:06)Êfirst of all lets make the status report as planed
-Pedro (PT): (17:06)Êwe can start
-Pedro (PT): (17:07)ÊWE (p8 package) have already come to an understanding
-Pedro (PT): (17:07)Êof the data warehouse tecnologies that we will be implementing
-Pedro (PT): (17:07)Êand the almost complete sketch of the business model
-Pedro (PT): (17:08)Êwe still have some doubts about what data will be stored and what not
-Pedro (PT): (17:08)Êbut we are plaining to implement it so your DB isnt affect in any way
-Pedro (PT): (17:08)Êso be prepared to the necessety of caling a method from a class provided by us
-Pedro (PT): (17:08)Êwhen you register an event liek a submission of a form
-Pedro (PT): (17:09)Êmore specefications by the end of the next week
-Pedro (PT): (17:09)Êour next step for the week is to make our DB schema ( relational model - snowflake)
-Pedro (PT): (17:10)Êand start some interface specifications as asked by our coordenator
-Pedro (PT): (17:10)Êand i belive thats it for us for now
-Pedro (PT): (17:10)ÊNEXT at random
-Stephane: (17:10)Êor P7?
-Pedro (PT): (17:10)Êbelgium your up
+Pedro (PT): (3/21/2011 17:06)Â first of all lets make the status report as planed
+Pedro (PT): (17:06)Â we can start
+Pedro (PT): (17:07)Â WE (p8 package) have already come to an understanding
+Pedro (PT): (17:07)Â of the data warehouse tecnologies that we will be implementing
+Pedro (PT): (17:07)Â and the almost complete sketch of the business model
+Pedro (PT): (17:08)Â we still have some doubts about what data will be stored and what not
+Pedro (PT): (17:08)Â but we are plaining to implement it so your DB isnt affect in any way
+Pedro (PT): (17:08)Â so be prepared to the necessety of caling a method from a class provided by us
+Pedro (PT): (17:08)Â when you register an event liek a submission of a form
+Pedro (PT): (17:09)Â more specefications by the end of the next week
+Pedro (PT): (17:09)Â our next step for the week is to make our DB schema ( relational model - snowflake)
+Pedro (PT): (17:10)Â and start some interface specifications as asked by our coordenator
+Pedro (PT): (17:10)Â and i belive thats it for us for now
+Pedro (PT): (17:10)Â NEXT at random
+Stephane: (17:10)Â or P7?
+Pedro (PT): (17:10)Â belgium your up
 
-Stephane: (17:13)ÊEuhm, we've did some research on which framework we could be using because as P-OUT and also P-IN we will have to code the biggest part of the application
-Pedro (PT): (17:14)Ê2-3min...
-Stephane: (17:14)ÊAnd that's why we would like to use Plonk or Yii and the last one in combination with Smarty
-Stephane: (17:15)ÊAnd we would like to decide that today because we have a lot of coding to do (setting up numerous forms)
-Stephane: (17:15)Êthat's out biggest concern for now
-Stephane: (17:15)Êdone
-Pedro (PT): (17:15)Êok good enouth we wil get to that after
-Pedro (PT): (17:15)Ênext time prepare the report a little better :P
+Stephane: (17:13)Â Euhm, we've did some research on which framework we could be using because as P-OUT and also P-IN we will have to code the biggest part of the application
+Pedro (PT): (17:14)Â 2-3min...
+Stephane: (17:14)Â And that's why we would like to use Plonk or Yii and the last one in combination with Smarty
+Stephane: (17:15)Â And we would like to decide that today because we have a lot of coding to do (setting up numerous forms)
+Stephane: (17:15)Â that's out biggest concern for now
+Stephane: (17:15)Â done
+Pedro (PT): (17:15)Â ok good enouth we wil get to that after
+Pedro (PT): (17:15)Â next time prepare the report a little better :P
 
-aggeliki: (17:16)Êwe have 8 forms to prepare and up to nw we have designed the first four using html and j-query
-aggeliki: (17:16)Êwe just learned about the frameworks 
-aggeliki: (17:17)Êand we still need to decide about  the final "style" of the applications with the belgian guys
-Pedro (PT): (17:18)Êok noted the fframework issue
-Pedro (PT): (17:18)ÊNEXT iceland
+aggeliki: (17:16)Â we have 8 forms to prepare and up to nw we have designed the first four using html and j-query
+aggeliki: (17:16)Â we just learned about the frameworks 
+aggeliki: (17:17)Â and we still need to decide about  the final "style" of the applications with the belgian guys
+Pedro (PT): (17:18)Â ok noted the fframework issue
+Pedro (PT): (17:18)Â NEXT iceland
 
-thib: (17:19)ÊWe've spent most of the time since Kiel figuring out how to calculate the correlation coff between two corpas
-thib: (17:19)Êso we are basically working the algorithm to do the matching (We are going to go with a weighted form, returning a coff in the range [-1,1] to indicate correlation -> i.e. a match)
-thib: (17:20)Êi'm writing up a tex file with the some of the algo, and it will be done in the next couple of weeks
-thib: (17:20)Êbesides that, we have figured out that php has no sane way of supporting callouts to a process running on the service instance, so we are working on a solution to that
-thib: (17:21)Êand as for the other packages, we've prepared mail to the p5, p8 and p9 groups w.r.t. hooks for our application into the web "app"
-thib: (17:21)Êmails*
-thib: (17:21)Êbasically, what we need in the databases to be able to our part, and how it needs to be present.
+thib: (17:19)Â We've spent most of the time since Kiel figuring out how to calculate the correlation coff between two corpas
+thib: (17:19)Â so we are basically working the algorithm to do the matching (We are going to go with a weighted form, returning a coff in the range [-1,1] to indicate correlation -> i.e. a match)
+thib: (17:20)Â i'm writing up a tex file with the some of the algo, and it will be done in the next couple of weeks
+thib: (17:20)Â besides that, we have figured out that php has no sane way of supporting callouts to a process running on the service instance, so we are working on a solution to that
+thib: (17:21)Â and as for the other packages, we've prepared mail to the p5, p8 and p9 groups w.r.t. hooks for our application into the web "app"
+thib: (17:21)Â mails*
+thib: (17:21)Â basically, what we need in the databases to be able to our part, and how it needs to be present.
 
-Zvezdimir Tsvyatkov: (17:23)Êok
-Zvezdimir Tsvyatkov: (17:24)Êand... that's all we have
-Zvezdimir Tsvyatkov: (17:24)Êwe need some discus with the other
-Zvezdimir Tsvyatkov: (17:24)Êto start doing something
+Zvezdimir Tsvyatkov: (17:23)Â ok
+Zvezdimir Tsvyatkov: (17:24)Â and... that's all we have
+Zvezdimir Tsvyatkov: (17:24)Â we need some discus with the other
+Zvezdimir Tsvyatkov: (17:24)Â to start doing something
 
-Arne R - Germany: (17:24)Êas you may have noticed arne2 and me had/have to write our last exams for the winter term this week so we were more into learning for this. we talked about the framework issue and started working with jquery to get used to it. today i wrote my last exam and arne2 will write his tomorrow so we will meet later this week to write a SQL script which sets up the database for your personal test environment.
-Arne R - Germany: (17:25)Êlater next week we will provide three design drafts from which you can choose. maybe we set up a poll or something.
-Arne R - Germany: (17:25)Êa gantt chart is prepared and will be pushed via git later this afternoon.
-Arne R - Germany: (17:25)Êthats it for today, sorry for our lazyness. but we had a hard week :)
+Arne R - Germany: (17:24)Â as you may have noticed arne2 and me had/have to write our last exams for the winter term this week so we were more into learning for this. we talked about the framework issue and started working with jquery to get used to it. today i wrote my last exam and arne2 will write his tomorrow so we will meet later this week to write a SQL script which sets up the database for your personal test environment.
+Arne R - Germany: (17:25)Â later next week we will provide three design drafts from which you can choose. maybe we set up a poll or something.
+Arne R - Germany: (17:25)Â a gantt chart is prepared and will be pushed via git later this afternoon.
+Arne R - Germany: (17:25)Â thats it for today, sorry for our lazyness. but we had a hard week :)
 
 ...
 
 
-aggeliki: (17:27)Ême too
-Nathan: (17:27)Êi agree with the current meeting protocol :)
-Pedro (PT): (17:27)Êok i agree with an alternate
-Stephane: (17:27)Êjust a bitch that adobe connect is so lame
-Stephane: (17:27)Êbut it works
-Arne R - Germany: (17:27)Êi like hit. nice short reports
-thib: (17:28)ÊIs there anyone here that is unfamilar with IRC ? (Or doesn't know what FreeNode is)
-Arne R - Germany: (17:28)Êwhat about using irc?
-thib: (17:28)Êyes please!
-Pedro (PT): (17:28)Êirc y freenode nop
-thib: (17:28)ÊArgue that please
-Pedro (PT): (17:29)Êbulgaria you have to say something 
-thib: (17:29)Êoops
-Pedro (PT): (17:29)Êi don''t care
-Stefanos (Greece): (17:29)Êi dont think irc is better than this...
-Ina Ivanova: (17:29)Êi like adobe
-Pedro (PT): (17:29)Êok every1 likes this
-thib: (17:29)Êno?
-Pedro (PT): (17:29)Êy the irc discussion is to an alternate
-Zvezdimir Tsvyatkov: (17:29)Êwhat about skype?
-thib: (17:29)Êthats even worse then adobe
-Pedro (PT): (17:30)Êy
-Nathan: (17:30)Êi dont think skype will work with 12 people
-Stephane: (17:30)Êlet us just use this?
-Pedro (PT): (17:30)Êpersonaly skype is for 4 people max
-Zvezdimir Tsvyatkov: (17:30)ÊIt works
-Zvezdimir Tsvyatkov: (17:30)ÊYesterday I use it for 11 peaople conference call
-Stephane: (17:30)Êchat, mail and sourceforge for exchanging documents
-Zvezdimir Tsvyatkov: (17:30)Êit was perfect
-Nathan: (17:30)Êok, for now, i suggest we stay to adobe? and deside on the framework, db and so on?
-aggeliki: (17:31)Êyes
-Stefanos (Greece): (17:31)Êyep
-Pedro (PT): (17:31)Êy
-Zvezdimir Tsvyatkov: (17:31)Êok
-Ina Ivanova: (17:31)Êok
-Arne R - Germany: (17:31)Êok: if we use an alternative to this, we should use irc. it's easy to set up, no account needed and i'ts nice plain text based chat. no flash, no window resizing...
-Pedro (PT): (17:31)Êfuther discussion to alternates are now made in the forums please
-Pedro (PT): (17:31)Ênext issue
-thib: (17:31)ÊI'll post sth to the fourms w.r.t. IRC.
-Pedro (PT): (17:32)Êdid any1 found any problem they want to coment on the report made b the others?
-Pedro (PT): (17:32)Êmy first one is stephan you report sucked
-daniel.lopes: (17:32)Êthordur mentioned using tex files
-Nathan: (17:32)Êeum, whats wrong with doc, txt?
-daniel.lopes: (17:33)Êthat tex file is for the rest of the team or yourselves?
-thib: (17:33)Êhem, that was maybe a mistake, it's going to end up as a pdf.
-Stefanos (Greece): (17:33)Êwe should discuss about the form CSS..
-aggeliki: (17:34)Êwith the belgians
-thib: (17:34)Êthe CSS ?
-daniel.lopes: (17:34)Êif every1 was familiar with latex it would be good but let's stick with pdf/txt
-thib: (17:34)Êyou are confusing things here daniel
-Nathan: (17:34)Êuhu, first we need to have the main layout for the site, before we can start designing the forms
-thib: (17:35)Êwhen it comes to the report: I'd prefer we'd do it in tex. but thats a problem for later.
-daniel.lopes: (17:35)Êyes i agree
-Pedro (PT): (17:35)Êok
-aggeliki: (17:35)Êok,nathan we will make a conference during the week...tmr if possible
-Nathan: (17:36)Êbut we still need the general layout, colours and so on
-Pedro (PT): (17:36)Êy
-Arne R - Germany: (17:36)Êas i've mentioned in my report, arne2 and me will provide 3 design drafts later next week. these 3 drafts can be discussed and one will be choosen
-Pedro (PT): (17:36)Êbut first of all
-Pedro (PT): (17:36)Êbulgaria is behind right now
-Nathan: (17:36)Êok, thx arne
-Pedro (PT): (17:37)Êi ask of you bulgaria citezens have you anything palned for this week?
-Zvezdimir Tsvyatkov: (17:37)Êresearch
-Pedro (PT): (17:37)Êok i belive you should spend some time this week
-Zvezdimir Tsvyatkov: (17:37)Ênext 2 weeks are for research
-Pedro (PT): (17:37)Êwith greece and belgium
-Pedro (PT): (17:38)Êsince at least the exams part
-Zvezdimir Tsvyatkov: (17:38)Êyes
-Pedro (PT): (17:38)Êare similar
-Zvezdimir Tsvyatkov: (17:38)Êi think we should arenge a meeting with them
-Nathan: (17:38)Êok, no problem, we are available every day from 9 till 5
-aggeliki: (17:39)Êwe are available after 3 every day
-thib: (17:39)ÊSame time on mondays works for us.
-Ina Ivanova: (17:39)Êok
-Zvezdimir Tsvyatkov: (17:39)Êok we can discus this later in emails
-aggeliki: (17:39)Êok
-Pedro (PT): (17:39)Ênow onto the framework issue
-Nathan: (17:39)Êok, perfect
-Pedro (PT): (17:40)Êwe wont be seeing php for a while
-Pedro (PT): (17:40)Êso i wont comment on that issue since it wont affect me that much
-thib: (17:40)ÊMe and Gummi have no stake in the framework since we'll do very minimal work on the web applications...
-Pedro (PT): (17:40)Êbut i belive the ones that are affect should get to an agreement
-thib: (17:41)Êthe .be guys are going to be writing most of the php code, I think this should be there decision ?
-Nathan: (17:41)Êso just greece, bulgary, germany and belgium?
-Arne R - Germany: (17:41)Êi agree with thib
-Nathan: (17:41)Êi dont know if the germans will write the exchance in php?
-Pedro (PT): (17:41)Êi belive the bulgary, germany and belgium are on the same page here
-Zvezdimir Tsvyatkov: (17:42)Êwe prefer php
-Pedro (PT): (17:42)Êand greece
-thib: (17:42)Êis there any question about using php ?
-Stephane: (17:42)Êassembler would be cool
-Ina Ivanova: (17:42)Ê:x
-Stephane: (17:42)Êno PHP it is
-Zvezdimir Tsvyatkov: (17:42)Êhahahah
-Zvezdimir Tsvyatkov: (17:42)Ê:)
-Nathan: (17:42)Êi dont think php is still an issue
-Nathan: (17:43)Êjust which framework to write our php
-aggeliki: (17:43)Êdefinetly NOT cool
-thib: (17:43)Ê?
-Nathan: (17:44)Êso php
-Nathan: (17:44)Êok
-Nathan: (17:44)Ênow librarie/framework
+aggeliki: (17:27)Â me too
+Nathan: (17:27)Â i agree with the current meeting protocol :)
+Pedro (PT): (17:27)Â ok i agree with an alternate
+Stephane: (17:27)Â just a bitch that adobe connect is so lame
+Stephane: (17:27)Â but it works
+Arne R - Germany: (17:27)Â i like hit. nice short reports
+thib: (17:28)Â Is there anyone here that is unfamilar with IRC ? (Or doesn't know what FreeNode is)
+Arne R - Germany: (17:28)Â what about using irc?
+thib: (17:28)Â yes please!
+Pedro (PT): (17:28)Â irc y freenode nop
+thib: (17:28)Â Argue that please
+Pedro (PT): (17:29)Â bulgaria you have to say something 
+thib: (17:29)Â oops
+Pedro (PT): (17:29)Â i don''t care
+Stefanos (Greece): (17:29)Â i dont think irc is better than this...
+Ina Ivanova: (17:29)Â i like adobe
+Pedro (PT): (17:29)Â ok every1 likes this
+thib: (17:29)Â no?
+Pedro (PT): (17:29)Â y the irc discussion is to an alternate
+Zvezdimir Tsvyatkov: (17:29)Â what about skype?
+thib: (17:29)Â thats even worse then adobe
+Pedro (PT): (17:30)Â y
+Nathan: (17:30)Â i dont think skype will work with 12 people
+Stephane: (17:30)Â let us just use this?
+Pedro (PT): (17:30)Â personaly skype is for 4 people max
+Zvezdimir Tsvyatkov: (17:30)Â It works
+Zvezdimir Tsvyatkov: (17:30)Â Yesterday I use it for 11 peaople conference call
+Stephane: (17:30)Â chat, mail and sourceforge for exchanging documents
+Zvezdimir Tsvyatkov: (17:30)Â it was perfect
+Nathan: (17:30)Â ok, for now, i suggest we stay to adobe? and deside on the framework, db and so on?
+aggeliki: (17:31)Â yes
+Stefanos (Greece): (17:31)Â yep
+Pedro (PT): (17:31)Â y
+Zvezdimir Tsvyatkov: (17:31)Â ok
+Ina Ivanova: (17:31)Â ok
+Arne R - Germany: (17:31)Â ok: if we use an alternative to this, we should use irc. it's easy to set up, no account needed and i'ts nice plain text based chat. no flash, no window resizing...
+Pedro (PT): (17:31)Â futher discussion to alternates are now made in the forums please
+Pedro (PT): (17:31)Â next issue
+thib: (17:31)Â I'll post sth to the fourms w.r.t. IRC.
+Pedro (PT): (17:32)Â did any1 found any problem they want to coment on the report made b the others?
+Pedro (PT): (17:32)Â my first one is stephan you report sucked
+daniel.lopes: (17:32)Â thordur mentioned using tex files
+Nathan: (17:32)Â eum, whats wrong with doc, txt?
+daniel.lopes: (17:33)Â that tex file is for the rest of the team or yourselves?
+thib: (17:33)Â hem, that was maybe a mistake, it's going to end up as a pdf.
+Stefanos (Greece): (17:33)Â we should discuss about the form CSS..
+aggeliki: (17:34)Â with the belgians
+thib: (17:34)Â the CSS ?
+daniel.lopes: (17:34)Â if every1 was familiar with latex it would be good but let's stick with pdf/txt
+thib: (17:34)Â you are confusing things here daniel
+Nathan: (17:34)Â uhu, first we need to have the main layout for the site, before we can start designing the forms
+thib: (17:35)Â when it comes to the report: I'd prefer we'd do it in tex. but thats a problem for later.
+daniel.lopes: (17:35)Â yes i agree
+Pedro (PT): (17:35)Â ok
+aggeliki: (17:35)Â ok,nathan we will make a conference during the week...tmr if possible
+Nathan: (17:36)Â but we still need the general layout, colours and so on
+Pedro (PT): (17:36)Â y
+Arne R - Germany: (17:36)Â as i've mentioned in my report, arne2 and me will provide 3 design drafts later next week. these 3 drafts can be discussed and one will be choosen
+Pedro (PT): (17:36)Â but first of all
+Pedro (PT): (17:36)Â bulgaria is behind right now
+Nathan: (17:36)Â ok, thx arne
+Pedro (PT): (17:37)Â i ask of you bulgaria citezens have you anything palned for this week?
+Zvezdimir Tsvyatkov: (17:37)Â research
+Pedro (PT): (17:37)Â ok i belive you should spend some time this week
+Zvezdimir Tsvyatkov: (17:37)Â next 2 weeks are for research
+Pedro (PT): (17:37)Â with greece and belgium
+Pedro (PT): (17:38)Â since at least the exams part
+Zvezdimir Tsvyatkov: (17:38)Â yes
+Pedro (PT): (17:38)Â are similar
+Zvezdimir Tsvyatkov: (17:38)Â i think we should arenge a meeting with them
+Nathan: (17:38)Â ok, no problem, we are available every day from 9 till 5
+aggeliki: (17:39)Â we are available after 3 every day
+thib: (17:39)Â Same time on mondays works for us.
+Ina Ivanova: (17:39)Â ok
+Zvezdimir Tsvyatkov: (17:39)Â ok we can discus this later in emails
+aggeliki: (17:39)Â ok
+Pedro (PT): (17:39)Â now onto the framework issue
+Nathan: (17:39)Â ok, perfect
+Pedro (PT): (17:40)Â we wont be seeing php for a while
+Pedro (PT): (17:40)Â so i wont comment on that issue since it wont affect me that much
+thib: (17:40)Â Me and Gummi have no stake in the framework since we'll do very minimal work on the web applications...
+Pedro (PT): (17:40)Â but i belive the ones that are affect should get to an agreement
+thib: (17:41)Â the .be guys are going to be writing most of the php code, I think this should be there decision ?
+Nathan: (17:41)Â so just greece, bulgary, germany and belgium?
+Arne R - Germany: (17:41)Â i agree with thib
+Nathan: (17:41)Â i dont know if the germans will write the exchance in php?
+Pedro (PT): (17:41)Â i belive the bulgary, germany and belgium are on the same page here
+Zvezdimir Tsvyatkov: (17:42)Â we prefer php
+Pedro (PT): (17:42)Â and greece
+thib: (17:42)Â is there any question about using php ?
+Stephane: (17:42)Â assembler would be cool
+Ina Ivanova: (17:42)Â :x
+Stephane: (17:42)Â no PHP it is
+Zvezdimir Tsvyatkov: (17:42)Â hahahah
+Zvezdimir Tsvyatkov: (17:42)Â :)
+Nathan: (17:42)Â i dont think php is still an issue
+Nathan: (17:43)Â just which framework to write our php
+aggeliki: (17:43)Â definetly NOT cool
+thib: (17:43)Â ?
+Nathan: (17:44)Â so php
+Nathan: (17:44)Â ok
+Nathan: (17:44)Â now librarie/framework
 
-Nathan: (17:41)Êi dont know if the germans will write the exchance in php?
-Pedro (PT): (17:41)Êi belive the bulgary, germany and belgium are on the same page here
-Zvezdimir Tsvyatkov: (17:42)Êwe prefer php
-Pedro (PT): (17:42)Êand greece
-thib: (17:42)Êis there any question about using php ?
-Stephane: (17:42)Êassembler would be cool
-Ina Ivanova: (17:42)Ê:x
-Stephane: (17:42)Êno PHP it is
-Zvezdimir Tsvyatkov: (17:42)Êhahahah
-Zvezdimir Tsvyatkov: (17:42)Ê:)
-Nathan: (17:42)Êi dont think php is still an issue
-Nathan: (17:43)Êjust which framework to write our php
-aggeliki: (17:43)Êdefinetly NOT cool
-thib: (17:43)Ê?
-Nathan: (17:44)Êso php
-Nathan: (17:44)Êok
-Nathan: (17:44)Ênow librarie/framework
-Pedro (PT): (17:44)Êfirst wohs not familiar with the terms librarie and framework? so we are on the same page
-Nathan: (17:44)Êok
-aggeliki: (17:45)Êok
-Arne R - Germany: (17:45)Êi never worked with php frameworks, but i'm familiar with the terms
-Ina Ivanova: (17:45)Ême too
-Zvezdimir Tsvyatkov: (17:45)Ême as well
-aggeliki: (17:45)Ême too
-Nathan: (17:46)Êa framework is basicly a frame to build your site in, so very powerfull, but not so user friendly
-Nathan: (17:47)Êfor a library, you can use multiple libraries in your site, for example, phpmailer is a library for mailing, phpgraph for building graphs
-Pedro (PT): (17:47)Êok se we agree that the decision in design(css,  layout) and framework/libraries are up to belgium bulgarie greece and germany
-Arne R - Germany: (17:47)Êfor me it's not a problem to work with a framework, but I can't help you to choose one. this matter should be decided by people how know pros and cons to give us the best advice
-Nathan: (17:47)Êyou just include them in your project and you can use them in your code
-Nathan: (17:48)Êthe plonk library we have from our school is something between a library and a framework, well documented
-thib: (17:48)ÊIs is under a suitable license ?
-Nathan: (17:48)Êlicence?
-daniel.lopes: (17:48)ÊGPL, BSD, MIT
-Nathan: (17:49)Êits just in use our school for now
-Arne R - Germany: (17:49)ÊGPL, BSD, MIT or something elsE?
-daniel.lopes: (17:49)Êit must have a license
-Nathan: (17:49)Êits just a library our lecturer wrote
-thib: (17:50)ÊIf we are going to use it, it needs to have a distribution license
-Nathan: (17:50)Êwe asked our lecturer and it was no problem
-Nathan: (17:50)Êsrr, BSD license
-Nathan: (17:50)Êmy mistake
-thib: (17:50)Êah! perfect.
-Arne R - Germany: (17:50)Êok
+Nathan: (17:41)Â i dont know if the germans will write the exchance in php?
+Pedro (PT): (17:41)Â i belive the bulgary, germany and belgium are on the same page here
+Zvezdimir Tsvyatkov: (17:42)Â we prefer php
+Pedro (PT): (17:42)Â and greece
+thib: (17:42)Â is there any question about using php ?
+Stephane: (17:42)Â assembler would be cool
+Ina Ivanova: (17:42)Â :x
+Stephane: (17:42)Â no PHP it is
+Zvezdimir Tsvyatkov: (17:42)Â hahahah
+Zvezdimir Tsvyatkov: (17:42)Â :)
+Nathan: (17:42)Â i dont think php is still an issue
+Nathan: (17:43)Â just which framework to write our php
+aggeliki: (17:43)Â definetly NOT cool
+thib: (17:43)Â ?
+Nathan: (17:44)Â so php
+Nathan: (17:44)Â ok
+Nathan: (17:44)Â now librarie/framework
+Pedro (PT): (17:44)Â first wohs not familiar with the terms librarie and framework? so we are on the same page
+Nathan: (17:44)Â ok
+aggeliki: (17:45)Â ok
+Arne R - Germany: (17:45)Â i never worked with php frameworks, but i'm familiar with the terms
+Ina Ivanova: (17:45)Â me too
+Zvezdimir Tsvyatkov: (17:45)Â me as well
+aggeliki: (17:45)Â me too
+Nathan: (17:46)Â a framework is basicly a frame to build your site in, so very powerfull, but not so user friendly
+Nathan: (17:47)Â for a library, you can use multiple libraries in your site, for example, phpmailer is a library for mailing, phpgraph for building graphs
+Pedro (PT): (17:47)Â ok se we agree that the decision in design(css,  layout) and framework/libraries are up to belgium bulgarie greece and germany
+Arne R - Germany: (17:47)Â for me it's not a problem to work with a framework, but I can't help you to choose one. this matter should be decided by people how know pros and cons to give us the best advice
+Nathan: (17:47)Â you just include them in your project and you can use them in your code
+Nathan: (17:48)Â the plonk library we have from our school is something between a library and a framework, well documented
+thib: (17:48)Â Is is under a suitable license ?
+Nathan: (17:48)Â licence?
+daniel.lopes: (17:48)Â GPL, BSD, MIT
+Nathan: (17:49)Â its just in use our school for now
+Arne R - Germany: (17:49)Â GPL, BSD, MIT or something elsE?
+daniel.lopes: (17:49)Â it must have a license
+Nathan: (17:49)Â its just a library our lecturer wrote
+thib: (17:50)Â If we are going to use it, it needs to have a distribution license
+Nathan: (17:50)Â we asked our lecturer and it was no problem
+Nathan: (17:50)Â srr, BSD license
+Nathan: (17:50)Â my mistake
+thib: (17:50)Â ah! perfect.
+Arne R - Germany: (17:50)Â ok
 
-Arne R - Germany: (17:51)Êok thats great nathan
-thib: (17:52)ÊCan we discuss a little bit the hierarchy inside our source tree (the git repo) ?
-Nathan: (17:52)Êand build a example with the basic functionality and directore structure 
-Nathan: (17:52)Êexample site
-Pedro (PT): (17:52)Êshure
-Pedro (PT): (17:52)Êthib*
-daniel.lopes: (17:52)Êyeah
-Nathan: (17:52)Êif everyone agrees on plonk, me and stephane can put up the basis directory tree and so one
-thib: (17:53)Êfwiw, I think you should just do it. This commitee style of making decisions is going to get us nowhere
-Nathan: (17:54)Êok, i'll put it on git tonight
-thib: (17:54)Êok, on to the tree maybe?
-Nathan: (17:54)Êand we can arrange a meeting tomorrow with the members who will most need it
-daniel.lopes: (17:55)Êyes go
-Pedro (PT): (17:55)Êthe planning part is simple
-Pedro (PT): (17:55)Êis for the gantt charts
-Pedro (PT): (17:55)Êand any other type of documentation related
-thib: (17:56)Êerrh, ok whatever. I dont see the point, but sure. (Like some of hte stuff in meetings/ should be in planning/ etc) it feels mixed up.
-thib: (17:56)Êand whats the presentation dir for ?
-thib: (17:56)Êeverything is full of unhelpful README files...
-daniel.lopes: (17:57)Êthe presentation directory just serves to make the final presentation later on
-thib: (17:58)Êokey
-daniel.lopes: (17:58)ÊI couldn't commit empty directories so I added redundant README files
-thib: (17:58)Êok, and the proper difference between meetings/ and planning/ is ?
-Pedro (PT): (17:59)Ênot shure on the need for meetings
-daniel.lopes: (17:59)Êthat was a mixup, the meetings directory should just contain the meeting transcriptions
-Pedro (PT): (17:59)Êbut the ideia is to keep somewhere the meetings planing and more importantly the previus meetings sumaries
-thib: (17:59)ÊCan I make a suggestion that we nuke both meetings and planning and just call it "docouments" or "stuff" or "dump" or whatever. and seperaate that into the package names ?
-thib: (17:59)Êso every group as one place to dump crud, and call it a day ?
-daniel.lopes: (18:00)Êsure why not
-daniel.lopes: (18:00)Êwe'll call it documents
-thib: (18:00)Êdocuments/ would be good (then you can have documents/meetings/datestamp.txt would be a log of the meeting) 
-thib: (18:01)Êdaniel: are you going to handle that ?
-daniel.lopes: (18:01)Êyes i'll do it
-thib: (18:01)Êperfect
-thib: (18:01)Êthen the sourcecode goes into erasmusline/ right ?
-daniel.lopes: (18:01)ÊIf i run into any snag can I get some help from you?
-daniel.lopes: (18:01)Êyes
-thib: (18:02)Ê(please please please, don't seperate that into package name sub directories)
-daniel.lopes: (18:02)Êshould the name be changed?
-thib: (18:02)Êdaniel: sure no problem
-thib: (18:02)Êthe "application" is called erasmusline, so I think the name is apt
-daniel.lopes: (18:02)Êwasn't going to
-daniel.lopes: (18:03)Êok then
-thib: (18:03)Êbut there should be ofcourse some logical seperation in there, but yeah.
-daniel.lopes: (18:04)Êagreed
-Pedro (PT): (18:04)ÊOH i almost forgot arne 1 (otto) aparantly cant make it to this meetings at 5pm ever apparently
-Pedro (PT): (18:04)Êarne reimer have anything to add?
-Pedro (PT): (18:05)Êdid he tell you about hes schedule or something?
-Arne R - Germany: (18:05)Êi'm available every monday, but would be better to arne2 in this meeting too
-Arne R - Germany: (18:06)Êyes
-Arne R - Germany: (18:06)Êhe is available from 7:30pm on mondays
-Arne R - Germany: (18:06)ÊGMT
+Arne R - Germany: (17:51)Â ok thats great nathan
+thib: (17:52)Â Can we discuss a little bit the hierarchy inside our source tree (the git repo) ?
+Nathan: (17:52)Â and build a example with the basic functionality and directore structure 
+Nathan: (17:52)Â example site
+Pedro (PT): (17:52)Â shure
+Pedro (PT): (17:52)Â thib*
+daniel.lopes: (17:52)Â yeah
+Nathan: (17:52)Â if everyone agrees on plonk, me and stephane can put up the basis directory tree and so one
+thib: (17:53)Â fwiw, I think you should just do it. This commitee style of making decisions is going to get us nowhere
+Nathan: (17:54)Â ok, i'll put it on git tonight
+thib: (17:54)Â ok, on to the tree maybe?
+Nathan: (17:54)Â and we can arrange a meeting tomorrow with the members who will most need it
+daniel.lopes: (17:55)Â yes go
+Pedro (PT): (17:55)Â the planning part is simple
+Pedro (PT): (17:55)Â is for the gantt charts
+Pedro (PT): (17:55)Â and any other type of documentation related
+thib: (17:56)Â errh, ok whatever. I dont see the point, but sure. (Like some of hte stuff in meetings/ should be in planning/ etc) it feels mixed up.
+thib: (17:56)Â and whats the presentation dir for ?
+thib: (17:56)Â everything is full of unhelpful README files...
+daniel.lopes: (17:57)Â the presentation directory just serves to make the final presentation later on
+thib: (17:58)Â okey
+daniel.lopes: (17:58)Â I couldn't commit empty directories so I added redundant README files
+thib: (17:58)Â ok, and the proper difference between meetings/ and planning/ is ?
+Pedro (PT): (17:59)Â not shure on the need for meetings
+daniel.lopes: (17:59)Â that was a mixup, the meetings directory should just contain the meeting transcriptions
+Pedro (PT): (17:59)Â but the ideia is to keep somewhere the meetings planing and more importantly the previus meetings sumaries
+thib: (17:59)Â Can I make a suggestion that we nuke both meetings and planning and just call it "docouments" or "stuff" or "dump" or whatever. and seperaate that into the package names ?
+thib: (17:59)Â so every group as one place to dump crud, and call it a day ?
+daniel.lopes: (18:00)Â sure why not
+daniel.lopes: (18:00)Â we'll call it documents
+thib: (18:00)Â documents/ would be good (then you can have documents/meetings/datestamp.txt would be a log of the meeting) 
+thib: (18:01)Â daniel: are you going to handle that ?
+daniel.lopes: (18:01)Â yes i'll do it
+thib: (18:01)Â perfect
+thib: (18:01)Â then the sourcecode goes into erasmusline/ right ?
+daniel.lopes: (18:01)Â If i run into any snag can I get some help from you?
+daniel.lopes: (18:01)Â yes
+thib: (18:02)Â (please please please, don't seperate that into package name sub directories)
+daniel.lopes: (18:02)Â should the name be changed?
+thib: (18:02)Â daniel: sure no problem
+thib: (18:02)Â the "application" is called erasmusline, so I think the name is apt
+daniel.lopes: (18:02)Â wasn't going to
+daniel.lopes: (18:03)Â ok then
+thib: (18:03)Â but there should be ofcourse some logical seperation in there, but yeah.
+daniel.lopes: (18:04)Â agreed
+Pedro (PT): (18:04)Â OH i almost forgot arne 1 (otto) aparantly cant make it to this meetings at 5pm ever apparently
+Pedro (PT): (18:04)Â arne reimer have anything to add?
+Pedro (PT): (18:05)Â did he tell you about hes schedule or something?
+Arne R - Germany: (18:05)Â i'm available every monday, but would be better to arne2 in this meeting too
+Arne R - Germany: (18:06)Â yes
+Arne R - Germany: (18:06)Â he is available from 7:30pm on mondays
+Arne R - Germany: (18:06)Â GMT
 
-thib: (18:12)Êok, so whats left?
-Nathan: (18:13)Êdatabase?
-Arne R - Germany: (18:13)Êok thas me
-thib: (18:13)Êschema or the actual database?
-Pedro (PT) (privately): (18:13)Êi belive acompelte undersatind
-Pedro (PT): (18:13)Êi belive a complete understanding
-Pedro (PT): (18:13)Êof the forms need and how their going to work
-Nathan: (18:14)Ênja i think we still have a lot discussion about the whole database design and implemenation
-Pedro (PT): (18:14)Êis needed before having a full DB model
-Pedro (PT): (18:14)Êhows the pre candi form thing going?
-Pedro (PT): (18:14)Ê(note should have been mentioned in the status report, so it wouldnt suck pfft)
-Pedro (PT): (18:15)Ênathan stephan?
-thib: (18:15)ÊOK, me and gummy have to head out. We had other engagments at 19:00
-Arne R - Germany: (18:16)Êarne and me will work on the database from tomorrow. we will provide our first results as soon as possible.
-Pedro (PT): (18:16)Êok thib
-Nathan: (18:16)Êok
-Pedro (PT): (18:16)Êi belive for you is jsut the coding thing for now
-Pedro (PT): (18:16)Êand the gantt till the next week
-Stephane: (18:16)Êwe didn't talk about that
-Stephane: (18:16)Êthat's for tomorrow
-Pedro (PT): (18:17)Êok you still could have sayd no advance has been made
-Pedro (PT): (18:17)Êso for now seems the DB cant be decided yet
-Pedro (PT): (18:18)ÊLET me wrap this up then sine its been more than 1h long and ppl are fading away
-Pedro (PT): (18:18)ÊFOR THIS NEXT WEEK
-Pedro (PT): (18:19)Êlayout frameworks etc is to be discussed and preferably decided between germany belgium bulgaria and greece
-aggeliki: (18:19)Êok
-Pedro (PT): (18:19)Êevery1 has to put their gant in git asap
-Ina Ivanova: (18:19)Êok
-Pedro (PT): (18:19)Ênot realy asap but well you get it
-Pedro (PT): (18:19)Êbulgaria has to be put on par
-Stefanos (Greece): (18:19)Êok
-Pedro (PT): (18:20)Êplease meet between yourselfs
-Nathan: (18:20)Êalready done :)
-Pedro (PT): (18:20)Êdon't be afraid to aks discuss etc
-Pedro (PT): (18:20)Êim always open for some talking and helping myself
-Ina Ivanova: (18:20)Ê:)
-Pedro (PT): (18:20)Êthe next meeting will be 1 and half hour later so lazy arne 2 can come
-Pedro (PT): (18:21)Êand for the next coordinator
-Pedro (PT): (18:21)Êwe go random or i have any volunteers?
-Pedro (PT): (18:21)Êno volunteers it seems
-Pedro (PT): (18:21)Êdon't forget this is a learing experience
-Pedro (PT): (18:22)Êi can help the next coordenator planning the next meeting if he wishs
-Stefanos (Greece): (18:22)Êi believe you are great coordenator
-Pedro (PT): (18:22)Êtake 1..
-Pedro (PT): (18:22)Êtake 2..
-Pedro (PT): (18:22)Êtake 3..
-Pedro (PT): (18:22)Êok random it is
-Zvezdimir Tsvyatkov: (18:23)ÊI'm agree with Stephanos
-Zvezdimir Tsvyatkov: (18:23)Ê:)
-Stefanos (Greece): (18:23)Ê;)
-Pedro (PT): (18:23)Êi realy don't mind coordenating but we agreed on passing by the torch at least once
-Pedro (PT): (18:23)Êand i can take all the laters ones if needed
-Pedro (PT): (18:23)Êi still want every1 to get the experience
-daniel.lopes: (18:23)Êevery1 pull the changes from git repo when conveninent
-Pedro (PT): (18:23)Êso the next coordinator is...
-Pedro (PT): (18:23)Êarne 2 (otto)
-Arne R - Germany: (18:24)Êok
-daniel.lopes: (18:24)Êok
-Pedro (PT): (18:24)Êwe will try to put on git tomorrow the meeting log
-Pedro (PT): (18:24)Êand summary
-Stefanos (Greece): (18:24)Êmr.Arne for now on..
-Arne R - Germany: (18:24)Êi'll tell i'm that he received the honor :)
-Pedro (PT): (18:24)Êso meeting adjurned
-Nathan: (18:24)Êok, i will put the Plonk library and explanation at git tonight
-Pedro (PT): (18:25)Êplease work beter on your status report next time
-Nathan: (18:25)Êi got to go
-Arne R - Germany: (18:25)Êok, went well. i like this text style.
-Stefanos (Greece): (18:25)Êi got to go too...
-Pedro (PT): (18:25)Êspecialy if you already have some issues that you would liek form others etc
-Nathan: (18:25)Êfor the php'ers ;), check your mail and see you tomorrow
-Pedro (PT): (18:25)Êand see you all next week
-Arne R - Germany: (18:25)Êthank you pedro for beeing the first coordinator
-aggeliki: (18:25)Êbb,have a nice and creative week!!
+thib: (18:12)Â ok, so whats left?
+Nathan: (18:13)Â database?
+Arne R - Germany: (18:13)Â ok thas me
+thib: (18:13)Â schema or the actual database?
+Pedro (PT) (privately): (18:13)Â i belive acompelte undersatind
+Pedro (PT): (18:13)Â i belive a complete understanding
+Pedro (PT): (18:13)Â of the forms need and how their going to work
+Nathan: (18:14)Â nja i think we still have a lot discussion about the whole database design and implemenation
+Pedro (PT): (18:14)Â is needed before having a full DB model
+Pedro (PT): (18:14)Â hows the pre candi form thing going?
+Pedro (PT): (18:14)Â (note should have been mentioned in the status report, so it wouldnt suck pfft)
+Pedro (PT): (18:15)Â nathan stephan?
+thib: (18:15)Â OK, me and gummy have to head out. We had other engagments at 19:00
+Arne R - Germany: (18:16)Â arne and me will work on the database from tomorrow. we will provide our first results as soon as possible.
+Pedro (PT): (18:16)Â ok thib
+Nathan: (18:16)Â ok
+Pedro (PT): (18:16)Â i belive for you is jsut the coding thing for now
+Pedro (PT): (18:16)Â and the gantt till the next week
+Stephane: (18:16)Â we didn't talk about that
+Stephane: (18:16)Â that's for tomorrow
+Pedro (PT): (18:17)Â ok you still could have sayd no advance has been made
+Pedro (PT): (18:17)Â so for now seems the DB cant be decided yet
+Pedro (PT): (18:18)Â LET me wrap this up then sine its been more than 1h long and ppl are fading away
+Pedro (PT): (18:18)Â FOR THIS NEXT WEEK
+Pedro (PT): (18:19)Â layout frameworks etc is to be discussed and preferably decided between germany belgium bulgaria and greece
+aggeliki: (18:19)Â ok
+Pedro (PT): (18:19)Â every1 has to put their gant in git asap
+Ina Ivanova: (18:19)Â ok
+Pedro (PT): (18:19)Â not realy asap but well you get it
+Pedro (PT): (18:19)Â bulgaria has to be put on par
+Stefanos (Greece): (18:19)Â ok
+Pedro (PT): (18:20)Â please meet between yourselfs
+Nathan: (18:20)Â already done :)
+Pedro (PT): (18:20)Â don't be afraid to aks discuss etc
+Pedro (PT): (18:20)Â im always open for some talking and helping myself
+Ina Ivanova: (18:20)Â :)
+Pedro (PT): (18:20)Â the next meeting will be 1 and half hour later so lazy arne 2 can come
+Pedro (PT): (18:21)Â and for the next coordinator
+Pedro (PT): (18:21)Â we go random or i have any volunteers?
+Pedro (PT): (18:21)Â no volunteers it seems
+Pedro (PT): (18:21)Â don't forget this is a learing experience
+Pedro (PT): (18:22)Â i can help the next coordenator planning the next meeting if he wishs
+Stefanos (Greece): (18:22)Â i believe you are great coordenator
+Pedro (PT): (18:22)Â take 1..
+Pedro (PT): (18:22)Â take 2..
+Pedro (PT): (18:22)Â take 3..
+Pedro (PT): (18:22)Â ok random it is
+Zvezdimir Tsvyatkov: (18:23)Â I'm agree with Stephanos
+Zvezdimir Tsvyatkov: (18:23)Â :)
+Stefanos (Greece): (18:23)Â ;)
+Pedro (PT): (18:23)Â i realy don't mind coordenating but we agreed on passing by the torch at least once
+Pedro (PT): (18:23)Â and i can take all the laters ones if needed
+Pedro (PT): (18:23)Â i still want every1 to get the experience
+daniel.lopes: (18:23)Â every1 pull the changes from git repo when conveninent
+Pedro (PT): (18:23)Â so the next coordinator is...
+Pedro (PT): (18:23)Â arne 2 (otto)
+Arne R - Germany: (18:24)Â ok
+daniel.lopes: (18:24)Â ok
+Pedro (PT): (18:24)Â we will try to put on git tomorrow the meeting log
+Pedro (PT): (18:24)Â and summary
+Stefanos (Greece): (18:24)Â mr.Arne for now on..
+Arne R - Germany: (18:24)Â i'll tell i'm that he received the honor :)
+Pedro (PT): (18:24)Â so meeting adjurned
+Nathan: (18:24)Â ok, i will put the Plonk library and explanation at git tonight
+Pedro (PT): (18:25)Â please work beter on your status report next time
+Nathan: (18:25)Â i got to go
+Arne R - Germany: (18:25)Â ok, went well. i like this text style.
+Stefanos (Greece): (18:25)Â i got to go too...
+Pedro (PT): (18:25)Â specialy if you already have some issues that you would liek form others etc
+Nathan: (18:25)Â for the php'ers ;), check your mail and see you tomorrow
+Pedro (PT): (18:25)Â and see you all next week
+Arne R - Germany: (18:25)Â thank you pedro for beeing the first coordinator
+aggeliki: (18:25)Â bb,have a nice and creative week!!
 
