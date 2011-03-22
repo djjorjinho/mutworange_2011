@@ -1,0 +1,35 @@
+= Executive Information Systems =
+
+Executive Information Systems (EIS) are Information Systems that access large ammounts of business information from various sources - internal and external to the organization - and provides decision support mediums to the organizion's senior executives.
+
+These mediums permit the executive managers to highlight patterns in the business process by analysing, comparing and determining trends in the provided mediums - speadsheets, graphic charts, pivot tables, reports, etc.
+
+As an example of EIS use, consider the following scenario:
+
+Erasmus administrators can do a weekly check on student enrollment information. Using a web browser, they can access that information in a personalized fashion by presentiong subsets of the information - views. These views can be "drilled-down" to minute levels of information or "rolled-up" to display a broader view.
+
+Since executive users are not necessarily data analysts, the EIS user interface must be as simple as possible, but without sacrificing presentation dynamics.
+
+With these criteria in mind, the following key requirements for an EIS where identified:
+
+* Cross Platform 
+* Ease of Use 
+* Limited Training 
+* Quick Response 
+* Large Volumes of Data 
+* Deployment Through the Web 
+* Easy Graphical Presentation Options 
+* Ability to Access Subsets of Data (Drill Down)
+
+== Architecture ==
+
+An EIS 
+
+
+== Interface ==
+
+
+
+
+[[Glossary]]
+[[Bibliography]] 

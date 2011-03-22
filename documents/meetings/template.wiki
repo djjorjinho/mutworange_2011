@@ -1,0 +1,33 @@
+= Meeting Report 1 =
+
+Subject: 
+Date:
+Start Hour:
+End Hour:
+
+== Personnel ==
+Coordinator: 
+Transcriber: 
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stéphan Polet, Aggeliki Katsiampouri, Mountrakis Stefanos,
+Thordur Bjornsson, Gudmundur Hallgrimsson, Ina Ivanova, Zvezdomir Tsvyatkov
+
+Excused:
+Absent:
+
+== Report ==
+
+1. title
+
+text
+
+2. title
+
+text
+
+== Offtopic ==
+
+1. title
+
+text
