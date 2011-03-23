@@ -1,0 +1,438 @@
+Meeting on 23-03-2011 with some stealth participation from portugal
+
+Topics discussed:
+
+	-A bit of a discussion back and forth about the DB:
+
+		a)Mostly just protugal trying to understand some things;
+		b)A suggestion from portugal to add a status field to the ErasmusInfoPerStudent table | Still has to be looked upon, no final decision on it;
+		c)Some of the discussion was carired by voice so the log might get abit confusing.
+
+	-Discussion about registering leaded to a discussion on the scope of the project and deployment in which a creation of a 'tree' of responsabilities
+	and jobs seems to have been agreed upon or at least a look at it.
+
+
+Warning: Some goofiness and jokes may cross your reading, you have been warned.
+	 Also a few parts of the conversation might be missing.
+
+
+
+
+
+Pedro (PT): (12:32) i can just get them myself
+Pedro (PT): (12:32) but atm thats the least of our problems
+Stephane: (12:32) indeed
+Stephane: (12:33) first is the database and the information exchange protocol that needs to be set up
+Pedro (PT): (12:34) if a process is rejected or canceled wheres that info kept?
+Pedro (PT): (12:35) status enum?
+Stephane: (12:35) that part we still have to figure out
+Stephane: (12:35) but i think it simple to solve
+Stephane: (12:35) just a table with the id of the eramusinforperstudent and than save every event for that student
+Pedro (PT): (12:36) erasmusprogressperstudent --- if it has a relation of n to 1 to the erasmus info then ok it has a porpouse
+Pedro (PT): (12:36) but if in the end its 1:1
+Pedro (PT): (12:36) they should be merged
+Stephane: (12:36) and status is a table which holds all the status (pre-candidate filled in, pre-candidate rejected and so on)
+Pedro (PT): (12:37) given the current draft
+Pedro (PT): (12:37) erasmusInfo is the 'process'
+Stephane: (12:37) yes that should be n to 1 indeed
+Pedro (PT): (12:37) it identifies the process etc
+Stephane: (12:37) my bad
+Pedro (PT): (12:38) ok its suposed to be 1 to n
+Pedro (PT): (12:38) then try o visualise that in action
+Pedro (PT): (12:38) and don't be sry
+Pedro (PT): (12:38) no1s sry here
+Stephane: (12:38) there should only be 3 fields in the table ErasmusProgressPerStudent: id - event - timestamp
+Pedro (PT): (12:38) thats why we discuss things etc
+Pedro (PT): (12:39) ok
+Pedro (PT): (12:39) i get its pourpouse now
+Pedro (PT): (12:39) damn my spelling
+Pedro (PT): (12:39) jesus crist...
+Stephane: (12:39) no problem
+Stephane: (12:40) But I think we should help the germans because they have a lot of work
+Stephane: (12:40) especially for the info exchange module
+Pedro (PT): (12:40) already sent them
+Pedro (PT): (12:40) an email
+Pedro (PT): (12:40) about that subject
+Pedro (PT): (12:40) i kinda psyed your reunions yesterday
+Stephane: (12:40) as far as i understand it we have to find a common protocol plus a common way of building a message
+Stephane: (12:40) ^^
+Pedro (PT): (12:41) spyed*
+Pedro (PT): (12:42) the common protocol 'inside a program' doesnt realy exist
+Pedro (PT): (12:42) to some extent
+Pedro (PT): (12:42) LETS say
+Pedro (PT): (12:42) the basic ideia is this
+Pedro (PT): (12:43) you have a method thats expecting a string and returns a boolean
+Pedro (PT): (12:43) sometimes the string comes from a exterior source as an int
+Pedro (PT): (12:43) thats the job of the infox to work as a mediator
+Pedro (PT): (12:43) so the way we do things internaly
+Pedro (PT): (12:43) doesnt get afected by the exterior protocols
+Pedro (PT): (12:44) theres more things to it but tis is the basic cncept
+Pedro (PT): (12:44) understandable? not understandable?
+Stephane: (12:44) yes :)
+Stephane: (12:45) i was just thinking about a simple protocol to let the home institution know when the host is sending information
+Pedro (PT): (12:45) also as i told them the DBconnection class can already be done
+Stephane: (12:45) something like a "HELLO" message or so
+Pedro (PT): (12:45) in those cases
+Pedro (PT): (12:46) you just send to the infox the target institution and the type of message
+Pedro (PT): (12:46) and they are responsible of creating the message and seing it with the needed tecnologies
+Pedro (PT): (12:46) emails
+Pedro (PT): (12:46) etc
+Pedro (PT): (12:46) thats the base ideia
+Pedro (PT): (12:46) sending*
+Pedro (PT): (12:46) dam im eating letters today
+Stephane: (12:47) by meaning sending to the info exchange module you mean using their module that's inegrated in your own webapplication or like a completely separated system?
+Pedro (PT): (12:47) its integrated
+Pedro (PT): (12:47) its like when you add a class that does some job for you
+Pedro (PT): (12:47) and you use it
+Pedro (PT): (12:48) for example the String type
+Pedro (PT): (12:48) is a class
+Pedro (PT): (12:48) that simplefies the labour of using char arrays etc
+Stephane: (12:48) was my understanding to, gladd we're on the same wavelength :)
+Pedro (PT): (12:49) you wish you could surf as me
+Pedro (PT): (12:49) ha!
+Stephane: (12:49) lol
+Pedro (PT): (12:50) another thing if you wish anytime you all schedule meetings
+Pedro (PT): (12:50) you can send me the schedule and i can pass by
+Pedro (PT): (12:50) and commet mid meeting if i have time stuff like that
+Pedro (PT): (12:50) OH also
+Pedro (PT): (12:50) wheres my gantt
+Pedro (PT): (12:50) im hungry for it
+Stephane: (12:52) yes, we're not finished with it
+Stephane: (12:53) it's hard setting deadlines because we know it will be impossible to make them
+Pedro (PT): (12:53) exactly
+Pedro (PT): (12:53) jsut schedule some
+Pedro (PT): (12:53) its suposed to change
+Stephane: (12:53) we could make a gantt on what we will do, but harder to say wen it will be finished
+Pedro (PT): (12:53) as times goes by
+Stephane: (12:53) ah okay
+Pedro (PT): (12:54) lets say
+Pedro (PT): (12:54) if you could do all the deadlines now
+Pedro (PT): (12:54) and they worked till the end
+Pedro (PT): (12:54) somethings worng :p
+Pedro (PT): (12:54) the ideia is that tihs helps keep a prepective of our your going etc
+Pedro (PT): (12:54) and also to the others
+Pedro (PT): (12:54) by the complete % etc
+Pedro (PT): (12:54) o no this is tanking longer than expected
+Pedro (PT): (12:54) change dealine
+Pedro (PT): (12:55) or its already done
+Pedro (PT): (12:55) i can start this thing sooner
+Stephane: (12:55) ah okay
+Stephane: (12:55) okay we'll try to finish it today
+Stephane: (12:56) but we have to make a screencast where we show how Plonk works
+Stephane: (12:56) horror :')
+Stephane: (12:56) and Nathan made a report on the meeting of yesterday
+Pedro (PT): (12:56) you brought that up yourselfs :P
+Stephane: (12:57) he will post it tonight because the problem with the firewall
+Pedro (PT): (12:57) yy crapy school
+Stephane: (12:57) yes, but they appreciated it
+Stephane: (12:57) i kinda hoped they would say no :)
+Pedro (PT): (12:59) for educational porpouses
+Pedro (PT): (12:59) http://www.youtube.com/watch?v=PeQgaNzwIeg
+
+
+
+
+
+############ PAUSE ##################
+
+
+
+
+
+Pedro (PT): (14:45) yes no?
+Stephane: (14:45) i'm trying to understand
+Pedro (PT): (14:46) lets put it like this
+Pedro (PT): (14:46) the simple info of canceled or not
+Pedro (PT): (14:46) cannot be acess directly
+Stephane: (14:46) erasmusinfo is just defining where a student wants to go and so on
+Pedro (PT): (14:46) you have to go throu the porcess table
+Pedro (PT): (14:46) and find the satus that your looking for
+Pedro (PT): (14:47) try making a query in your midn that looks if x studant erasmus was canceled or not
+Pedro (PT): (14:47) might help
+Stephane: (14:48) maybe adding an extra field in the table process which states if it's completed ot cancelled?
+Stephane: (14:48) makes it easier
+Pedro (PT): (14:48) but if you had it to the process table
+Pedro (PT): (14:48) it will afect only that process
+Pedro (PT): (14:48) not the overall erasmus
+Pedro (PT): (14:48) add*
+Stephane: (14:49) hmm, in that table you have all the events of all students and you can find the events specific for one student based on the id of that student
+Stephane: (14:50) so you can follow it process
+Pedro (PT): (14:50) y
+Pedro (PT): (14:50) but being redundant in this case
+Pedro (PT): (14:50) wouldnt benefir us?
+Pedro (PT): (14:50) benefit*
+Pedro (PT): (14:51) because you will have a whole line on a table
+Pedro (PT): (14:51) just for something that ca be in a column
+Stephane: (14:52) you can't put all the events in one column?
+Pedro (PT): (14:52) its a Text column
+Pedro (PT): (14:52) update taht line n htat table
+Pedro (PT): (14:52) fom a to b
+Pedro (PT): (14:52) when needed
+Stephane: (14:53) but you have save all the events that happened related to a certain student, no?
+Pedro (PT): (14:53) yes
+Stephane: (14:53) for your statistics
+Pedro (PT): (14:53) im jsut saying
+Pedro (PT): (14:53) the overall status
+Pedro (PT): (14:53) if its not worth adding
+Stephane: (14:53) you mean his present state in an axtra field?
+Stephane: (14:53) extra*
+Stephane: (14:54) so you don't have to check that table
+Stephane: (14:54) ?
+Pedro (PT): (14:54) like evaluation(going trhou the forms process), ongiong(already on erasmus in the given country), completed(already came back home blablablaO), canceled(was rejected, go to the kitchen)
+Pedro (PT): (14:54) its not all the events
+Pedro (PT): (14:54) jsut a status
+Pedro (PT): (14:55) because i find ood to put a status like canceled
+Pedro (PT): (14:55) on the processes
+Stephane: (14:55) wait, i think i get it
+Stephane: (14:55) try to add it live
+Pedro (PT): (14:57) y thats the ideia
+Stephane: (14:57) good idea :)
+Pedro (PT): (14:57) now if your going to useit or not thats waht we are discussing
+Pedro (PT): (14:57) because otherwise you would have to go throu all the events
+Pedro (PT): (14:58) to find a comon ground on where your stading
+Pedro (PT): (14:58) in the oveall process
+Pedro (PT): (14:58) agree?
+Stephane: (14:58) agree :)
+Pedro (PT): (14:58) ok now when you meet with the others
+Pedro (PT): (14:58) decide which status there will be
+Pedro (PT): (14:58) that might be helpful etc
+Stephane: (14:59) indeed
+Pedro (PT): (14:59) now is there anything we might help? some doubt in your minds?
+Stephane: (14:59) there will be alot i suppose
+Pedro (PT): (14:59) cause for now im done *attacking* the db
+Stephane: (15:00) euhm we had some arguments and that's why we would have a meeting with the greeks now
+Stephane: (15:00) but now you're here
+Stephane: (15:00) sorry had to stop sharing my screen
+Pedro (PT): (15:01) yy np
+aggeliki: (15:01) hi
+Pedro (PT): (15:01) i assume i wasnt in the middle of the meeting?
+Pedro (PT): (15:01) heya
+Stephane: (15:01) no 
+Nathan: (15:01) started @ 3 GMT
+Stephane: (15:01) so right on time :)
+Pedro (PT): (15:01) lol
+Pedro (PT): (15:01) then amazing time for our conclusion
+Stephane: (15:02) we had some problems with defining how we would do the initial registration
+Stephane: (15:02) because you have not only students and so on but also coordinators and mentors
+
+
+
+
+############ PAUSE ##################
+
+
+
+
+aggeliki: (15:30) yes
+Nathan: (15:31) yes
+Nathan: (15:31) so we're back were we started, how do they register :)
+Stephane: (15:31) but at first, you can do like daniel said, define a default password and then when the app is at the institution setting up your admin account and filling in the info about your institute and then sending that to all the other institutions so they can put it in thei db 
+Stephane: (15:31) their*
+Pedro (PT): (15:32) hows the app on the institution?
+Pedro (PT): (15:32) what kind of deployemnt are you palning?
+Stephane: (15:32) by the responsible person you talked about
+Stephane: (15:32) Pedro (PT): (16:25) theres a 'master admin' choosen by the eramus organization
+Pedro (PT): (15:33) y
+Pedro (PT): (15:33) n the app is at the institution s
+Pedro (PT): (15:33) you said this
+Pedro (PT): (15:33) why woudl the app be AT the institution
+Pedro (PT): (15:33) because of the descentralized DB problem?
+Pedro (PT): (15:33) thats whats crossing oyur mind?
+Pedro (PT): (15:34) pls give me feedback, greece to
+Pedro (PT): (15:34) because its harder to explain without feedback
+Pedro (PT): (15:34) i even might be wrong on the matter
+Stephane: (15:34) yes the point is the application runs on the institutes local server
+Pedro (PT): (15:35) have you thought on the implications of that?
+Pedro (PT): (15:35) not saying its wrong
+aggeliki: (15:36) do you all from all the countries have a personal student account to enter your mails and course stuff or not?
+Pedro (PT): (15:36) we have to decide the scope of things
+Stephane: (15:36) yes, but than you have to work with LDAP or something like that
+Pedro (PT): (15:37) think liek this whos responsible for adding X information, or manage Y information
+Pedro (PT): (15:37) with this line of thought we start getting a scope of things
+Pedro (PT): (15:37) should we give responsibilitys by countrys? institutions? departments?
+Pedro (PT): (15:38) without much thought out of my mind i find the need of giving separate responsibilitys
+Pedro (PT): (15:38) to each institution
+Pedro (PT): (15:38) now upping the scope
+Pedro (PT): (15:38) who adds the institutions?
+Pedro (PT): (15:38) each country responsible?
+Pedro (PT): (15:38) is that necessary or an it be the overall erasmus responsible
+Pedro (PT): (15:38) ala master admin
+Stephane: (15:39) uhu
+Pedro (PT): (15:39) when you complain to an organization you dont talk with the boss
+Stephane: (15:39) hmm
+Pedro (PT): (15:39) you talk with someone that is responsible for that part
+Pedro (PT): (15:39) therefor that person has powers that allow him in his job
+Stephane: (15:39) we can't deicde that if we will be using a master admin or not
+Stephane: (15:40) because we don't have that authority i think
+Stephane: (15:40) Have to ask my teacher I think
+Pedro (PT): (15:40) there has to be some kind of mastery here
+Pedro (PT): (15:40) at least regarding the adding new isntitutions to the program
+Pedro (PT): (15:40) they cant just add themselves
+Pedro (PT): (15:41) i belive
+Pedro (PT): (15:41) now onto the registering thingy
+Stephane: (15:41) Uhu, that's the hardest part
+Pedro (PT): (15:41) when we start giving responsibilitys
+Stephane: (15:41) indeed
+Pedro (PT): (15:42) thats when we might find if the site provides that or it must pass throu someone with the power
+Pedro (PT): (15:42) to make that decision
+Stephane: (15:42) I think the admin of an institution should create eveybody above the students, that aren't that many accounts
+Stephane: (15:42) and then the coordinators should check the students accounts
+aggeliki: (15:43) i m sorry,it has been 5.45 i have to go
+aggeliki: (15:43) when you come t a solution,send me by email
+Pedro (PT): (15:43) ok angel we will keep a log or somthing
+Pedro (PT): (15:43) bye
+Stephane: (15:43) bye
+Pedro (PT): (15:43) as i was about to say
+Pedro (PT): (15:44) we could suggest even that
+Pedro (PT): (15:44) you cant creat accs on the website
+Stephane: (15:44) so a student can't add himself?
+Pedro (PT): (15:45) duno
+Pedro (PT): (15:45) which would be the best aproach?
+Stephane: (15:45) isn't that a lot of work for a coordinator than?
+Pedro (PT): (15:45) its up to us to prupose a solution
+Pedro (PT): (15:45) find the ups and cons
+Pedro (PT): (15:45) and decide
+Stephane: (15:45) make the student add himself and than the coordinator can check if the info if that student is a member of he school in question
+Pedro (PT): (15:46) ok but how does it check it then
+Pedro (PT): (15:46) we allow a field to put the student id?
+Stephane: (15:46) he just gives al his info
+Pedro (PT): (15:46) or its up to them to make a search by name only
+Stephane: (15:47) then you have to include the schools database in the webapp
+Pedro (PT): (15:48) ok you want a descentralized DB by institutions
+Pedro (PT): (15:48) but at least the list of institutions has to be centralized
+Pedro (PT): (15:48) how do we go about that process of adding an institution
+Stephane: (15:49) we had a scenario like this: students fills in basic info, he gets an email to confirm his registration (in that way you prevent someone else from adding you to the system) AFTER that the coordinators checks if the student is a member of the school, if not, account is deleted, if so, the student can fill in pre candidate
+Pedro (PT): (15:49) agreed
+Stephane: (15:49) or maybe directly include the pre candidate
+Stephane: (15:49) so you can 2 steps at once
+Stephane: (15:50) and I thought we skipped the part about adding institutions for now 
+Stephane: (15:50) my bad
+Pedro (PT): (15:50) no keep going
+Pedro (PT): (15:50) just keep increasing the scope as you go
+Stephane: (15:51) and as I said the institutions admin can add everyone above the students
+Stephane: (15:52) and than there is, who is responsible for adding the institution
+Stephane: (15:52) the so called super mega shizzle admin
+Pedro (PT): (15:52) ok in this regard
+Pedro (PT): (15:52) we seem all to have reached and early draft that we agree?
+Pedro (PT): (15:52) nathan stefanos?
+Nathan: (15:53) i was reading with stephane
+Pedro (PT): (15:53) i know jsut pissing oyu off
+Stephane: (15:53) ^^
+Stephane: (15:53) it works
+Nathan: (15:53) d
+Nathan: (15:53) *:d
+Pedro (PT): (15:53) stefanos your with us?
+Pedro (PT): (15:53) seems i replaced the greeks?
+Stephane: (15:54) how do you keep a log of this chat?
+Pedro (PT): (15:54) myself
+Stephane: (15:54) would be handy for furher problems
+Nathan: (15:54) we had some other questions, but that will be for tomorrow
+Pedro (PT): (15:54) im just copy pasting as it goes
+Stephane: (15:54) ohw nice
+Stephane: (15:54) love that motivation
+Nathan: (15:54) i'll put the meeting report of yesterday on git tonight
+Nathan: (15:54) and replace plonk ;)
+Pedro (PT): (15:54) and gantt RWARR
+Stephane: (15:54) yes
+Nathan: (15:55) gantt??
+Stephane: (15:55) lol
+Pedro (PT): (15:55) nathan you dont know what gantt is?
+Pedro (PT): (15:55) are we going to have a talk in greece?
+Stefanos (Greece): (15:55) :D sorry guys...
+Stephane: (15:55) you saw the post about the adobe.connect session tomorrow and friday?
+Pedro (PT): (15:55) hmm hmm hmm?
+Stephane: (15:56) ah damn
+Nathan: (15:56) i'll put it on the forum
+Nathan: (15:56) just a second
+Pedro (PT): (15:56) stefanos scroll up a bit
+Pedro (PT): (15:56) a give us your thoughts pls
+Nathan: (15:56) just mailed it a the ones of the meeting yesterdagy
+Stefanos (Greece): (15:58) we had a scenario like this: students fills in basic info, he gets an email to confirm his registration (in that way you prevent someone else from adding you to the system) AFTER that the coordinators checks if the student is a member of the school, if not, account is deleted, if so, the student can fill in pre candidate
+Stefanos (Greece): (15:58) its good idea...
+Pedro (PT): (15:58) ok wer all on the same page it seems
+Pedro (PT): (15:58) nwo to move from easy to normal
+Pedro (PT): (15:59) the deployemnt implications
+Stefanos (Greece): (15:59) so coordinator will activate/delete accounts through a panel right?
+Pedro (PT): (15:59) yes
+Pedro (PT): (15:59) id say thats the ideial
+Stephane: (15:59) yes , the accounts of the students
+Nathan: (16:00) @Greece (just a small remark about the forms we got from greece, we like them, but instead of using tabels, our lecturer told us that it is not done, but instead we should use definition lists or css to layout the forms)
+Stephane: (16:00) and if you want to labels in a different way it would be hard
+Stefanos (Greece): (16:00) we'll try..
+Stephane: (16:00) but apart from that, the forms are really good :)
+Stefanos (Greece): (16:01) i'v some questions too...
+Stephane: (16:01) and we hadn't the functionality for adding fields in our forms, so good good :)
+Nathan: (16:01) with css, if we have one css file, then all our forms would be the same, without having to adapt a single thing
+Stefanos (Greece): (16:02) *adding fields*???
+Stephane: (16:02) at 4:15 GMT we have to go 
+Nathan: (16:02) in the future
+Nathan: (16:02) more options, etc
+Stephane: (16:02) in your form
+Stephane: (16:02) there was abutton to add fields
+Stephane: (16:02) the learning agreement
+Stephane: (16:02) we hadn't that functionality yet
+Pedro (PT): (16:03) ha!
+Stefanos (Greece): (16:03) i'm trying to implement a function in jquery for adding more info (table rows)
+Pedro (PT): (16:03) 3 weeks of advance and greece beats you
+Pedro (PT): (16:03) cof cof
+Stephane: (16:03) (yes I told aggeliki we already made the same as you but yours is already more complete so :) )
+Nathan: (16:03) bye pedro :)
+Stefanos (Greece): (16:03) i want to ask you somenthing guys...
+Stephane: (16:03) perdo, we also had to do some other stuff, nyez :)
+Pedro (PT): (16:03) kidding
+Stephane: (16:04) pedro* :')
+Pedro (PT): (16:04) its not like i have more
+Stephane: (16:04) Your function for adding more table rows worked, no?
+Pedro (PT): (16:04) and theres the DB etc
+Stefanos (Greece): (16:04) in the text u send us there is some Certificate forms...
+Pedro (PT): (16:04) your so hurtful
+Nathan: (16:04) uhu
+Pedro (PT): (16:04) :P
+Stefanos (Greece): (16:05) these forms is shown only on coordinators 
+Stefanos (Greece): (16:05) and they are filling with values from the db right?
+Stephane: (16:06) yes
+Stephane: (16:06) some parts are
+Stefanos (Greece): (16:06) and why you write common next to them?
+Stephane: (16:06) other wont
+Stefanos (Greece): (16:07) (these values are from allready completed fields)
+Stephane: (16:07) ah yes, because they are not official ECTS forms but are common across the institutions
+Stephane: (16:07) you can check that in the document about erasmusline
+Stephane: (16:07) page 52 53
+Stefanos (Greece): (16:07) ok
+Stephane: (16:07) there is a complete schema of the flow
+Stephane: (16:07) scheme*
+Stephane: (16:08) was that the question,
+Stephane: (16:08) ?
+Stefanos (Greece): (16:08) yep..
+Stephane: (16:08) ah okay great
+Pedro (PT): (16:08) next question
+Stephane: (16:09) we have to go in 5 minutes
+Pedro (PT): (16:09) you still have 3 min stephan
+Stephane: (16:09) indeed
+Stephane: (16:09) @stefanos: did you get the maila bout the plonk demonstration we will give on adobe connect?
+Stephane: (16:10) mail*
+Stefanos (Greece): (16:10) yep..
+Stefanos (Greece): (16:10) friday sounds good
+Nathan: (16:11) ok we'll be online tomorrow afternoon and friday afternoon
+Nathan: (16:11) we'll see who's online then
+Stephane: (16:11) and pedro? you had a question?
+Nathan: (16:11) now we are off
+Nathan: (16:11) see you tomorrow or friday :)
+Nathan: (16:11) bye
+Pedro (PT): (16:11) for myself the awnser is getting this going so no no 'actual ' question
+Pedro (PT): (16:12) also as i try to help it forces me to understand the overall project better
+Pedro (PT): (16:12) go with the winds
+Pedro (PT): (16:13) btw you want the log?
+Stephane: (16:13) Btw, our teacher told us portugal has the lead over this project, i didn't know this :)
+Stephane: (16:13) you can put it on git
+Pedro (PT): (16:13) well the professors or coordenators part yea
+Stephane: (16:13) if you want
+Pedro (PT): (16:13) so we are kind inted to do the same
+Pedro (PT): (16:13) but i dont mind
+Stephane: (16:13) yes, Nathan knew this, I didn't
+Stephane: (16:13) but cool
+Stephane: (16:14) glad it's not me :)
+Stephane: (16:14) now have to go
+Stephane: (16:14) see you tomorrow or so
+Pedro (PT): (16:14) just go already
+
