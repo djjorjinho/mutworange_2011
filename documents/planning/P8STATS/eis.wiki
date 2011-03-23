@@ -47,11 +47,16 @@ Also, ETL process can make use of temporary database tables for intermediate pro
 
 === Data Warehouse ===
 
-A Data Warehouse 
+A Data Warehouse holds the processed information into a database designed properly for the retrieval of large amounts of data. The database structure is composed of fact tables and dimension tables, connected by their keys in a Star or Snowflake fashion.
+
+A fact table holds facts - an aggregation of contextualized fields and numerical values for measurement.
+A Dimension table holds the various combinations of a given dimension, often identified by a part of the composite key in the fact table and serves as a means to restrict and summarize the information contained in the fact table ("roll-up" and "drill-down" operations).
+
 
 
 == Interface ==
 
+The interface should be flexible and intuitive enough for users without previous skills to select the indicators they want and operate filters by several dimensions and metrics - this operation can be called a "scenario". Theses "scenarios" can be saved and edited for later used by the user.
 
 
 
