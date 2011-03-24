@@ -1,0 +1,17 @@
+/***UPDATES***/
+
+Be sure  to check this file to see if there are any updates to the Plonk library.
+
+Also while using Plonk it may be possible you find bugs.You can correct these
+BUT be sure to mention them in this file and don't forget to push the new Plonk library back to the repository
+
+ALSO: If you want to add some functionality to the Plonk library be sure to mention this here.
+
+UPDATE 1
+--------
+24/03/2011
+Changed the plonk/website/controller.php file. Added an extra function doMain() so it's more easy
+to call a static function (which is located in the core/includes/functions.php) that is needed in the layout.tpl. I did this so it's possible to
+put the login/search form in the header.
+This function is only called when the name of an action starts with 'main' 
+and is only needed when you need a function that can't be implemented in the modules/[name_module]/[name_module].php file
