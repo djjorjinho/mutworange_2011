@@ -1,0 +1,9 @@
+MySQL WorkBench (Win/Linux/Mac)
+http://wb.mysql.com/
+
+OpenProj
+http://openproj.org/
+
+XAMPP
+http://www.apachefriends.org/en/xampp.html
+
