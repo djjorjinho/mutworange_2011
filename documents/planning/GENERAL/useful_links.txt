@@ -7,3 +7,15 @@ http://openproj.org/
 XAMPP
 http://www.apachefriends.org/en/xampp.html
 
+Navicat MySQL Manager Lite
+http://www.navicat.com/en/download/download.html
+
+NetBeans IDE
+http://netbeans.org/downloads/index.html
+
+Komodo Edit
+http://www.activestate.com/komodo-edit
+
+
+
+
