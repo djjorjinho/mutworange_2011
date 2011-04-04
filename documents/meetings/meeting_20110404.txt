@@ -1,0 +1,46 @@
+= Meeting Report 1 =
+
+Subject: 
+Date:04/04/2011
+Start Hour:17:30GMT
+End Hour:19:45GMT
+
+== Personnel ==
+Coordinator: Stéphane Polet
+Transcriber: Stéphane Polet
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stéphane Polet, Mountrakis Stefanos, Ina Ivanova
+
+Excused:Zvezdomir Tsvyatkov, Aggeliki Katsiampouri
+Absent:Thordur Bjornsson, Gudmundur Hallgrimsson
+
+== Report ==
+
+->What have we done this week ( each team ) + problems/questions
+	
+-> Database ( discussion )
+
+-> Main design: Germany presented 2 layouts
+
+-> Signatures 
+	-> Each team should ask their international office which forms really need 
+	an official signature and which ones we can skip.
+
+-> Pre-candidate forms of all the teams ( and other .. ) + who provides internship
+	-> We only received the pre-candidate form from Portugal ..
+	-> Need internship forms as quickly as possible, because this is an important part of our module.
+
+->Information exchange
+
+
+== Meeting Outcome ==
+Database: meeting thursday 07/04/2011: In this meeting we will try to finalize the database design; A mail will be sent to
+	the partners to join.
+
+Main design: Germany presented 2 layouts and you can find them on sourceforge. Also there is a topic where you can vote and give suggestions
+
+Signatures and internship: partners will ask this at their international office.
+
+Information exchange: Germany will use the Curl library to send data between institutions --> http://curl.haxx.se/
+

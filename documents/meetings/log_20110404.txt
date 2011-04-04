@@ -1,0 +1,256 @@
+
+Stephane: (20:07) Yes, i think i will start with the meeting, too bad germany is not here but the meeting will be over more quickly then :)
+Stephane: (20:07) So let's start :(
+Pedro (PT): (20:07) present
+Stephane: (20:08) first, who is here and who is not
+daniel.lopes: (20:08) here here
+Ina: (20:08) Bulgaria - checked, Zvezdomir is abroad
+Stefanos (Greece): (20:08) greece here
+Stephane: (20:09) and belgium here also
+Stephane: (20:09) so, I think we will start with what we've been doing the previous week
+Stefanos (Greece): (20:10) shall i start?
+Stephane: (20:10) we've been working on forms, had some great agreements with the greeks, they are now up to speed with Plonk which is really good
+Stephane: (20:10) i already did :)
+Stefanos (Greece): (20:11) you'v got me
+Stephane: (20:11) euhm, we've been working on the official forms (ects) which are going less fast than expected but we're getting there
+Stephane: (20:12) And had a meeting with our teachers about the signature part and the pre-candidate part
+Stephane: (20:12) the signature part: we should ask our internation office which forms are important to be signed and which not --> we have a meeting next thursday about that
+Stephane: (20:14) also: we need to find a common layout for the pre-candidate OR find a system where every institution can create hos own pre-candidate form but that's to discuss after everyone has given his report
+Stephane: (20:14) that's all for belgium
+Stephane: (20:14) next is Greece?
+Stefanos (Greece): (20:14) yes
+Stephane: (20:15) (srr Ina)
+Stefanos (Greece): (20:15) this week
+Stefanos (Greece): (20:15) we started (with stephane help) to transfer our forms to plonk
+Stefanos (Greece): (20:16) we are working with server validation at this moment
+Stefanos (Greece): (20:16) we havent started yet to work with database since we havent agreed for anything
+Stefanos (Greece): (20:17) that all
+Stefanos (Greece): (20:17) /*------*/
+Stephane: (20:17) next Ina :)
+Ina: (20:17) ... ill be fast
+Ina: (20:18) I haven`t worked on the project I worked on my graduation work
+Stephane: (20:18) an that's all? :)
+Ina: (20:18) project
+Ina: (20:18) yes
+Ina: (20:19) this week is for mutw
+Stephane: (20:19) Ah great!
+Stephane: (20:19) Next is Portugal
+Stephane: (20:19) you go guys
+Pedro (PT): (20:20) sry
+Pedro (PT): (20:20) well
+Pedro (PT): (20:20) we refined the data warehouse model, populated it and started some query response tests
+Pedro (PT): (20:21) and therefor focused on indexing in orther to improve performance
+Pedro (PT): (20:21) for the next week we plan to finish the indexing, do some improvements to the schema
+Pedro (PT): (20:22) and start the ETL process
+Pedro (PT): (20:22) thats it
+Stephane: (20:22) Okay, so everybody has made his report :)
+Stephane: (20:23) too bad iceland and germany aren't here but it will go like this too
+Stephane: (20:23) first I would like to know if anyone is having big problems?
+Pedro (PT): (20:24) i hurted my wrist yesterday
+Stephane: (20:24) related to the project
+Pedro (PT): (20:24) but to be more seriouse only the deployment overview
+Pedro (PT): (20:25) part from that is going so so for us
+Stephane: (20:25) greece, bulgary?
+Ina: (20:25) no
+Stephane: (20:25) stefanos is gone
+Stephane: (20:26) Hmm, is it because I'm 'leading' the meeting? :')
+Stephane: (20:26) anyway
+Stephane: (20:27) Pedro, if you want to talk about you problem regarding the deployment
+Stephane: (20:27) shoot
+Pedro (PT): (20:28) mostly has been outing some thought trying to finish
+Pedro (PT): (20:28) that which i sent you a week ago
+Pedro (PT): (20:28) so i can present to every1 the problems and conclusions that i found
+Pedro (PT): (20:29) apart from that we have a base ideia for the data warehouse deployment
+Pedro (PT): (20:29) but we cant advance it until yours is decided
+Arne R.: (20:29) hey everybody
+Stephane: (20:29) I knew it :)
+
+Pedro (PT): (20:30) SO for now
+Pedro (PT): (20:31) it helps us more helping you guys
+Pedro (PT): (20:31) than getting help
+Pedro (PT): (20:31) we both have to relocate, it wil take 1h+ for that so we cant stay any longer
+Arne R.: (20:31) did you already start the meeting?
+Stephane: (20:31) ah okay, well we can't decide for ou own and It's tzee germans who coordinate that part :)
+Stephane: (20:32) yes, about an hour ago in actually but we waited a half an hour :)
+Pedro (PT): (20:32) so log this and make a resume of the decisions
+Pedro (PT): (20:32) ill check it right away
+Pedro (PT): (20:32) any questions mail etc
+Stephane: (20:32) fine
+Pedro (PT): (20:33) ill get you that part about signatures asap
+Pedro (PT): (20:33) good luck
+Stephane: (20:33) great
+Stephane: (20:33) thank you
+Arne R.: (20:33) my log begins at 19:37. would you send me a textfile of the whole meeting
+Pedro (PT): (20:33) btw we already have a date defined for our staying in greece
+Pedro (PT): (20:33) and it will be in heraklion
+Pedro (PT): (20:33) trying to get the hotel and prices
+Pedro (PT): (20:33) so i can make a post if ppl want to stay there extra days etc
+Stephane: (20:33) ofcourse
+Pedro (PT): (20:33) well cya
+Stephane: (20:34) you can do that
+Stephane: (20:34) we also want to stay longer
+Stephane: (20:34) bye
+daniel.lopes: (20:34) bye guys
+Arne R.: (20:34) guys, who changed the estimated meeting time?
+Arne R.: (20:35) damnit
+Stephane: (20:35) it's always at this time
+Stephane: (20:35) no?
+Ina: (20:35) no
+Ina: (20:35) it was 18:30 last week
+Arne R.: (20:35) the weeks before we had 18:30 GMT
+Stephane: (20:35) anyway, nathan sent a mail with the time and no one responded to that mail
+Stephane: (20:36) hmm
+Arne R.: (20:36) i read it
+Stephane: (20:36) well, actually you din't miss much
+Stephane: (20:36) so no worries
+Arne R.: (20:36) ok, i see my mistake
+Stephane: (20:36) didn't*
+Arne R.: (20:36) i didn't read the header of the msg
+Arne R.: (20:37) but we have good news for you
+Stephane: (20:37) ah nice
+Stephane: (20:37) deisgn?
+Arne R.: (20:37) yes
+Stephane: (20:37) design*
+Stephane: (20:37) db?
+Stephane: (20:37) infox ;)
+Arne R.: (20:37) 2 drafts are ready and you have to decide
+Stephane: (20:37) great
+Stephane: (20:37) show me show me
+Arne L (Germany): (20:38) http://orne.de/mutw/template1/
+Arne L (Germany): (20:38) http://orne.de/mutw/template2/
+Arne R.: (20:40) your opinion on this?
+Stephane: (20:40) maybe a stupid question
+Ina: (20:40) ou... i love the orange one :)
+Stephane: (20:40) but what's difference between 1 and 2?
+Stephane: (20:40) okay, srr wait
+Ina: (20:41) may be with the banner of the second
+Stephane: (20:43) I prefer the one with orange and blue
+Stephane: (20:43) but I have the feeling something is missing
+Arne R.: (20:43) you prefer no1?
+Stephane: (20:44) yes
+Arne L (Germany): (20:44) i like the black more
+Stephane: (20:44) the problem with the black one is that i have the feeling it's not finished
+Arne L (Germany): (20:45) yeah...not completly...the subnavbar is not finished...the rest ist
+Nathan: (20:46) i also prefer the black one
+Arne R.: (20:46) there is some adjustment needed, but the structure is finished and ready
+Arne L (Germany): (20:48) infox is also done a lot...i started creating a module in plonk...so all you have to do is calling the module, giving some information via post (which table is affected and which data will be send)
+Stephane: (20:50) god I hate this internetconnection
+Stephane: (20:51) how are you sending the data?
+
+Arne R.: (20:51) curl
+Stephane: (20:53) never heard of it
+Stephane: (20:53) checking it out right now
+Arne L (Germany): (20:53) its a hole package of php
+Arne L (Germany): (20:53) like the hole mysql-functions
+Stephane: (20:53) so you can send data, and how do you receive it?
+Arne L (Germany): (20:54) there is a php-script on the other server. this will be called and it will process all data to the database. it gives back a string (success/error) 
+Stephane: (20:55) hmm, looks good, great it's still being developed
+Arne L (Germany): (20:56) you can do http for the first time, later, when everything works, we can also switch to https
+Arne R.: (20:56) it's secure, fast and simple
+Arne L (Germany): (20:57) and actually, there is not much data being transfered...only one string
+Stephane: (20:58) yes, it looks good but I'm not the best person to make judgement about this part 
+Stephane: (20:58) I think iceland would have a better vision on that part
+Arne L (Germany): (21:00) yes...maybe...but it was his opinion to take http-connection. and this is a good way and it works very well...
+Stephane: (21:00) yes, and the ability to use https is also great
+Stephane: (21:01) Yes, maybe you've found the golden egg :)
+Stephane: (21:01) i assume you didn't do anything about the database?
+
+Stephane: (21:02) because you worked on the infox and design
+Stephane: (21:03) btw, you should create a topic on sourceforge to ask which design everybody wants and than they can make suggestions or so
+Arne L (Germany): (21:03) yes...what is with the database? are there some tables missing?
+Arne L (Germany): (21:04) yes...arne will do it
+Arne L (Germany): (21:04) or has already done it :-)
+Stephane: (21:06) euhm there are some tables missing and also so fields
+Stephane: (21:06) but we should sit together
+Stephane: (21:06) maybe this week
+Stephane: (21:07) to finalize the database
+Arne R.: (21:08) ok. would you send us a paper what exactly do you need. so we can prepare for the meeting and only have to finalize this
+Stephane: (21:08) hmm it's hard to put it on paper
+Nathan: (21:08) maybe we can put the missing fields in your database design and then discuss it this week?
+Stephane: (21:09) i think it would be better to have a meeting with you, and than all the other parties who are highly involved with the database (greece, belgium, portugal,...)
+Arne R.: (21:09) yes, this would be really helpful
+Stephane: (21:09) Ina, you're still there?
+Stephane: (21:10) Inaaaaaaaaaaaaaaaaaa
+Stephane: (21:10) it's just to know i you would also want to participate in that meeting or not
+Stephane: (21:11) no response
+Arne L (Germany): (21:11) fall asleep ;-)
+Ina: (21:11) here
+Stephane: (21:11) nice
+Arne L (Germany): (21:11) ahh
+Stephane: (21:11) still awake
+Ina: (21:11) no...
+Ina: (21:11) :X
+Stephane: (21:11) :)
+Ina: (21:12) i havent got words...
+Ina: (21:12) pf
+Stephane: (21:12) so, You want to participate in that meeting or are you okay with it that only germany, belgium, greece and portugal would discuss this
+Ina: (21:13) when it will be
+Stephane: (21:13) I don't know
+Ina: (21:13) i need to know in advance, ok?
+Stephane: (21:13) sure
+Stephane: (21:14) but it will take a while I think to come up wth a final db design
+Ina: (21:14) ill try to be there, if you want me
+Stephane: (21:14) I want you
+Stephane: (21:14) lol
+Ina: (21:15) hm.. ok
+Ina: (21:15) so.. u ll email us, right
+Stephane: (21:15) anyway, germany, you have time this week?
+Arne R.: (21:15) yes, but not before thursday
+Arne R.: (21:16) tomorrow and wednesday i'll be at the uni until 18 UTC
+Arne R.: (21:16) by the way
+Arne R.: (21:17) what will be the standard meeting time?
+Arne R.: (21:17) 17:30UTC, 18:30UTC? xx:xxUTC?
+Stephane: (21:17) 18:30 i suppose
+Arne R.: (21:18) ok, so today was an exception?
+Stephane: (21:18) apparently
+Stephane: (21:18) our bad
+Arne L (Germany): (21:19) ok...no prob. i also could have better read your mail...but skipped that part i thought it was clear...
+Arne R.: (21:19) no no, it was my mistakte, i didn't read the mail good enough
+Stephane: (21:20) euhm, another question, but you can see that also in the log of the meeting i will put on sourceforge, could you ask your school's international office which forms are important to be signed and which ones aren't and does your school provides the possibility to do internships
+Stephane: (21:20) because our school doesn't and we don't have those forms
+Stephane: (21:20) okay, than no problem :)
+
+Arne L (Germany): (21:23) ok...we will prepare a whitepaper how the infox will work and what type of data you have to pass and how...
+Stephane: (21:23) heh?
+Arne L (Germany): (21:24) not understandable???
+Stephane: (21:24) No because I don't see how that's an answer to my question
+Stephane: (21:25) unless the question didn't got through
+Arne L (Germany): (21:25) oh...sorry...didnt see that...yes we will check...but you have received the other forms??
+Stephane: (21:26) yes, but we need to create an account to have access and that was my last question, is that a problem? and also, do we have to fill in everything in to see the next form OR once we are registered, can we see all the forms?
+Arne L (Germany): (21:27) btw...do you have contact to the other team and how far the are gone
+Arne L (Germany): (21:27) sorry...i but a few pdf-files on git with the forms...no login
+Arne L (Germany): (21:27) *put
+Stephane: (21:27) ah nice
+Stephane: (21:28) check that out tomorrow
+Stephane: (21:28) euhm about the other team, we didn't contact them yet
+
+Arne L (Germany): (21:30) sorry...i just heard, that it didnt worked with git. i just tried it again...git->push and it says...everything up to date...git doesnt work here in my computer
+Stephane: (21:31) to upload the forms?
+Stephane: (21:31) you first have to commit
+Stephane: (21:31) and than you can push
+Arne L (Germany): (21:33) aaahhhhhhh
+Arne L (Germany): (21:34) never worked with git before and until now its not my friend...
+Arne L (Germany): (21:34) ok...it works
+Stephane: (21:34) great
+Stephane: (21:34) I wll pull it now :)
+Arne L (Germany): (21:35) yeah...the pull think could i already handle :-)
+Stephane: (21:36) have them
+
+Stephane: (21:36) have them
+Arne L (Germany): (21:37) ok...i think we are done...when will we hold the next meeting would friday be ok??
+Stephane: (21:37) the next meeting for everyone or for the db?
+Arne L (Germany): (21:37) db
+Stephane: (21:38) euhm friday could work but only till 2GMT for us
+Arne L (Germany): (21:39) hm...i will be at university then...wednesday and thursday i have to work...but arne will have time thursday evening
+Stephane: (21:40) thursday evening than?
+Arne L (Germany): (21:41) ok...i will tell arne, he had to go...but lets write a mail to make it clear
+Stephane: (21:41) I will
+Stephane: (21:41) also put a report on sourceforge toghether with the log of this meeting
+Arne L (Germany): (21:41) ok...thx...
+Arne L (Germany): (21:42) ok...i will also go then...
+Stephane: (21:42) me too
+Stephane: (21:42) tiered an shit
+Arne L (Germany): (21:42) good night the :-)
+Stephane: (21:42) tired
+Stephane: (21:42) you too
+Stephane: (21:42) bye
