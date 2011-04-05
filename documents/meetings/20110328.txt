@@ -1,0 +1,39 @@
+= Meeting Report 1 =
+
+Subject: 
+Date:28.03.2011
+Start Hour: 18:30 GMT
+End Hour: 
+
+== Personnel ==
+Coordinator: Arne Lipfert
+Transcriber: Arne Lipfert
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stéphan Polet, Aggeliki Katsiampouri, ,
+Thordur Bjornsson, Gudmundur Hallgrimsson, Ina Ivanova
+
+Excused:Mountrakis Stefanos,Zvezdomir Tsvyatkov
+Absent:
+
+== Report ==
+
+1. What has been done
+
+Germany: Gantt Chart, SQL-File, Forms, Templates
+Belgium: tutorial, register-page, collecting forms
+Portugal: business Workflow, statistical indicators, designing data model
+Greece: designed the needed forms, client validation, server validation
+Bulgaria: learning plonk and git, creating some more db-tables
+island: did some test with php and python to integrate it later
+
+2. Discussion
+Germany will present up to Three Layouts until next meeting.
+
+1. Infox
+Germany will try to get some more Information about how to transfer Data. Everybody agrres that it has to be done very quickly because Portugal/Belgium and Bulgaria needs this infomation for their work.
+
+2. Plonk
+Belgium will try to get some more information about how to implement php-code into a template.
+
+
