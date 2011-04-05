@@ -79,12 +79,21 @@ class DB{
 		return null;
 	}
 	
-	function getOne($query){
+	function query($query){
 		$result = mysql_query($query);
 		if (!$result) {
 		    throw new Exception('Could not run query: ' .
 					mysql_error()); 
 		}
+		return $result;
+	}
+	
+	function execute($query){
+		return $this->query($query);
+	}
+	
+	function getOne($query){
+		$result = $this->query($query);
 		if (mysql_num_rows($result) > 0) {
 			$row = mysql_fetch_assoc($result);
 			return $row;
@@ -209,7 +218,12 @@ class DB{
 		return $result;
 	}
 	
-	
+	/**
+	 * Deletes a row object from the database table
+	 * @param array assoc. array containing the table and id of the row to be
+	 * 	deleted
+	 * @return int success confirmation
+	 */
 	function delete($obj){
 		if(!is_array($obj)) throw new Exception("Not a valid object!");
 		list($table,$id) = preg_split("/\./",$obj['dbkey']);
@@ -233,10 +247,38 @@ class DB{
 		return $result;
 	}
 	
+	/**
+	 * Fetches a random row from a table
+	 * @param string table name
+	 * @return array the table row assoc. array
+	 */
 	function getRandom($table){
 		if(empty($table))
 			throw new Exception("no table to fetch random row!");
 		return $this->getOne("select * from $table order by rand() limit 1");	
+	}
+	
+	/**
+	 * Returns merging tables for the merge table in question.
+	 * The query follows the following convention:
+	 * merging table name -> $mergeTableName_$year_$semester
+	 * @param string merge table name
+	 * @return array the list of merging tables
+	 */
+	
+	function getMergedTables($table){
+		$config = $this->config;
+		$query ="show tables where Tables_in_$config[schema]".
+			" like '${table}_%' and Tables_in_$config[schema]".
+			" not like '${table}_tpl'";
+
+		$result = $this->getMany($query);
+		$tables = array();
+		foreach($result as $row){
+			array_push($tables,$row["Tables_in_$config[schema]"]);
+		}
+
+		return $tables;
 	}
 	
 }
