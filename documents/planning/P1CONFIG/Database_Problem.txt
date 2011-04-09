@@ -1,0 +1,53 @@
+Database problem
+----------------
+We've overlooked something very important and that is:
+When you fill in a form we don't save all the info that is filled in. We only save the most important stuff like name, education, address and so
+So when for example the pre-candidate form is sent to an institution we can only retrieve certain data from the database
+ -> We only save name, address, study
+ -> we don't save the prefered countries and motivation and other optional info
+
+To solve this we have 3 scenarios
+
+1) save all the data in the database: meaning each form will have its own table
+
+Pro: 
++ easy to implement
++ easy to retrieve data for a specific form
+
+Con:
+- very big database
+- a lot of double entries/information
+- hard to keep data consistent
+!!! database needs to be re-designed !!!
+
+2) Keep a copie of each form as xml/pdf/... and save it on server
+
+Pro:
++ can keep perfect track of previous forms
++ easy to retrieve old forms (archive)
++ easy accessible
++ database can stay the same
+
+Con:
+- Need for extra file server
+- Database loses his purpose
+- a lot of files need to be transfered
+- hard to get info from files (for example the countries people want to go need to be used in STATS, how to extract that info???)
+
+3) Combination of both - only important data is saved in database and most important forms are being copied
+Pro:
++ database is kept small
++ only small modification is needed to database
++ no/less multiple entries in database
++ file server needs to hold less forms
+
+Con:
+- Need to define what is saved in database and what not -> where to draw the line
+- still need separated tables for the forms
+!!! re-design the database will be more complicated !!!
+
+
+This are the thoughts we have for now. It's important to have a look at this problem because it's essential for the INFOX,CONFIG,STATS, IN and OUT module
+It's also imortant that we don't take too much time to decide which direction we will be taking.
+
+SO if you have any suggestions please respond because we're stuck!

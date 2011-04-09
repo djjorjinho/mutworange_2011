@@ -1,0 +1,544 @@
+daniel.lopes (PT): (4/7/2011 18:56) Hello everyone
+Stephane: (18:56) hlo hlo
+daniel.lopes (PT): (18:56) Pedro fell asleep in the train so he's gonna be a few minutes late...
+Stephane: (18:57) no problem
+daniel.lopes (PT): (18:57) we're waiting for the rest of the gang so..
+Stephane: (18:57) Arne Reimer sent me a message he will be online at 17/30 gmt
+Stephane: (18:58) and hwo are you?
+daniel.lopes (PT): (18:58) me?
+Stephane: (19:00) yes?
+daniel.lopes (PT): (19:00) Daniel
+daniel.lopes (PT): (19:01) from Portugal
+Stephane: (19:02) ohw :)
+Stephane: (19:02) no i meant how are you? :)
+daniel.lopes (PT): (19:02) oh damn
+daniel.lopes (PT): (19:02) lol
+Stefanos (Greece): (19:03) hey
+daniel.lopes (PT): (19:03) my brain is fried...
+Stephane: (19:03) hlo
+daniel.lopes (PT): (19:04) I'm a bit tired but otherwise ok
+daniel.lopes (PT): (19:04) and How are you dude?
+Stefanos (Greece): (19:04) fine u?
+daniel.lopes (PT): (19:05) good :)
+Stephane 2: (19:06) this meeting is gonna be lovely if my internet will keep behaving this way
+daniel.lopes (PT): (19:07) yeah :\
+daniel.lopes (PT): (19:07) that sucks
+Stephane 2: (19:07) but i'm fine
+Stephane 2: (19:07) we had a meeting with the of our international office btw
+Stephane 2: (19:07) she gave us a little bit more info about the signing part
+Stephane 2: (19:08) there are no european regulations that say that those ects forms should be signed by hand
+Stephane 2: (19:09) but they have to be agreed by the partners
+Stephane 2: (19:09) and she said there was a meeting with the partners the 11th of june (a bit late) where we could suggest some solutions
+Stephane 2: (19:10) and in some schools it's already digital
+Stephane 2: (19:10) for example: in our school our internation office coordinator signs sometimes forms with the use of an image with her signature on it
+Pedro (PT): (19:11) hey there
+Stephane 2: (19:11) hlo
+daniel.lopes (PT): (19:12) but the students don't have that kind of signature
+daniel.lopes (PT): (19:12) they don't need to sign?
+Stephane 2: (19:13) why wouldn't they have a digital signature?
+Pedro (PT): (19:13) hmm 11 june seems way risky
+Pedro (PT): (19:14) what i tol you about printing it with the fields already filled
+Pedro (PT): (19:14) and using a scanner
+Stefanos (Greece) (presenters): (19:14) are we gonna design the database tonight?
+Pedro (PT): (19:14) isnt it more accessible then a digital sign?
+Pedro (PT): (19:14) BRB
+daniel.lopes (PT): (19:15) ok, let me refrase it: not every student has a digital signature
+daniel.lopes (PT): (19:15) I don't have one
+Stephane 2 (privately): (19:15) Yes, we're waiting for arne reimer
+daniel.lopes (PT): (19:16) but if the documents don't need to be signed then that's not an issue right?
+Stephane 2: (19:16) some documents like the application and learning agreement need to be signed
+daniel.lopes (PT): (19:16) yes
+Stephane 2: (19:16) others like the pre candidate are less official
+Stephane 2: (19:17) but she said it would be great to have that possibility
+Stephane 2: (19:17) because printing them and scanning them again would be a waste of paper
+Stephane 2: (19:17) imo
+daniel.lopes (PT): (19:17) yes that is a waste
+daniel.lopes (PT): (19:18) we can reach a compromise
+daniel.lopes (PT): (19:19) like only using digital signatures
+daniel.lopes (PT): (19:19) but that would take some time to adhere
+Stephane 2: (19:19) i really hoped she could give us a straight answer, even if it was no than we could move on, but now i'm still wondering and examing how to implement that part
+daniel.lopes (PT): (19:20) it would be an innovation
+daniel.lopes (PT): (19:21) yeah that would be great
+Stephane 2: (19:21) indeed, and she told us we could create a revolution for the erasmus process
+daniel.lopes (PT): (19:21) if there's no answer you just decide what's best though
+Stephane 2: (19:21) the 11th of june we will have one :')
+daniel.lopes (PT): (19:22) thats too close for confort... that sucks
+daniel.lopes (PT): (19:23) are you guys employed or finishing other classes?
+Stephane 2: (19:24) you mean if we have other courses a part from this project?
+daniel.lopes (PT): (19:24) yes
+daniel.lopes (PT): (19:24) or a job
+Stephane 2: (19:25) we have one course on monday where we have in the morning classes and in the afternoon we work on the project for that course
+Stephane 2: (19:25) and than also a course we had to do last year but we didn't pass it so we do it now :)
+Stephane 2: (19:25) this project is actually our internship
+Stephane 2: (19:25) so that's why we spend so much time on it :)
+daniel.lopes (PT): (19:26) cool dude
+daniel.lopes (PT): (19:26) so if it's a success you can get a job at the college?
+Stephane 2: (19:27) no, it's just an alternative for doing internship at a company
+Stephane 2: (19:27) they have no need for teachers or it crowd as far as i know
+Pedro (PT): (19:28) b
+daniel.lopes (PT): (19:28) waiting for the germans I guess
+Stephane 2 (privately): (19:29) yes
+Stephane 2 (privately): (19:29) oeps
+Stephane 2: (19:29) yes
+Stephane 2: (19:30) don't know if arne lipfert will be joining
+
+Stephane 2: (19:30) don't know if arne lipfert will be joining
+Pedro (PT): (19:30) digital signatures not being a problem seems fishy to me
+Pedro (PT): (19:31) in my opinion for now not every1 will agree
+daniel.lopes (PT): (19:35) look, If we get too close to deadline we're gonna have to decide on an easier solution
+daniel.lopes (PT): (19:35) but you have to admit It would be awsome
+Stephane 2: (19:36) it damn would be :)
+Stephane 2: (19:37) but we should start with the actual meeting now I think
+Pedro (PT): (19:38) shoot then
+Stefanos (Greece): (19:38) +1
+daniel.lopes (PT): (19:38) go
+Stephane 2: (19:38) I hope i'm not the only one who wants to add/change something to the db :/
+Stephane 2: (19:40) should we use voice or?
+Pedro (PT): (19:40) any1 good for me
+Stephane 2: (19:40) think it would be best if we should all use voice
+Pedro (PT): (19:40) but until any suggestions are made you might not need the shared screen for now
+Stephane 2: (19:40) ah okay
+Stephane 2: (19:41) than I have a first suggestion
+Stefanos (Greece): (19:41) no voice
+Stephane 2: (19:41) adding a companies table to the database
+Stefanos (Greece): (19:41) i dont have speakers but i'll follow you..
+Stefanos (Greece): (19:41) :/
+ageliki: (19:42) companies?
+Stephane 2: (19:42) ah okee
+ageliki: (19:42) u mean for internships?
+Stephane 2: (19:42) we have an institution table
+Stephane 2: (19:42) but students can also go to companies
+Pedro (PT): (19:42) can you break down info about a company that is consisntent?
+Pedro (PT): (19:42) if not it might not be necessary
+Stephane 2: (19:43) hmm, maybe
+Stephane 2: (19:43) problem is i don't know what info need to be saved of a company
+Stefanos (Greece): (19:43) maybe it shoold be boolean in the institution table
+Pedro (PT): (19:43) if not its just a name or description, and considering it wont repeat that much
+Stephane 2: (19:43) but you're probably right it can be in the same table
+Pedro (PT): (19:44) beter be just a column
+daniel.lopes (PT): (19:44) you can save address, phone, email about a company
+Pedro (PT): (19:44) and how will you get that
+Pedro (PT): (19:44) does that info ocme from the forms?
+daniel.lopes (PT): (19:45) does it?
+Stephane 2: (19:45) we asked out IO coordinator today for those forms and she was going to send us those
+Stephane 2: (19:45) our*
+daniel.lopes (PT): (19:46) does the student just requests a internship mobility and the IO sends a list of companies?
+Stephane 2: (19:46) maybe a system where: if the company is not in the database it will be added when you fill it in so it can be used in the future?
+Pedro (PT): (19:47) ok
+Pedro (PT): (19:47) but now picture this theres a versus the amount of info that a companie holds
+Pedro (PT): (19:47) and the amount of repetitions
+Stephane 2: (19:47) she told us you don't need partnerships with companies
+Pedro (PT): (19:47) if both are low, a new table isnt justifiable i say
+Stephane 2: (19:48) so no new table?
+Stephane 2: (19:48) and as stefanos said, a boolean?
+Pedro (PT): (19:49) qdo we get the name in the forms? if yes why avoid storing it
+Stephane 2: (19:49) don't get the question :/
+daniel.lopes (PT): (19:49) so you're going to take the name and check the yellow pages?
+Stefanos (Greece): (19:50) we can set it as a varchar also, in case we want to add something else in the future, except from company/intitution, for greater detail
+Stephane 2: (19:50) i'm not following here
+Stephane 2: (19:50) the part about the varchar i get
+Stephane 2: (19:51) but the part about checking the name?
+Pedro (PT): (19:52) it was him being funy ignore
+Stefanos (Greece): (19:52) we can save the names, and later an administrator can filter them and add them to the db
+daniel.lopes (PT): (19:53) no i was making a point
+Stephane 2: (19:53) please explain than because i'm not following :/
+daniel.lopes (PT): (19:53) if you save the company name, addresse every time, it loses integrity
+Stephane 2: (19:53) if it's not in it than save it
+daniel.lopes (PT): (19:54) save it in another table? ok
+Stephane 2: (19:55) save it in the same table, no? that's what pedro said no?
+Pedro (PT): (19:55) as i sayd
+Pedro (PT): (19:55) i ponted out if its only a name and it probably wont be used many times
+Pedro (PT): (19:55) maybe isnt necessary
+Pedro (PT): (19:56) example
+Pedro (PT): (19:56) you use a key for mobility type
+Pedro (PT): (19:56) and in its table its only a description
+Pedro (PT): (19:56) but you know its only 3-4 types
+Pedro (PT): (19:56) repeated over and over
+Pedro (PT): (19:56) a new table inst wrong
+Pedro (PT): (19:56) jsut saying it maight not be necessary
+Pedro (PT): (19:56) its up to you
+Stephane 2: (19:57) it's up to all of us :)
+daniel.lopes (PT): (19:57) 'might' doesn't seem right
+Arne R 2: (19:57) hey guys, sorry for my delay. i had a big problem with my car and had to take it to the workshop
+Stephane 2: (19:58) no problem
+
+Arne R 2: (19:58) my key got stuck in the lock that i could'nt get it out...i had to wait for the emergency service to take it to the workshop
+daniel.lopes (PT): (19:59) that sucks
+Stefanos (Greece): (19:59) yep..
+Stephane 2: (19:59) indeed
+Arne R 2: (20:00) terrible afternoon, i had to wait 3 hours beside my car...
+daniel.lopes (PT): (20:00) ok we we're discussing including a company table in the database and if it's necessary
+Arne R 2: (20:00) ok, i read the logs
+Stephane 2: (20:00) 3 hours :/
+daniel.lopes (PT): (20:01) you can have more than one student in the same company, if you have a company table you just save the company id in the student's process
+Stephane 2: (20:01) indeed
+Stephane 2: (20:01) the same for an institution
+daniel.lopes (PT): (20:02) exactly
+Stephane 2: (20:02) so, 1 table for both (i really like the idea now :) )
+daniel.lopes (PT): (20:02) company is an entity
+daniel.lopes (PT): (20:03) even if you don't save a lot of info, it pays to have a separate table
+Stephane 2: (20:03) hm
+daniel.lopes (PT): (20:03) ok let's vote ;)
+Stephane 2: (20:04) can you say why it pays to have a separate table?
+Stephane 2: (20:04) but maybe it's better
+Stephane 2: (20:04) because we're having the problem of centralizing the institutions and companies can be added on the fly
+Stephane 2: (20:04) didn't consider that
+Pedro (PT): (20:05) ' because we're having the problem of centralizing the institutions' what problems?
+daniel.lopes (PT): (20:05) the companies normaly revolve around the institution right?
+daniel.lopes (PT): (20:06) consider it a contact list
+daniel.lopes (PT): (20:06) the payoff is integrity
+daniel.lopes (PT): (20:06) you have one company info instead of thousands for every student application
+Arne R 2: (20:07) i think we have to find out what kind of data has to be stored especially for a company
+daniel.lopes (PT): (20:07) chances are you are going to use a small number of companies in a semester
+Arne R 2: (20:07) if there is much more special information it has to be a seperate table
+Stephane 2: (20:07) @Arne: the problem is we still don't know that because we don't have the forms
+daniel.lopes (PT): (20:07) but you are going to repeat them over the years
+Arne R 2: (20:07) ok so the question could not be answered.
+Arne R 2: (20:08) yet
+Stephane 2: (20:08) not really
+Pedro (PT): (20:08) just go with seperated
+Pedro (PT): (20:08) the reasons to not keep it separated are way to restrictive
+Pedro (PT): (20:08) and since we dont have enouth info about it
+Stephane 2: (20:08) separated it is
+Pedro (PT): (20:08) the separated can handle any changes
+Arne R 2: (20:09) I tend to seperated tables, too
+Pedro (PT): (20:09) greece?
+daniel.lopes (PT): (20:10) just think of what kind of information the IO needs to have to contact and control the companies
+ageliki: (20:11) actually i wanted to ask if there is any country which has seperate sheet for intenships
+Arne R 2: (20:11) my thought is that it is a seperate entity so we have to add a seperate table...
+daniel.lopes (PT): (20:11) gotta go dudes
+Stephane 2: (20:11) you're coming back or?
+daniel.lopes (PT): (20:11) got a class coming
+daniel.lopes (PT): (20:12) maybe not... only finishes at 22:30pm :(
+Stephane 2: (20:12) ouch
+daniel.lopes (PT): (20:12) Auf Wiederzehen
+Stephane 2: (20:13) for now i copies the institution tables and changed the name to cOMPANIES
+Stephane 2: (20:13) BYE
+Arne R 2: (20:13) wiedersehen ;)
+Stephane 2: (20:13) COPIED$
+daniel.lopes (PT): (20:13) sorry... still learning :P
+Pedro (PT): (20:13) ageliki on that i cant help you
+Stefanos (Greece): (20:13) my dsl went down
+Pedro (PT): (20:13) stephane is the one collecting forms
+Pedro (PT): (20:14) is still want my awnser on this ' because we're having the problem of centralizing the institutions' what problems?
+Stephane 2: (20:14) we asked our IO coordinator for the forms and she would send them to us
+Stephane 2: (20:14) so for now we play the waiting game
+Pedro (PT): (20:14) you collected all our forms, i cant check em now because the link is ffline but was there any one making a distinction?
+Stephane 2: (20:16) I have no problems with centralising the institutions but I think it would be hard to have the companies and institutions in the same table because companies can be added on the fly while institutions need to be confirmed by partnership
+Stephane 2: (20:16) if that makes any sense
+Pedro (PT): (20:16) ok
+Pedro (PT): (20:16) then write better dam it :P
+Stephane 2: (20:16) srr :(
+Arne R 2: (20:17) companies are now a seperate table. let's go on to the next topic
+Stephane 2: (20:17) so i created an extra table now
+Stephane 2: (20:17) check
+Stephane 2: (20:18) another thing was
+Stephane 2: (20:18) now with the centralised database of the institutions you have to copy that info to the db of the school
+Stephane 2: (20:19) but you also need to copy which studies you can follow at that school and which courses
+Stephane 2: (20:19) i'm not seeing quite how this should be implemented
+Pedro (PT): (20:20) did you read the email
+Pedro (PT): (20:20) i sent today about deployment?
+Stephane 2: (20:20) yes
+Stephane 2: (20:20) i'm not talking about the ticket
+Pedro (PT): (20:20) i did say that not having a central DB would be better
+Pedro (PT): (20:20) and that we have to ocnsider that the info about other institutions needs to be stored
+Pedro (PT): (20:20) or is accessed wenever needed
+Pedro (PT): (20:21) now you have to picture all this info fragmented and if its needed to replicate it or not
+
+Pedro (PT): (20:22) if it is when you added a new partners both would get the info about each other by infox
+Pedro (PT): (20:22) for example
+Stephane 2: (20:24) so no central database?
+Stephane 2: (20:24) or am i reading it completely wrong
+Pedro (PT): (20:24) as i sayd in the email i belive a entral DB for now
+Pedro (PT): (20:24) isnt justified
+Pedro (PT): (20:24) for sayd reasons there
+Arne R 2: (20:24) i think pedro means that there will be a central db which only holds the contact information of all institutions
+Pedro (PT): (20:25) but the point of it is for every1 to think and form their opinion
+Pedro (PT): (20:25) unfortunaly i cant be right on this by myself
+Arne R 2: (20:25) and the infox gets the contact information from this db to send the data to the right institution
+Arne R 2: (20:25) this is how arne and me think about it and how we design it
+Pedro (PT): (20:26) yes arne theres that way
+Arne R 2: (20:26) there should be no legal issues in this solution because no personal data is stored
+Pedro (PT): (20:26) but considering you only contact isntitutions that you have partenrship with
+Arne R 2: (20:26) just "gateways" to the right servers
+Arne R 2: (20:26) yep
+Pedro (PT): (20:26) we can avoid it and the administrator adds the link manualy
+Pedro (PT): (20:26) when they do the partning up however they do it
+Arne R 2: (20:27) we agree with pedros deployment thoughts
+Pedro (PT): (20:29) and the others
+Pedro (PT): (20:29) you have knowledge on tyhe problem that i dont have
+Pedro (PT): (20:29) what kind of info might be needed etc
+Pedro (PT): (20:29) lets blossom some problems and solutions gogo
+Stefanos (Greece): (20:30) :D
+Stephane 2: (20:30) hmm
+Stephane 2: (20:31) i'm trying to see it, we already had a brainstorm session about the problem of adding an institution
+Stephane 2: (20:31) seems i've lost some parts of it
+Stephane 2: (20:32) everything would be decentralized
+Stephane 2: (20:32) excep for euhm.. example the name and ip of the institution?
+Pedro (PT): (20:32) exactly
+Stephane 2: (20:33) and than based on that sending the info and getting the info
+Pedro (PT): (20:33) but if thats the only thing descentralized
+Pedro (PT): (20:33) is it realy necessary?
+Pedro (PT): (20:33) can you find more things that migth be needed in a central repository?
+Stephane 2: (20:33) you have to be able to communicate to the other
+Stephane 2: (20:33) how will you else start initial communication,
+Pedro (PT): (20:33) as i sayd
+Stephane 2: (20:34) sending a mail asking for the ip?
+Pedro (PT): (20:34) partner ship must be made first
+Pedro (PT): (20:34) on doing that by phone email or w/e
+Pedro (PT): (20:34) they manualy add
+Pedro (PT): (20:34) the new institution
+Pedro (PT): (20:34) the program has an input box for the administrator
+Pedro (PT): (20:34) where you put the name and url
+Stephane 2: (20:34) yes
+Pedro (PT): (20:34) for example
+Stephane 2: (20:35) it seems a good solution
+Pedro (PT): (20:35) because having to monitor a central thing
+Pedro (PT): (20:35) creating sync deamon alerts etc
+Pedro (PT): (20:35) jsut for that
+Pedro (PT): (20:35) to much work for nothing
+Stephane 2: (20:35) yes maybe
+Stephane 2: (20:35) okay
+Stephane 2: (20:36) so we have that
+Stephane 2: (20:37) that part about having a central db holding the ip's and names isn't so imortant now with this new implementation
+Pedro (PT): (20:37) yeah
+Pedro (PT): (20:37) but the part of the rest of the info being separeted is i believe
+Pedro (PT): (20:37) so now you have to choose between
+Pedro (PT): (20:37) getting the info once and storing in your db
+Pedro (PT): (20:38) or accessing it when necessary
+Stephane 2: (20:38) hmm
+Stephane 2: (20:39) if you should ask everytime for a connection to a db in another institution will be going slow
+Stephane 2: (20:39) would be a good solution to store the info as long as you're on erasmus?
+Stephane 2: (20:39) and when finished deleting entry from db?
+Arne R 2: (20:39) btw: if you want to contact me beside the meeting, feel free to add me over jabber/xmpp: turkleton@jabber.ccc.de
+
+Pedro (PT): (20:40) ok stephane
+Arne R 2: (20:40) in germany we have privacy laws that say: data has to be deleted when you don't need it anymore
+Pedro (PT): (20:40) but which kind of info are you allowed to store
+Pedro (PT): (20:40) and how do you make shure it is deleted after
+Pedro (PT): (20:41) this is to bring up those law problems
+Stephane 2: (20:41) hmm, now you too have to fill in your personal data on those forms
+Stephane 2: (20:41) and those formsmust be kept for 5 years
+Arne R 2: (20:42) for example: when you buy something from an online store they are allowed to store your data for the time of the process. after sending the good and receiving the payment they have to delete all personal data
+Arne R 2: (20:43) there must be a policy of the erasmus institution itself which says how long you have to save the data
+Stephane 2: (20:43) if people start to mess with the application, is that our fault?
+Stephane 2: (20:43) you can't prevent people from doing bad things
+Pedro (PT): (20:43) not necessarely
+Pedro (PT): (20:43) but you can present some counter measures
+Pedro (PT): (20:43) you do want to make a good product
+Stephane 2: (20:43) yes
+Stephane 2: (20:43) but as i said
+Stephane 2: (20:44) when you go on erasmus now, you still have to fill in those forms with your pesonal data which is sent to that institution
+Stephane 2: (20:44) and there you can't also prevent people from copying that or using that info
+Pedro (PT): (20:44) yes
+Pedro (PT): (20:45) but you can round down the number of peaplo
+Pedro (PT): (20:45) people*
+Pedro (PT): (20:45) able to do that
+Pedro (PT): (20:45) if you present only 1 weak link (the admin)
+Pedro (PT): (20:45) its esier to find the culprit
+Pedro (PT): (20:45) stuff like that
+Stephane 2: (20:45) only the admin will be able to access the php files/db i think
+Pedro (PT): (20:46) create logs for when sensible data is copied
+Pedro (PT): (20:46) etc
+Pedro (PT): (20:46) it is perfectly reasenable to do this
+Pedro (PT): (20:46) i am just pointing out the implications
+Pedro (PT): (20:46) that will affect mostly germany
+Pedro (PT): (20:47) they can say its to complicated for the time we have
+Pedro (PT): (20:47) or have a better ideia etc etc
+Pedro (PT): (20:47) but still some data is always stored for the out package i belive
+Pedro (PT): (20:47) the name of the student, where he comes from and what course and mobility he has
+Pedro (PT): (20:48) is there any more relevant info for the host institution to hold?
+Stephane 2: (20:48) Am i wrong to say it makes perfect sense to hold the data of the incoming students while they are at the host institution?
+Pedro (PT): (20:48) ups i meant the in package
+Pedro (PT): (20:49) no your not wrong
+Pedro (PT): (20:49) but what data are we talking about
+Pedro (PT): (20:49) is it complex? is it simple has i pointed out?
+Pedro (PT): (20:49) greece has to enter here pls (their p-in right? lol)
+Stephane 2: (20:49) all the data that need to be filled in on the application/learnign agreement form
+Pedro (PT): (20:50) you shure?
+Pedro (PT): (20:50) for the out which means the home isntitutions
+Pedro (PT): (20:50) it will be stored
+Pedro (PT): (20:50) but is realy needed all of it
+Pedro (PT): (20:50) for the host?
+
+Stephane 2: (20:51) you have to send it to the host
+Stephane 2: (20:51) so obviously it does
+Stephane 2: (20:51) else they wouldn't ask you to do it
+Stefanos (Greece): (20:51) since the user is active we have to keep the data. he must have the option to sign out. also, we can have a cronjob to delete inactive uers
+Pedro (PT): (20:51) ok
+Pedro (PT): (20:52) so seems it needs to be stored
+Pedro (PT): (20:52) in this particular case those problems of having names from other ocuntrys etc still aply?
+Pedro (PT): (20:52) i ask you germany the strict laws country
+Stephane 2: (20:54) it can't be a problem, how else are you applying for an erasmus project, you can't say 'I have here a John Doe' applying for Erasmus
+Pedro (PT): (20:54) i assume so to
+Pedro (PT): (20:54) but htere are some crazy countrys out there
+Pedro (PT): (20:54) example in germany you get arrested for 3 years if you blow an atomic bomb O.o
+Stephane 2: (20:55) lols
+Arne R 2: (20:55) sorry, were afk...moment please
+Stephane 2: (20:56) the main problem when we asked for a centralized db was that eveyone could see the info of an eramus student - even he wasn't from your institution or in your institution
+Stephane 2: (20:56) but now we see that a decentralized is the best option
+Stephane 2: (20:56) we don't have that problem anymore
+Stephane 2: (20:57) when you apply for a partnership with an institution you have some restrictions to obey
+Stephane 2: (20:57) such as: not abusing personal data
+Pedro (PT): (20:57) i can't help you there
+Pedro (PT): (20:57) i also believe its like that
+Pedro (PT): (20:57) but between believing and knowing theres a ig gap
+Stephane 2: (20:58) we asked our international office and teacher, maybe one of you guys should ask it
+Stephane 2: (20:58) but you have to be reasonable too, you can't go on erasmus and expectin not to share any data
+Stephane 2: (20:58) if something goes wrong, who do they contact
+Pedro (PT): (20:59) yers
+Pedro (PT): (20:59) soem data is always shared
+Stephane 2: (20:59) it's only logic thay have that info
+Pedro (PT): (20:59) i was just asking if ALL is shared
+Pedro (PT): (21:00) so given this ocnsiderations the actual schema of the DB still holds up i believe?
+Pedro (PT): (21:00) this would only affect syncing info between institutions
+Stephane 2: (21:00) i guess so, because all the data that is being kept in the database we got from the official ects forms
+
+Arne R 2: (21:01) if there is a need to save personal data by a public institution there will be no problems with laws
+Arne R 2: (21:01) a justified need
+Pedro (PT): (21:02) ok now a question should a student be able to login on both isntitutions sites when in an erasmus? i say no because its mostly useless
+Arne R 2: (21:02) and the institutions have to confess to privacy laws when they want to use our piece of software
+Arne R 2: (21:03) hmmm...
+Stephane 2: (21:03) so we are good?
+Stephane 2: (21:03) :)
+Arne R 2: (21:03) it would be good to have somebody who has some erasmus experience..
+Stephane 2: (21:03) hmm
+Stefanos (Greece): (21:03) aggeliki has experiance 
+Arne R 2: (21:03) to get to know what it necessary in the exchange process
+Arne R 2: (21:04) *is
+Pedro (PT): (21:04) why stepahne feeling like straching your legs :P?
+Pedro (PT): (21:04) streaching*
+Pedro (PT): (21:05) in what regard? did she do erasmus already?
+Stephane 2: (21:05) no, i just wondered wether we were good with the info we are holding because again, all the info we stored in the db came from the official erasmus forms
+ageliki: (21:05) yes
+Stephane 2: (21:05) and we can't delay to long on certain things because we don't have that mmuch time
+Pedro (PT): (21:05) then talk no wait yell!!
+Pedro (PT): (21:06) you have more knowladge than us hehe
+ageliki: (21:06) :P
+Pedro (PT): (21:06) ok one point seems to be over to
+Pedro (PT): (21:06) deployment wont affect the DB
+Pedro (PT): (21:06) every1 agrees?
+Pedro (PT): (21:07) a little off tipic to the greeks
+Pedro (PT): (21:07) who nkows creete best?
+Pedro (PT): (21:07) dam so many typos...
+Arne R 2: (21:08) yep agreed
+Stephane 2: (21:08) about the login in both institutions
+Stephane 2: (21:09) you mean not able to login at both institutions when you're in one or the other?
+Pedro (PT): (21:09) nah it was dumb ideia
+Pedro (PT): (21:10) its not like your going to china and would be unable to acess foreign websites
+Pedro (PT): (21:10) lets keep it simple
+Pedro (PT): (21:10) hehe
+
+Pedro (PT): (21:11) i still want my offtopic who knows creete island the best? aggeliki or stefanos
+Stephane 2: (21:11) :)
+Arne R 2: (21:12) i've been to creete years ago
+Stephane 2: (21:12) btw, i wanted to add a boolean to the institution which would determine if they allow internship/studying or the combination of both
+ageliki: (21:12) stefanos is from creta
+Stephane 2: (21:13) good idea, yes no?
+Arne R 2: (21:13) but i was 12 years old...my only interest was the mediteran sea :)
+Stefanos (Greece): (21:14) where is creta?
+Pedro (PT): (21:14) @ stephane it can be useful yea
+Pedro (PT): (21:14) @ off topic i am asking for this because i am trying to plan
+Pedro (PT): (21:14) the suposed vacations
+Stefanos (Greece): (21:14) come here in hersonisos
+Pedro (PT): (21:14) already contacted laura from the blue team to ask if they want
+Pedro (PT): (21:14) to plan this together with us
+Stefanos (Greece): (21:14) girls beers ;)
+Stephane 2: (21:15) we also asked our teacher if we could reschedule an exam to go sooner to greece because we can only stay 2 days longer in greece after the presentation because we have to do a presntation at our school too
+Pedro (PT): (21:15) is hersonisos close to chania?
+Stefanos (Greece): (21:15) thats a  good idea
+Stefanos (Greece): (21:16) @off topic no
+Pedro (PT): (21:16) because i saw a beach there that i would kill to go hehe
+Stefanos (Greece): (21:16) chania is for old people
+Stefanos (Greece): (21:16) no party
+Pedro (PT): (21:16) going sooner? hmmmmmm
+Pedro (PT): (21:17) i behave a little like old people at night unfortunaly :P 
+Stefanos (Greece): (21:17) ;)
+Pedro (PT): (21:17) going sooner cuts from project time that i belive we will need
+Pedro (PT): (21:17) and we wont enjoy it the best i believe with the stress of the presantation
+Stefanos (Greece): (21:18) you'll meet the russian girls and you wont feel old :D
+Stefanos (Greece): (21:18) lets get back to work
+Stefanos (Greece): (21:18) because its 22:30 here and i'm getting sleppy :D
+Stephane 2: (21:19) yes, i kknow it's not ideal but we would love to stay longer but due to that presentation we have to give in school :/
+Stephane 2: (21:19) but indeed, let's get back to work :(
+Pedro (PT): (21:19) yea
+Pedro (PT): (21:20) ill probably open a topic OR create a new forum if the blue team wants to do this together
+Pedro (PT): (21:20) specialy for this
+Stefanos (Greece): (21:20) yep
+Pedro (PT): (21:20) onto the work well id say now its up mostly to checking the forms involved and keeping the integrety
+Stephane 2: (21:20) do you guys (portugal/greece) need to add something? we have some minor things to add/edit but maybe you should go first
+Stephane 2: (21:21) germany also :)
+Stefanos (Greece): (21:21) i have some questions about the forms..
+Stefanos (Greece): (21:21) :D
+Pedro (PT): (21:21) shoot it then
+ageliki: (21:22) about the tanscript of records
+ageliki: (21:23) it is supposed to get   the data from the base,right?
+ageliki: (21:23) i mean we don t have to fill anything\
+
+Pedro (PT): (21:23) stephane your up
+Stephane 2: (21:24) yes yes :)
+Stephane 2: (21:24) euhm
+Stephane 2: (21:24) it should get the data from the bas yes
+Stephane 2: (21:24) db*
+Stefanos (Greece): (21:24) should we make a list so the admin could see all the records?
+Stefanos (Greece): (21:25) like a panel
+Stephane 2: (21:26) euhm hwo do you mean?
+Stephane 2: (21:26) like per student a view of the records seprated from the form or?
+Stefanos (Greece): (21:26) where he can see the students for using this form
+Stephane 2: (21:27) when he fills in the students name, the records should be filled in
+Stephane 2: (21:27) if that's possible
+Stefanos (Greece): (21:28) ...
+Stephane 2: (21:29) or another way would be having a list of students who are finishing their erasmus and have grades for the courses they took
+Stephane 2: (21:30) and than when you click on a name, redirect then to the transcript of records
+Stefanos (Greece): (21:30) that i was thinking about
+Stephane 2: (21:30) and then in the showmethod for the transcript of records filling in the info
+Stephane 2: (21:30) yes
+Stefanos (Greece): (21:30) list of all of students name
+Stefanos (Greece): (21:30) where he can search and select the name
+Stefanos (Greece): (21:30) ..
+Stephane 2: (21:31) and then when he click on it he will be redirected to the transcript of records formpage where the grades and so on are being filled in based on the name you clicked, yes?
+Stefanos (Greece): (21:31) yes
+Stefanos (Greece): (21:32) he only adds the grades
+Stefanos (Greece): (21:32) ..
+Stephane 2: (21:32) yes
+Stephane 2: (21:32) would be great
+Stephane 2: (21:32) we also try to do as many things automatically
+Stefanos (Greece): (21:32) yep...
+Stephane 2: (21:33) we're almost finished with the pre-candidate part
+Stephane 2: (21:33) and the learning agreement and student application form is also finished (or as good as)
+Stefanos (Greece): (21:34) ..
+Stephane 2: (21:34) not good?
+Stefanos (Greece): (21:34) very nice :D
+Stefanos (Greece): (21:35) i also have some plonk questions that i'll send you an email :D
+Stephane 2: (21:35) ah okay
+Stefanos (Greece): (21:35) about session and stuff..
+Pedro (PT): (21:35) dam you plonk? hehe
+Stephane 2: (21:35) :)
+Stefanos (Greece): (21:35) right
+Stefanos (Greece): (21:35) :D
+Stephane 2: (21:35) euhm, also something else
+Stephane 2: (21:36) nathan was a little bit enthousiastic and he made a certificate of arrival i think
+Stephane 2: (21:36) i hope you didn't do this yet
+ageliki: (21:36) can he send me the code?
+Stephane 2: (21:36) sure
+Stephane 2: (21:36) tomorrow?
+ageliki: (21:36) whenever
+Stephane 2: (21:37) okay :)
+Stephane 2: (21:37) we also use your css for the layout
+Stephane 2: (21:37) btw
+Stephane 2: (21:37) Arne!!!!
+Stefanos (Greece): (21:37) :D
+Stephane 2: (21:37) Arne!!!
+Pedro (PT): (21:38) Arne!!!
+Arne R 2: (21:38) here
+Stephane 2: (21:38) great
+Pedro (PT): (21:38) Arne!!! o wait sry
+Stephane 2: (21:38) you have been checking out the topic you started on sourceforge about the layouts?
+Arne R 2: (21:39) we do some improvements over the weekends
+Arne R 2: (21:39) to pimp the design
+Arne R 2: (21:39) btw: we take draft no2
+Stephane 2: (21:39) ah okay :)
+Arne R 2: (21:40) we'll make it a bit brighter and fix the layout issues
+Arne R 2: (21:40) stephane, could you upload the logo.psd file?
+Stephane 2: (21:40) i didn't?
+Stephane 2: (21:40) hmm my bad
