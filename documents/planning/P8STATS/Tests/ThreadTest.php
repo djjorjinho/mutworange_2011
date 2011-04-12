@@ -4,6 +4,10 @@ require_once 'PHPUnit.php';
 require_once 'lib/DB.php';
 require_once 'lib/Thread.php';
 class ThreadTest extends PHPUnit_TestCase {
+
+    function ThreadTest($name){
+        $this->PHPUnit_TestCase($name);
+    }
     
     function testThreadSupport(){
 	if( ! Thread::available() ) {
@@ -19,7 +23,7 @@ class ThreadTest extends PHPUnit_TestCase {
     }
     
     function testTread(){
-	$t1 = new Thread( "dummyFunc", new ThreadTest() );
+	$t1 = new Thread( "dummyFunc", $this );
 	$t1->start("HEllo\n");
 	$this->assertTrue($t1->isAlive());
 	while($t1->isAlive()){

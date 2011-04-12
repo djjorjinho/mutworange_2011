@@ -1,4 +1,5 @@
 #!/usr/bin/env php
+
 <?php
 require_once 'lib/DB.php';
 require_once 'lib/TSample.php';
@@ -6,11 +7,10 @@ require_once "lib/CsvToArray.Class.php";
 class PopulateDB {
     
     var $dim_tables = array('dim_gender','dim_lodging','dim_mobility',
-                            'dim_institution','dim_date','dim_state');
+                            'dim_institution','dim_date','dim_process',
+                            'dim_study');
     
     var $fact_tables = array('fact_efficacy','fact_efficiency');
-    
-    var $fact_tpl = array('fact_efficacy_tpl','fact_efficiency');
     
     var $dict_dir = 'pop_dict';
     
@@ -117,9 +117,15 @@ class PopulateDB {
         }
     }
     
-    function populate_state(){
-        foreach (CsvToArray::open($this->dict_dir."/state.csv") as $R){
+    function populate_process(){
+        foreach (CsvToArray::open($this->dict_dir."/process.csv") as $R){
             $this->db->insert($R,$this->dim_tables[5]);
+        }
+    }
+    
+    function populate_study(){
+        foreach (CsvToArray::open($this->dict_dir."/study.csv") as $R){
+            $this->db->insert($R,$this->dim_tables[6]);
         }
     }
     
@@ -135,12 +141,11 @@ class PopulateDB {
         $ftpl = $this->fact_tpl;
         
         // create a merging table based on template
-        $mrg_table = preg_replace("/_tpl$/","_2011_1s",$ftpl[0]);
-        $db->execute("create table $mrg_table like $ftpl[0]");
+        $mrg_table = $ftb[0]."_2011_2s";
+        $db->execute("create table $mrg_table like $ftb[0]");
+        $db->execute("alter table $mrg_table engine=MyISAM");
         $db->execute("alter table $mrg_table disable keys");
-        
-        $db->execute("alter table $ftb[0] disable keys");
-        
+                
         for($i=0;$i<10000;$i++){
             $obj=array();
             $aux = $db->getRandom($dtb[0]);
@@ -165,7 +170,7 @@ class PopulateDB {
             $obj['dim_date_id'] = $aux['id'];
             
             $aux = $db->getRandom($dtb[5]);
-            $obj['dim_state_code'] = $aux['code'];
+            $obj['dim_state_id'] = $aux['id'];
             
             $obj[extension] = $rnd->range(0,1);
             $obj[resubmission] = $rnd->range(0,1);
@@ -184,7 +189,7 @@ class PopulateDB {
         // load indices to cache
         $db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
         $db->execute("LOAD INDEX INTO CACHE ".implode(",",$dtb)." IGNORE LEAVES");
-        $db->execute("LOAD INDEX INTO CACHE ".implode(",",$ftb)." IGNORE LEAVES");
+        $db->execute("LOAD INDEX INTO CACHE ".implode(",",$mrg_tables)." IGNORE LEAVES");
     }
     
     function run(){
@@ -193,7 +198,8 @@ class PopulateDB {
         $this->populate_lodging();
         $this->populate_institution();
         $this->populate_date();
-        $this->populate_state();
+        $this->populate_process();
+        $this->populate_study();
         $this->populate_efficacy();
     }
     

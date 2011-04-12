@@ -1,10 +1,13 @@
 <?php
-
+require_once "pqp/classes/PhpQuickProfiler.php";
 class DB{
 	
-	var $db;
-	var $conn;
-	var $config;
+	private static $db;
+	private $conn;
+	public $config;
+	private $profiler;
+	public $queryCount = 0;
+	public $queries = array();
 	
 	/**
 	 * Table info cache
@@ -17,6 +20,7 @@ class DB{
 	 * instance var $config
 	 */
 	private function DB(){
+		$this->profiler = new PhpQuickProfiler(PhpQuickProfiler::getMicroTime());
 		$this->config =
 			json_decode(file_get_contents('dbconfig.json'),true);
 	}
@@ -25,11 +29,11 @@ class DB{
 	 * Singleton function
 	 * @return DB the DB class object
 	 */
-	function getInstance(){
-		if(!isset($db)){
-			$db = new DB();
+	public static function getInstance(){
+		if(!isset(self::$db)){
+			self::$db = new DB();
 		}
-		return $db;
+		return self::$db;
 	}
 	
 	/**
@@ -79,8 +83,15 @@ class DB{
 		return null;
 	}
 	
+	function pureQuery($query){
+		return mysql_query($query);
+	}
+	
 	function query($query){
+		$start = $this->getTime();
 		$result = mysql_query($query);
+		$this->queryCount += 1;
+		$this->logQuery($query, $start);
 		if (!$result) {
 		    throw new Exception('Could not run query: ' .
 					mysql_error()); 
@@ -118,11 +129,7 @@ class DB{
 	 */
 	function getMany($query){
 		$rset=array();
-		$result = mysql_query($query);
-		if (!$result) {
-		    throw new Exception('Could not run query: ' .
-					mysql_error()); 
-		}
+		$result = $this->query($query);
 		if (mysql_num_rows($result) > 0) {
 		    while($row = mysql_fetch_assoc($result)){
 			array_push($rset,$row);
@@ -166,12 +173,8 @@ class DB{
 		
 		$sql = "INSERT INTO ".$table." (".$fields.")VALUES(".$values.");";
 
-		$result = mysql_query($sql);
+		$result = $this->query($sql);
 		
-		if (!$result) {
-		    throw new Exception($sql ." ". 
-					mysql_error()); 
-		}
 		return mysql_insert_id();
 	}
 	
@@ -209,11 +212,7 @@ class DB{
 		
 		$sql = "UPDATE $table SET $update WHERE $field = '$id'";
 		
-		$result = mysql_query($sql);
-		
-		if (!$result) {
-		    throw new Exception($sql." ".mysql_error()); 
-		}
+		$result = $this->query($sql);
 		
 		return $result;
 	}
@@ -238,12 +237,8 @@ class DB{
 		$field = array_key_exists('id',$tinfo) ? 'id' : 'code';
 		$sql = "DELETE FROM $table WHERE $field = '$id'";
 		
-		$result = mysql_query($sql);
-		
-		if (!$result) {
-		    throw new Exception($sql ." ". 
-					mysql_error()); 
-		}
+		$result = $this->query($sql);
+
 		return $result;
 	}
 	
@@ -281,6 +276,26 @@ class DB{
 		return $tables;
 	}
 	
+	function logQuery($sql, $start) {
+		$query = array(
+				'sql' => $sql,
+				'time' => ($this->getTime() - $start)*1000
+			);
+		array_push($this->queries, $query);
+	}
+	
+	function getTime() {
+		$time = microtime();
+		$time = explode(' ', $time);
+		$time = $time[1] + $time[0];
+		$start = $time;
+		return $start;
+	}
+	
+	public function __destruct() {
+		error_log("DB quitting...");
+		$this->profiler->display($this);
+	}
 }
 
 ?>

@@ -1,0 +1,196 @@
+<!-- JavaScript -->
+<script type="text/javascript">
+	var PQP_DETAILS = true;
+	var PQP_HEIGHT = "short";
+	
+	addEvent(window, 'load', loadCSS);
+
+	function changeTab(tab) {
+		var pQp = document.getElementById('pQp');
+		hideAllTabs();
+		addClassName(pQp, tab, true);
+	}
+	
+	function hideAllTabs() {
+		var pQp = document.getElementById('pQp');
+		removeClassName(pQp, 'console');
+		removeClassName(pQp, 'speed');
+		removeClassName(pQp, 'queries');
+		removeClassName(pQp, 'memory');
+		removeClassName(pQp, 'files');
+	}
+	
+	function toggleDetails(){
+		var container = document.getElementById('pqp-container');
+		
+		if(PQP_DETAILS){
+			addClassName(container, 'hideDetails', true);
+			PQP_DETAILS = false;
+		}
+		else{
+			removeClassName(container, 'hideDetails');
+			PQP_DETAILS = true;
+		}
+	}
+	function toggleHeight(){
+		var container = document.getElementById('pqp-container');
+		
+		if(PQP_HEIGHT == "short"){
+			addClassName(container, 'tallDetails', true);
+			PQP_HEIGHT = "tall";
+		}
+		else{
+			removeClassName(container, 'tallDetails');
+			PQP_HEIGHT = "short";
+		}
+	}
+	
+	function loadCSS() {
+		var sheet = document.createElement("link");
+		sheet.setAttribute("rel", "stylesheet");
+		sheet.setAttribute("type", "text/css");
+		sheet.setAttribute("href", "lib/pqp/css/pQp.css");
+		document.getElementsByTagName("head")[0].appendChild(sheet);
+		setTimeout(function(){document.getElementById("pqp-container").style.display = "block"}, 10);
+	}
+	
+	
+	//http://www.bigbold.com/snippets/posts/show/2630
+	function addClassName(objElement, strClass, blnMayAlreadyExist){
+	   if ( objElement.className ){
+	      var arrList = objElement.className.split(' ');
+	      if ( blnMayAlreadyExist ){
+	         var strClassUpper = strClass.toUpperCase();
+	         for ( var i = 0; i < arrList.length; i++ ){
+	            if ( arrList[i].toUpperCase() == strClassUpper ){
+	               arrList.splice(i, 1);
+	               i--;
+	             }
+	           }
+	      }
+	      arrList[arrList.length] = strClass;
+	      objElement.className = arrList.join(' ');
+	   }
+	   else{  
+	      objElement.className = strClass;
+	      }
+	}
+
+	//http://www.bigbold.com/snippets/posts/show/2630
+	function removeClassName(objElement, strClass){
+	   if ( objElement.className ){
+	      var arrList = objElement.className.split(' ');
+	      var strClassUpper = strClass.toUpperCase();
+	      for ( var i = 0; i < arrList.length; i++ ){
+	         if ( arrList[i].toUpperCase() == strClassUpper ){
+	            arrList.splice(i, 1);
+	            i--;
+	         }
+	      }
+	      objElement.className = arrList.join(' ');
+	   }
+	}
+
+	//http://ejohn.org/projects/flexible-javascript-events/
+	function addEvent( obj, type, fn ) {
+	  if ( obj.attachEvent ) {
+	    obj["e"+type+fn] = fn;
+	    obj[type+fn] = function() { obj["e"+type+fn]( window.event ) };
+	    obj.attachEvent( "on"+type, obj[type+fn] );
+	  } 
+	  else{
+	    obj.addEventListener( type, fn, false );	
+	  }
+	}
+</script><div id="pqp-container" class="pQp" style="display:none"><div id="pQp" class="console">
+<table id="pqp-metrics" cellspacing="0">
+<tr>
+	<td class="green" onclick="changeTab('console');">
+		<var>0</var>
+		<h4>Console</h4>
+	</td>
+	<td class="blue" onclick="changeTab('speed');">
+		<var>9.296 ms</var>
+		<h4>Load Time</h4>
+	</td>
+	<td class="purple" onclick="changeTab('queries');">
+		<var>9 Queries</var>
+		<h4>Database</h4>
+	</td>
+	<td class="orange" onclick="changeTab('memory');">
+		<var>610.05 kB</var>
+		<h4>Memory Used</h4>
+	</td>
+	<td class="red" onclick="changeTab('files');">
+		<var>11 Files</var>
+		<h4>Included</h4>
+	</td>
+</tr>
+</table><div id="pqp-console" class="pqp-box"><h3>This panel has no log items.</h3></div><div id="pqp-speed" class="pqp-box"><h3>This panel has no log items.</h3></div><div id="pqp-queries" class="pqp-box"><table class="side" cellspacing="0">
+		  <tr><td><var>9</var><h4>Total Queries</h4></td></tr>
+		  <tr><td class="alt"><var>1.499 ms</var> <h4>Total Time</h4></td></tr>
+		  <tr><td><var>0</var> <h4>Duplicates</h4></td></tr>
+		 </table>
+		<table class="main" cellspacing="0"><tr>
+				<td class="">INSERT INTO dim_gender (code,description)VALUES('O','Other');</td></tr><tr>
+				<td class="alt">SELECT * FROM dim_gender WHERE code = 'O'<em>
+						Possible keys: <b></b> &middot; 
+						Key Used: <b></b> &middot; 
+						Type: <b></b> &middot; 
+						Rows: <b></b> &middot; 
+						Speed: <b>0.172 ms</b>
+					</em></td></tr><tr>
+				<td class="">SELECT * FROM dim_gender WHERE code = 'O'<em>
+						Possible keys: <b></b> &middot; 
+						Key Used: <b></b> &middot; 
+						Type: <b></b> &middot; 
+						Rows: <b></b> &middot; 
+						Speed: <b>0.068 ms</b>
+					</em></td></tr><tr>
+				<td class="alt">UPDATE dim_gender SET code = 'O',description = 'Mascul' WHERE code = 'O'</td></tr><tr>
+				<td class="">SELECT * FROM dim_gender WHERE code = 'O'<em>
+						Possible keys: <b></b> &middot; 
+						Key Used: <b></b> &middot; 
+						Type: <b></b> &middot; 
+						Rows: <b></b> &middot; 
+						Speed: <b>0.125 ms</b>
+					</em></td></tr><tr>
+				<td class="alt">SELECT * FROM dim_gender WHERE code = 'O'<em>
+						Possible keys: <b></b> &middot; 
+						Key Used: <b></b> &middot; 
+						Type: <b></b> &middot; 
+						Rows: <b></b> &middot; 
+						Speed: <b>0.045 ms</b>
+					</em></td></tr><tr>
+				<td class="">DELETE FROM dim_gender WHERE code = 'O'</td></tr><tr>
+				<td class="alt">SELECT * FROM dim_gender WHERE code = 'O'<em>
+						Possible keys: <b></b> &middot; 
+						Key Used: <b></b> &middot; 
+						Type: <b></b> &middot; 
+						Rows: <b></b> &middot; 
+						Speed: <b>0.129 ms</b>
+					</em></td></tr><tr>
+				<td class="">select * from dim_gender order by rand() limit 1<em>
+						Possible keys: <b></b> &middot; 
+						Key Used: <b>idx_gender_description</b> &middot; 
+						Type: <b>index</b> &middot; 
+						Rows: <b>2</b> &middot; 
+						Speed: <b>0.192 ms</b>
+					</em></td></tr></table></div><div id="pqp-memory" class="pqp-box"><h3>This panel has no log items.</h3></div><div id="pqp-files" class="pqp-box"><table class="side" cellspacing="0">
+		  	<tr><td><var>11</var><h4>Total Files</h4></td></tr>
+			<tr><td class="alt"><var>63.44 kB</var> <h4>Total Size</h4></td></tr>
+			<tr><td><var>11.65 kB</var> <h4>Largest</h4></td></tr>
+		 </table>
+		<table class="main" cellspacing="0"><tr><td class=""><b>1.46 kB</b> /Users/daniel/mutw/mutworange/documents/planning/P8STATS/Tests/DBTest.php</td></tr><tr><td class="alt"><b>4.01 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit.php</td></tr><tr><td class=""><b>7.20 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit/TestCase.php</td></tr><tr><td class="alt"><b>11.65 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit/Assert.php</td></tr><tr><td class=""><b>8.33 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit/TestResult.php</td></tr><tr><td class="alt"><b>3.90 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit/TestFailure.php</td></tr><tr><td class=""><b>4.55 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit/TestListener.php</td></tr><tr><td class="alt"><b>6.68 kB</b> /Applications/XAMPP/xamppfiles/lib/php/pear/PHPUnit/TestSuite.php</td></tr><tr><td class=""><b>7.03 kB</b> /Users/daniel/mutw/mutworange/documents/planning/P8STATS/Tests/lib/DB.php</td></tr><tr><td class="alt"><b>6.08 kB</b> /Users/daniel/mutw/mutworange/documents/planning/P8STATS/Tests/lib/pqp/classes/PhpQuickProfiler.php</td></tr><tr><td class=""><b>2.55 kB</b> /Users/daniel/mutw/mutworange/documents/planning/P8STATS/Tests/lib/pqp/classes/Console.php</td></tr></table></div>	<table id="pqp-footer" cellspacing="0">
+		<tr>
+			<td class="credit">
+				<a href="http://particletree.com" target="_blank">
+				<strong>PHP</strong> 
+				<b class="green">Q</b><b class="blue">u</b><b class="purple">i</b><b class="orange">c</b><b class="red">k</b>
+				Profiler</a></td>
+			<td class="actions">
+				<a href="#" onclick="toggleDetails();return false">Details</a>
+				<a class="heightToggle" href="#" onclick="toggleHeight();return false">Height</a>
+			</td>
+		</tr>
+	</table></div></div>
