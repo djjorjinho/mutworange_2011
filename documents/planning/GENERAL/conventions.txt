@@ -1,0 +1,45 @@
+== Conventions for new Features==
+
+DB:
+    * MySQL - utf8_general_ci encoding
+    * Field names are lower case and can contain underscores
+    * Table names are lower case and can contain unserscores
+    
+Text:
+    * PHP - UTF8 charset / UNIX EOL (\n)
+    * HTML - UTF8 charset / UNIX EOL (\n) / UTF8 html meta tag
+    * 80 caracter/columns breaks - no more text in that line
+    * tabs are real tabs, no substitute spaces
+    
+Code:
+    * PHP
+	- Class names: UpperCamelCase, no unserscores
+	- method/function names: lowerCamelCase, no underscores
+	- variable names: can contain underscores, lowercased first letter
+	
+	- Brackets: first one in the same line of the class/method/condition
+	    specification
+	    (unless you reached the 80 character limit, then break line and
+		indent). The last one must be alone in a line.
+	    
+    * PHP Doc
+	- Classes
+	- Methods
+	- Variables (if the info is relevant, if not, the variable name must be
+	    descriptive)
+    
+    * HTML
+	- XHTML 1.0 transitional
+	    * http://www.w3.org/TR/xhtml1/#a_dtd_XHTML-1.0-Transitional
+	    * http://www.webstandards.org/learn/reference/templates/xhtml10t/
+	- WAI / WCAG Accebility guidelines -> at least the first level of conformance
+	    * http://www.w3.org/TR/WAI-WEBCONTENT/#priorities
+	- List of validation tools:
+	    * http://chrispederick.com/work/webdeveloper/
+	    * http://tidy.sourceforge.net/
+	    * http://wave.webaim.org/
+	    
+	    
+    
+    
+
