@@ -3,7 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `p8statsdw` ;
-CREATE SCHEMA IF NOT EXISTS `p8statsdw` DEFAULT CHARACTER SET latin1 ;
+CREATE SCHEMA IF NOT EXISTS `p8statsdw` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `p8statsdw` ;
 
 -- -----------------------------------------------------
@@ -113,15 +113,15 @@ PACK_KEYS = Default;
 
 
 -- -----------------------------------------------------
--- Table `p8statsdw`.`dim_state`
+-- Table `p8statsdw`.`dim_process`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `p8statsdw`.`dim_state` ;
+DROP TABLE IF EXISTS `p8statsdw`.`dim_process` ;
 
-CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_state` (
-  `code` CHAR(6) NOT NULL ,
-  `description` VARCHAR(25) NULL ,
-  PRIMARY KEY (`code`) ,
-  INDEX `idx_dim_state_description` (`description` ASC) )
+CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_process` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `phase_code` VARCHAR(10) NULL ,
+  `status_code` CHAR(6) NULL ,
+  PRIMARY KEY (`id`) )
 ENGINE = MyISAM
 PACK_KEYS = Default;
 
@@ -136,27 +136,23 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   `dim_enddate_id` BIGINT UNSIGNED NOT NULL ,
   `dim_home_institution_id` INT NOT NULL ,
   `dim_host_institution_id` INT NOT NULL ,
-  `dim_state_code` CHAR(6) NOT NULL ,
+  `dim_state_id` INT UNSIGNED NOT NULL ,
   `dim_gender_code` ENUM('M','F','O') NOT NULL ,
-  `delay_hours` SMALLINT UNSIGNED NULL ,
+  `dim_study_id` INT NOT NULL ,
   `elapsed_hours` SMALLINT UNSIGNED NULL ,
   `reply_hours` SMALLINT UNSIGNED NULL ,
   `gave_up` TINYINT UNSIGNED NULL ,
   `accomodation_available` TINYINT UNSIGNED NULL ,
   `accepted` TINYINT UNSIGNED NULL ,
   `denied` TINYINT UNSIGNED NULL ,
-  INDEX `fk_fact_efficiency_dim_state` (`dim_state_code` ASC) ,
   INDEX `fk_fact_efficiency_dim_gender` (`dim_gender_code` ASC) ,
   INDEX `fk_fact_efficiency_dim_startdate` (`dim_enddate_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_enddate` (`dim_startdate_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_host_institution` (`dim_host_institution_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_home_institution` (`dim_home_institution_id` ASC) ,
-  INDEX `idx_efficiency` USING BTREE (`dim_startdate_id` DESC, `dim_enddate_id` DESC, `dim_home_institution_id` DESC, `dim_host_institution_id` DESC, `dim_state_code` DESC, `dim_gender_code` DESC) ,
-  CONSTRAINT `fk_fact_efficiency_dim_state1`
-    FOREIGN KEY (`dim_state_code` )
-    REFERENCES `p8statsdw`.`dim_state` (`code` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `idx_efficiency` USING BTREE (`dim_startdate_id` DESC, `dim_enddate_id` DESC, `dim_home_institution_id` DESC, `dim_host_institution_id` DESC, `dim_state_id` ASC, `dim_gender_code` DESC, `dim_study_id` ASC) ,
+  INDEX `fk_fact_efficiency_dim_study` (`dim_study_id` ASC) ,
+  INDEX `fk_fact_efficiency_dim_state1` (`dim_state_id` ASC) ,
   CONSTRAINT `fk_fact_efficiency_dim_gender1`
     FOREIGN KEY (`dim_gender_code` )
     REFERENCES `p8statsdw`.`dim_gender` (`code` )
@@ -180,6 +176,16 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   CONSTRAINT `fk_fact_efficiency_dim_institution2`
     FOREIGN KEY (`dim_home_institution_id` )
     REFERENCES `p8statsdw`.`dim_institution` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_fact_efficiency_dim_study1`
+    FOREIGN KEY (`dim_study_id` )
+    REFERENCES `p8statsdw`.`dim_study` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_fact_efficiency_dim_state1`
+    FOREIGN KEY (`dim_state_id` )
+    REFERENCES `p8statsdw`.`dim_process` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MRG_MyISAM
@@ -245,125 +251,6 @@ INSERT_METHOD = LAST
 PACK_KEYS = Default;
 
 
--- -----------------------------------------------------
--- Table `p8statsdw`.`fact_efficacy_tpl`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `p8statsdw`.`fact_efficacy_tpl` ;
-
-CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficacy_tpl` (
-  `dim_date_id` BIGINT UNSIGNED NOT NULL ,
-  `dim_home_institution_id` INT NOT NULL ,
-  `dim_host_institution_id` INT NOT NULL ,
-  `dim_mobility_code` CHAR(6) NOT NULL ,
-  `dim_lodging_code` CHAR(6) NOT NULL ,
-  `dim_gender_code` ENUM('M','F','O') NOT NULL ,
-  `extension` TINYINT UNSIGNED NULL ,
-  `resubmission` TINYINT UNSIGNED NULL ,
-  `ects` TINYINT UNSIGNED NULL ,
-  `student` TINYINT UNSIGNED NOT NULL DEFAULT 1 ,
-  INDEX `fk_fact_efficacy_dim_lodging1` (`dim_lodging_code` ASC) ,
-  INDEX `fk_fact_efficacy_dim_mobility1` (`dim_mobility_code` ASC) ,
-  INDEX `fk_fact_efficacy_dim_gender1` (`dim_gender_code` ASC) ,
-  INDEX `fk_fact_efficacy_dim_date1` (`dim_date_id` ASC) ,
-  INDEX `fk_fact_efficacy_dim_home_institution1` (`dim_home_institution_id` ASC) ,
-  INDEX `fk_fact_efficacy_dim_host_institution1` (`dim_host_institution_id` ASC) ,
-  INDEX `idx_efficacy_home` USING BTREE (`dim_date_id` DESC, `dim_home_institution_id` DESC, `dim_mobility_code` DESC, `dim_lodging_code` DESC, `dim_gender_code` DESC) ,
-  INDEX `idx_efficacy_host` USING BTREE (`dim_date_id` ASC, `dim_host_institution_id` ASC, `dim_mobility_code` ASC, `dim_lodging_code` ASC, `dim_gender_code` ASC) ,
-  CONSTRAINT `fk_fact_efficacy_dim_lodging100`
-    FOREIGN KEY (`dim_lodging_code` )
-    REFERENCES `p8statsdw`.`dim_lodging` (`code` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficacy_dim_mobility100`
-    FOREIGN KEY (`dim_mobility_code` )
-    REFERENCES `p8statsdw`.`dim_mobility` (`code` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficacy_dim_gender100`
-    FOREIGN KEY (`dim_gender_code` )
-    REFERENCES `p8statsdw`.`dim_gender` (`code` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficacy_dim_date100`
-    FOREIGN KEY (`dim_date_id` )
-    REFERENCES `p8statsdw`.`dim_date` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficacy_dim_institution100`
-    FOREIGN KEY (`dim_home_institution_id` )
-    REFERENCES `p8statsdw`.`dim_institution` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficacy_dim_institution200`
-    FOREIGN KEY (`dim_host_institution_id` )
-    REFERENCES `p8statsdw`.`dim_institution` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-INSERT_METHOD = LAST
-PACK_KEYS = Default;
-
-
--- -----------------------------------------------------
--- Table `p8statsdw`.`fact_efficiency_tpl`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `p8statsdw`.`fact_efficiency_tpl` ;
-
-CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency_tpl` (
-  `dim_startdate_id` BIGINT UNSIGNED NOT NULL ,
-  `dim_enddate_id` BIGINT UNSIGNED NOT NULL ,
-  `dim_home_institution_id` INT NOT NULL ,
-  `dim_host_institution_id` INT NOT NULL ,
-  `dim_state_code` CHAR(6) NOT NULL ,
-  `dim_gender_code` ENUM('M','F','O') NOT NULL ,
-  `delay_hours` SMALLINT UNSIGNED NULL ,
-  `elapsed_hours` SMALLINT UNSIGNED NULL ,
-  `reply_hours` SMALLINT UNSIGNED NULL ,
-  `gave_up` TINYINT UNSIGNED NULL ,
-  `accomodation_available` TINYINT UNSIGNED NULL ,
-  `accepted` TINYINT UNSIGNED NULL ,
-  `denied` TINYINT UNSIGNED NULL ,
-  INDEX `fk_fact_efficiency_dim_state` (`dim_state_code` ASC) ,
-  INDEX `fk_fact_efficiency_dim_gender` (`dim_gender_code` ASC) ,
-  INDEX `fk_fact_efficiency_dim_startdate` (`dim_enddate_id` ASC) ,
-  INDEX `fk_fact_efficiency_dim_enddate` (`dim_startdate_id` ASC) ,
-  INDEX `fk_fact_efficiency_dim_host_institution` (`dim_host_institution_id` ASC) ,
-  INDEX `fk_fact_efficiency_dim_home_institution` (`dim_home_institution_id` ASC) ,
-  INDEX `idx_efficiency` USING BTREE (`dim_startdate_id` DESC, `dim_enddate_id` DESC, `dim_home_institution_id` DESC, `dim_host_institution_id` DESC, `dim_state_code` DESC, `dim_gender_code` DESC) ,
-  CONSTRAINT `fk_fact_efficiency_dim_state10`
-    FOREIGN KEY (`dim_state_code` )
-    REFERENCES `p8statsdw`.`dim_state` (`code` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficiency_dim_gender10`
-    FOREIGN KEY (`dim_gender_code` )
-    REFERENCES `p8statsdw`.`dim_gender` (`code` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficiency_dim_date20`
-    FOREIGN KEY (`dim_enddate_id` )
-    REFERENCES `p8statsdw`.`dim_date` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficiency_dim_date10`
-    FOREIGN KEY (`dim_startdate_id` )
-    REFERENCES `p8statsdw`.`dim_date` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficiency_dim_institution10`
-    FOREIGN KEY (`dim_host_institution_id` )
-    REFERENCES `p8statsdw`.`dim_institution` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficiency_dim_institution20`
-    FOREIGN KEY (`dim_home_institution_id` )
-    REFERENCES `p8statsdw`.`dim_institution` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-PACK_KEYS = Default;
-
-
 CREATE USER `erasmuline` IDENTIFIED BY 'orange';
 
 grant ALL on TABLE `p8statsdw`.`dim_date` to erasmuline;
@@ -371,12 +258,10 @@ grant ALL on TABLE `p8statsdw`.`dim_gender` to erasmuline;
 grant ALL on TABLE `p8statsdw`.`dim_institution` to erasmuline;
 grant ALL on TABLE `p8statsdw`.`dim_lodging` to erasmuline;
 grant ALL on TABLE `p8statsdw`.`dim_mobility` to erasmuline;
-grant ALL on TABLE `p8statsdw`.`dim_state` to erasmuline;
+grant ALL on TABLE `p8statsdw`.`dim_process` to erasmuline;
 grant ALL on TABLE `p8statsdw`.`dim_study` to erasmuline;
 grant ALL on TABLE `p8statsdw`.`fact_efficacy` to erasmuline;
-grant ALL on TABLE `p8statsdw`.`fact_efficacy_tpl` to erasmuline;
 grant ALL on TABLE `p8statsdw`.`fact_efficiency` to erasmuline;
-grant ALL on TABLE `p8statsdw`.`fact_efficiency_tpl` to erasmuline;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
