@@ -2,33 +2,50 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-DROP SCHEMA IF EXISTS `mydb` ;
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-SHOW WARNINGS;
-USE `mydb` ;
-
--- -----------------------------------------------------
--- Table `mydb`.`Country`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Country` ;
+DROP SCHEMA IF EXISTS `erasmusline` ;
+CREATE SCHEMA IF NOT EXISTS `erasmusline` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`Country` (
+USE `erasmusline` ;
+
+CREATE USER 'erasmusline'@'localhost' identified by 'orange';
+
+GRANT SELECT , 
+INSERT ,
+
+UPDATE ,
+DELETE ,
+CREATE ,
+DROP ,
+INDEX ,
+ALTER ,
+CREATE TEMPORARY TABLES ,
+LOCK TABLES ON  `erasmusline` . * TO  'erasmusline'@'localhost' 
+WITH GRANT OPTION ;
+
+-- -----------------------------------------------------
+-- Table `erasmusline`.`country`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `erasmusline`.`country` ;
+
+SHOW WARNINGS;
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`country` (
   `Code` CHAR(3) NOT NULL DEFAULT '' ,
   `Name` CHAR(52) NOT NULL DEFAULT '' ,
   PRIMARY KEY (`Code`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`institutions`
+-- Table `erasmusline`.`institutions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`institutions` ;
+DROP TABLE IF EXISTS `erasmusline`.`institutions` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`institutions` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`institutions` (
   `instId` INT NOT NULL AUTO_INCREMENT ,
   `instName` VARCHAR(200) NOT NULL ,
   `instStreetNr` VARCHAR(200) NOT NULL ,
@@ -44,23 +61,25 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`institutions` (
   PRIMARY KEY (`instId`) ,
   CONSTRAINT `fk_Institutions_Country1`
     FOREIGN KEY (`instCountry` )
-    REFERENCES `mydb`.`Country` (`Code` )
+    REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Institutions_Country1` ON `mydb`.`institutions` (`instCountry` ASC) ;
+CREATE INDEX `fk_Institutions_Country1` ON `erasmusline`.`institutions` (`instCountry` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`users`
+-- Table `erasmusline`.`users`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`users` ;
+DROP TABLE IF EXISTS `erasmusline`.`users` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`users` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`users` (
   `userId` VARCHAR(45) NOT NULL ,
   `familyName` VARCHAR(45) NOT NULL ,
   `firstName` VARCHAR(45) NOT NULL ,
@@ -82,31 +101,33 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`users` (
   PRIMARY KEY (`userId`) ,
   CONSTRAINT `fk_Users_Country1`
     FOREIGN KEY (`country` )
-    REFERENCES `mydb`.`Country` (`Code` )
+    REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Users_Institutions1`
     FOREIGN KEY (`institutionId` )
-    REFERENCES `mydb`.`institutions` (`instId` )
+    REFERENCES `erasmusline`.`institutions` (`instId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Users_Country1` ON `mydb`.`users` (`country` ASC) ;
+CREATE INDEX `fk_Users_Country1` ON `erasmusline`.`users` (`country` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Users_Institutions1` ON `mydb`.`users` (`institutionId` ASC) ;
+CREATE INDEX `fk_Users_Institutions1` ON `erasmusline`.`users` (`institutionId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`owner`
+-- Table `erasmusline`.`owner`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`owner` ;
+DROP TABLE IF EXISTS `erasmusline`.`owner` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`owner` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`owner` (
   `ownerId` INT NOT NULL AUTO_INCREMENT ,
   `familyName` VARCHAR(200) NULL ,
   `firstName` VARCHAR(200) NULL ,
@@ -120,23 +141,25 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`owner` (
   PRIMARY KEY (`ownerId`) ,
   CONSTRAINT `fk_owner_Country1`
     FOREIGN KEY (`country` )
-    REFERENCES `mydb`.`Country` (`Code` )
+    REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_owner_Country1` ON `mydb`.`owner` (`country` ASC) ;
+CREATE INDEX `fk_owner_Country1` ON `erasmusline`.`owner` (`country` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`residence`
+-- Table `erasmusline`.`residence`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`residence` ;
+DROP TABLE IF EXISTS `erasmusline`.`residence` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`residence` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`residence` (
   `residenceId` INT NOT NULL AUTO_INCREMENT ,
   `price` INT NOT NULL ,
   `streetNr` VARCHAR(200) NOT NULL ,
@@ -155,31 +178,33 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`residence` (
   PRIMARY KEY (`residenceId`) ,
   CONSTRAINT `fk_Residents_Owner1`
     FOREIGN KEY (`ownerId` )
-    REFERENCES `mydb`.`owner` (`ownerId` )
+    REFERENCES `erasmusline`.`owner` (`ownerId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_residence_Country1`
     FOREIGN KEY (`country` )
-    REFERENCES `mydb`.`Country` (`Code` )
+    REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Residents_Owner1` ON `mydb`.`residence` (`ownerId` ASC) ;
+CREATE INDEX `fk_Residents_Owner1` ON `erasmusline`.`residence` (`ownerId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_residence_Country1` ON `mydb`.`residence` (`country` ASC) ;
+CREATE INDEX `fk_residence_Country1` ON `erasmusline`.`residence` (`country` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`leasing`
+-- Table `erasmusline`.`leasing`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`leasing` ;
+DROP TABLE IF EXISTS `erasmusline`.`leasing` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`leasing` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`leasing` (
   `rentalId` INT NOT NULL AUTO_INCREMENT ,
   `outboundUser` INT NULL ,
   `Subleased` TINYINT(1)  NOT NULL ,
@@ -190,37 +215,41 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`leasing` (
   PRIMARY KEY (`rentalId`) ,
   CONSTRAINT `fk_Lodging_Residents1`
     FOREIGN KEY (`residentId` )
-    REFERENCES `mydb`.`residence` (`residenceId` )
+    REFERENCES `erasmusline`.`residence` (`residenceId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Lodging_Residents1` ON `mydb`.`leasing` (`residentId` ASC) ;
+CREATE INDEX `fk_Lodging_Residents1` ON `erasmusline`.`leasing` (`residentId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Education`
+-- Table `erasmusline`.`education`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`Education` ;
+DROP TABLE IF EXISTS `erasmusline`.`education` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`Education` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`education` (
   `educationId` INT NOT NULL AUTO_INCREMENT ,
   `educationName` VARCHAR(200) NULL ,
   PRIMARY KEY (`educationId`) )
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`educationPerInstitute`
+-- Table `erasmusline`.`educationPerInstitute`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`educationPerInstitute` ;
+DROP TABLE IF EXISTS `erasmusline`.`educationPerInstitute` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`educationPerInstitute` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`educationPerInstitute` (
   `educationPerInstId` INT NOT NULL ,
   `institutionId` INT NOT NULL ,
   `studyId` INT NOT NULL ,
@@ -228,31 +257,33 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`educationPerInstitute` (
   PRIMARY KEY (`educationPerInstId`) ,
   CONSTRAINT `fk_Institutions_has_Study_Institutions1`
     FOREIGN KEY (`institutionId` )
-    REFERENCES `mydb`.`institutions` (`instId` )
+    REFERENCES `erasmusline`.`institutions` (`instId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Institutions_has_Study_Study1`
     FOREIGN KEY (`studyId` )
-    REFERENCES `mydb`.`Education` (`educationId` )
+    REFERENCES `erasmusline`.`education` (`educationId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Institutions_has_Study_Study1` ON `mydb`.`educationPerInstitute` (`studyId` ASC) ;
+CREATE INDEX `fk_Institutions_has_Study_Study1` ON `erasmusline`.`educationPerInstitute` (`studyId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Institutions_has_Study_Institutions1` ON `mydb`.`educationPerInstitute` (`institutionId` ASC) ;
+CREATE INDEX `fk_Institutions_has_Study_Institutions1` ON `erasmusline`.`educationPerInstitute` (`institutionId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`erasmusStudent`
+-- Table `erasmusline`.`erasmusStudent`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`erasmusStudent` ;
+DROP TABLE IF EXISTS `erasmusline`.`erasmusStudent` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`erasmusStudent` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`erasmusStudent` (
   `studentId` VARCHAR(45) NOT NULL ,
   `homeCoordinatorId` INT NOT NULL ,
   `hostCoordinatorId` INT NOT NULL ,
@@ -271,71 +302,73 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`erasmusStudent` (
   PRIMARY KEY (`studentId`) ,
   CONSTRAINT `fk_ErasmusInfo_Users2`
     FOREIGN KEY (`studentId` )
-    REFERENCES `mydb`.`users` (`userId` )
+    REFERENCES `erasmusline`.`users` (`userId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ErasmusInfo_Users1`
     FOREIGN KEY (`homeCoordinatorId` )
-    REFERENCES `mydb`.`users` (`userId` )
+    REFERENCES `erasmusline`.`users` (`userId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ErasmusInfo_Users3`
     FOREIGN KEY (`hostCoordinatorId` )
-    REFERENCES `mydb`.`users` (`userId` )
+    REFERENCES `erasmusline`.`users` (`userId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ErasmusInfo_Institutions1`
     FOREIGN KEY (`homeInstitutionId` )
-    REFERENCES `mydb`.`institutions` (`instId` )
+    REFERENCES `erasmusline`.`institutions` (`instId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ErasmusInfo_Institutions2`
     FOREIGN KEY (`hostInstitutionId` )
-    REFERENCES `mydb`.`institutions` (`instId` )
+    REFERENCES `erasmusline`.`institutions` (`instId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ErasmusInfoPerStudent_Institutions_has_Study1`
     FOREIGN KEY (`educationPerInstId` )
-    REFERENCES `mydb`.`educationPerInstitute` (`educationPerInstId` )
+    REFERENCES `erasmusline`.`educationPerInstitute` (`educationPerInstId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ErasmusInfoPerStudent_Lodging1`
     FOREIGN KEY (`lodgingId` )
-    REFERENCES `mydb`.`leasing` (`rentalId` )
+    REFERENCES `erasmusline`.`leasing` (`rentalId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfo_Users2` ON `mydb`.`erasmusStudent` (`studentId` ASC) ;
+CREATE INDEX `fk_ErasmusInfo_Users2` ON `erasmusline`.`erasmusStudent` (`studentId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfo_Users1` ON `mydb`.`erasmusStudent` (`homeCoordinatorId` ASC) ;
+CREATE INDEX `fk_ErasmusInfo_Users1` ON `erasmusline`.`erasmusStudent` (`homeCoordinatorId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfo_Users3` ON `mydb`.`erasmusStudent` (`hostCoordinatorId` ASC) ;
+CREATE INDEX `fk_ErasmusInfo_Users3` ON `erasmusline`.`erasmusStudent` (`hostCoordinatorId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfo_Institutions1` ON `mydb`.`erasmusStudent` (`homeInstitutionId` ASC) ;
+CREATE INDEX `fk_ErasmusInfo_Institutions1` ON `erasmusline`.`erasmusStudent` (`homeInstitutionId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfo_Institutions2` ON `mydb`.`erasmusStudent` (`hostInstitutionId` ASC) ;
+CREATE INDEX `fk_ErasmusInfo_Institutions2` ON `erasmusline`.`erasmusStudent` (`hostInstitutionId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfoPerStudent_Institutions_has_Study1` ON `mydb`.`erasmusStudent` (`educationPerInstId` ASC) ;
+CREATE INDEX `fk_ErasmusInfoPerStudent_Institutions_has_Study1` ON `erasmusline`.`erasmusStudent` (`educationPerInstId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusInfoPerStudent_Lodging1` ON `mydb`.`erasmusStudent` (`lodgingId` ASC) ;
+CREATE INDEX `fk_ErasmusInfoPerStudent_Lodging1` ON `erasmusline`.`erasmusStudent` (`lodgingId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`coursesPerEducPerInst`
+-- Table `erasmusline`.`coursesPerEducPerInst`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`coursesPerEducPerInst` ;
+DROP TABLE IF EXISTS `erasmusline`.`coursesPerEducPerInst` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`coursesPerEducPerInst` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`coursesPerEducPerInst` (
   `courseId` INT NOT NULL AUTO_INCREMENT ,
   `courseName` VARCHAR(100) NOT NULL ,
   `ectsPoint` INT NOT NULL ,
@@ -344,55 +377,58 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`coursesPerEducPerInst` (
   PRIMARY KEY (`courseId`) ,
   CONSTRAINT `fk_Courses_educationPerInstitute1`
     FOREIGN KEY (`educationPerInstId` )
-    REFERENCES `mydb`.`educationPerInstitute` (`educationPerInstId` )
+    REFERENCES `erasmusline`.`educationPerInstitute` (`educationPerInstId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Courses_educationPerInstitute1` ON `mydb`.`coursesPerEducPerInst` (`educationPerInstId` ASC) ;
+CREATE INDEX `fk_Courses_educationPerInstitute1` ON `erasmusline`.`coursesPerEducPerInst` (`educationPerInstId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`grades`
+-- Table `erasmusline`.`grades`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`grades` ;
+DROP TABLE IF EXISTS `erasmusline`.`grades` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`grades` (
-  `gradesId` INT NOT NULL AUTO_INCREMENT ,
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`grades` (
   `courseId` INT NOT NULL ,
   `studentId` VARCHAR(45) NOT NULL ,
   `grade` INT NULL ,
-  PRIMARY KEY (`gradesId`) ,
+  PRIMARY KEY (`courseId`, `studentId`) ,
   CONSTRAINT `fk_Grades_Institutions_has_Study_has_Courses1`
     FOREIGN KEY (`courseId` )
-    REFERENCES `mydb`.`coursesPerEducPerInst` (`courseId` )
+    REFERENCES `erasmusline`.`coursesPerEducPerInst` (`courseId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Grades_ErasmusInfoPerStudent1`
     FOREIGN KEY (`studentId` )
-    REFERENCES `mydb`.`erasmusStudent` (`studentId` )
+    REFERENCES `erasmusline`.`erasmusStudent` (`studentId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Grades_Institutions_has_Study_has_Courses1` ON `mydb`.`grades` (`courseId` ASC) ;
+CREATE INDEX `fk_Grades_Institutions_has_Study_has_Courses1` ON `erasmusline`.`grades` (`courseId` ASC) ;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Grades_ErasmusInfoPerStudent1` ON `mydb`.`grades` (`studentId` ASC) ;
+CREATE INDEX `fk_Grades_ErasmusInfoPerStudent1` ON `erasmusline`.`grades` (`studentId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`studentEvents`
+-- Table `erasmusline`.`studentEvents`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`studentEvents` ;
+DROP TABLE IF EXISTS `erasmusline`.`studentEvents` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`studentEvents` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`studentEvents` (
   `eventId` INT NOT NULL AUTO_INCREMENT ,
   `event` TEXT NOT NULL ,
   `timestamp` DATE NOT NULL ,
@@ -404,23 +440,25 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`studentEvents` (
   PRIMARY KEY (`eventId`) ,
   CONSTRAINT `fk_ErasmusProgressPerStudent_ErasmusInfoPerStudent1`
     FOREIGN KEY (`erasmusStudentId` )
-    REFERENCES `mydb`.`erasmusStudent` (`studentId` )
+    REFERENCES `erasmusline`.`erasmusStudent` (`studentId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_ErasmusProgressPerStudent_ErasmusInfoPerStudent1` ON `mydb`.`studentEvents` (`erasmusStudentId` ASC) ;
+CREATE INDEX `fk_ErasmusProgressPerStudent_ErasmusInfoPerStudent1` ON `erasmusline`.`studentEvents` (`erasmusStudentId` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`companies`
+-- Table `erasmusline`.`companies`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`companies` ;
+DROP TABLE IF EXISTS `erasmusline`.`companies` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`companies` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`companies` (
   `companyId` INT NOT NULL AUTO_INCREMENT ,
   `companyName` VARCHAR(200) NOT NULL ,
   `companyStreetNr` VARCHAR(200) NOT NULL ,
@@ -435,23 +473,25 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`companies` (
   PRIMARY KEY (`companyId`) ,
   CONSTRAINT `fk_Institutions_Country10`
     FOREIGN KEY (`companyCountry` )
-    REFERENCES `mydb`.`Country` (`Code` )
+    REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Institutions_Country1` ON `mydb`.`companies` (`companyCountry` ASC) ;
+CREATE INDEX `fk_Institutions_Country1` ON `erasmusline`.`companies` (`companyCountry` ASC) ;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`forms`
+-- Table `erasmusline`.`forms`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`forms` ;
+DROP TABLE IF EXISTS `erasmusline`.`forms` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `mydb`.`forms` (
+CREATE  TABLE IF NOT EXISTS `erasmusline`.`forms` (
   `formId` INT NOT NULL ,
   `type` VARCHAR(45) NOT NULL ,
   `date` DATE NOT NULL ,
@@ -460,13 +500,15 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`forms` (
   PRIMARY KEY (`formId`) ,
   CONSTRAINT `fk_Forms_ErasmusInfoPerStudent1`
     FOREIGN KEY (`studentId` )
-    REFERENCES `mydb`.`erasmusStudent` (`studentId` )
+    REFERENCES `erasmusline`.`erasmusStudent` (`studentId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_Forms_ErasmusInfoPerStudent1` ON `mydb`.`forms` (`studentId` ASC) ;
+CREATE INDEX `fk_Forms_ErasmusInfoPerStudent1` ON `erasmusline`.`forms` (`studentId` ASC) ;
 
 SHOW WARNINGS;
 
