@@ -4,24 +4,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `erasmusline` ;
 CREATE SCHEMA IF NOT EXISTS `erasmusline` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-
 SHOW WARNINGS;
 USE `erasmusline` ;
-
-CREATE USER 'erasmusline'@'localhost' identified by 'orange';
-
-GRANT SELECT , 
-INSERT ,
-
-UPDATE ,
-DELETE ,
-CREATE ,
-DROP ,
-INDEX ,
-ALTER ,
-CREATE TEMPORARY TABLES ,
-LOCK TABLES ON  `erasmusline` . * TO  'erasmusline'@'localhost' 
-WITH GRANT OPTION ;
+GRANT ALL PRIVILEGES  ON erasmusline.* 
+TO 'erasmusline'@'%' IDENTIFIED BY 'orange' 
+WITH GRANT OPTION;
 
 -- -----------------------------------------------------
 -- Table `erasmusline`.`country`
