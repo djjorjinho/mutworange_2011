@@ -357,10 +357,14 @@ DROP TABLE IF EXISTS `erasmusline`.`coursesPerEducPerInst` ;
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `erasmusline`.`coursesPerEducPerInst` (
   `courseId` INT NOT NULL AUTO_INCREMENT ,
+  `courseCode` VARCHAR(45) NOT NULL ,
   `courseName` VARCHAR(100) NOT NULL ,
+  `localPoints` INT NOT NULL ,
   `ectsPoint` INT NOT NULL ,
+  `ectsCredits` VARCHAR(45) NOT NULL ,
   `courseDescription` TEXT NULL ,
   `educationPerInstId` INT NOT NULL ,
+  `courseDuration` VARCHAR(10) NOT NULL ,
   PRIMARY KEY (`courseId`) ,
   CONSTRAINT `fk_Courses_educationPerInstitute1`
     FOREIGN KEY (`educationPerInstId` )
