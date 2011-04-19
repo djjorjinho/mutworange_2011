@@ -9,6 +9,7 @@ USE `erasmusline` ;
 GRANT ALL PRIVILEGES  ON erasmusline.* 
 TO 'erasmusline'@'%' IDENTIFIED BY 'orange' 
 WITH GRANT OPTION;
+
 -- -----------------------------------------------------
 -- Table `erasmusline`.`country`
 -- -----------------------------------------------------
@@ -75,6 +76,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`users` (
   `sex` TINYINT(1)  NOT NULL ,
   `tel` VARCHAR(45) NOT NULL ,
   `mobilePhone` VARCHAR(45) NULL ,
+  `fax` VARCHAR(45) NULL ,
   `email` VARCHAR(45) NULL ,
   `streetNr` VARCHAR(45) NOT NULL ,
   `city` VARCHAR(45) NOT NULL ,
@@ -385,8 +387,8 @@ SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `erasmusline`.`grades` (
   `courseId` INT NOT NULL ,
   `studentId` VARCHAR(45) NOT NULL ,
-  `localGade` INT NULL ,
-  `ectsGrade` INT NULL ,
+  `localGrade` INT NULL ,
+  `ectsGrade` VARCHAR(3) NULL ,
   `courseDuration` VARCHAR(45) NULL ,
   PRIMARY KEY (`courseId`, `studentId`) ,
   CONSTRAINT `fk_Grades_Institutions_has_Study_has_Courses1`
