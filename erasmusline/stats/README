@@ -1,0 +1,8 @@
+P8STATS package directory
+Here lies the files necessary only to the package:
+	- Data Warehouse sql files
+	- Mysql config file
+	- PHP libraries
+	- System daemons
+	- Unit Test scripts
+	- Misc script files and tools

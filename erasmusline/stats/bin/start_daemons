@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+dir=$(cd `dirname $0` && pwd)
+dir="${dir}/../daemons/"
+cd ${dir}
+
+Dirlist=$(find . -type d)
+for direc in $Dirlist ; do
+	php "./${direc}/${direc}"
+done

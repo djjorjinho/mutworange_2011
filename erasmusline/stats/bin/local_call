@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+list($func,$daemon,$msg) = $argv;
+$socket = stream_socket_client("unix:///tmp/erasmusline/${daemon}/${daemon}.sock");
+stream_socket_sendto($socket,$msg);
+print stream_socket_recvfrom($socket,1500);
+?>

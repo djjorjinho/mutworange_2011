@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+if ($handle = opendir(dirname(__FILE__).'/../daemons/')) {
+    while (false !== ($file = readdir($handle))) {
+        if(!($file == "." or $file == "..")){
+			exec("kill `ps aux | grep -e \"${file}\$\" | grep -v grep | awk '{print \$2}'`",$list);
+			
+		}
+    }
+    closedir($handle);
+}
+?>

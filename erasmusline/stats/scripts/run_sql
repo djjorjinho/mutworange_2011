@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+dir=$(cd `dirname $0` && pwd)
+cd ${dir}
+
+echo -n "Mysql root Password: "
+
+stty -echo
+read password
+stty echo
+
+mysql -uroot -p${password} < create_user.sql
+
+mysql -uroot -p${password} < p8statsdw.sql

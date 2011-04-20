@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+dir=$(cd `dirname $0` && pwd)
+cd ${dir}
+
+Dirlist=$(find . -type f)
+for file in $Dirlist ; do
+	if [ ${file} != $0 ]
+	then
+		php "./${file}"
+	fi
+done

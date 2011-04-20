@@ -1,0 +1,8 @@
+{
+	"host": "localhost",
+	"user":"erasmusline",
+	"password":"orange",
+	"port":"3306",
+	"schema":"p8statsdw",
+	"debug" : false
+}
