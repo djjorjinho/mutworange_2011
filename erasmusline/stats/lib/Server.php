@@ -19,7 +19,8 @@ class Server{
 		$unixSock = new UnixSocketSource($options,$this);
 		$this->unixLoop = new LooPHP_EventLoop( $unixSock );
 		
-		$this->tcpLoop->run();
+		$this->tcpLoop->run(true);
+		
 		$this->unixLoop->run();
 	}
 	

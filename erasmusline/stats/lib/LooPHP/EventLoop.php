@@ -106,10 +106,15 @@ class LooPHP_EventLoop
 		} while( ! $this->_event_queue->isEmpty() );
 	}
 	
-	function run()
+	function run($thread=false)
 	{
-		$this->thread = new Thread( "doRun", $this );
-		$this->thread->start();
+		if($thread){
+			$this->thread = new Thread( "doRun", $this );
+			$this->thread->start();
+		}else{
+			$this->doRun();
+		}
+		
 	}
 	
 	function doRun(){
