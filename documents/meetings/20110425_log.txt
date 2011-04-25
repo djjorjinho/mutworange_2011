@@ -1,0 +1,227 @@
+Pedro (PT): (19:07) we will start with portugal
+Daniel (PT): (19:07) ok
+Daniel (PT): (19:08) What's been done: - EIS interface specification analysis  - Partial "final solution" integration in the git app directory
+Daniel (PT): (19:08) What's our next step:     - Continue to review EIS interface     - Populate current EIS db solution     - Write Plonk module
+Daniel (PT): (19:09) we propose the following discussion:
+Daniel (PT): (19:09) To start integration of the "final solution" I need to know if there's anyone who:  
+Daniel (PT): (19:10)  * Doesn't know what source code versioning is
+Daniel (PT): (19:10)  * Doesn't know how to work with Git or doesn't see the point of using it
+Daniel (PT): (19:10) * Doesn't see the point of integrating and working on a single directory from the git repository
+Daniel (PT): (19:10)  * Has everyone setup their xAMP server or needs any help?
+Daniel (PT): (19:10) ok NEXT
+Pedro (PT): (19:10) first welcom reimer
+
+
+
+Pedro (PT): (19:10) germany next
+Arne L (Germany): (19:11) us??
+Arne L (Germany): (19:11) ok
+Arne L (Germany): (19:12) yes, we overworked a bit the infox and it is now ready, i am currently on work to upload it on Git. Had not that much Time last week abut we have now two weeks free so we can work a bit harder. next...tomorrow i will finalize the design and upload it
+Pedro (PT): (19:13) thats it?
+Arne L (Germany): (19:13) yes
+
+
+
+Pedro (PT): (19:13) ok next belgium
+Nathan: (19:13) since we had our easter holiday week we didn't work on the project this week, but since we now have the complete database, from tomorrow on, we can start on working on the flow of the application from register to pre-candidate and so on ..
+Pedro (PT): (19:14) if thats it please say so
+Nathan: (19:14) ?
+Pedro (PT): (19:14) if you have nothing more to say
+Nathan: (19:15) thats it :)
+Pedro (PT): (19:15) ok thanks
+
+
+
+Pedro (PT): (19:15) greece
+aggeliki: (19:15) we ar estill working on the validation of the rest of the forms
+Stefanos (Greece): (19:16) we also started connecting with db
+Stefanos (Greece): (19:17) but we have some questions about whats saved and where
+Stefanos (Greece): (19:17) so we preparing an email for Stefan..
+Stefanos (Greece): (19:18) so in the end of this week we gonna have some forms for testing..
+Stefanos (Greece): (19:18) thats all
+Pedro (PT): (19:18) ok thank you all
+
+
+
+
+
+
+Pedro (PT): (19:18) ok thank you all
+Pedro (PT): (19:18) now to the pourpose of this meeting
+Pedro (PT): (19:18) as has been sayed in the emails and now by daniel
+Pedro (PT): (19:18) we think its time to start putting the pieces together
+Pedro (PT): (19:19) special to get a new view on the DB and try to finalise it
+Pedro (PT): (19:20) now about deploying a product in a version controler, git in this case, daniel has more experience so i will pass the word to him
+Daniel (PT): (19:21) ok everyone read what I wrote earlier?
+Nathan: (19:22) uhu
+Arne L (Germany): (19:22) yes
+aggeliki: (19:22) y
+Daniel (PT): (19:22) does anyone havy any questions, or doesnt understand the points
+Stefanos (Greece): (19:22) yes
+Daniel (PT): (19:23) any git haters here?
+Nathan: (19:23) i guess ina
+Nathan: (19:23) but since she isnt here :p
+Arne L (Germany): (19:23) you mean, i put my local documentroot on the git folder, and before i start i make a pull and after rthe work is done i will comit??
+Daniel (PT): (19:23) yah I guess we'll have to make the best without bulgaria
+Daniel (PT): (19:24) ok I'm talking about everyone setting up their xAMP server in their PC's
+Arne L (Germany): (19:24) true
+Daniel (PT): (19:25) yes arne but let me explain
+Daniel (PT): (19:25) the repository... the directory called erasmusline will contain our combined efforts
+Daniel (PT): (19:26) a working demo for us to see and test
+Daniel (PT): (19:26) and guves us a bit of motivation
+Daniel (PT): (19:26) it would be nice to go to http://localhost/mutworange/erasmusline/ and see something wouldnt it?
+Daniel (PT): (19:27) so i would suggest
+Daniel (PT): (19:27) (for those who havent done that)
+Arne L (Germany): (19:28) i have no problem with that
+Daniel (PT): (19:28) 1. setting up your Apache, Mysql
+Arne L (Germany): (19:28) i have no prob with that
+Arne L (Germany): (19:28) wow...my connection is so slow
+Daniel (PT): (19:28) goto your htdocs, document root or whatever and clone the git repository and work from there
+Daniel (PT): (19:29) in the erasmusline directory
+Daniel (PT): (19:29) since belgium are the Plonk guys i suggest they start by putting a working skeleton in that directory
+Daniel (PT): (19:30) so when the rest of the team pulls the changes they can start working in that folder
+Nathan: (19:30) ok, no problem
+Nathan: (19:30) first thing tomorrow morning
+Pedro (PT): (19:30) ok so every1 present beleive they can start doing this this week?
+Daniel (PT): (19:30) INFOX can be integrated there, IN, OUT, etc
+Nathan: (19:30) so it will be online tomorrow evening, since git doesn't work @ our schoo
+Nathan: (19:31) *school
+Daniel (PT): (19:31) CCONFIG also
+Pedro (PT): (19:31) greece any questions?
+Stefanos (Greece): (19:31) nop
+aggeliki: (19:31) we will have,by tomorrow 
+aggeliki: (19:31) :)
+Daniel (PT): (19:31) because we need the config module to handle permissions or did I misenterpret it?
+Pedro (PT): (19:31) ok then its decided
+Daniel (PT): (19:32) that erasmusline folder can also have
+Pedro (PT): (19:32) now this will almost shurely arrise DB design questions
+Daniel (PT): (19:32) the current erasmusline DB sql script
+Pedro (PT): (19:32) so with actualy implementing and such alot more questions realisations etc will arrise
+Daniel (PT): (19:33) ok
+Pedro (PT): (19:33) so for the next meeting we will discuss the necessety of creating some simple DB design meeting
+Pedro (PT): (19:33) 2-3 per week
+Pedro (PT): (19:34) in which 1 is using the whiteboard and changing the DB given the requests
+Pedro (PT): (19:34) because from this point on any changes need to be done in group
+Pedro (PT): (19:34) so it doesnt afect some1 blindly
+Daniel (PT): (19:34) besides plonk we need the HP layout and styles implemented to start being used by everyone
+
+
+
+
+
+
+
+Pedro (PT): (19:36) has i sayd in the first meeting after the rootation finishes portugal can take the coordenator part from there on
+Pedro (PT): (19:37) so lets make a pool in who wants to keep the rotation or keep it on portugal from now on
+Pedro (PT): (19:37) yes for rotation no for portugal
+Arne R.: (19:37) i'm fine with the rotation
+Arne L (Germany): (19:38) we can rotate between pedro and daniel ;-)
+Nathan: (19:38) :D lol
+Arne L (Germany): (19:38) but i dont care...
+Pedro (PT): (19:38) we have no problem with that
+Nathan: (19:38) i vote portugal :p
+Daniel (PT): (19:38) oh you're so sweet
+Pedro (PT): (19:38) jsut making the pool because some may want to keep it
+Pedro (PT): (19:39) its not our decision :)
+Pedro (PT): (19:39) well greece?
+aggeliki: (19:39) stefanos?
+aggeliki: (19:39) do u wan?
+aggeliki: (19:39) or i do it, ok we will ttake it
+Stefanos (Greece): (19:40) no
+Stefanos (Greece): (19:40) :D
+Stefanos (Greece): (19:40) ok
+Pedro (PT): (19:40) hum got abit lost
+Pedro (PT): (19:40) your saying you will take the coordenator job?
+aggeliki: (19:41) yes
+Pedro (PT): (19:41) i wasn't directly asking that but ok if we keep the rotation we have volunteers already
+aggeliki: (19:42) i thought u asked us
+Pedro (PT): (19:42) so it seems aggeliki stefanos reimer - rotation
+Nathan: (19:42) :D
+Stefanos (Greece): (19:42) haha
+Pedro (PT): (19:42) nathan lipfert - portugal
+Pedro (PT): (19:42) i was asking your opinion pool wise
+Pedro (PT): (19:42) hehe
+Pedro (PT): (19:42) you can still rethink
+aggeliki: (19:43) is there any other volunteer???
+Pedro (PT): (19:43) if rootation is kept it will stay the same, a rotation so..
+Pedro (PT): (19:43) and we are a volunteer so to speak
+Daniel (PT): (19:44) if rotation continues you have to prepares your meetings better...
+Arne R.: (19:44) let's keep the rotation like last round
+Arne R.: (19:44) next meeting, I'll do the coordinators job
+Arne L (Germany): (19:44) come on guys...keep it serious. if someone would do the job he should do it...so everythink is in one hand and we got a bit structure in it
+Pedro (PT): (19:44) exactly
+Pedro (PT): (19:44) i was in favor of the first round
+Pedro (PT): (19:45) because i believe every1 should have the oportunity of having the experience
+Pedro (PT): (19:45) now that thats done
+Pedro (PT): (19:45) we don't mind planning all the meetings from here on
+Daniel (PT): (19:45) i'm a big fan of structure
+Pedro (PT): (19:46) so on a serius note its realy a matter if you want to coordenate or not
+Pedro (PT): (19:46) because you don't lose anything if you don't
+Pedro (PT): (19:46) so whos in favor of keeping the rootation?
+Pedro (PT): (19:47) this is the last thing to close todays meeting
+Daniel (PT): (19:47) just raise your hand...
+Pedro (PT): (19:47) we are reaching our 45min mark
+Pedro (PT): (19:48) make me proud and let me do a good time guess just once :P
+Nathan: (19:48) everyone's gone?
+Stefanos (Greece): (19:48) na
+Stefanos (Greece): (19:48) :P
+Nathan: (19:48) :p
+Arne R.: (19:49) rotation
+Pedro (PT): (19:49) then yay or nay liek reimer
+Arne R.: (19:49) i'll do it netxt week
+Pedro (PT): (19:49) 1 for rotation
+Nathan: (19:50) portugal! 
+Pedro (PT): (19:50) 1-1
+Arne L (Germany): (19:50) ok...then do the ratation. i dont care. we are talking now for 10 min on that
+Pedro (PT): (19:50) jsut 2 votes from greece missing
+Pedro (PT): (19:50) and we can end this 
+Stefanos (Greece): (19:50) port
+Stefanos (Greece): (19:50) :D
+aggeliki: (19:50) keep it the way it was 
+Pedro (PT): (19:51) so rotation wins
+Pedro (PT): (19:51) and as requested
+Nathan: (19:51) woho, lost :p
+Pedro (PT): (19:51) germany can be the next coordenator
+Nathan: (19:51) ok
+aggeliki: (19:51) ok
+Arne L (Germany): (19:51) ok...see you next week
+Pedro (PT): (19:51) meeting adjurned :) have a rest of a nice day
+Arne R.: (19:51) ok, i'll send you a timetable by the end of the week
+Daniel (PT): (19:52) ok thank you Arne
+Nathan: (19:52) cv
+Daniel (PT): (19:52) good job every1
+Daniel (PT): (19:52) now back to work!
+aggeliki: (19:52) u2
+Nathan: (19:52) we will put the website on git tomorrow :)
+Daniel (PT): (19:52) thank you nathan
+Stefanos (Greece): (19:53) bb ev1
+
+
+
+
+.....
+
+Extra
+
+....
+
+
+
+
+Daniel (PT): (19:53) and we need the HP layoutsand css too if you have them
+Nathan: (19:54) that's for germany?
+Daniel (PT): (19:54) germany has the layout right?
+Nathan: (19:54) i guess
+Daniel (PT): (19:54) then after you put plonk then germany puts the html
+Arne R.: (19:54) yep
+Daniel (PT): (19:55) when you do that Nathan send everyone an email
+Arne R.: (19:55) we have an appointment tomorrow to finish the layout
+Arne R.: (19:55) after plonk is set up, we add the design
+Daniel (PT): (19:56) if anyone is interested you can add this rss to your feed reader: http://mutworange.git.sourceforge.net/git/gitweb.cgi?p=mutworange/mutworange;a=rss
+Daniel (PT): (19:57) it alerts you anytime someone pushed an update to the git repo
+Nathan: (19:57) ok
+Nathan: (19:57) ok, i'll mail everyone
+Nathan: (19:57) it will be tomorrow evening
+Daniel (PT): (19:57) ok thank you Nathan
+Daniel (PT): (19:58) that's all from me
+Daniel (PT): (19:58) bye
