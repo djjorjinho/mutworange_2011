@@ -1,0 +1,21 @@
+= Meeting Report =
+
+Date: 2011-04-25
+Start Hour: 18:00 GMT
+End Hour: 18:50 GMT
+
+== Personnel ==
+Coordinator: Pedro Ferreira
+Transcriber: Daniel Lopes
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche,  Aggeliki Katsiampouri, Mountrakis Stefanos,
+
+Excused: Stéphane Polet
+Absent: Thordur Bjornsson, Gudmundur Hallgrimsson,Ina Ivanova, Zvezdomir Tsvyatkov
+
+== Report ==
+
+1. Everyone reported their tasks
+2. Integration will start tomorrow, with Belgium putting a working Plonk instalation in the app directory
+3. Germany will prepare next week's meeting
