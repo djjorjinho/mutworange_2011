@@ -10,11 +10,22 @@ http://www.apachefriends.org/en/xampp.html
 Navicat MySQL Manager Lite
 http://www.navicat.com/en/download/download.html
 
+Eclipse
+http://www.eclipse.org
+
+Cygwin
+http://cygwin.com/install.html
+
 NetBeans IDE
 http://netbeans.org/downloads/index.html
 
 Komodo Edit
 http://www.activestate.com/komodo-edit
+
+TortoiseGit
+http://code.google.com/p/tortoisegit/
+
+
 
 
 
