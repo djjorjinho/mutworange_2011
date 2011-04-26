@@ -105,7 +105,7 @@ class DB{
 		$this->queryCount += 1;
 		$this->logQuery($query, $start);
 		if (!$result) {
-		    throw new Exception('Could not run query: ' .
+		    throw new Exception("Could not run query:\n".$query.
 					mysql_error()); 
 		}
 		return $result;
@@ -266,10 +266,12 @@ class DB{
 	 * @return array the table row assoc. array
 	 */
 	function getRandom($table,$where="1=1"){
+
 		if(empty($table))
 			throw new Exception("no table to fetch random row!");
-		return $this->getOne(
-				"select * from $table where ${where} order by rand() limit 1");	
+		
+		return $this->getOne("select * from $table ".
+					"where ${where} order by rand() limit 1");
 	}
 	
 	/**

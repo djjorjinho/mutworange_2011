@@ -1,2 +1,3 @@
-area_code;degree_code;course_code
-engineer;informatic;soft_eng
+area_code;degree_code;course_code;description
+engineer;informatic;soft_eng;Software Engineer
+engineer;electro;computer_eng;Electrotech Engineer

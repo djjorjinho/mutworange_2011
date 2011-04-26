@@ -1,4 +1,5 @@
-country_code;city_code;institution_code;faculty_code;department_code
-pt;porto;ipp;isep;dei
-pt;porto;ipp;isep;dee
-pt;porto;ipp;isep;defi
+country_code;institution_code;description
+pt;isep;ISEP
+de;fkl;Fachhochschule Kiel
+en;gun;Glasgow University
+be;gent;Gent University

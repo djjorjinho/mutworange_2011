@@ -71,17 +71,12 @@ DROP TABLE IF EXISTS `p8statsdw`.`dim_institution` ;
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_institution` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `country_code` VARCHAR(10) NULL ,
-  `city_code` VARCHAR(10) NULL ,
   `institution_code` VARCHAR(10) NULL ,
-  `faculty_code` VARCHAR(10) NULL ,
-  `department_code` VARCHAR(10) NULL ,
+  `description` VARCHAR(30) NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `idx_institution` USING BTREE (`id` ASC, `country_code` DESC, `city_code` DESC, `institution_code` DESC, `faculty_code` DESC, `department_code` DESC) ,
+  INDEX `idx_institution` USING BTREE (`id` DESC, `country_code` DESC, `institution_code` DESC, `description` DESC) ,
   INDEX `idx_institution_country` (`country_code` ASC) ,
-  INDEX `idx_institution_city` (`city_code` ASC) ,
-  INDEX `idx_institution_institution` (`institution_code` ASC) ,
-  INDEX `idx_institution_faculty` (`faculty_code` ASC) ,
-  INDEX `idx_institution_department` (`department_code` ASC) )
+  INDEX `idx_institution_institution` (`institution_code` ASC, `description` ASC) )
 ENGINE = MyISAM
 PACK_KEYS = Default;
 
@@ -92,12 +87,13 @@ PACK_KEYS = Default;
 DROP TABLE IF EXISTS `p8statsdw`.`dim_study` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_study` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `area_code` VARCHAR(10) NULL ,
   `degree_code` VARCHAR(10) NULL ,
   `course_code` VARCHAR(10) NULL ,
+  `description` VARCHAR(30) NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `idx_study` (`id` ASC, `area_code` ASC, `degree_code` ASC, `course_code` ASC) ,
+  INDEX `idx_study` (`id` ASC, `area_code` ASC, `degree_code` ASC, `course_code` ASC, `description` ASC) ,
   INDEX `idx_study_area` (`area_code` ASC) ,
   INDEX `idx_study_degree` (`degree_code` ASC) ,
   INDEX `idx_study_course` (`course_code` ASC) )
