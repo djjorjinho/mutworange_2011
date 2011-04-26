@@ -1,0 +1,4 @@
+About the website:
+- You should be good to go, but during this week we will make sure everything works as it should work
+- for germany, you can put you layout in the core/css folder but please don't delete the css files that are included. They are used for styling the forms and styling some jQuery stuff
+- If there any changes made to Plonk please report them. If there are any question regarding Plonk, please ask.
