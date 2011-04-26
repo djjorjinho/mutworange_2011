@@ -1,0 +1,108 @@
+@CHARSET "UTF-8";
+/******* GENERAL RESET *******/
+
+/*body{
+	background: #fff;
+	line-height:14px;
+	font-size: 12px;
+	font-family: Arial,  Verdana, Helvetica, sans-serif;
+	margin:0pt;
+	cursor:default;
+
+}*/
+
+
+.mainDiv{
+    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-size:12px;
+    border:solid 2px #b7ddf2;
+    background:#ebf4fb;
+    width:850px;
+    margin-left: 20%;
+
+
+
+}
+
+
+
+
+.TRdiv input{
+    font-size:12px;
+    border:solid 1px #aacfe4;
+
+
+}
+.lol {
+    background-color: #fdd7d7;
+
+
+}
+
+
+/******* Transip Records *******/
+div.curFocus {
+    background: #a9ef96;
+}
+
+
+label {
+    width: 14em;
+    display: block;
+    float: left;
+    padding-top: 4px;
+    vertical-align: middle;
+
+}
+.TRdiv {
+    display: table;
+    min-width:1px;
+    padding: 0.2em;
+    position: relative;
+
+}
+
+
+.req {
+    margin-left: 2px;
+    color: #ee0101;
+    font-size:16px;
+
+}
+
+.minHead {
+    
+    font-size: medium;
+    
+}
+
+.leftAlDiv {
+    width:425px;
+
+    position: relative;
+    float: left;
+
+
+}
+
+.rightAlDiv {
+    width:425px;
+    position: relative;
+
+    float: right;
+
+
+
+
+}
+.alCenterDiv {
+    width:100%;
+    position: relative;
+    float: left;
+
+
+}
+
+
+/* button  CSS*/
+
