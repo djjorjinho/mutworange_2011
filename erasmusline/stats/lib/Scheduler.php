@@ -10,17 +10,18 @@ require_once("lib/Thread.php");
 class Scheduler {
 	private $thread;
 	public $tasks;
-	private $callback_obj;
+	private $obj_registry;
 	
 	/**
 	 * 
-	 * Takes a task list and a callback object on which to run the tasks
-	 * @param array $tasks
-	 * @param class $callback_obj
+	 * Sets-up a task list and a list of referenced objects in a registry map
+	 * to callback upon
+	 * @param array $tasks - array with <ScheduledTask> objects
+	 * @param array $obj_registry - assoc. array that maps classname to obj ref
 	 */
-	function __construct($tasks,$callback_obj){
+	function __construct($tasks,$obj_registry){
 		$this->tasks = $tasks;
-		$this->callback_obj = $callback_obj;
+		$this->obj_registry = $obj_registry;
 		
 		$this->thread = new Thread( "process", $this );
 		$this->thread->start();
@@ -30,13 +31,14 @@ class Scheduler {
 		
 		while(true){
 			
-			$obj = $this->callback_obj;
 			$tasks = $this->tasks;
 			
 			foreach($tasks as $task){
 				$time = time();
 				#error_log($task->timeout.":::".$time  );
 				if($task->timeout <= $time){
+					
+					$obj = $this->obj_registry[$task->record['class']];
 					
 					$call = array($obj,$task->record['method']);
 					call_user_func_array( $call ,array());
@@ -78,7 +80,14 @@ class Scheduler {
 class ScheduledTask{
 	
 	public $record;
+	
+	/**
+	 * 
+	 * Timeout which the task will be executed
+	 * @var int epoch time
+	 */
 	public $timeout;
+	
 	public $runs;
 	
 	function __construct($record){
@@ -95,6 +104,10 @@ class ScheduledTask{
 		
 	}
 	
+	/**
+	 * 
+	 * Calculates the next time the task will be run.
+	 */
 	function nextTimeout(){
 		$rec = $this->record;
 		
