@@ -1,6 +1,5 @@
 {
-	"_comment" : "from this JSON message we can get everything to be used by: 
-					deamons, the database, the EIS plonk module",
+	"_comment" : "from this JSON message we can get everything to be used by: deamons, the database, the EIS plonk module",
 	"jsonrpc" : "2.0",
 	"method" : "query",
 	"params" : {
@@ -11,8 +10,8 @@
 		"columns" : [ "dim_gender.code" , "measure.max" ],
 		"rows" : [ "dim_institution.country_code" ],
 		"filters" : 
-				{ "dim_institution.country_code" : ["pt","be","en"],
-			 		"dim_date.semester" : "2"},
+				{ "dim_institution.country_code.eq" : ["pt","be","en"],
+			 		"dim_date.semester.eq" : "2"},
 		"highlight" : [
 				{ "dim_gender.code.eq" : "2011"}
 			]
