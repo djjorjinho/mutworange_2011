@@ -1,0 +1,12 @@
+/**
+ * IE6 Conditional comments
+ * Stylesheet for Todolist
+ 
+ * @media	screen, projection
+ * @author	Bram(us) Van Damme <bramus.vandamme@kahosl.be>
+ */
+
+/* clearfix-fix */
+.clearfix {
+	display: inline-block;
+}

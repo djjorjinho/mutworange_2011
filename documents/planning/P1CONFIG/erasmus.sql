@@ -20,7 +20,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`country` (
   `Code` CHAR(3) NOT NULL DEFAULT '' ,
   `Name` CHAR(52) NOT NULL DEFAULT '' ,
   PRIMARY KEY (`Code`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -51,7 +51,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`institutions` (
     REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -97,7 +97,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`users` (
     REFERENCES `erasmusline`.`institutions` (`instId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -132,7 +132,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`owner` (
     REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -174,7 +174,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`residence` (
     REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -206,7 +206,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`leasing` (
     REFERENCES `erasmusline`.`residence` (`residenceId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -225,7 +225,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`education` (
   `educationId` INT NOT NULL AUTO_INCREMENT ,
   `educationName` VARCHAR(200) NULL ,
   PRIMARY KEY (`educationId`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -238,7 +238,7 @@ DROP TABLE IF EXISTS `erasmusline`.`educationPerInstitute` ;
 
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `erasmusline`.`educationPerInstitute` (
-  `educationPerInstId` INT NOT NULL ,
+  `educationPerInstId` INT NOT NULL AUTO_INCREMENT ,
   `institutionId` INT NOT NULL ,
   `studyId` INT NOT NULL ,
   `Description` TEXT NULL ,
@@ -253,7 +253,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`educationPerInstitute` (
     REFERENCES `erasmusline`.`education` (`educationId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -273,15 +273,15 @@ DROP TABLE IF EXISTS `erasmusline`.`erasmusStudent` ;
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `erasmusline`.`erasmusStudent` (
   `studentId` VARCHAR(45) NOT NULL ,
-  `homeCoordinatorId` INT NOT NULL ,
-  `hostCoordinatorId` INT NOT NULL ,
+  `homeCoordinatorId` VARCHAR(45) NOT NULL ,
+  `hostCoordinatorId` VARCHAR(45) NOT NULL ,
   `homeInstitutionId` INT NOT NULL ,
   `hostInstitutionId` INT NOT NULL ,
   `startDate` DATE NOT NULL ,
   `endDate` DATE NOT NULL ,
+  `lodgingId` INT NOT NULL ,
   `educationPerInstId` INT NOT NULL ,
   `statusOfErasmus` VARCHAR(45) NOT NULL ,
-  `lodgingId` INT NOT NULL ,
   `traineeOrStudy` INT NOT NULL ,
   `uploadedWhat` INT NULL ,
   `ectsCredits` INT NOT NULL ,
@@ -323,7 +323,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`erasmusStudent` (
     REFERENCES `erasmusline`.`leasing` (`rentalId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -369,7 +369,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`coursesPerEducPerInst` (
     REFERENCES `erasmusline`.`educationPerInstitute` (`educationPerInstId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -401,7 +401,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`grades` (
     REFERENCES `erasmusline`.`erasmusStudent` (`studentId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -434,7 +434,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`studentEvents` (
     REFERENCES `erasmusline`.`erasmusStudent` (`studentId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -467,7 +467,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`companies` (
     REFERENCES `erasmusline`.`country` (`Code` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
@@ -483,7 +483,7 @@ DROP TABLE IF EXISTS `erasmusline`.`forms` ;
 
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `erasmusline`.`forms` (
-  `formId` INT NOT NULL ,
+  `formId` INT NOT NULL AUTO_INCREMENT ,
   `type` VARCHAR(45) NOT NULL ,
   `date` DATE NOT NULL ,
   `content` TEXT NOT NULL ,
@@ -494,7 +494,7 @@ CREATE  TABLE IF NOT EXISTS `erasmusline`.`forms` (
     REFERENCES `erasmusline`.`erasmusStudent` (`studentId` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
