@@ -29,7 +29,10 @@ class SchedulerTest extends PHPUnit_TestCase {
 		
 		$task = new ScheduledTask($row);
 		
-		$sched = new Scheduler(array($task),$this);
+		$sched = new Scheduler(
+				array($task),
+				array( get_class($this) => $this));
+				
 		sleep(65);
 		$sched->shutdown();
 	}

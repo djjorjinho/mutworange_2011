@@ -3,7 +3,7 @@ require_once("lib/System/Daemon.php");
 require_once("lib/DB.php");
 require_once("lib/Server.php");
 require_once("lib/JsonRpcDispatcher.php");
-
+require_once("lib/Scheduler.php");
 /**
  * Deamon that communicates with Erasmusline and delivers summary information
  * to EIS interface.
@@ -15,6 +15,7 @@ class StatsdMaster extends Server{
 	private $db;
 	private $config;
 	private $dispatcher;
+	private $scheduler;
 	
 	function __construct($options){
 		
@@ -27,6 +28,10 @@ class StatsdMaster extends Server{
 		}
 		
 		$this->dispatcher = new JsonRpcDispatcher($this);
+		
+		$this->scheduler = new Scheduler(
+						array(),
+						array( get_class($this) => $this ));
 		
 		parent::__construct($options); # leave this for last
 	}

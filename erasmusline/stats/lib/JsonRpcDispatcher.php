@@ -1,13 +1,32 @@
 <?php
 require_once("lib/System/Daemon.php");
+/**
+ * 
+ * JSON-RPC message dispatcher class that parses the method and parameters
+ * and calls back to a predefined object
+ * 
+ * @author daniel
+ *
+ */
 class JsonRpcDispatcher{
 	
 	private $callback_obj;
 	
+	/**
+	 * 
+	 * Constructor sets the callback object
+	 * @param object object to issue callbacks
+	 */
 	function __construct($obj){
 		$this->callback_obj = $obj;
 	}
 	
+	/**
+	 * 
+	 * De-Serializes the rpc message and issues a callback to the 
+	 * defined object
+	 * @param str string reference with the JSON-RPC message
+	 */
 	function dispatch(&$msg){
 		
 		try{
@@ -46,6 +65,14 @@ class JsonRpcDispatcher{
 		
 	}
 	
+	/**
+	 * 
+	 * Generates a JSON-RPC error message
+	 * @param string error message
+	 * @param string error code
+	 * @param int id number to match incomming json-rpc message (optional)
+	 * @param string exception message if you catch it
+	 */
 	function jsonError($error,$code=0,$id=0,$exception=''){
 		$obj = array(
 			jsonrpc => '2.0',
@@ -60,6 +87,12 @@ class JsonRpcDispatcher{
 		return json_encode($obj);
 	}
 	
+	/**
+	 * 
+	 * Generates a JSON-RPC result message
+	 * @param mixed result variable, can be array, string, etc.
+	 * @param int id number to match incomming json-rpc message (optional)
+	 */
 	function jsonResult($result,$id=0){
 		
 		$obj = array(

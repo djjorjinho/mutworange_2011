@@ -1,10 +1,23 @@
 <?php
 require_once("lib/Thread.php");
+/**
+ * 
+ * Runs object methods after a defined timeout.
+ * The loop runs in a separate thread, so be carefull with it ok?
+ * @author daniel
+ *
+ */
 class Scheduler {
 	private $thread;
 	public $tasks;
 	private $callback_obj;
 	
+	/**
+	 * 
+	 * Takes a task list and a callback object on which to run the tasks
+	 * @param array $tasks
+	 * @param class $callback_obj
+	 */
 	function __construct($tasks,$callback_obj){
 		$this->tasks = $tasks;
 		$this->callback_obj = $callback_obj;
@@ -55,6 +68,13 @@ class Scheduler {
 	}
 }
 
+/**
+ * 
+ * Task wrapper class that indicates the method, the next execution time 
+ * and the number of executions
+ * @author daniel
+ *
+ */
 class ScheduledTask{
 	
 	public $record;

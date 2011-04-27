@@ -1,5 +1,11 @@
 <?php
 require_once "pqp/classes/PhpQuickProfiler.php";
+/**
+ * 
+ * DB abstraction class 
+ * @author daniel
+ *
+ */
 class DB{
 	
 	private static $db;
@@ -95,10 +101,20 @@ class DB{
 		return null;
 	}
 	
+	/**
+	 * 
+	 * Used for quick queries with no need to be tracked
+	 * @param str sql query string
+	 */
 	function pureQuery($query){
 		return mysql_query($query);
 	}
 	
+	/**
+	 * 
+	 * Main query method. Logs and tracks queries for profiler. 
+	 * @param str sql query string
+	 */
 	function query($query){
 		$start = $this->getTime();
 		$result = mysql_query($query);
@@ -111,10 +127,21 @@ class DB{
 		return $result;
 	}
 	
+	/**
+	 * 
+	 * Calls query() and imediately returns the resultset
+	 * @param str sql query string
+	 */
 	function execute($query){
 		return $this->query($query);
 	}
 	
+	/**
+	 * 
+	 * Executes a query and returns the first result
+	 * @param str sql query
+	 * @return array associative array with the db row values
+	 */
 	function getOne($query){
 		$result = $this->query($query);
 		if (mysql_num_rows($result) > 0) {
@@ -124,6 +151,12 @@ class DB{
 		return null;
 	}
 	
+	/**
+	 * 
+	 * Takes a db key (format: {table}.{id}) and returns the record
+	 * @param str $dbkey
+	 * @return array|null row array or null value
+	 */
 	function getObj($dbkey){
 		list($table,$id) = preg_split("/\./",$dbkey);
 		
@@ -144,7 +177,7 @@ class DB{
 		$result = $this->query($query);
 		if (mysql_num_rows($result) > 0) {
 		    while($row = mysql_fetch_assoc($result)){
-			array_push($rset,$row);
+				array_push($rset,$row);
 		    }
 		    return $rset;
 		}
@@ -191,6 +224,13 @@ class DB{
 		return mysql_insert_id();
 	}
 	
+	/**
+	 * 
+	 * Takes an array with the table, id|code and 
+	 * the other values to be updated
+	 * @param array associative array containing the the data to be updated
+	 * @return mixed query result
+	 */
 	function update($obj){
 		if(!is_array($obj)) throw new Exception("Not a valid object!");
 		list($table,$id) = preg_split("/\./",$obj['dbkey']);

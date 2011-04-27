@@ -1,0 +1,5 @@
+{
+	"_comment" : "this JSON object contains the rules to the EIS OLAP
+		 query system, for example, what measures does a dimension permit, etc."
+
+}
