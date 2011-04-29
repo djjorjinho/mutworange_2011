@@ -1,5 +1,88 @@
 {
-	"_comment" : "this JSON object contains the rules to the EIS OLAP
-		 query system, for example, what measures does a dimension permit, etc."
-
+	"_comment" : "this JSON object contains the rules to the EIS OLAP",
+	"__comment" : "query system, for example, what measures does a dimension permit, etc.",
+	
+	"cubes" : [
+		{ "id" : "O1",
+			"table" : "fact_efficacy", "description" : "Efficacy",
+			"measures" : [
+				{"id" : "M1", "name" : "Applications", 
+					"column" : "total_applications", "aggregator" : "sum"},
+				{"id" : "M3", "name" : "Applications (Homologous)", 
+					"column" : "last_applications", "aggregator" : "sum"},
+				{"id" : "M4", "name" : "Applications (Relative)", 
+					"column" : "last_applications", "aggregator" : "perc"},
+				{"id" : "M5", "name" : "Avg. Applications", 
+					"column" : "total_applications", "aggregator" : "avg"},
+				{"id" : "M6", "name" : "Max. Applications", 
+					"column" : "total_applications", "aggregator" : "max"},
+				{"id" : "M7", "name" : "Min. Applications", 
+					"column" : "total_applications", "aggregator" : "min"},
+				{"id" : "M5", "name" : "Avg. ECTS", 
+					"column" : "avg_ects", "aggregator" : "avg"},
+				{"id" : "M6", "name" : "Max. ECTS", 
+					"column" : "max_ects", "aggregator" : "max"},
+				{"id" : "M7", "name" : "Min. ECTS", 
+					"column" : "min_ects", "aggregator" : "min"}],
+			"dimensions" : ["D1","D2","D3","D4","D5","D6"]
+		},
+		{ "id" : "O2",
+			"table" : "fact_efficiency","description" : "Efficiency",
+			"measures" : [
+				{"id" : "M1", "name" : "Student Participation", 
+					"column" : "val_participation", "aggregator" : "sum"},
+				{"id" : "M4", "name" : "Student Participation", 
+					"column" : "val_participation", "aggregator" : "sum"},
+				{"id" : "M5", "name" : "Avg. Response Days", 
+					"column" : "avg_response_days", "aggregator" : "avg"},
+				{"id" : "M6", "name" : "Max. Response Days", 
+					"column" : "max_response_days", "aggregator" : "max"},
+				{"id" : "M7", "name" : "Min. Response Days", 
+					"column" : "min_response_days", "aggregator" : "min"},
+				],
+			"dimensions" : ["D1","D2","D3","D4","D5","D6","D7"]
+		}
+	],
+	
+	"dimensions" : [
+		{"id" : "D1", "name" : "Gender", "table" : "dim_gender", 
+			"pk" : "dim_gender_id", "hasAll" : true, "measure" : "M1",
+			"levels" : [
+				{"name" : "Gender", "column" : "code"}]
+		},
+		{"id" : "D2", "name" : "Lodging", "table" : "dim_lodging", 
+			"pk" : "dim_lodging_id", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Residence Type", "column" : "code"}]
+		},
+		{"id" : "D3", "name" : "Mobility", "table" : "dim_mobility", 
+			"pk" : "dim_mobility_id", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Mobility Type", "column" : "code"}]
+		},
+		{"id" : "D4", "name" : "Academic Date", "table" : "dim_date", 
+			"pk" : "dim_date_id", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Year", "column" : "year"},
+				{"name" : "Semester", "column" : "semester"}]
+		},
+		{"id" : "D5", "name" : "Institution", "table" : "dim_institution", 
+			"pk" : "dim_institution_id", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Country", "column" : "country_code"},
+				{"name" : "Institution", "column" : "institution_code"}]
+		},
+		{"id" : "D6", "name" : "Study", "table" : "dim_study", 
+			"pk" : "dim_study_id", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Area", "column" : "area_code"},
+				{"name" : "Degree", "column" : "degree_code"},
+				{"name" : "Course", "column" : "course_code"}]
+		},
+		{"id" : "D7", "name" : "Process", "table" : "dim_phase", 
+			"pk" : "dim_phase_id", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Phase", "column" : "code"}]
+		}
+	]
 }

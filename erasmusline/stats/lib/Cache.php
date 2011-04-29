@@ -1,5 +1,12 @@
 <?php
 require_once("lib/TSample.php");
+
+/**
+ * 
+ * Keeps objects, arrays or other structures in memory to be fetched later.
+ * @author daniel
+ *
+ */
 class ObjectCache{
 	
 	private $cache;
@@ -62,4 +69,27 @@ class ObjectCache{
 	
 }
 
+/**
+ * 
+ * Object cache sigleton class.
+ * Just in case you need it. 
+ * @author daniel
+ *
+ */
+class ObjectCacheSingleton extends ObjectCache{
+	
+	private static $object_cache;
+	
+	private function __construct(){
+		parent::__construct();
+	}
+	
+	static public function getInstance(){
+		if(!isset(self::$object_cache)){
+			self::$object_cache = new ObjectCacheSingleton();
+		}
+		return self::$object_cache;
+	}
+	
+}
 ?>

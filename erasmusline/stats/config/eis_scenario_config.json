@@ -7,13 +7,13 @@
 		"user_id" : "123",
 		"scenario_name" : "query1",
 		"cube" : "fact_efficacy",
-		"columns" : [ "dim_gender.code" , "measure.max" ],
+		"columns" : [ "dim_gender.code" , "measure.M1" ],
 		"rows" : [ "dim_institution.country_code" ],
 		"filters" : 
 				{ "dim_institution.country_code.eq" : ["pt","be","en"],
 			 		"dim_date.semester.eq" : "2"},
 		"highlight" : [
-				{ "dim_gender.code.eq" : "2011"}
+				{ "measure.M1.gt" : "12"}
 			]
 	}
 }
