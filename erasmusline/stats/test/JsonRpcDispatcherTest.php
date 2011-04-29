@@ -3,7 +3,7 @@ $ipath = get_include_path();
 set_include_path($ipath.":".dirname(__FILE__)."/../");
 require_once 'PHPUnit.php';
 require_once 'lib/JsonRpcDispatcher.php';
-class JsonRpcDispatcherTest extends PHPUnit_TestCase {
+class JsonRpcDispatcherTest extends PHPUnit_TestCase implements JsonRpcI{
 	
 	var $dispatcher;
 	
@@ -54,6 +54,15 @@ JSON;
 		unset($this->dispatcher);
 	}
 	
+// allowed methods by the JsonRpcDispatcher object
+    function rpcMethods(){
+    	
+    	$methods = array(
+    		'dummy' => true
+    	);
+    	
+    	return $methods;
+    }
 }
  
 $suite = new PHPUnit_TestSuite('JsonRpcDispatcherTest');

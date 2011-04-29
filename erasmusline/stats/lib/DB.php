@@ -160,9 +160,7 @@ class DB{
 	function getObj($dbkey){
 		list($table,$id) = preg_split("/\./",$dbkey);
 		
-		$tinfo = $this->tableInfo($table);
-		$field = array_key_exists('id',$tinfo) ? 'id' : 'code';
-		$sql = "SELECT * FROM $table WHERE $field = '$id'";
+		$sql = "SELECT * FROM $table WHERE ${table}_id = '$id'";
 		
 		return $this->getOne($sql);
 	}
@@ -235,9 +233,8 @@ class DB{
 		if(!is_array($obj)) throw new Exception("Not a valid object!");
 		list($table,$id) = preg_split("/\./",$obj['dbkey']);
 		if(empty($table)) $table = $obj['table'];
-		if(empty($id)) $id = $obj['id'];
-		if(empty($id)) $id = $obj['code'];
-		
+		if(empty($id)) $id = $obj["${table}_id"];
+
 		if(empty($table) or empty($id))
 			throw new Exception("Can't update! check id or table");
 		
@@ -264,10 +261,7 @@ class DB{
 			}
 		}
 		
-		$tinfo = $this->tableInfo($table);
-		$field = array_key_exists('id',$tinfo) ? 'id' : 'code';
-		
-		$sql = "UPDATE $table SET $update WHERE $field = '$id'";
+		$sql = "UPDATE $table SET $update WHERE ${table}_id = '$id'";
 		
 		$result = $this->query($sql);
 		
@@ -284,15 +278,12 @@ class DB{
 		if(!is_array($obj)) throw new Exception("Not a valid object!");
 		list($table,$id) = preg_split("/\./",$obj['dbkey']);
 		if(empty($table)) $table = $obj['table'];
-		if(empty($id)) $id = $obj['id'];
-		if(empty($id)) $id = $obj['code'];
+		if(empty($id)) $id = $obj["${table}_id"];
 
 		if(empty($table) or empty($id))
 			throw new Exception("Can't update! check id or table");
 		
-		$tinfo = $this->tableInfo($table);
-		$field = array_key_exists('id',$tinfo) ? 'id' : 'code';
-		$sql = "DELETE FROM $table WHERE $field = '$id'";
+		$sql = "DELETE FROM $table WHERE ${table}_id = '$id'";
 		
 		$result = $this->query($sql);
 

@@ -25,7 +25,7 @@ class DBTest extends PHPUnit_TestCase {
 		$db = $this->db;
 		
 		$obj=array(
-		   code => 'O',
+		   dim_gender_id => 'O',
 		   description => 'Other'
 		   );
 		$id = $db->insert($obj,'dim_gender');
@@ -37,7 +37,7 @@ class DBTest extends PHPUnit_TestCase {
 		$db = $this->db;
 		$obj = $db->getObj("dim_gender.O");
 		
-		$this->assertTrue($obj['code'] == 'O');
+		$this->assertTrue($obj['dim_gender_id'] == 'O');
 	}
 	
 	function testUpdate(){

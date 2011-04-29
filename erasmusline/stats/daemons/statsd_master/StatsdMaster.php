@@ -10,8 +10,8 @@ require_once("lib/Scheduler.php");
  * Main daemon class 
  *
  */
-class StatsdMaster extends Server{
-    
+class StatsdMaster extends Server implements JsonRpcI{
+
 	private $db;
 	private $config;
 	private $dispatcher;
@@ -36,11 +36,8 @@ class StatsdMaster extends Server{
 		parent::__construct($options); # leave this for last
 	}
 	
-	function hello($params){
-		
-		System_Daemon::info("Params Message: ".print_r($params,true));
-		
-		return array(hello=>$params['name']);
+	function ping($params){
+		return array(ping=>$params['name']);
 	}
 	
     function onMessage(&$message,&$response,$event_loop){
@@ -50,6 +47,16 @@ class StatsdMaster extends Server{
 		//			"<body>Hello World</body>";
 		
 		$response = $this->dispatcher->dispatch($message);
+    }
+    
+    // allowed methods by the JsonRpcDispatcher object
+    function rpcMethods(){
+    	
+    	$methods = array(
+    		'ping' => true
+    	);
+    	
+    	return $methods;
     }
 }
 

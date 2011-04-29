@@ -32,7 +32,7 @@ class PopulateDB {
     }
     
 	function populate_lodging(){
-    	foreach (CsvToArray::open($this->dict_dir."/mobility.csv") as $R){
+    	foreach (CsvToArray::open($this->dict_dir."/lodging.csv") as $R){
             $this->db->insert($R,$this->dim_tables[1]);
         }
     }
@@ -167,34 +167,34 @@ class PopulateDB {
             
             // date
             $aux = $db->getRandom($dtb[4],"semester=${semester}");
-            $obj['dim_date_id'] = $aux['id'];
+            $obj['dim_date_id'] = $aux['dim_date_id'];
             
             // gender
             $aux = $db->getRandom($dtb[0]);
-            $obj['dim_gender_code'] = $aux['code'];
+            $obj['dim_gender_id'] = $aux['dim_gender_id'];
             
             // lodging
             $aux = $db->getRandom($dtb[1]);
-            $obj['dim_lodging_code'] = $aux['code'];
+            $obj['dim_lodging_id'] = $aux['dim_lodging_id'];
             
             // mobility
             $aux = $db->getRandom($dtb[2]);
-            $obj['dim_mobility_code'] = $aux['code'];
+            $obj['dim_mobility_id'] = $aux['dim_mobility_id'];
             
             // home institution
             $aux = $db->getRandom($dtb[3]);
-            $obj['dim_home_institution_id'] = $aux['id'];
+            $obj['dim_home_institution_id'] = $aux['dim_institution_id'];
             
             // host institution
             $aux2 = $db->getRandom($dtb[3]);
-            while($aux['id'] == $aux2['id']){
+            while($aux['dim_institution_id'] == $aux2['dim_institution_id']){
                 $aux2 = $db->getRandom($dtb[3]);
             }
-            $obj['dim_host_institution_id'] = $aux2['id'];
+            $obj['dim_host_institution_id'] = $aux2['dim_institution_id'];
             
 			// study
             $aux = $db->getRandom($dtb[6]);
-            $obj['dim_study_id'] = $aux['id'];
+            $obj['dim_study_id'] = $aux['dim_study_id'];
             
             // facts
             $obj['total_applications'] = $rnd->range(5,20);

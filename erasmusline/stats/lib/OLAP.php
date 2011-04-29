@@ -17,7 +17,7 @@ class OLAP{
 	
 	/**
 	 * 
-	 * Enter description here ...
+	 * Processes the scenario settings and generates an sql query
 	 * @param unknown_type $params
 	 * @return unknown_type var
 	 */

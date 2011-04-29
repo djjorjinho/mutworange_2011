@@ -11,6 +11,7 @@ require_once("lib/System/Daemon.php");
 class JsonRpcDispatcher{
 	
 	private $callback_obj;
+	private $allowed_methods;
 	
 	/**
 	 * 
@@ -19,6 +20,7 @@ class JsonRpcDispatcher{
 	 */
 	function __construct($obj){
 		$this->callback_obj = $obj;
+		$this->allowed_methods = $obj->rpcMethods();
 	}
 	
 	/**
@@ -41,7 +43,13 @@ class JsonRpcDispatcher{
 				return $this->jsonError("NOT_JSON_MSG");
 			}
 			
-			$runnable = array($this->callback_obj,$json['method']);
+			$method = $json['method'];
+			
+			if(!$this->allowed_methods[$method]){
+				return $this->jsonError("NO_METHOD",0,$json['id']);
+			}
+			
+			$runnable = array($this->callback_obj,$method);
 			if(is_callable($runnable)){
 				$result = call_user_func_array($runnable,array($json['params']));
 			}
@@ -52,10 +60,10 @@ class JsonRpcDispatcher{
 				# false fails, if you need to return false,
 				# wrap it in a json object
 				
-				return $this->jsonError("FUNC_NOT_AVAILABLE");
+				return $this->jsonError("FUNC_NOT_AVAILABLE",0,$json['id']);
 				
 			}else{
-				return $this->jsonResult($result);
+				return $this->jsonResult($result,$json['id']);
 			}
 			
 		}catch(Exception $e){
@@ -104,6 +112,10 @@ class JsonRpcDispatcher{
 		return json_encode($obj);
 	}
 	
+}
+
+interface JsonRpcI{
+	function rpcMethods();
 }
 
 ?>
