@@ -12,7 +12,7 @@ class StatsCall{
 	private static $id;
 	
 	function __construct(){
-		$daemon = "statsd_master";
+		$daemon = "statsd_slave";
 		$this->sock_path = "unix:///tmp/erasmusline/${daemon}/${daemon}.sock";
 		$this->socket = stream_socket_client($this->sock_path);
 		self::$id = 0;

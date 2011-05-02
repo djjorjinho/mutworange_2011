@@ -8,6 +8,7 @@ require_once("lib/TSample.php");
  *
  */
 class ObjectCache{
+	private static $object_cache;
 	
 	private $cache;
 	private $ttl;
@@ -67,29 +68,18 @@ class ObjectCache{
 		$this->cache = array();
 	}
 	
-}
-
-/**
- * 
- * Object cache sigleton class.
- * Just in case you need it. 
- * @author daniel
- *
- */
-class ObjectCacheSingleton extends ObjectCache{
-	
-	private static $object_cache;
-	
-	private function __construct(){
-		parent::__construct();
-	}
-	
+	/**
+	 * 
+	 * Use this function to generate a singleton object.
+	 * @return ObjectCache $obj
+	 */
 	static public function getInstance(){
 		if(!isset(self::$object_cache)){
-			self::$object_cache = new ObjectCacheSingleton();
+			self::$object_cache = new ObjectCache();
 		}
 		return self::$object_cache;
 	}
 	
 }
+
 ?>

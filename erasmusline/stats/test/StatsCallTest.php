@@ -29,6 +29,18 @@ class StastCallTest extends PHPUnit_TestCase {
 		$this->assertTrue($rsp['ping']=='world');
 	}
 	
+	function testRedirectCall(){
+		
+		$call = $this->call;
+		
+		$rsp = $call->call('ping',array('name'=>'world', "method" => "query",
+										"table" => 'fact_efficacy'));
+		
+		$this->kill();
+		
+		$this->assertTrue($rsp['ping']=='world');
+	}
+	
 	function kill(){
 		//exec(dirname(__FILE__)."/../bin/stop_daemons &> /dev/null &");
 	}

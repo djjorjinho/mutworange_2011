@@ -7,13 +7,14 @@ require_once("lib/Scheduler.php");
 require_once("lib/OLAP.php");
 require_once("lib/ETL.php");
 require_once("lib/Cache.php");
+require_once("lib/Client.php");
 /**
  * Deamon that communicates with Erasmusline and delivers summary information
  * to EIS interface.
  * Main daemon class 
  *
  */
-class StatsdMaster extends Server implements JsonRpcI{
+class StatsdSlave extends Server implements JsonRpcI{
 
 	private $db;
 	private $config;
@@ -59,6 +60,20 @@ class StatsdMaster extends Server implements JsonRpcI{
 	 * @param obj $event_loop
 	 */
     function onMessage(&$message,&$response,$event_loop){
+    	$config = $this->config;
+    	
+    	// redirect rules
+    	foreach($config['jsonrpc_redirect'] as $rule){
+    		if(preg_match($rule['regex'],$message) > 0){
+    			
+    			$client = new Client($config[$rule['connect_config']]);
+    			$client->sendMessage($message,$response);
+    			
+    			return;
+    		}
+    	}
+    	
+    	// no rules matched
 		$response = $this->dispatcher->dispatch($message);
     }
     

@@ -1,0 +1,31 @@
+{
+    "daemonconfig" : {
+		"appName" : "statsd_slave"
+	},
+    "serverconfig" : {
+		"sockFile" : "/tmp/erasmusline/statsd_slave/statsd_slave.sock",
+		"serverIP" : "0.0.0.0",
+		"serverPort" : "8119"
+    },
+    "master_serverconfig" : {
+    	"sockType" : "tcp",
+    	"sockFile" : "/tmp/erasmusline/statsd_master/statsd_master.sock",
+		"serverIP" : "0.0.0.0",
+		"serverPort" : "8118"
+    },
+    "dbconfig" : {
+		"host": "localhost",
+		"user":"erasmusline",
+		"password":"orange",
+		"port":"3306",
+		"schema":"p8statsdw",
+		"debug" : false
+    },
+    "etlconfig" : {
+    },
+    "olapconfig" : {
+    },
+    "jsonrpc_redirect" : [
+    	{"regex" : "/query.*fact_efficacy/", "connect_config" : "master_serverconfig"}
+    ]
+}

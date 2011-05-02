@@ -3,7 +3,6 @@
 		"appName" : "statsd_master"
 	},
     "serverconfig" : {
-		"sockType" : "tcp",
 		"sockFile" : "/tmp/erasmusline/statsd_master/statsd_master.sock",
 		"serverIP" : "0.0.0.0",
 		"serverPort" : "8118"
