@@ -1,0 +1,4 @@
+{$success}
+<br />
+<br />
+{$debug}
