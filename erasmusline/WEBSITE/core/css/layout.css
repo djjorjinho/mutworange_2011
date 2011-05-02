@@ -1,0 +1,153 @@
+* { padding: 0; margin: 0 }
+
+body {
+    background: url(../img/background.png) repeat-x;
+    text-align: center;
+    font-family: "Lucida Grande",Helvetica,Arial sans-serif;
+}
+a {
+    text-decoration: none;
+    color: #2C3138
+}
+a:hover {
+    text-decoration: underline;
+}
+
+#wrapper {
+    text-align: left;
+    margin: auto;
+    width: 980px;
+    margin-top: 10px;
+}
+
+#header {
+    background: #2A569D;
+    height: 90px;
+    background: url(../img/header.png);
+    border: 1px solid #f0f0f0;
+}
+#footer {
+    float: left;
+    width: 949px;
+    margin: 5px;
+    padding: 10px;
+    border-top: 1px solid #2C3138;
+    text-align: center;
+    vertical-align:bottom;
+}
+
+ #nav-main {
+    float: right;
+}
+
+#nav-main a{
+    float: left;
+    color: #333;
+    font-weight: bold;
+    background: url(../img/bg_nav-main.png) no-repeat;;
+    width: 78px;
+    height: 35px;
+    margin-top: 36px;
+    text-align: center;
+    padding-top: 8px;
+}
+
+#nav-main a:hover{
+    height: 42px;
+    margin-top: 29px;
+}
+
+#nav-main a.active {
+    height: 42px;
+    margin-top: 29px;
+}
+#headNavi {
+    float: left;
+    width: 978px;
+    height: 20px;
+}
+#headNavi a{
+    float: right;
+    color: #bdbdbd;
+    margin-right: 10px;
+}
+
+/* MAIN-Layer */
+#main {
+    position: absolute;
+    width: 979px;
+    background: #f0f0f0;
+    border-left: 1px solid #2C3138;
+    border-right: 1px solid #2C3138;
+    border-bottom: 1px solid #2C3138;
+    min-height: 500px;
+}
+
+#breadcrumb {
+    float: left;
+    width: 690px;
+    margin: 5px 0 5px 10px;
+}
+#breadcrumb a{
+    margin-right: 5px;
+    padding-right: 5px;
+    border-right: 1px solid #2C3138;
+}
+
+#content {
+    float: left;
+    width: 680px;
+    margin: 0 10px 10px;
+    min-height: 500px;
+}
+
+#subnav {
+    float: left;
+    width: 275px;
+    background: url(../img/bg_subnavi.png);
+    border-left: 3px double #6A7787;
+    border-top: 3px double #6A7787;
+    border-bottom: 3px double #6A7787;
+}
+#subnav a{
+    text-decoration: none;
+    padding-left: 2px;
+}
+#subnav a:hover{
+    color: #F0F0F0;
+}
+#subnav ul {
+    list-style: none;
+}
+#subnav li{
+    font-size: 16px;
+    padding: 2px 0;
+}
+#subnav li.active{
+    font-weight: bold;
+}
+#subnav li:hover{
+    background: url(../img/bg_subnavi_hover.png);
+}
+#subnav li.level2 {
+    padding-left: 10px;
+    font-size: 14px;
+}
+#subnav li.level3 {
+    padding-left: 20px;
+    font-size: 14px;
+}
+input {
+    background: #6A7787;
+    border: 1px solid #000000;
+    color: #FF6A00;
+    font-weight: bold;
+    padding: 5px;
+}
+input:active {
+    background: #12293D;
+    border: 1px solid #000000;
+    color: #FF6A00;
+    font-weight: bold;
+    padding: 5px;
+}
