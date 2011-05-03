@@ -157,7 +157,7 @@ strong a{
 	color:#7EA411;
 }
 </style>
-
+</head>
 <body>
 
 <div id="box">

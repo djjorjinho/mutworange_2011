@@ -38,7 +38,7 @@
 				{"id" : "M6", "name" : "Max. Response Days", 
 					"column" : "max_response_days", "aggregator" : "max"},
 				{"id" : "M7", "name" : "Min. Response Days", 
-					"column" : "min_response_days", "aggregator" : "min"},
+					"column" : "min_response_days", "aggregator" : "min"}
 				],
 			"dimensions" : ["D1","D2","D3","D4","D5","D6","D7"]
 		}

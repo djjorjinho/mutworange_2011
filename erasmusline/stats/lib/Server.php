@@ -34,6 +34,22 @@ class Server{
 					"<body>Hello World</body>";
     }
 	
+	function getIP() {
+			
+		$ip = getenv('HTTP_CLIENT_IP');
+		if(isset($ip) && $ip != 'unknown') return $ip;
+		
+		$ip = getenv('HTTP_X_FORWARDED_FOR');
+		if(isset($ip) && $ip != 'unknown') return $ip;
+		
+		$ip = getenv('REMOTE_ADDR');
+		if(isset($ip) && $ip != 'unknown') return $ip;
+		
+		$ip = isset($_SERVER['REMOTE_ADDR']) ?
+					$_SERVER['REMOTE_ADDR'] : 'unknown';
+		  
+		return $ip;
+	}
 	
 }
 

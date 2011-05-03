@@ -26,6 +26,8 @@ class StastCallTest extends PHPUnit_TestCase {
 		
 		$this->kill();
 		
+		print_r($rsp);
+		
 		$this->assertTrue($rsp['ping']=='world');
 	}
 	

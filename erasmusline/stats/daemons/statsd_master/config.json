@@ -14,5 +14,10 @@
 		"port":"3306",
 		"schema":"p8statsdw",
 		"debug" : false
+    },
+    "etlconfig" : {
+    },
+    "olapconfig" : {
+    	"rulefile" : "eis_scenario_rules.json"
     }
 }

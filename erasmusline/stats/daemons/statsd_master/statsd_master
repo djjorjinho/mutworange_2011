@@ -9,7 +9,10 @@ LooPHP_Autoloader::register();
 
 $configfile = dirname(__FILE__).'/config.json';
 $options = json_decode(file_get_contents($configfile),true);
-
+if(!isset($options)){
+	throw new Exception("Invalid JSON: ${configfile}");
+}
+		
 // Setup
 $dconfig = array_merge($options['daemonconfig'],array(
     'appDir' => dirname(__FILE__),

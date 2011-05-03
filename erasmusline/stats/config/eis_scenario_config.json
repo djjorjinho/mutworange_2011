@@ -3,11 +3,11 @@
 	"jsonrpc" : "2.0",
 	"method" : "query",
 	"params" : {
-		"_comment" : "this nested object can be saved or loaded from the db"
+		"_comment" : "this nested object can be saved or loaded from the db",
 		"user_id" : "123",
 		"scenario_name" : "query1",
 		"cube" : "fact_efficacy",
-		"columns" : [ "dim_gender.code" , "measure.M1" ],
+		"columns" : [ "dim_gender.dim_gender_id" , "measure.M1" ],
 		"rows" : [ "dim_institution.country_code" ],
 		"filters" : 
 				{ "dim_institution.country_code.eq" : ["pt","be","en"],

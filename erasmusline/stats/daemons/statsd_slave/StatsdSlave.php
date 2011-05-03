@@ -98,7 +98,7 @@ class StatsdSlave extends Server implements JsonRpcI{
      * @return array $array
      */
 	function ping($params){
-		return array(ping=>$params['name']);
+		return array(ping=>$params['name'],ip=>$this->getIP());
 	}
 }
 
