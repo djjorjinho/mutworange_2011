@@ -10,7 +10,7 @@ class DB{
 	
 	private static $db;
 	private $conn;
-	public $config;
+	private $config;
 	private $profiler;
 	public $queryCount = 0;
 	public $queries = array();
@@ -35,6 +35,10 @@ class DB{
 								dirname(__FILE__).'/dbconfig.json'),true);
 		}
 		
+		if(!isset($this->config)){
+			throw new Exception("Invalid DB config.");
+		}
+		
 		if($this->config['debug']){
 			$this->profiler = new PhpQuickProfiler(
 					PhpQuickProfiler::getMicroTime());
@@ -50,6 +54,7 @@ class DB{
 	public static function getInstance($options=null){
 		if(!isset(self::$db)){
 			self::$db = new DB($options);
+			self::$db->connect();
 		}
 		return self::$db;
 	}
@@ -67,6 +72,8 @@ class DB{
 	 * the assoc. array
 	 */
 	function connect(){
+		if(isset($this->conn)) return true;
+		
 		$config = $this->getConfig();
 		$this->conn = mysql_connect($config['host'].":".$config['port'],
 			$config['user'],
@@ -121,7 +128,7 @@ class DB{
 		$this->queryCount += 1;
 		$this->logQuery($query, $start);
 		if (!$result) {
-		    throw new Exception("Could not run query:\n".$query.
+		    throw new Exception("Could not run query:\n".$query."\n".
 					mysql_error()); 
 		}
 		return $result;

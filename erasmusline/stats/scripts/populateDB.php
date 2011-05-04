@@ -183,14 +183,14 @@ class PopulateDB {
             
             // home institution
             $aux = $db->getRandom($dtb[3]);
-            $obj['dim_home_institution_id'] = $aux['dim_institution_id'];
+            $obj['dim_institution_id'] = $aux['dim_institution_id'];
             
             // host institution
             $aux2 = $db->getRandom($dtb[3]);
             while($aux['dim_institution_id'] == $aux2['dim_institution_id']){
                 $aux2 = $db->getRandom($dtb[3]);
             }
-            $obj['dim_host_institution_id'] = $aux2['dim_institution_id'];
+            $obj['dim_institution_host_id'] = $aux2['dim_institution_id'];
             
 			// study
             $aux = $db->getRandom($dtb[6]);

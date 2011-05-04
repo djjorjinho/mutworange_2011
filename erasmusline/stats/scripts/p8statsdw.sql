@@ -120,8 +120,8 @@ DROP TABLE IF EXISTS `p8statsdw`.`fact_efficiency` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   `dim_date_id` BIGINT UNSIGNED NOT NULL ,
-  `dim_home_institution_id` INT NOT NULL ,
-  `dim_host_institution_id` INT NOT NULL ,
+  `dim_institution_id` INT NOT NULL ,
+  `dim_institution_host_id` INT NOT NULL ,
   `dim_phase_id` CHAR(6) NOT NULL ,
   `dim_mobility_id` CHAR(6) NOT NULL ,
   `dim_gender_id` ENUM('M','F','O') NOT NULL ,
@@ -131,10 +131,10 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   `val_participants` SMALLINT UNSIGNED NULL DEFAULT 0 ,
   `perc_students` SMALLINT UNSIGNED NULL DEFAULT 0 ,
   INDEX `fk_fact_efficiency_dim_enddate` (`dim_date_id` ASC) ,
-  INDEX `fk_fact_efficiency_dim_host_institution` (`dim_host_institution_id` ASC) ,
-  INDEX `fk_fact_efficiency_dim_home_institution` (`dim_home_institution_id` ASC) ,
-  INDEX `idx_efficiency_home` USING BTREE (`dim_date_id` DESC, `dim_home_institution_id` DESC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC) ,
-  INDEX `idx_efficiency_host` (`dim_date_id` ASC, `dim_host_institution_id` ASC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC) ,
+  INDEX `fk_fact_efficiency_dim_host_institution` (`dim_institution_host_id` ASC) ,
+  INDEX `fk_fact_efficiency_dim_home_institution` (`dim_institution_id` ASC) ,
+  INDEX `idx_efficiency_home` USING BTREE (`dim_date_id` DESC, `dim_institution_id` DESC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC) ,
+  INDEX `idx_efficiency_host` (`dim_date_id` ASC, `dim_institution_host_id` ASC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_mobility1` (`dim_mobility_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_phase1` (`dim_phase_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_gender1` (`dim_gender_id` ASC) ,
@@ -144,12 +144,12 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_fact_efficiency_dim_institution1`
-    FOREIGN KEY (`dim_host_institution_id` )
+    FOREIGN KEY (`dim_institution_host_id` )
     REFERENCES `p8statsdw`.`dim_institution` (`dim_institution_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_fact_efficiency_dim_institution2`
-    FOREIGN KEY (`dim_home_institution_id` )
+    FOREIGN KEY (`dim_institution_id` )
     REFERENCES `p8statsdw`.`dim_institution` (`dim_institution_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -179,8 +179,8 @@ DROP TABLE IF EXISTS `p8statsdw`.`fact_efficacy` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficacy` (
   `dim_date_id` BIGINT UNSIGNED NOT NULL ,
-  `dim_home_institution_id` INT NOT NULL ,
-  `dim_host_institution_id` INT NOT NULL ,
+  `dim_institution_id` INT NOT NULL ,
+  `dim_institution_host_id` INT NOT NULL ,
   `dim_mobility_id` CHAR(6) NOT NULL ,
   `dim_study_id` INT NOT NULL ,
   `dim_lodging_id` CHAR(6) NOT NULL ,
@@ -194,10 +194,10 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficacy` (
   INDEX `fk_fact_efficacy_dim_mobility` (`dim_mobility_id` ASC) ,
   INDEX `fk_fact_efficacy_dim_gender` (`dim_gender_id` ASC) ,
   INDEX `fk_fact_efficacy_dim_date` (`dim_date_id` ASC) ,
-  INDEX `fk_fact_efficacy_dim_home_institution` (`dim_home_institution_id` ASC) ,
-  INDEX `fk_fact_efficacy_dim_host_institution` (`dim_host_institution_id` ASC) ,
-  INDEX `idx_efficacy_home` USING BTREE (`dim_date_id` DESC, `dim_home_institution_id` DESC, `dim_mobility_id` DESC, `dim_study_id` ASC, `dim_lodging_id` ASC, `dim_gender_id` DESC) ,
-  INDEX `idx_efficacy_host` USING BTREE (`dim_date_id` ASC, `dim_host_institution_id` ASC, `dim_mobility_id` ASC, `dim_study_id` ASC, `dim_lodging_id` ASC, `dim_gender_id` ASC) ,
+  INDEX `fk_fact_efficacy_dim_home_institution` (`dim_institution_id` ASC) ,
+  INDEX `fk_fact_efficacy_dim_host_institution` (`dim_institution_host_id` ASC) ,
+  INDEX `idx_efficacy_home` USING BTREE (`dim_date_id` DESC, `dim_institution_id` DESC, `dim_mobility_id` DESC, `dim_study_id` ASC, `dim_lodging_id` ASC, `dim_gender_id` DESC) ,
+  INDEX `idx_efficacy_host` USING BTREE (`dim_date_id` ASC, `dim_institution_host_id` ASC, `dim_mobility_id` ASC, `dim_study_id` ASC, `dim_lodging_id` ASC, `dim_gender_id` ASC) ,
   INDEX `fk_fact_efficacy_dim_study1` (`dim_study_id` ASC) ,
   CONSTRAINT `fk_fact_efficacy_dim_lodging10`
     FOREIGN KEY (`dim_lodging_id` )
@@ -220,12 +220,12 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficacy` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_fact_efficacy_dim_institution10`
-    FOREIGN KEY (`dim_home_institution_id` )
+    FOREIGN KEY (`dim_institution_id` )
     REFERENCES `p8statsdw`.`dim_institution` (`dim_institution_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_fact_efficacy_dim_institution20`
-    FOREIGN KEY (`dim_host_institution_id` )
+    FOREIGN KEY (`dim_institution_host_id` )
     REFERENCES `p8statsdw`.`dim_institution` (`dim_institution_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -248,6 +248,32 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_semester` (
   `code` ENUM('1','2') NOT NULL ,
   `description` VARCHAR(15) NULL ,
   PRIMARY KEY (`code`) )
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `p8statsdw`.`slaves`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `p8statsdw`.`slaves` ;
+
+CREATE  TABLE IF NOT EXISTS `p8statsdw`.`slaves` (
+  `slaves_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `ip_address` CHAR(15) NULL ,
+  `port` CHAR(7) NULL ,
+  PRIMARY KEY (`slaves_id`) )
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `p8statsdw`.`scenarios`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `p8statsdw`.`scenarios` ;
+
+CREATE  TABLE IF NOT EXISTS `p8statsdw`.`scenarios` (
+  `scenarios_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `users_id` INT UNSIGNED NULL ,
+  `json_config` TEXT NULL ,
+  PRIMARY KEY (`scenarios_id`) )
 ENGINE = MyISAM;
 
 

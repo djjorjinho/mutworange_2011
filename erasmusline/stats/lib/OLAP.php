@@ -23,6 +23,11 @@ class OLAP{
 		$this->rules = $this->getRules();
 	}
 	
+	/**
+	 * 
+	 * Read the rules config file and returns an associative array
+	 * @return array $json - associative array, product o json parsing
+	 */
 	function getRules(){
     	$file = dirname(__FILE__).'/../config/'.$this->config['rulefile'];
     	if(!file_exists($file)){
@@ -58,7 +63,7 @@ class OLAP{
 		$having = array();
 		$limit;
 		$cube;
-		$sql;
+		$sql="";
 		
 		$this->processCube($params, $tables, $cube);
 		
@@ -68,23 +73,44 @@ class OLAP{
 		$this->processFilters($params,$fields,$tables,$where,$groupby,
 				$having,$limit);
 				
-		print("fields\n");
-		print_r($fields);
+		#print("fields\n");
+		#print_r($fields);
 		
-		print("tables\n");
-		print_r($tables);
+		$sql .= "SELECT ".implode(',',$fields);
 		
-		print("where\n");
-		print_r($where);
+		#print("tables\n");
+		#print_r($tables);
 		
-		print("groupby\n");
-		print_r($groupby);
+		$sql .= " FROM ".implode(' JOIN ',$tables);
+		
+		#print("where\n");
+		#print_r($where);
+		
+		$sql .= " WHERE ".implode(' AND ',$where);
+		
+		#print("groupby\n");
+		#print_r($groupby);
+		
+		$sql .= " GROUP BY ".implode(',',$groupby);
+		
+		#print $sql."\n";
+		
+		$result = $this->db->getMany($sql);
+		
 		
 		//store result in cache and resturn
 		$this->cache->store($cache_key, $result,120);
 		return $result;
 	}
 	
+	/**
+	 * 
+	 * Validate cube fact table and add it to the tables array
+	 * @param mixed $params
+	 * @param array $tables
+	 * @param str $cube
+	 * @throws Exception
+	 */
 	private function processCube(&$params,&$tables,&$cube){
 		$cube = $params['cube'];
 		if(!isset($cube)){
@@ -109,9 +135,15 @@ class OLAP{
 			}else{
 				$table = $field_array[0];
 				$id = $table."_id";
-				//TODO no repeat tables
-				array_push($tables,"${table} using (${id})");
-				array_push($groupby,$field);
+				
+				if(!self::valueInArray($tables,$table)) 
+					array_push($tables,"${table} using (${id})");
+				
+				if($field_array[1]!='all'){
+					array_push($groupby,$field);
+					array_push($fields,$field);
+				}
+					
 			}
 			
 		}
@@ -125,6 +157,24 @@ class OLAP{
 		return $res;
 	}
 	
+	static function valueInArray(&$array,&$value){
+		foreach($array as $item){
+			if(preg_match("/${value}/", $item))
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Processes found measures in the scenario config.
+	 * @param str $cube
+	 * @param str $measure_id
+	 * @param array $fields
+	 * @param array $tables
+	 * @param array $where
+	 * @param str $limit
+	 */
 	private function processMeasure(&$cube,&$measure_id,&$fields,
 										&$tables,&$where,&$limit){
 											
@@ -136,14 +186,104 @@ class OLAP{
 		$aggregator = $measure['aggregator'];
 		$column = $measure['column'];
 		
-		//TODO process aggregators
-		
-		array_push($fields,"${aggregator}(${cube}.${column}) as ${column}");
+		$this->processAggregatorOp($aggregator,"${cube}.${column}",$column,
+																	$fields);
+	}
+	
+	private function processAggregatorOp($op,$field,$column,&$fields){
+		$aggregator = $op;
+		//TODO percentage, or implement it in the data mining
+		array_push($fields,"${aggregator}(${field}) as ${column}");
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,
-		&$groupby,&$having,&$limit){
-		//TODO
+				&$groupby,&$having,&$limit){
+		
+		$filters = $params['filters'];
+		foreach($filters as $filter => $value){
+			$field_array = self::splitField($filter);
+			$op = $field_array[2];
+			
+			if(!self::valueInArray($tables,$field_array[0])){
+				$table = $field_array[0];
+				$id = $table."_id";
+				array_push($tables,"${table} using (${id})");
+			}
+					
+			$this->processFilterOp($op, $field_array[0].'.'.$field_array[1],
+									$value,$where, $limit);
+			
+		}
 	}
+	
+	/**
+	 * 
+	 * Processes found filter operations in the scenario config.
+	 * @param str $op
+	 * @param str $field
+	 * @param mixed $value
+	 * @param array $where
+	 * @param str $limit
+	 * @throws Exception
+	 */
+	private function processFilterOp(&$op,$field,&$value,&$where,&$limit){
+		$isarray = is_array($value);
+		
+		if($op == 'eq'){
+			$array = $isarray ? $value : array($value);
+			
+			$aux = array_map(function($value)use($field){
+				return "$field = '${value}'";
+			},$array);
+			
+			array_push($where, '('.implode(" OR ",$aux).')');
+			
+		}else if($op == 'ne'){
+			$array = $isarray ? $value : array($value);
+			
+			$aux = array_map(function($value)use($field){
+				return "$field != '${value}'";
+			},$array);
+			
+			array_push($where, '('.implode(" OR ",$aux).')');
+		}else if($op == 'ge'){
+			$array = $isarray ? $value : array($value);
+			
+			$aux = array_map(function($value)use($field){
+				return "$field >= '${value}'";
+			},$array);
+			
+			array_push($where, '('.implode(" OR ",$aux).')');
+		}else if($op == 'le'){
+			$array = $isarray ? $value : array($value);
+			
+			$aux = array_map(function($value)use($field){
+				return "$field <= '${value}'";
+			},$array);
+			
+			array_push($where, '('.implode(" OR ",$aux).')');
+		}else if($op == 'lt'){
+			$array = $isarray ? $value : array($value);
+			
+			$aux = array_map(function($value)use($field){
+				return "$field < '${value}'";
+			},$array);
+			
+			array_push($where, '('.implode(" OR ",$aux).')');
+		}else if($op == 'gt'){
+			$array = $isarray ? $value : array($value);
+			
+			$aux = array_map(function($value)use($field){
+				return "$field > '${value}'";
+			},$array);
+			
+			array_push($where, '('.implode(" OR ",$aux).')');
+		}else{
+			throw new Exception("Invalid Filter Operation");
+		}
+		
+	}
+	
+	
 }
 ?>
