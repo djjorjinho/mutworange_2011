@@ -344,7 +344,7 @@ function validateFields($fields, $rules)
         break;
 
       case "is_alpha":
-        if (preg_match('/[^A-Za-z0-9]/', $fields[$field_name]))
+        if (preg_match('/[^A-Za-z0-9\s.,\'\-]/', $fields[$field_name]))
           $errors[$field_name] = $error_message; 
         break;
         

@@ -14,9 +14,10 @@ require_once './library/validation/validation.php';
 
 // ... require other classes if needed.
 
+
 $website = new PlonkWebsite(
 		array(
-		'home','about','register','info','admin','profile', 'abroad_stay','lagreeform','pre_leave','precandidate','teardown_finish','login','infox'
+		'home','about','register','info','admin','profile', 'abroad_stay','lagreeform','pre_leave','precandidate','teardown_finish','login'
 		)
 	);
 

@@ -1,7 +1,7 @@
 * { padding: 0; margin: 0 }
 
 body {
-    background: url(../img/background.png) repeat-x;
+    background: url(../css/images/background.png) repeat-x;
     text-align: center;
     font-family: "Lucida Grande",Helvetica,Arial sans-serif;
 }
@@ -23,7 +23,7 @@ a:hover {
 #header {
     background: #2A569D;
     height: 90px;
-    background: url(../img/header.png);
+    background: url(../css/images/header.png);
     border: 1px solid #f0f0f0;
 }
 #footer {
@@ -44,7 +44,7 @@ a:hover {
     float: left;
     color: #333;
     font-weight: bold;
-    background: url(../img/bg_nav-main.png) no-repeat;;
+    background: url(../css/images/bg_nav-main.png) no-repeat;;
     width: 78px;
     height: 35px;
     margin-top: 36px;
@@ -104,7 +104,7 @@ a:hover {
 #subnav {
     float: left;
     width: 275px;
-    background: url(../img/bg_subnavi.png);
+    background: url(../css/images/bg_subnavi.png);
     border-left: 3px double #6A7787;
     border-top: 3px double #6A7787;
     border-bottom: 3px double #6A7787;
@@ -127,7 +127,7 @@ a:hover {
     font-weight: bold;
 }
 #subnav li:hover{
-    background: url(../img/bg_subnavi_hover.png);
+    background: url(../css/images/bg_subnavi_hover.png);
 }
 #subnav li.level2 {
     padding-left: 10px;
@@ -136,22 +136,4 @@ a:hover {
 #subnav li.level3 {
     padding-left: 20px;
     font-size: 14px;
-}
-input {
-    border: 1px solid #006;
-    margin-bottom: 5px;
-}
-.button {
-    background: #99ABC1;
-    border: 1px solid #000000;
-    color: #006;
-    font-weight: bold;
-    padding: 5px;
-}
-.button:active {
-    background: #12293D;
-    border: 1px solid #000000;
-    color: #FF6A00;
-    font-weight: bold;
-    padding: 5px;
 }

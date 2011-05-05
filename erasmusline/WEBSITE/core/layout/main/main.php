@@ -8,12 +8,8 @@
 class MainController extends PlonkController {
     
     public function assignMain() {
-      if (PlonkSession::exists('isAdmin'))
-        $this->mainTpl->assignOption('oAdmin');
-      if (PlonkSession::exists('loggedIn') && PlonkSession::get('loggedIn') == true)
-        $this->mainTpl->assignOption('oLogged');
-//      else
-//        $this->mainTpl->assignOption('oNotLogged');
+        //$this->mainTpl->assign('test', 'Ahaaaaaaaa');
+        
     }
     
     public function doFunction($action) {
@@ -23,7 +19,7 @@ class MainController extends PlonkController {
     }
     
 
-    private static function login() {
+    public static function login() {
         
         $msgEmail = "Email and/or password is not filled in.";
         $msgName = "Name is not filled in.";
@@ -40,12 +36,11 @@ class MainController extends PlonkController {
 
                 if (strtolower($email) === 'admin') {
                     PlonkSession::set('loggedIn', true);
-                    PlonkSession::set('id', $values['idUsers']);
-
+                    PlonkSession::set('id', 0);
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                 } else {
                     PlonkSession::set('loggedIn', true);
-                    PlonkSession::set('id', $values['idUsers']);
+                    PlonkSession::set('id', $values['userId']);
 
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
                 }
@@ -60,7 +55,7 @@ class MainController extends PlonkController {
     /**
      * Logout action
      */
-    private static function logout() {
+    public static function logout() {
 
         PlonkSession::destroy();
 
@@ -77,7 +72,7 @@ class MainController extends PlonkController {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne("select idUsers from users where Email = '" . $email . "' AND Password ='" . $password . "'");
+        $items = $db->retrieveOne("select userId from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "'");
 
         // return the result
         return $items;

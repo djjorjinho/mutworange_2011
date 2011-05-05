@@ -7,58 +7,72 @@
     <link rel="stylesheet" href="./core/css/layout.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
-<!--    {$pageMeta}-->
+    {$pageMeta}
+    {$pageJava}
   </head>
   
   <body>
   <div id="wrapper">
-
-    <div id="header">
-    
+    <div id="header">    
       <div id="headNavi">
-{option:oLogged}
-		  <a href="#">Profile</a>
-		  <a href="#">Notifications</a>
-		  <a href="#">Progress</a>
-{/option:oLogged}
+		  <a href="#">Contact</a>
+		  <a href="index.php?module=about&view=about">About</a>
 {option:oNotLogged}
 &nbsp;
 {/option:oNotLogged}
       </div>
       <div id="nav-main">
-      <a href="index.php" class="{$tabHome}">Home</a>
-      <a href="index.php" class="{$tabInfo}">Information</a>
+{option:oAdmin}
+           <a href="index.php?module=admin&view=admin" class="{$tabHome}">Admin</a>
+{/option:oAdmin}
 {option:oLogged}
-      <a href="index.php?module=home&view=logout" title="Logout">Logout</a>
+      <a href="index.php?module=profile&view=ownprofile">Profile</a>
+            <a href="index.php?module=home&view=userhome" class="{$tabHome}">Home</a>
 {/option:oLogged}
 {option:oNotLogged}
-      <a href="index.php?module=login" title="Login">Login</a>
+      <a href="index.php?module=home&view=home" title="home">Home</a>
+{/option:oNotLogged}
+      <a href="index.php?module=info&view=erasmus" class="{$tabInfo}">Info</a>      
+{option:oLogged}
+      <a href="index.php?module=login&view=logout" title="Logout">Logout</a>
+{/option:oLogged}
+{option:oNotLogged}
+      <a href="index.php?module=login&view=login" title="Login">Login</a>
 {/option:oNotLogged}
 {option:oAdmin}
-      <a href="index.php?module=admin&view=users" class="{$tabAdmin}" title="Users">Admin</a>
+     <a href="index.php?module=login&view=logout" title="Logout">Logout</a>
 {/option:oAdmin}
-
       </div>
     </div>
     <div id="main">
       <div id="breadcrumb">#{breadcrumb}</div>
       <div id="content">
 <!-- CONTENT -->
-<h2>{$title}</h2>
 {$pageContent}
 <!-- END CONTENT -->      
       </div>
-      <div id="subnav">
-<!-- SUBNAVBAR -->
+{option:oAdmin}
+<div id="subnav">
 <ul>
-<li class="active"><a href="">Subnavbar 1st Level (active)</a></li>
-  <li class="level2"><a href="">Subnavbar 2nd Level</a></li>
-    <li class="level3"><a href="">Subnavbar 3rd Level</a></li>
-<li><a href="">Subnavbar 1st Level (inactive)</a></li>
+    <li class="level2"><a href="index.php?module=admin&view=students">Students</a></li>
+    <li class="level2"><a href="index.php?module=admin&view=staff">Staff</a></li>
+    <li class="level2"><a href="index.php?module=register&view=register">Add staff member</a></li>
+    <li class="level2"><a href="">Subnavbar 1st Level (inactive)</a></li>
 </ul>
+</div>
+{/option:oAdmin}
+{option:oLogged}
+<div id="subnav">
+<ul>
+    <li class="active"><a href="">Progess</a></li>
+    <li class="level2"><a href="">Profile</a></li>
+    <li class="level3"><a href="">Subnavbar 3rd Level</a></li>
+    <li><a href="">Subnavbar 1st Level (inactive)</a></li>
+</ul>
+</div>
+{/option:oLogged}
 <!-- END SUBNAVBAR -->
-      </div>
+      
       <div id="footer">
       &copy; 2011 by EU | Sitemap | Contact | Disclaimer | Legal info
       </div>

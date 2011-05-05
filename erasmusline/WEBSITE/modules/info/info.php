@@ -36,14 +36,16 @@ class InfoController extends PlonkController {
     }
 
     public function checkLogged() {
-
-        if (PlonkSession::exists('loggedIn')) {
-
-            $this->mainTpl->assignOption('oLogged');
-            $this->id = PlonkSession::get('id');
+        //Plonk::dump(PlonkSession::get('id').'hgdjdh');
+        if (!PlonkSession::exists('loggedIn')) {
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-
-            $this->mainTpl->assignOption('oNotLogged');
+            if (PlonkSession::get('id') == 0) {
+                $this->mainTpl->assignOption('oAdmin');
+                $this->id = PlonkSession::get('id');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            }
         }
     }
 
