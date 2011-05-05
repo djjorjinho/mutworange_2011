@@ -33,5 +33,19 @@ class RegisterDB {
         return $updated;
     }    
     
+    public static function insertUser($table, $values) {
+        $db = PlonkWebsite::getDB();
+        
+        $insertId = $db->insert($table, $values);
+    }
+    
+    public static function getInstituteId($name) {
+        $db = PlonkWebsite::getDB();
+        
+        $id = $db->retrieveOne("select instId from institutions where instName = '" . $db->escape($name)."'");
+        
+        return $id;
+    }
+    
 }
 ?>

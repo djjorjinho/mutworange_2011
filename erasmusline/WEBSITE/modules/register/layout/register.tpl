@@ -78,8 +78,9 @@
             </select>
             <span class="req" id="msgNationality">{$msgNationality|htmlentities}</span>
 	</div>
-        {option:oAdmin}
+        
         <div class="TRdiv">
+            {option:oAdmin}
             <label for="userLevel"><span>User Level</span><label>
             <select name="userLevel" value="{$selectedUserLevel}">
                {iteration:iUserLevel}
@@ -87,9 +88,8 @@
                {/iteration:iUserLevel}
             </select>
             <span class="req" id="msgUserLevel">{$msgUserLevel|htmlentities}</span>
+            {/option:oAdmin}
 	</div>
-        {/option:oAdmin}	
-
 </fieldset>
         <div class="TRdiv">               
 		<input type="hidden" name="formAction" id="formRegister" value="doSubmit" />

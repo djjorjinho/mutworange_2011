@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Genereertijd: 05 Mei 2011 om 17:31
+-- Genereertijd: 05 Mei 2011 om 17:50
 -- Serverversie: 5.1.53
 -- PHP-Versie: 5.3.4
 
@@ -18,6 +18,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `erasmusline`
 --
+DROP DATABASE `erasmusline`;
+CREATE DATABASE `erasmusline` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `erasmusline`;
 
 -- --------------------------------------------------------
 
@@ -25,6 +28,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Tabelstructuur voor tabel `companies`
 --
 
+DROP TABLE IF EXISTS `companies`;
 CREATE TABLE IF NOT EXISTS `companies` (
   `companyId` int(11) NOT NULL AUTO_INCREMENT,
   `companyName` varchar(200) NOT NULL,
@@ -52,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Tabelstructuur voor tabel `country`
 --
 
+DROP TABLE IF EXISTS `country`;
 CREATE TABLE IF NOT EXISTS `country` (
   `Code` char(3) NOT NULL DEFAULT '',
   `Name` char(52) NOT NULL DEFAULT '',
@@ -73,6 +78,7 @@ INSERT INTO `country` (`Code`, `Name`) VALUES
 -- Tabelstructuur voor tabel `coursespereducperinst`
 --
 
+DROP TABLE IF EXISTS `coursespereducperinst`;
 CREATE TABLE IF NOT EXISTS `coursespereducperinst` (
   `courseId` int(11) NOT NULL AUTO_INCREMENT,
   `courseCode` varchar(45) NOT NULL,
@@ -100,6 +106,7 @@ INSERT INTO `coursespereducperinst` (`courseId`, `courseCode`, `courseName`, `ec
 -- Tabelstructuur voor tabel `education`
 --
 
+DROP TABLE IF EXISTS `education`;
 CREATE TABLE IF NOT EXISTS `education` (
   `educationId` int(11) NOT NULL AUTO_INCREMENT,
   `educationName` varchar(200) DEFAULT NULL,
@@ -121,6 +128,7 @@ INSERT INTO `education` (`educationId`, `educationName`) VALUES
 -- Tabelstructuur voor tabel `educationperinstitute`
 --
 
+DROP TABLE IF EXISTS `educationperinstitute`;
 CREATE TABLE IF NOT EXISTS `educationperinstitute` (
   `educationPerInstId` int(11) NOT NULL AUTO_INCREMENT,
   `institutionId` int(11) NOT NULL,
@@ -146,6 +154,7 @@ INSERT INTO `educationperinstitute` (`educationPerInstId`, `institutionId`, `stu
 -- Tabelstructuur voor tabel `erasmuslevel`
 --
 
+DROP TABLE IF EXISTS `erasmuslevel`;
 CREATE TABLE IF NOT EXISTS `erasmuslevel` (
   `levelId` int(11) NOT NULL AUTO_INCREMENT,
   `levelName` varchar(45) DEFAULT NULL,
@@ -174,6 +183,7 @@ INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `levelDescrip`, `module`, `v
 -- Tabelstructuur voor tabel `erasmusstudent`
 --
 
+DROP TABLE IF EXISTS `erasmusstudent`;
 CREATE TABLE IF NOT EXISTS `erasmusstudent` (
   `studentId` int(11) NOT NULL,
   `homeCoordinatorId` int(11) DEFAULT NULL,
@@ -212,6 +222,7 @@ INSERT INTO `erasmusstudent` (`studentId`, `homeCoordinatorId`, `hostCoordinator
 -- Tabelstructuur voor tabel `forms`
 --
 
+DROP TABLE IF EXISTS `forms`;
 CREATE TABLE IF NOT EXISTS `forms` (
   `formId` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) NOT NULL,
@@ -238,6 +249,7 @@ INSERT INTO `forms` (`formId`, `type`, `date`, `content`, `studentId`, `erasmusL
 -- Tabelstructuur voor tabel `grades`
 --
 
+DROP TABLE IF EXISTS `grades`;
 CREATE TABLE IF NOT EXISTS `grades` (
   `courseId` int(11) NOT NULL,
   `studentId` int(11) NOT NULL,
@@ -260,6 +272,7 @@ CREATE TABLE IF NOT EXISTS `grades` (
 -- Tabelstructuur voor tabel `institutions`
 --
 
+DROP TABLE IF EXISTS `institutions`;
 CREATE TABLE IF NOT EXISTS `institutions` (
   `instId` int(11) NOT NULL AUTO_INCREMENT,
   `instName` varchar(200) NOT NULL,
@@ -292,6 +305,7 @@ INSERT INTO `institutions` (`instId`, `instName`, `instStreetNr`, `instCity`, `i
 -- Tabelstructuur voor tabel `leasing`
 --
 
+DROP TABLE IF EXISTS `leasing`;
 CREATE TABLE IF NOT EXISTS `leasing` (
   `rentalId` int(11) NOT NULL AUTO_INCREMENT,
   `outboundUser` int(11) DEFAULT NULL,
@@ -317,6 +331,7 @@ CREATE TABLE IF NOT EXISTS `leasing` (
 -- Tabelstructuur voor tabel `owner`
 --
 
+DROP TABLE IF EXISTS `owner`;
 CREATE TABLE IF NOT EXISTS `owner` (
   `ownerId` int(11) NOT NULL AUTO_INCREMENT,
   `familyName` varchar(200) DEFAULT NULL,
@@ -343,6 +358,7 @@ CREATE TABLE IF NOT EXISTS `owner` (
 -- Tabelstructuur voor tabel `residence`
 --
 
+DROP TABLE IF EXISTS `residence`;
 CREATE TABLE IF NOT EXISTS `residence` (
   `residenceId` int(11) NOT NULL AUTO_INCREMENT,
   `price` int(11) NOT NULL,
@@ -375,6 +391,7 @@ CREATE TABLE IF NOT EXISTS `residence` (
 -- Tabelstructuur voor tabel `studentsevents`
 --
 
+DROP TABLE IF EXISTS `studentsevents`;
 CREATE TABLE IF NOT EXISTS `studentsevents` (
   `eventId` int(11) NOT NULL AUTO_INCREMENT,
   `event` text NOT NULL,
@@ -403,6 +420,7 @@ INSERT INTO `studentsevents` (`eventId`, `event`, `timestamp`, `motivation`, `re
 -- Tabelstructuur voor tabel `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
   `familyName` varchar(45) NOT NULL,
