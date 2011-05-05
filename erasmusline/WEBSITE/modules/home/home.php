@@ -40,7 +40,7 @@ class HomeController extends PlonkController {
         // Main Layout
         // assign vars in our main layout tpl
 
-        if (PlonkSession::exists('loggedIn')) {
+        if (PlonkSession::exists('id')) {
             $this->id = PlonkSession::get('id');
 
             if (PlonkSession::get('id') === '1') {
@@ -68,42 +68,50 @@ class HomeController extends PlonkController {
         } else {
             $this->id = PlonkSession::get('id');
             $this->mainTpl->assignOption('oLogged');
-            $this->pageTpl->assignOption('oLogged');
         }
-
-        // assign vars in our main layout tpl
-        $this->mainTplAssigns('Welcome dummy');
-
-        // assign menu active state
-        $this->mainTpl->assignOption('oNavUserHome');
 
         if (($user = HomeDB::getNameById($this->id)) !== null) {
             $this->pageTpl->assign('user', $user['firstName']);
+            // assign vars in our main layout tpl
+            $this->mainTplAssigns('Welcome ' . $user['firstName']);
 
             $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             $this->mainTpl->assign('profile', 'index.php?module=profile&view=ownprofile');
+
+            $this->getErasmusInfo();
         }
     }
 
-    public function checkLogged() {
+    public function getErasmusInfo() {
+        $latestEvent = HomeDB::getLatestEvent($this->id);
+        if (!empty($latestEvent)) {
+            $next = HomeDB::getNext($latestEvent['next']);
+        }
 
-        if (!PlonkSession::exists('loggedIn')) {
-
-            $this->mainTpl->assignOption('oNotLogged');
-            $this->pageTpl->assignOption('oNotLogged');
-
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        if (!empty($latestEvent)) {
+            $this->pageTpl->assign('action', '<a href="index.php?module=' . $latestEvent['module'] . '&view=' . $latestEvent['view'] . '" title="' . $latestEvent['levelName'] . '">' . $latestEvent['levelName'] . '</a>');
+            $this->pageTpl->assign('status', $latestEvent['action']);
+            $this->pageTpl->assign('next', '<a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a>');
         } else {
-            if (PlonkSession::get('id') === '1') {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-            } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            $this->pageTpl->assign('action', 'No current action taken.');
+            $this->pageTpl->assign('status', 'No status');
+            $this->pageTpl->assign('next', '<a href="index.php?module=precandidate&view=precandidate" title="precandidate">Fill in pre candidate form</a>');
+        }
+
+
+        $forms = HomeDB::getForms($this->id);
+
+        if (!empty($forms)) {
+            $this->pageTpl->setIteration('iForms');
+
+            foreach ($forms as $form) {
+                $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=' . $form['view'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                $this->pageTpl->refillIteration('iForms');
             }
 
-            $this->mainTpl->assignOption('oLogged');
-            $this->pageTpl->assignOption('oLogged');
-
-            $this->id = PlonkSession::get('id');
+            $this->pageTpl->parseIteration('iForms');
+        } else {
+            $this->pageTpl->assignOption('noForms');
         }
     }
 

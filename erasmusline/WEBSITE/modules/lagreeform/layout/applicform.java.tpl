@@ -14,6 +14,12 @@
         $(function() {
 		$( "#signDepSignDate" ).datepicker();
 	});
+        $(function() {
+		$( "#daateFrom" ).datepicker();
+	});
+        $(function() {
+		$( "#daateUntill" ).datepicker();
+	});
 
 
 	</script>
@@ -44,8 +50,9 @@
                 var i = $('#languageTable tr').length-4;;
                 $('#addLanguage').click(function(){
                     i++;
-                  $('#languageCount').val(i);
-                    $('#languageTable > tbody:last').append('<tr><td><input  type="text" id="language'+i+'" name="language'+i+'" /></td><td><input type="radio" name="studyThis'+i+'" value="1" class="validate[required] radio" id="een'+i+'" checked /><input type="radio" name="studyThis'+i+'" value="0" id="nul'+i+'"/></td><td><input type="radio" name="knowledgeThis'+i+'" value="1" class="validate[required] radio" id="een2'+i+'" checked /><input type="radio" name="knowledgeThis'+i+'" value="0" id="nul2'+i+'"/></td><td><input type="radio" name="extraPrep'+i+'" value="1" class="validate[required] radio" id="een3'+i+'" checked /><input type="radio" name="extraPrep'+i+'" value="0" id="nul3'+i+'"/></td><td><span class="req">*</span></td></tr>');});
+                    $('#languageCount').val(i);
+                    $('#languageTable > tbody:last').append('<tr><td><input class="validate[required,custom[onlyLetterSp]] text-input"  type="text" id="language'+i+'" name="language'+i+'" /></td><td><input type="radio" name="studyThis'+i+'" value="1" class="validate[required] radio" id="een'+i+'" checked /><input type="radio" name="studyThis'+i+'" value="0" id="nul'+i+'"/></td><td><input type="radio" name="knowledgeThis'+i+'" value="1" class="validate[required] radio" id="een2'+i+'" checked /><input type="radio" name="knowledgeThis'+i+'" value="0" id="nul2'+i+'"/></td><td><input type="radio" name="extraPrep'+i+'" value="1" class="validate[required] radio" id="een3'+i+'" checked /><input type="radio" name="extraPrep'+i+'" value="0" id="nul3'+i+'"/></td><td><span class="req">*</span></td></tr>');});
+                    
                 $('#remLanguage').click(function(){
                     
                     if ($('#languageTable tr').length > 4)
@@ -53,7 +60,6 @@
                         i--;
                         $('#languageTable tr:last').remove();
                         $('#languageCount').val(i);
-                        
                     }
                 });
 
@@ -66,16 +72,15 @@
                 var i = $('#workTable tr').length-3;;
                 $('#addWork').click(function(){
                     i++;
-                  $('#workCount').val(i);
+                    $('#workCount').val(i);   
                     $('#workTable > tbody:last').append('<tr><td><input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="type'+i+'" name="type'+i+'" /></td><td><input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="firm'+i+'" name="firm'+i+'" /></td><td><input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" id="date'+i+'" name="date'+i+'" /></td><td><input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="country'+i+'" name="country'+i+'" /></td><td><span class="req">*</span></td></tr>');});
-
+                     
                 $('#remWork').click(function(){
                     if ($('#workTable tr').length > 3)
                     {
                         i--;
                         $('#workTable tr:last').remove();
                         $('#workCount').val(i);
-                        
                     }
                 });
 

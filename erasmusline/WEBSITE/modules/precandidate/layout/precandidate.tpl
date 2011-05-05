@@ -1,70 +1,147 @@
 <div class="mainDiv">
-<form action="" method="post" enctype="multipart/form-data" id="precandidate">	
+<form action="" method="post" enctype="multipart/form-data" id="precandidate" name="precandidate">	
 <fieldset>
+    <p>{$pageJava}</p>
     <legend>Student Information</legend>    
     <div class="TRdiv">
         <label for="familyName"><span>Last Name : </span></label>
-        <input type="text" name="familyName" id="familyName" value="{$familyName|htmlentities}" disabled="true" />
+        <input type="text" name="familyName" id="familyName" value="{$familyName|htmlentities}" />
     </div>
     <div class="TRdiv">
         <label for="firstName"><span>First Name : </span></label>
-        <input type="text" name="firstName" id="firstName" value="{$firstName|htmlentities}" disabled="true" />
+        <input type="text" name="firstName" id="firstName" value="{$firstName|htmlentities}" />
     </div> 
     <div class="TRdiv">
         <label for="email"><span>Email address : </span></label>
-        <input type="text" name="email" id="email" value="{$email|htmlentities}" disabled="true" />  
+        <input type="text" name="email" id="email" value="{$email|htmlentities}" />  
     </div>   
      <div class="TRdiv">
         <label for="instName"><span>University : </span></label>
-        <input type="text" name="instName" id="instName" value="{$instName|htmlentities}" disabled="true" />  
+        <input type="text" name="instName" id="instName" value="{$instName|htmlentities}" />  
     </div>     
     <div class="TRdiv">
         <label for="streetNr"><span>Street + NR : </span></label>
-        <input type="text" name="streetNr" id="streetNr" value="{$streetNr|htmlentities}" disabled="true" />
+        <input type="text" name="streetNr" id="streetNr" value="{$streetNr|htmlentities}" />
     </div>   
     <div class="TRdiv">
         <label for="tel"><span>Telephone : </span></label>
-        <input type="text" name="tel" id="tel" value="{$tel|htmlentities}" disabled="true" />
+        <input type="text" name="tel" id="tel" value="{$tel|htmlentities}" />
     </div>
     <div class="TRdiv">
         <label for="mobilePhone"<span>Mobile Phone : </span></label>
-        <input type="text" name="mobilePhone" id="mobilePhone" value="{$mobilePhone|htmlentities}" disabled="true" />
+        <input type="text" name="mobilePhone" id="mobilePhone" value="{$mobilePhone|htmlentities}" />
+    </div>
+</fieldset>
+
+{option:oFilled}    
+<fieldset>    
+    <legend>Study</legend> 
+    <div class="TRdiv">
+        <label for="study"><span>Study :  </span></label>
+        <input type="text" name="study" id="study" value="{$study|htmlentities}" />
+    </div> 
+</fieldset>
+    <fieldset>
+    <legend>Preferred countries</legend> 
+    <div class="TRdiv">
+        <label for="choice1"><span>First Choice : </span></label>
+        <input type="text" name="choice1" id="firstChoice" value="{$choice1|htmlentities}" />
+    </div>
+    <div class="TRdiv">
+        <label for="choice2"><span>Second Choice : </span></label>
+        <input type="text" name="choice2" id="secondChoice" value="{$choice2|htmlentities}" />
+	</div>  
+    <div class="TRdiv">
+        <label for="choice3"><span>Third Choice : </span></label>
+        <input type="text" name="choice3" id="choice3" value="{$choice3|htmlentities}" />
+    </div> 
+    </fieldset>
+    <fieldset>
+    <legend>CV</legend>    
+      <div class="TRdiv">
+        <label for="cv"><span>Upload your CV here :</span></label>        
+        <input type="text" name="cv" id="cv" value="{$cv|htmlentities}" />
     </div>
 </fieldset>
 <fieldset>
+    <legend>Transcript of records</legend>    
+      <div class="TRdiv">
+        <label for="transcript"><span>Upload your Transcript of Records here :</span></label>
+        <input type="text" name="transcript" id="transcript" value="{$transcript|htmlentities}" />
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Certificate of Foreign Language</legend>    
+      <div class="TRdiv">
+        <label for="certificate"><span>Upload your Certificate of Foreign Language here :</span></label>
+        <input type="text" name="certificate" id="certificate" value="{$certificate|htmlentities}" />
+        
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Extra</legend>        
+     <div class="TRdiv">
+            <label for="traineeOrStudy"><span>Aanvraag voor: </span></label>            
+            <input type="text" name="traineeOrStudy" id="traineeOrStudy" value="{$traineeOrStudy|htmlentities}" />
+    </div>
+    <div class="TRdiv">
+            <label for="cribb"><span>Op kot : </span></label>
+            <input type="text" name="cribb" id="cribb" value="{$cribb|htmlentities}" />
+    </div>
+    <div class="TRdiv">
+            <label for="cribRent"><span>Wens je je kot over te laten tijdens je uitwissling : </span></label>
+            <input type="text" name="cribRent" id="cribRent" value="{$cribRent|htmlentities}" />
+    </div>
+   <div class="TRdiv">
+            <label for="scolarship"><span>Deelnemen zonder Europese subsidie : </span></label>
+            <input type="text" name="scolarship" id="scolarship" value="{$scolarship|htmlentities}" />
+    </div>
+</fieldset> 
+{/option:oFilled}
+{option:oNotFilled}
+    <fieldset>
     <legend>Study</legend>    
     <div class="TRdiv">
         <label for="study"><span>Study :</span></label>
-        <input class="validate[required],custom[onlyLetterSp] text-input" type="text" name="study" id="study" value="{$study|htmlentities}"/>
-        <span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>	
-    </div>
+        <select name="study" >
+               {iteration:iStudy}
+                     {$stud}
+               {/iteration:iStudy}
+            </select>
+            <span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>    
 </fieldset>
-<fieldset>
+    
+    <fieldset>    
     <legend>Preferred countries</legend>    
     <div class="TRdiv">
-        <label for="firstChoice"><span>First Choice : </span></label>
-        <input class="validate[required],custom[onlyLetterSp] text-input" type="text" name="firstChoice" id="firstChoice" value="{$firstChoice|htmlentities}"/>
-        <span class="req" id="msgFirstChoice">{$msgFirstChoice|htmlentities}</span>	
-    </div>
+        <label for="choice1"><span>First Choice : </span></label>
+        <select name="choice1" >
+               {iteration:iChoice1}
+                     {$choic1}
+               {/iteration:iChoice1}
+            </select>
+            <span class="req" id="msgChoice1">{$msgChoice1|htmlentities}</span>
+            
     <div class="TRdiv">
-        <label for="secondChoice"><span>Second Choice :</span></label>
-        <input class="validate[required],custom[onlyLetterSp] text-input" type="text" name="secondChoice" id="secondChoice" value="{$secondChoice|htmlentities}"/>
-        <span class="req" id="msgSecondChoice">{$msgSecondChoice|htmlentities}</span>	
-    </div>  
+        <label for="choice2"><span>Second Choice : </span></label>
+        <select name="choice2"  >
+               {iteration:iChoice2}
+                     {$choic2}
+               {/iteration:iChoice2}
+            </select>
+            <span class="req" id="msgChoice2">{$msgChoice2|htmlentities}</span>
+	</div>  
     <div class="TRdiv">
-        <label for="thirdChoice"><span>Third Choice :</span></label>
-        <input class="validate[required],custom[onlyLetterSp] text-input" type="text" name="thirdChoice" id="thirdChoice" value="{$thirdChoice|htmlentities}"/>
-        <span class="req" id="msgThirdChoice">{$msgThirdChoice|htmlentities}</span>	
-    </div>
-</fieldset>
-<fieldset>
-    <legend>Motivation</legend>    
-    <div class="TRdiv">
-        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="motivation" id="motivation" cols="50" rows="5">{$motivation|htmlentities}</textarea>
-        <span class="req" id="msgMotivation">{$msgMotivation|htmlentities}</span>	
-    </div>
-</fieldset>
-<fieldset>
+        <label for="choice3"><span>Third Choice : </span></label>
+        <select name="choice3" >
+               {iteration:iChoice3}
+                     {$choic3}
+               {/iteration:iChoice3}
+            </select>
+            <span class="req" id="msgChoice3">{$msgChoice3|htmlentities}</span>
+	</div> 
+ </fieldset>
+    <fieldset>
     <legend>CV</legend>    
       <div class="TRdiv">
         <label for="cv"><span>Upload your CV here :</span></label>
@@ -88,37 +165,45 @@
         <span class="req" id="msgCertificate">{$msgCertificate|htmlentities}</span>	
     </div>
 </fieldset>
-{option:oBelgium}
 <fieldset>
-    <legend>Belgium</legend>        
+    <legend>Extra</legend>        
      <div class="TRdiv">
-            <label for="aanvraag"><span>Aanvraag voor: </span></label>
-            <select name="aanvraag" value="{$selectedAanvraag}" >
-               {iteration:iAanvraag}
-                     {$aanvraag}
-               {/iteration:iAanvraag}
+            <label for="traineeOrStudy"><span>Aanvraag voor: </span></label>
+            <select name="traineeOrStudy" value="{$traineeOrStudy}" >
+               {iteration:iDemand}
+                     {$demand}
+               {/iteration:iDemand}
             </select>
-            <span class="req" id="msgAanvraag">{$msgAanvraag|htmlentities}</span>
+            <span class="req" id="msgTraineeOrStudy">{$msgTraineeOrStudy|htmlentities}</span>
     </div>
     <div class="TRdiv">
-            <label for="kot"><span>Op kot : </span></label>
-            <span>Ja</span><input type="radio" {$kotTrue} id="kotJa" name="kot" value="1" class="validate[required] radio"  />
-            <span>Nee</span><input type="radio" {$kotFalse} id="kotNee" name="kot" value="0" class="validate[required] radio" />
-            <span class="req" id="msgKot">{$msgKot|htmlentities}</span>
+            <label for="cribb"><span>Op kot : </span></label>
+            <span>Yes</span><input type="radio" {$cribYes} id="cribYes" name="cribb" value="Yes" class="validate[required] radio"  />
+            <span>No</span><input type="radio" {$cribNo} id="cribNo" name="cribb" value="No" class="validate[required] radio" />
+            <span class="req" id="msgCribb">{$msgCribb|htmlentities}</span>
     </div>
     <div class="TRdiv">
-            <label for="kotOverlaten"><span>Wens je je kot over te laten tijdens je uitwissling : </span></label>
-            <span>Ja<input type="radio" id="kotOverlatenJa" {$kotOverlatenTrue} name="kotOverlaten" value="1" class="validate[required] radio" /></span>
-            <span>Nee<input type="radio" id="kotOverlatenNee" {$kotOverlatenFalse} name="kotOverlaten" value="0" class="validate[required] radio" /></span>
-            <span class="req" id="msgKotOverlaten">{$msgKotOverlaten|htmlentities}</span>
+            <label for="cribRent"><span>Wens je je kot over te laten tijdens je uitwissling : </span></label>
+            <span>Yes<input type="radio" id="rentYes" {$rentYes} name="cribRent" value="Yes" class="validate[required] radio" /></span>
+            <span>No<input type="radio" id="rentNo" {$rentNo} name="cribRent" value="No" class="validate[required] radio" /></span>
+            <span class="req" id="msgCribRent">{$msgCribRent|htmlentities}</span>
     </div>
    <div class="TRdiv">
-            <label for="subsidie"><span>Deelnemen zonder Europese subsidie : </span></label>
-            <span>Ja<input type="radio" id="subdidieJa" {$subsidieTrue} name="subsidie" value="1" class="validate[required] radio" /></span>
-            <span>Nee<input type="radio" id="subsidieNee" {$subsidieFalse} name="subsidie" value="0" class="validate[required] radio" /></span>
-            <span class="req" id="msgSubsidie">{$msgSubsidie|htmlentities}</span>
+            <label for="scolarship"><span>Deelnemen zonder Europese subsidie : </span></label>
+            <span>Yes<input type="radio" id="scolYes" {$scolYes} name="scolarship" value="Yes" class="validate[required] radio" /></span>
+            <span>No<input type="radio" id="scolNo" {$scolNo} name="scolarship" value="No" class="validate[required] radio" /></span>
+            <span class="req" id="msgScolarship">{$msgScolarship|htmlentities}</span>
+    </div>
+</fieldset>    
+{/option:oNotFilled}
+<fieldset>
+    <legend>Motivation</legend>    
+    <div class="TRdiv">
+        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="motivation" id="motivation" cols="50" rows="5">{$motivation|htmlentities}</textarea>
+        <span class="req" id="msgMotivation">{$msgMotivation|htmlentities}</span>	
     </div>
 </fieldset>
+{option:oBelgium}
 {/option:oBelgium}
 {option:oPortugal}
 <fieldset>
@@ -144,9 +229,12 @@
 <fieldset>
     <legend>Iceland</legend>      
 </fieldset>
-{/option:oIceland}    
+{/option:oIceland}
+    
+{option:oNotFilled}
     <div class="TRdiv">               
         <input type="hidden" name="formAction" id="formCert" value="doSubmit" />
 	<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-    </div>    
+    </div>   
+{/option:oNotFilled}
 </form>

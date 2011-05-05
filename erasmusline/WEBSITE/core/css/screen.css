@@ -1,4 +1,4 @@
-       .suggestionsBox {
+       .suggestionsBox, .suggestionsBox2, .suggestionsBox3 {
 		position: relative;
 		left: 30px;
 		margin: 10px 0px 0px 0px;
@@ -12,18 +12,18 @@
 		color: #fff;
 	}
 	
-	.suggestionList {
+	.suggestionList, .suggestionList2, .suggestionList3 {
 		margin: 0px;
 		padding: 0px;
 	}
 	
-	.suggestionList li {
+	.suggestionList li, .suggestionList2 li, .suggestionList3 li {
 		
 		margin: 0px 0px 3px 0px;
 		padding: 3px;
 		cursor: pointer;
 	}
 	
-	.suggestionList li:hover {
+	.suggestionList li:hover, .suggestionList2 li:hover, .suggestionList3 li:hover {
 		background-color: #659CD8;
         }

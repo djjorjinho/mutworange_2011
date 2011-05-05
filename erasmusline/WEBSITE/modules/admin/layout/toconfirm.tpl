@@ -18,9 +18,9 @@
                 <a href="{$hrefProfile}">{$name}</a>
             </td>
             <td>
-            <span>Accept</span><input class="validate[required] radio" type="radio" name="accepted{$i}" value="1" id="radio2{$i}" {$acceptedYes} />
+            <span>Accept</span><input class="validate[required] radio" type="radio" name="accepted{$i}" value="2" id="radio2{$i}" {$acceptedYes} />
             <span>Deny</span><input type="radio" class="validate[required] radio" name="accepted{$i}" value="0" id="radio0{$i}" {$acceptedNo} />
-            <span>Wait</span><input type="radio" class="validate[required] radio" name="accepted{$i}" value="0" id="radio1{$i}" {$acceptedWait} />
+            <span>Wait</span><input type="radio" class="validate[required] radio" name="accepted{$i}" value="1" id="radio1{$i}" {$acceptedWait} />
             </td>
         </tr>
 		{/iteration:iStudents}

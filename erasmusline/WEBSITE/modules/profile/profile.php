@@ -101,18 +101,19 @@ class ProfileController extends PlonkController {
         $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
     }
 
+    
     public function checkLogged() {
-
+        //Plonk::dump(PlonkSession::get('id').'hgdjdh');
         if (!PlonkSession::exists('loggedIn')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            if (PlonkSession::get('id') === '1') {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+            if (PlonkSession::get('id') == 0) {
+                $this->mainTpl->assignOption('oAdmin');
+                $this->id = PlonkSession::get('id');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             }
-            $this->mainTpl->assignOption('oLogged');
-            $this->id = PlonkSession::get('id');
         }
-        $this->mainTpl->assignOption('oProfile');
     }
 
 }

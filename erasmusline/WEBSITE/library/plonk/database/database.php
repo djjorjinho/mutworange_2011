@@ -170,6 +170,24 @@ class PlonkDB {
 		// execute query and return affected rows
 		return $this->execute($query);
 	}
+        
+        public function deleteMultiple($table, $where, $which) {
+            $table = (string)$table;
+            $where = (string)$where;
+            $string = '';
+            for ($i = 0; $i < count($which); $i++) {
+                $string = $string . $which[$i];
+                if ($i < count($which)-1) {
+                    $string .= ',';
+                }
+            }
+            $query = 'DELETE FROM '.$table;
+            if($where != '') $query .=' WHERE '. $where;
+            $query .= ' IN ('.$string.');';
+            
+            // execute query and return affected rows
+		return $this->execute($query);
+        }
 	
 	
 	/**
@@ -745,6 +763,27 @@ class PlonkDB {
 		return $this->execute($query);
 		
 	}
+        
+        public function updateOneInMany($table, $what,$where, $value, $which) {
+            $table = (string)$table;
+            $where = (string)$where;
+            $string = '';
+            
+            for ($i = 0; $i < count($which); $i++) {
+                $string = $string . $which[$i];
+                if ($i < count($which)-1) {
+                    $string .= ',';
+                }
+            }
+            
+            $query = 'UPDATE '.$table;
+            if($where != '') $query .=' SET '. $what. ' = '. (int)$value;
+            $query .= ' WHERE '.$where.' IN ('.$string.');';
+            
+            
+            // execute query and return affected rows
+		return $this->execute($query);
+        }
 	
 		
 	/**

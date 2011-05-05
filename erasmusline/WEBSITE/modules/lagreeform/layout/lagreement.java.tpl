@@ -51,15 +51,13 @@
                 var i = $('#coursesTable tr').length-3;;
                 $('#addCourse').click(function(){
                     i++;
-                  $('#courseCount').val(i);
-                    $('#coursesTable > tbody:last').append('<tr> <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code'+i+'" name="code'+i+'" /></td><td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="title'+i+'" name="title'+i+'" /></td><td><input class="validate[required,custom[onlyNumberSp]]" type="text" id="ects'+i+'" name="ects'+i+'" /></td><td><span class="req">*</span></td> </tr>');});
+                    $('#coursesTable > tbody:last').append('<tr> <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code'+i+'" name="code'+i+'" /></td><td><input onkeyup="lookup('+i+',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title'+i+'" name="title'+i+'" /><div class="suggestionsBox'+i+'" id="suggestions'+i+'" style="display: none;"><div class="suggestionList'+i+'" id="autoSuggestionsList'+i+'">&nbsp;</div></div></td><td><input class="validate[required,custom[onlyNumberSp]]" type="text" id="ects'+i+'" name="ects'+i+'" /></td><td><span class="req">*</span></td></tr>');});
                 $('#remCourse').click(function(){
                     
                     if ($('#coursesTable tr').length > 4)
                     {
                         i--;
                         $('#coursesTable tr:last').remove();
-                        $('#courseCount').val(i);
                         
                     }
                 });

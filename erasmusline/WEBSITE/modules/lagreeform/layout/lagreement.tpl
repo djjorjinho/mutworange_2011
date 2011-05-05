@@ -53,7 +53,7 @@
             </tr>
             <tr>
                             <td></td><td></td><td></td>
-                            <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /><input type="text" id="courseCount" name="courseCount" value="{$courseCount}" /></td>
+                            <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /></td>
                         </tr>
             {iteration:iCourses}
             {$row}

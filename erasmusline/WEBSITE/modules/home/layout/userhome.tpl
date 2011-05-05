@@ -1,7 +1,26 @@
-<h2>You're logged in, {$user}</h2>
+<h2>Welcome {$user}</h2>
 
-{option:oLogged}
+<h3>Your status</h3>
+<p>Your latest action:{$action}</p>
+<p>Status of action: {$status}</p>
 
-                {/option:oLogged}
+<h3>What's next?</h3>
+<p>{$next}</p>
 
-<h3><a href="index.php?module=erasmus&view=preCandidateForm" title="Fill in pre-candidate form">Fill in pre-candidate form</a></h3>
+<h3>Forms that you already filled in</h3>
+{option:noForms}
+<p>You didn't fill in any forms yet</p>
+{/option:noForms}
+
+<ul>
+{iteration:iForms}
+{$form}
+{/iteration:iForms}
+    </ul>
+
+
+
+
+
+
+

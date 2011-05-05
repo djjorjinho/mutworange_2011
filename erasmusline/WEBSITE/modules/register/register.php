@@ -19,7 +19,7 @@ class RegisterController extends PlonkController {
         'city', 'postalCode', 'nationality'
     );
     protected $actions = array(
-        'submit'
+        'submit', 'login'
     );
     protected $code;
     protected $id;
@@ -37,18 +37,21 @@ class RegisterController extends PlonkController {
 
         $user = RegisterDB::getUserById($id);
         if ($string === $user['verificationCode']) {
-            $this->pageTpl->assignOption('oTest');
-            $array['isValidUser'] = true;
+            $this->pageTpl->assignOption('oSuccess');
+            $array['isValidUser'] = 1;
             RegisterDB::updateUserField($array, 'userId = ' . (int) $id);
+        }
+        else {
+            $this->pageTpl->assignOption('oNoSuccess');
         }
     }
 
     private function mainTplAssigns() {
         // Assign main properties
-        $this->mainTpl->assign('siteTitle', 'ErasmusLine');
+        $this->mainTpl->assign('siteTitle', 'Register');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/register.java.tpl');
-        $this->mainTpl->assign('pageMeta', $java->getContent(true));
-        $this->mainTpl->assign('pageCSS', '');
+        $this->mainTpl->assign('pageJava', $java->getContent(true));
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
     }
 
     private function fillNationality($nationality = '') {
@@ -93,14 +96,13 @@ class RegisterController extends PlonkController {
         $this->mainTplAssigns();
         $this->fillNationality(PlonkFilter::getPostValue('nationality'));
         $this->checkLogged();
-        
-        
-        if (PlonkSession::exists('loggedIn')) {    
-            if (PlonkSession::get('id') === '1') {                 
+
+        if (PlonkSession::exists('id')) {            
+            if (PlonkSession::get('id') == '0') {
                 $this->variables[] = 'userLevel';
                 $this->fillUserLevel(PlonkFilter::getPostValue('userLevel'));
             }
-        }        
+        }
 
         foreach ($this->variables as $value) {
             if (empty($this->fields)) {
@@ -135,31 +137,45 @@ class RegisterController extends PlonkController {
             $this->fields = $_POST;
         } else {
             $this->code = Functions::createRandomString();
+            $school = RegisterDB::getInstituteId(INSTITUTE);
             $values = array(
                 'familyName' => htmlentities(PlonkFilter::getPostValue('familyName')),
                 'firstName' => htmlentities(PlonkFilter::getPostValue('firstName')),
                 'email' => htmlentities(PlonkFilter::getPostValue('email')),
-                'street' => htmlentities(PlonkFilter::getPostValue('street')),
-                'city' => htmlentities(PlonkFilter::getPostValue('city')),
+                'streetNr' => htmlentities(PlonkFilter::getPostValue('street')),
+                'city' => htmlentities(PlonkFilter::getPostValue('city')),                
                 'postalCode' => htmlentities(PlonkFilter::getPostValue('postalCode')),
                 'password' => htmlentities(PlonkFilter::getPostValue('password')),
                 'tel' => htmlentities(PlonkFilter::getPostValue('telephone')),
                 'mobilePhone' => htmlentities(PlonkFilter::getPostValue('mobilePhone')),
                 'birthDate' => htmlentities(PlonkFilter::getPostValue('birthDate')),
                 'birthPlace' => htmlentities(PlonkFilter::getPostValue('birthPlace')),
-                'code' => htmlentities(PlonkFilter::getPostValue('nationality')),
+                'country' => htmlentities(PlonkFilter::getPostValue('nationality')),
                 'sex' => htmlentities(PlonkFilter::getPostValue('sex')),
                 'verificationCode' => $this->code,
-                'userLevel' => '1'
+                'institutionId' => $school['instId']    
             );
-            $db = PlonkWebsite::getDB();
-            if (!PlonkSession::get('id') === '1') {
-                $this->sendMail($values['email'], $values['familyName'], $values['firstName']);
-                $insertId = $db->insert('users', $values);
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=register&' . PlonkWebsite::$viewKey . '=registersucces');
+            if (PlonkSession::exists('id')) {            
+                if (PlonkSession::get('id') == '0') {
+                    
+                    $values['userLevel'] = htmlentities(PlonkFilter::getPostValue('userLevel'));
+                    $values['isValidUser'] = 2;
+                    RegisterDB::insertUser('users', $values);           
+                    PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+                }
+                else {
+                    PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+                }
             } else {
+                $this->sendMail($values['email'], $values['familyName'], $values['firstName']);
+                
                 $values['userLevel'] = htmlentities(PlonkFilter::getPostValue('userLevel'));
-                $insertId = $db->insert('users', $values);
+                $values['userLevel'] = 'Student';
+                $values['isValidUser'] = 0;
+
+                RegisterDB::insertUser('users', $values);
+
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=register&' . PlonkWebsite::$viewKey . '=registersucces');
             }
         }
     }
@@ -194,32 +210,31 @@ class RegisterController extends PlonkController {
         }
     }
 
-    public function checkLogged() {
 
-        if (!PlonkSession::exists('loggedIn')) {
-            $this->mainTpl->assignOption('oNotLogged');
-            $this->pageTpl->assignOption('oNotLogged');
-        } else {
-            if (PlonkSession::get('id') === '1') {
+    public function checkLogged() {
+        if (PlonkSession::exists('id')) {
+            if (PlonkSession::get('id') == '0') {
+                $this->mainTpl->assignOption('oAdmin');
                 $this->pageTpl->assignOption('oAdmin');
+                $this->id = PlonkSession::get('id');
             } else {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             }
-
-            $this->mainTpl->assignOption('oLogged');
-            $this->pageTpl->assignOption('oLogged');
+        }
+        else {
+            $this->mainTpl->assignOption('oNotLogged');
         }
     }
 
     private function fillUserLevel($userLevel = '') {
-        $userLevels = ('student');
+        $userLevels = array('Teaching staff', 'Erasmus coordinator', 'Higher Education institution', 'Industrial institution', 'International relations office staff');
         $this->pageTpl->setIteration('iUserLevel');
         $i = 1;
         foreach ($userLevels as $value) {
             if ($userLevel == $value) {
                 $this->pageTpl->assignIteration('userLevel', '<option selected=\"true\" value=' . $value . '> ' . $value . '</option>');
             } else {
-                $this->pageTpl->assignIteration('userLevel', '<option value=' . $i . '> ' . $value . '</option>');
+                $this->pageTpl->assignIteration('userLevel', '<option value="' . $value . '"> ' . $value . '</option>');
             }
             $this->pageTpl->refillIteration('iUserLevel');
             $i++;
