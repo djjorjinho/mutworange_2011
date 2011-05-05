@@ -33,7 +33,7 @@ class OLAPTest extends PHPUnit_TestCase {
     	$config = $this->getJSON('../config/eis_scenario_config.json');
     	
     	$results = $this->olap->runScenario($config['params']);
-    	print_r($results);
+    	#print_r($results);
     	$this->assertTrue(is_array($results));
     }
     

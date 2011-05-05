@@ -21,7 +21,7 @@ class ObjectCache{
 	}
 	
 	function get($key){
-		$time = mktime();
+		$time = time();
 		$arr =  $this->cache[$key];
 		
 		if(! is_array($arr)){
@@ -80,6 +80,23 @@ class ObjectCache{
 		return self::$object_cache;
 	}
 	
+	/**
+	 * 
+	 * Cache the result of a closure function
+	 * @param string $key
+	 * @param int $ttl
+	 * @param Closure $func
+	 * @return mixed $result
+	 */
+	function cacheFunc($key,$ttl=0,Closure $func){
+		$result = $this->get($key);
+		if(isset($result)) return $result;
+		
+		$result = $func();
+		
+		$this->store($key,$result,$ttl);
+		return $result;
+	}
 }
 
 ?>

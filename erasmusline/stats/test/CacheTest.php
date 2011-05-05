@@ -21,6 +21,22 @@ class CacheTest extends PHPUnit_TestCase {
 	
 	function tearDown(){}
 	
+	function testCacheFunc(){
+		$cache = $this->cache;
+		$arg = "World";
+		
+		$res = $cache->cacheFunc("helloworld",120,function()use($arg){
+			print "Hello ${arg}\n";
+			return true;
+		});
+		$this->assertTrue($res);
+		
+		$res = $cache->cacheFunc("helloworld",120,function()use($arg){
+			return false;
+		});
+		$this->assertTrue($res);
+	}
+	
 	function testCache(){
 		$cache = $this->cache;
 		$cache->store("ID1",$this,20);

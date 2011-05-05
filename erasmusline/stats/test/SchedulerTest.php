@@ -11,9 +11,10 @@ class SchedulerTest extends PHPUnit_TestCase {
     
 	function dummyFunc(){
 		error_log("Hello World!");
+		$this->assertTrue(true);
 	}
 	
-	function testSchedule(){
+	function testSchedule3(){
 		print "SchedulerTest::testSchedule: wait a minute\n";
 		$row = array(
 				timeout => 0,
@@ -23,8 +24,7 @@ class SchedulerTest extends PHPUnit_TestCase {
 				every_day => 0,
 				method => 'dummyFunc',
 				'class' => get_class($this),
-				startup => 0,
-				runs => 0
+				startup => 0
 				);
 		
 		$task = new ScheduledTask($row);
@@ -37,6 +37,54 @@ class SchedulerTest extends PHPUnit_TestCase {
 		$sched->shutdown();
 	}
 	
+	function testSchedule2(){
+		
+		$row = array(
+				timeout => 0,
+				every_seconds => 0,
+				every_minute => 1,
+				every_hour => 0,
+				every_day => 0,
+				method => 'dummyFunc',
+				'class' => get_class($this),
+				startup => 1
+				);
+		
+		$task = new ScheduledTask($row);
+		
+		$sched = new Scheduler(
+				array($task),
+				array( get_class($this) => $this));
+				
+		sleep(5);
+		$sched->shutdown();
+	}
+	
+	function testSchedule(){
+		$dt = new DateTime('@'.(time()+20));
+		print($dt->format('Y-m-d H:i:s'));
+		$row = array(
+				timeout => 0,
+				every_seconds => 0,
+				every_minute => 0,
+				every_hour => 0,
+				every_day => 0,
+				method => 'dummyFunc',
+				'class' => get_class($this),
+				startup => 0,
+				at => $dt->format('Y-m-d H:i:s'),
+				next_months => 1
+			);
+		
+		$task = new ScheduledTask($row);
+		
+		$sched = new Scheduler(
+				array($task),
+				array( get_class($this) => $this));
+				
+		sleep(65);
+		$sched->shutdown();
+	}
     
 }
 $suite = new PHPUnit_TestSuite('SchedulerTest');

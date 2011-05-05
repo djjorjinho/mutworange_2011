@@ -114,14 +114,27 @@ class ScheduledTask{
 			$this->timeout = 0;
 			return;
 		}
+		if(empty($rec['at'])){
+			$timeout = $rec['every_seconds'];
+			$timeout += $rec['every_minute'] * 60;
+			$timeout += $rec['every_hour'] * 60 * 60;
+			$timeout += $rec['every_day'] * 60 * 60;
+			$timeout += time();
+		}else{
+			$now = time();
+			$dt = new DateTime($rec['at']);
 			
+			if($dt->getTimestamp() > $now){
+				$timeout = $dt->getTimestamp();
+			}else{
+				$dt->add(new DateInterval('P'.$rec['next_months'].'M'));
+				$timeout = $dt->getTimestamp();
+			}
+			
+		}
 		
-		$timeout = $rec['every_seconds'];
-		$timeout += $rec['every_minute'] * 60;
-		$timeout += $rec['every_hour'] * 60 * 60;
-		$timeout += $rec['every_day'] * 60 * 60;
-		
-		$timeout += time();
+		$next = new DateTime('@'.$timeout);
+		print("Next timeout: ".$next->format('Y-m-d H:i:s')."\n");
 		
 		$this->timeout = $timeout;
 	}
