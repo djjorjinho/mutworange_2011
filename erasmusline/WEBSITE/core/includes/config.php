@@ -26,45 +26,45 @@
 	/**
 	 * Database Server Username
 	 */
-		define ('DB_USER',		'root');
+		define ('DB_USER',		'erasmusline');
 
 
 	/**
 	 * Database Server Password
 	 */
-		define ('DB_PASS',		'');
+		define ('DB_PASS',		'orange');
 
 
 	/**
 	 * Database Name
 	 */
 		define ('DB_NAME',		'erasmusline');
-                
-        
+
+
         /**
         * Sender
          */
                 define('MAIL_SENDER','info@kahosl.be');
-                
+
        /**
         * Smpt-server
         */
                 define('MAIL_SMTP','smtp.kahosl.be');
-       
+
        /**
         *Subject
         */
                 define('MAIL_SUBJECT','Task completed: ');
-                
+
        /**
         * Institute
         */
-              define('INSTITUTE', 'KAHO Sint-Lieven');  
-              
+              define('INSTITUTE', 'KAHO Sint-Lieven');
+
        /**
         * Academic Year
         */
               define('ACADEMICYEAR','2010-2011');
-	
-	
+
+
 // EOF
