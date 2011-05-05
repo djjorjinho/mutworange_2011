@@ -19,8 +19,7 @@ class Client{
 		
 		stream_socket_sendto($this->socket,$message);
 		$response = stream_socket_recvfrom($this->socket,1500);
-		
-		//System_Daemon::info($message." !!!! ".$response);
+
 	}
 	
 }

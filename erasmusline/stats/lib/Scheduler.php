@@ -110,6 +110,11 @@ class ScheduledTask{
 	 */
 	function nextTimeout(){
 		$rec = $this->record;
+		if($rec['startup'] && $this->runs == 0){
+			$this->timeout = 0;
+			return;
+		}
+			
 		
 		$timeout = $rec['every_seconds'];
 		$timeout += $rec['every_minute'] * 60;

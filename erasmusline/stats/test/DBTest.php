@@ -40,6 +40,12 @@ class DBTest extends PHPUnit_TestCase {
 		$this->assertTrue($obj['dim_gender_id'] == 'O');
 	}
 	
+	function testDBKEY(){
+		list($table,$id) = preg_split("/\./","slaves.192.168.0.1",2);
+		$this->assertEquals("slaves",$table);
+		$this->assertEquals("192.168.0.1",$id);
+	}
+	
 	function testUpdate(){
 		$db = $this->db;
 		$obj = $db->getObj("dim_gender.O");

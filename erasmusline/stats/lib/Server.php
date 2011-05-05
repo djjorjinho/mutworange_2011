@@ -10,9 +10,11 @@ class Server{
 
 	private $tcpLoop;
 	private $unixLoop;
+	private $config;
 	
 	function __construct($options){
-
+		$this->config = $options;
+		
 		$tcpSock = new TCPSocketSource($options,$this);
 		$this->tcpLoop = new LooPHP_EventLoop( $tcpSock );
 		
@@ -35,7 +37,7 @@ class Server{
     }
 	
 	function getIP() {
-			
+		/*
 		$ip = getenv('HTTP_CLIENT_IP');
 		if(isset($ip) && $ip != 'unknown') return $ip;
 		
@@ -47,7 +49,11 @@ class Server{
 		
 		$ip = isset($_SERVER['REMOTE_ADDR']) ?
 					$_SERVER['REMOTE_ADDR'] : 'unknown';
-		  
+		*/
+		preg_match("/Current IP Address: ([0-9.]*)/", 
+			`curl http://checkip.dyndns.org/`,$matches);
+		
+		$ip = $matches[1];		
 		return $ip;
 	}
 	

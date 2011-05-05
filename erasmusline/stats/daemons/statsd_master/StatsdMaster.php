@@ -70,7 +70,9 @@ class StatsdMaster extends Server implements JsonRpcI{
     function rpcMethods(){
     	
     	$methods = array(
-    		'ping' => true
+    		'ping' => true,
+    		'query' => true,
+    		'pingSlave' => true
     	);
     	
     	return $methods;
@@ -84,6 +86,24 @@ class StatsdMaster extends Server implements JsonRpcI{
      */
 	function ping($params){
 		return array(ping=>$params['name']);
+	}
+	
+	function query($params){
+		return $this->olap->runScenario($params);
+	}
+	
+	function pingSlave($params){
+		$obj = array(
+			slaves_id => $params['ipAdress'],
+			port => $params['port'] 
+		);
+		
+		$r = $this->db->getObj( "slaves.$params[ipAdress]" );
+		
+		if( empty($r) ){
+			$this->db->insert($obj, "slaves");
+		}
+		return array(OK=>true);	
 	}
 }
 

@@ -44,10 +44,10 @@ class StatsdSlave extends Server implements JsonRpcI{
 		
 		# leave these for last
 		$this->scheduler = new Scheduler(
-						array(),
+						$this->getTasks(),
 						array( get_class($this) => $this,
 								get_class($this->etl) => $this->etl ));
-		
+								
 		parent::__construct($options);
 	}
 	
@@ -77,6 +77,24 @@ class StatsdSlave extends Server implements JsonRpcI{
 		$response = $this->dispatcher->dispatch($message);
     }
     
+    function getTasks(){
+    	$tasks = array(
+			new ScheduledTask(array(
+				timeout => 0,
+				every_seconds => 0,
+				every_minute => 0,
+				every_hour => 0,
+				every_day => 1,
+				method => 'pingMaster',
+				'class' => get_class($this),
+				startup => 1,
+				runs => 0
+			))
+    	);
+    	
+    	return $tasks;
+    }
+    
     /**
      * 
      * Allowed methods by the JsonRpcDispatcher object
@@ -85,7 +103,8 @@ class StatsdSlave extends Server implements JsonRpcI{
     function rpcMethods(){
     	
     	$methods = array(
-    		'ping' => true
+    		'ping' => true,
+    		'query' => true
     	);
     	
     	return $methods;
@@ -99,6 +118,22 @@ class StatsdSlave extends Server implements JsonRpcI{
      */
 	function ping($params){
 		return array(ping=>$params['name'],ip=>$this->getIP());
+	}
+	
+	function query($params){
+		return $this->olap->runScenario($params);
+	}
+	
+	function pingMaster(){
+		$client = new Client($this->config['master_serverconfig']);
+		$message = json_encode(array(
+			method => 'pingSlave',
+			params => array(
+					ipAdress => $this->getIP(),
+					port => $this->config['serverconfig']['serverPort'] 
+				)
+		));
+    	$client->sendMessage($message,$response);
 	}
 }
 

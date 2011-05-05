@@ -1,6 +1,7 @@
 {
     "daemonconfig" : {
-		"appName" : "statsd_slave"
+		"appName" : "statsd_slave",
+		"logVerbosity" : 7
 	},
     "serverconfig" : {
 		"sockFile" : "/tmp/erasmusline/statsd_slave/statsd_slave.sock",

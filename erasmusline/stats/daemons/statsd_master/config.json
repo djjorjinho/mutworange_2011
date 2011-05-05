@@ -1,6 +1,7 @@
 {
     "daemonconfig" : {
-		"appName" : "statsd_master"
+		"appName" : "statsd_master",
+		"logVerbosity" : 7
 	},
     "serverconfig" : {
 		"sockFile" : "/tmp/erasmusline/statsd_master/statsd_master.sock",
@@ -13,7 +14,7 @@
 		"password":"orange",
 		"port":"3306",
 		"schema":"p8statsdw",
-		"debug" : false
+		"debug" : true
     },
     "etlconfig" : {
     },

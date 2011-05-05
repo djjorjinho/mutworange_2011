@@ -165,7 +165,8 @@ class DB{
 	 * @return array|null row array or null value
 	 */
 	function getObj($dbkey){
-		list($table,$id) = preg_split("/\./",$dbkey);
+
+		list($table,$id) = preg_split("/\./",$dbkey,2);
 		
 		$sql = "SELECT * FROM $table WHERE ${table}_id = '$id'";
 		

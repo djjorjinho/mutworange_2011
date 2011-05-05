@@ -33,11 +33,11 @@ class JsonRpcDispatcher{
 		
 		try{
 			
-			#System_Daemon::info("Encoded Message: ".$msg);
+			System_Daemon::debug("Encoded Message: ".$msg);
 			
 			$json = json_decode($msg,true);
 			
-			#System_Daemon::info("Decoded Message: ".print_r($json,true));
+			System_Daemon::debug("Decoded Message: ".print_r($json,true));
 			
 			if($json==null){
 				return $this->jsonError("NOT_JSON_MSG");
@@ -54,7 +54,7 @@ class JsonRpcDispatcher{
 				$result = call_user_func_array($runnable,array($json['params']));
 			}
 			
-			#System_Daemon::info("Result Message: ".print_r($result,true));
+			System_Daemon::debug("Result Message: ".print_r($result,true));
 			
 			if(!isset($result) or $result == false){
 				# false fails, if you need to return false,
@@ -67,7 +67,7 @@ class JsonRpcDispatcher{
 			}
 			
 		}catch(Exception $e){
-			System_Daemon::err("EXCEPTION",0,0,$e->getMessage());
+			System_Daemon::err("EXCEPTION:\n".$e->getMessage());
 			return $this->jsonError($e->getMessage);
 		}
 		

@@ -257,8 +257,7 @@ ENGINE = MyISAM;
 DROP TABLE IF EXISTS `p8statsdw`.`slaves` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`slaves` (
-  `slaves_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `ip_address` CHAR(15) NULL ,
+  `slaves_id` CHAR(15) NOT NULL COMMENT 'ip address' ,
   `port` CHAR(7) NULL ,
   PRIMARY KEY (`slaves_id`) )
 ENGINE = MyISAM;
