@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./core/css/layout.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
 <!--    {$pageMeta}-->
   </head>
   
@@ -32,7 +33,7 @@
       <a href="index.php?module=home&view=logout" title="Logout">Logout</a>
 {/option:oLogged}
 {option:oNotLogged}
-      <a href="index.php?module=home&view=login" title="Login">Login</a>
+      <a href="index.php?module=login" title="Login">Login</a>
 {/option:oNotLogged}
 {option:oAdmin}
       <a href="index.php?module=admin&view=users" class="{$tabAdmin}" title="Users">Admin</a>

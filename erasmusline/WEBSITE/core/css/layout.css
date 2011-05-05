@@ -138,13 +138,17 @@ a:hover {
     font-size: 14px;
 }
 input {
-    background: #6A7787;
+    border: 1px solid #006;
+    margin-bottom: 5px;
+}
+.button {
+    background: #99ABC1;
     border: 1px solid #000000;
-    color: #FF6A00;
+    color: #006;
     font-weight: bold;
     padding: 5px;
 }
-input:active {
+.button:active {
     background: #12293D;
     border: 1px solid #000000;
     color: #FF6A00;
