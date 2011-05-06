@@ -36,8 +36,7 @@ class HomeDB {
             
             $db = PlonkWebsite::getDB();
             
-            $eventInfo = $db ->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where erasmusStudentId = ".$db->escape($id));
-            
+            $eventInfo = $db ->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where erasmusStudentId = ".$db->escape($id).' ORDER BY timestamp,eventId DESC');
             return $eventInfo;
         }
         

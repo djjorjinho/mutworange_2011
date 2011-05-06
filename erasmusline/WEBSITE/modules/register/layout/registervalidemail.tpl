@@ -14,7 +14,7 @@
 			</p>
 
 		<p>
-			<input type="hidden" name="formAction" id="formLogin" value="doLogin" />
+			<input type="hidden" name="formAction" id="formLogin" value="mainLogin" />
 			<input class="button" name="btnLogin" id="btnLogin" type="submit" value="Login"/>
 		</p>
                     </form>

@@ -8,6 +8,7 @@
 <span class="req" id="msgAcaYear">{$msgAcaYear|htmlentities}</span>
 </div>
 
+{option:oNotFilled}
 <div class="TRdiv">
 <label for="study"><span>Field of Study: </span></label>
             <select name="study" value="{$study}" >
@@ -17,6 +18,13 @@
             </select>
             <span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>
 </div>  
+{/option:oNotFilled}
+{option:oFilled}
+<div class="TRdiv">
+<label for="study"><span>Study: </span></label>
+<input type="text" id="studye" name="study" value="{$study|htmlentities}" />
+</div>
+{/option:oFilled}
 
 <h3>Sending Institution</h3>
 <fieldset>

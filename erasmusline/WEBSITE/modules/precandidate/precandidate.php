@@ -38,10 +38,16 @@ class PrecandidateController extends PlonkController {
         $this->checkLogged();
         $this->CountryAssign();
         $this->MainTplAssigns();
-
+        
+        //Plonk::dump(PlonkSession::get('id'));
         $status = PrecandidateDB::getStudentStatus(PlonkSession::get('id'));
+        
         if (!empty($status)) {
-            if ($status['statusOfErasmus'] === "Precandidate") {
+            $status = PrecandidateDB::getStudentStatus(PlonkSession::get('id'));
+            $erasmusLevel = PrecandidateDB::getIdLevel($status['statusOfErasmus']);
+            $erasmusLevel2 = PrecandidateDB::getIdLevel('Student Application Form');
+            
+            if ($erasmusLevel['levelId'] > $erasmusLevel2['levelId']) {
                 $this->filledPrecandidate();
                 
             } else {
@@ -243,7 +249,8 @@ class PrecandidateController extends PlonkController {
     }
 
     private function extraShow() {
-
+        
+        
         $this->extra[] = '...';
         $this->extra[] = 'Study';
         $this->extra[] = 'Internship';

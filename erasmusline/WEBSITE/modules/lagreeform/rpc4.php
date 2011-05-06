@@ -7,13 +7,13 @@ if (isset($_POST['queryString'])) {
     $queryString = $_POST['queryString'];
     $id = $_POST['id'];
     if (strlen($queryString) > 0) {
-          $query = "SELECT * FROM coursesPerEducPerInst";
+          $query = "SELECT * FROM coursesPerEducPerInst WHERE courseName LIKE '$queryString%' LIMIT 10";
        
        $result = mysql_query($query);
         
         while ($row = mysql_fetch_array($result)) {
             echo '<li 
-                onClick="fill('.$id.',\''.$row['courseName'].'\',\''.$row['courseCode'].'\','.$row['ectsCredits'].')
+                onClick="fill('.$id.',\''.$row['courseName'].'\',\''.$row['courseCode'].'\','.$row['ectsCredits'].');
                 ;">' . $row['courseName'].'</li>';          
         }
              

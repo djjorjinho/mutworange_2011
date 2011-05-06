@@ -1,6 +1,6 @@
 <h2>Learning agreement</h2>
 
-<form action="" method="post" enctype="multipart/form-data" id="lagreement">
+<form action="" method="post" enctype="multipart/form-data" id="lagreement" name="lagreement">
     <p>
         <span>Academic Year: </span>
         {$acaYear}
@@ -53,7 +53,7 @@
             </tr>
             <tr>
                             <td></td><td></td><td></td>
-                            <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /></td>
+                            <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /><input type="hidden" id="courseCount" name="courseCount" value="{$courseCount}" /></td>
                         </tr>
             {iteration:iCourses}
             {$row}
