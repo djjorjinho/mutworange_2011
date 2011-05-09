@@ -14,7 +14,7 @@ class PopulateDB {
     
     var $fact_tables = array('fact_efficacy','fact_efficiency');
     
-    var $dict_dir = 'pop_dict';
+    var $dict_dir;
     
     var $rnd;
     var $db;
@@ -23,6 +23,7 @@ class PopulateDB {
         $this->db = DB::getInstance();
         $this->db->connect();
         $this->rnd = new TSample();
+        $this->dict_dir = dirname(__FILE__).'/pop_dict';
     }
     
     function populate_gender(){

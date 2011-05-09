@@ -55,7 +55,7 @@ PACK_KEYS = Default;
 DROP TABLE IF EXISTS `p8statsdw`.`dim_lodging` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_lodging` (
-  `dim_lodging_id` CHAR(6) NOT NULL ,
+  `dim_lodging_id` VARCHAR(20) NOT NULL ,
   `description` VARCHAR(20) NULL ,
   PRIMARY KEY (`dim_lodging_id`) ,
   INDEX `idx_lodging_description` (`description` ASC, `dim_lodging_id` ASC) )
@@ -107,7 +107,7 @@ PACK_KEYS = Default;
 DROP TABLE IF EXISTS `p8statsdw`.`dim_phase` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`dim_phase` (
-  `dim_phase_id` CHAR(6) NOT NULL ,
+  `dim_phase_id` VARCHAR(20) NOT NULL ,
   `description` VARCHAR(25) NULL ,
   PRIMARY KEY (`dim_phase_id`) )
 ENGINE = MyISAM;
@@ -122,7 +122,7 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   `dim_date_id` BIGINT UNSIGNED NOT NULL ,
   `dim_institution_id` INT NOT NULL ,
   `dim_institution_host_id` INT NOT NULL ,
-  `dim_phase_id` CHAR(6) NOT NULL ,
+  `dim_phase_id` VARCHAR(20) NOT NULL ,
   `dim_mobility_id` CHAR(6) NOT NULL ,
   `dim_gender_id` ENUM('M','F','O') NOT NULL ,
   `avg_response_days` SMALLINT UNSIGNED NULL DEFAULT 0 ,
@@ -183,7 +183,7 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficacy` (
   `dim_institution_host_id` INT NOT NULL ,
   `dim_mobility_id` CHAR(6) NOT NULL ,
   `dim_study_id` INT NOT NULL ,
-  `dim_lodging_id` CHAR(6) NOT NULL ,
+  `dim_lodging_id` VARCHAR(20) NOT NULL ,
   `dim_gender_id` ENUM('M','F','O') NOT NULL ,
   `total_applications` SMALLINT UNSIGNED NULL DEFAULT 0 ,
   `last_applications` SMALLINT UNSIGNED NULL DEFAULT 0 ,
@@ -273,6 +273,43 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`scenarios` (
   `users_id` INT UNSIGNED NULL ,
   `json_config` TEXT NULL ,
   PRIMARY KEY (`scenarios_id`) )
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `p8statsdw`.`ods_efficiency`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `p8statsdw`.`ods_efficiency` ;
+
+CREATE  TABLE IF NOT EXISTS `p8statsdw`.`ods_efficiency` (
+  `studentid` VARCHAR(45) NOT NULL COMMENT 'erasmusStudent.studentid' ,
+  `dim_phase_id` VARCHAR(20) NOT NULL COMMENT 'forms.type' ,
+  `dim_institution_code` VARCHAR(20) NULL COMMENT 'erasmusStudent.homeInstitutionId' ,
+  `dim_institution_host_code` VARCHAR(20) NULL COMMENT 'erasmusStudent.hostInstitutionId' ,
+  `country_code` CHAR(6) NULL ,
+  `year` SMALLINT UNSIGNED NULL ,
+  `semester` ENUM('1','2') NULL ,
+  `dim_mobility_id` CHAR(6) NULL COMMENT 'forms.content.traineeOrStudy' ,
+  `create_date` DATETIME NULL ,
+  `aprove_date` DATETIME NULL ,
+  `reject_date` DATETIME NULL ,
+  `dim_gender_id` VARCHAR(45) NULL COMMENT 'user.sex' ,
+  `lodging_available` TINYINT(1) UNSIGNED NULL DEFAULT 0 COMMENT 'erasmusStudent.lodgingId\n-> leasing.rentalid\n\nleasing.residentid -> residence.recidenceid\n\nresidence.available' ,
+  PRIMARY KEY (`studentid`, `dim_phase_id`) )
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `p8statsdw`.`meta_semester`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `p8statsdw`.`meta_semester` ;
+
+CREATE  TABLE IF NOT EXISTS `p8statsdw`.`meta_semester` (
+  `meta_semester_id` CHAR(7) NOT NULL DEFAULT 'default' COMMENT 'countryid' ,
+  `begin_month` DECIMAL(2,0)  NULL ,
+  `end_month` DECIMAL(2,0)  NULL ,
+  `semester` ENUM('1','2') NULL DEFAULT 1 ,
+  PRIMARY KEY (`meta_semester_id`) )
 ENGINE = MyISAM;
 
 
