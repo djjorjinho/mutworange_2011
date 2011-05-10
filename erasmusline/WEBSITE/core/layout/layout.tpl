@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./core/css/layout.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
     {$pageMeta}
     {$pageJava}
     
@@ -43,7 +44,7 @@
       </div>
     </div>
     <div id="main">
-      <div id="breadcrumb">#{breadcrumb}</div>
+      <div id="breadcrumb">{$breadcrumb}</div>
       <div id="content">
 <!-- CONTENT -->
 {$pageContent}
