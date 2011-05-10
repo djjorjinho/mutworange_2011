@@ -28,14 +28,9 @@ class DB {
   }
   
   function insertData($key, $value) {
-    if ($this->id == 0) {
-      $SQL = "INSERT INTO ".$this->tbl." (".$key.") VALUES ('".$value."')";
-      mysql_query($SQL);
-      $this->id = mysql_insert_id();
-    } else {
-      $SQL = "UPDATE ".$this->tbl." SET ".$key." = '".$value."'";
-      mysql_query($SQL);
-    }
+    $SQL = "INSERT INTO ".$this->tbl." (".$key.") VALUES (".$value.")";
+    mysql_query($SQL);
+    $this->id = mysql_insert_id();
   }
   
   function checkInsert() {

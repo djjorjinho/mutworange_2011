@@ -1,7 +1,7 @@
 <?php
 
 class InfoxController extends PlonkController {
-    protected $views = array ('infox','transfer');
+    protected $views = array ('infox','transfer','admin');
     protected $actions = array('transfer');
     protected $debug = false;
     protected $debugMsg = "";
@@ -15,42 +15,46 @@ class InfoxController extends PlonkController {
     
     public function showInfox() {
       $this->mainTpl->assign('pageTitle', 'ERASMUS line');
-		if (PlonkSession::exists('login') && PlonkSession::get("login") == true) {
-		  $this->mainTpl->assign('loginLink', '<a href="index.php?module=home&view=logout">Logout</a>');
-		  $this->mainTpl->assign('loginName', PlonkSession::get('Firstname'));
-        } else
-		  $this->mainTpl->assign('loginLink', '<a href="index.php?module=home&view=login">Login</a>');
+		  if (PlonkSession::exists('loggedIn') && PlonkSession::get("loggedIn") == true) {
 
 // set Iteration with all universities
-      $uni = InfoxDB::getUniversity();
-      $this->pageTpl->setIteration('iUniversity');
-      foreach ($uni as $key => $value) {
-        $this->pageTpl->assignIteration ('university', '<option value=' . $value['id'] . '> ' . $value['name'] . '</option>');
-        $this->pageTpl->refillIteration('iUniversity');
-      }
-      $this->pageTpl->parseIteration('iUniversity');
+        $uni = InfoxDB::getUniversity();
+        $this->pageTpl->setIteration('iUniversity');
+        foreach ($uni as $key => $value) {
+          $this->pageTpl->assignIteration ('university', '<option value=' . $value['instId'] . '> ' . $value['instName'] . '</option>');
+          $this->pageTpl->refillIteration('iUniversity');
+        }
+        $this->pageTpl->parseIteration('iUniversity');
       
 // set JSON String
-      if (PlonkFilter::getPostValue('table') != null) {
-        $array = array('table' => PlonkFilter::getPostValue('table'), 'data' => $_POST['data']);
-        $json = json_encode($array);
-        $json = str_replace('"',"'",$json);
-        $json = str_replace("''","'",$json);
-      } else if (PlonkSession::exists('infoxJSON'))
-        $json = PlonkSession::get('infoxJSON');
-      else
-        PlonkWebsite::redirect('index.php');
-      $this->pageTpl->assign('json', $json);
+        if (PlonkFilter::getPostValue('table') != null) {
+		  if (PlonkFilter::getPostValue('admin') != null) {
+		    $_POST['data'] = array();
+		    for ($i = 0; $i < count($_POST['row']); $i++) {
+			  array_push($_POST['data'],InfoxDB::getRowFromDB(PlonkFilter::getPostValue('table'),$_POST['row'][$i]));
+			}
+		  }
+          $array = array('table' => PlonkFilter::getPostValue('table'), 'data' => $_POST['data']);
+          $json = json_encode($array);
+          $json = str_replace('"',"'",$json);
+          $json = str_replace("''","'",$json);
+		  echo $json;
+        } else if (PlonkSession::exists('infoxJSON'))
+          $json = PlonkSession::get('infoxJSON');
+        else
+          PlonkWebsite::redirect('index.php');
+        $this->pageTpl->assign('json', $json);
 
-      if ($this->debug) {
-        $this->debugMsg['JSON'] = $json;
-      }
+        if ($this->debug) {
+          $this->debugMsg['JSON'] = $json;
+        }
 
-      if ($this->debug) {
-        $msg = "# # # # # # DEBUG # # # # # #<br />".$this->getDebug($this->debugMsg);
-        $this->pageTpl->assign("debug",$msg);
-      } else {
-        $this->pageTpl->assign("debug","");
+        if ($this->debug) {
+          $msg = "# # # # # # DEBUG # # # # # #<br />".$this->getDebug($this->debugMsg);
+          $this->pageTpl->assign("debug",$msg);
+        } else {
+          $this->pageTpl->assign("debug","");
+        }
       }
     }
     public function showTransfer() {
@@ -66,8 +70,40 @@ class InfoxController extends PlonkController {
         $this->pageTpl->assign("debug","");
       }
     }
+    public function showAdmin() {
+        $tables = InfoxDB::getAllTables();
+        $this->pageTpl->setIteration('iTables');
+        foreach ($tables as $key => $value) {
+          $this->pageTpl->assignIteration ('tables', '<option value=' . $value['Tables_in_erasmusline'] . '> ' . $value['Tables_in_erasmusline'] . '</option>');
+          $this->pageTpl->refillIteration('iTables');
+        }
+        $this->pageTpl->parseIteration('iTables');
+        
+        if (PlonkFilter::getPostValue('table')) {
+          $this->pageTpl->assignOption('oTable');
+		  $this->pageTpl->assign('table',PlonkFilter::getPostValue('table'));
+          $data = InfoxDB::getAllDataFromTable(PlonkFilter::getPostValue('table'));
+          $this->pageTpl->setIteration('iData');
+		  if (!empty($data))
+            foreach ($data as $key => $value) {
+			  $str = $value[1];
+			  for ($i = 1; $i < count($value); $i++) {
+			    $str .= " | " . $value[$i];
+			  }
+              $this->pageTpl->assignIteration ('data', '<input type="checkbox" name="row[]" value=' . $value[0] . ' /> ' . $str . '<br />');
+              $this->pageTpl->refillIteration('iData');
+            }
+          $this->pageTpl->parseIteration('iData');
+        }
+        if ($this->debug) {
+          $msg = "# # # # # # DEBUG # # # # # #<br />".$this->getDebug($this->debugMsg);
+          $this->pageTpl->assign("debug",$msg);
+        } else {
+          $this->pageTpl->assign("debug","");
+        }
+    }
     public function doTransfer() {
-//    	if (PlonkSession::exists('login') && PlonkSession::get("login") == true) {
+    	if (PlonkSession::exists('loggedIn') && PlonkSession::get("loggedIn") == true) {
         if (PlonkFilter::getPostValue('idUni') == 0) {
           PlonkSession::set('infoxJSON', PlonkFilter::getPostValue('json'));
           PlonkWebsite::redirect('index.php?module=infox');
@@ -85,7 +121,7 @@ class InfoxController extends PlonkController {
             $this->debugMsg['curl'] = curl::getInfo();
           }
         }
-//    	}
+    	}
     }
     
     public function getDebug($a) {
