@@ -5,9 +5,9 @@ include('db.class.php');
 $db = new DB();
 
 if (isset($_REQUEST['json'])) {
-
   $json = str_replace("'",'"',$_REQUEST['json']);
   $obj = json_decode($json);
+
   if ($db->checkTable($obj->table)) {
     if (is_array($obj->data)) {
 	  for ($i = 0; $i < count($obj->data);$i++) {

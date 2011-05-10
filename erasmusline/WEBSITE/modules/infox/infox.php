@@ -16,6 +16,8 @@ class InfoxController extends PlonkController {
     public function showInfox() {
       $this->mainTpl->assign('pageTitle', 'ERASMUS line');
 		  if (PlonkSession::exists('loggedIn') && PlonkSession::get("loggedIn") == true) {
+		  
+		  $this->mainTpl->assign('breadcrumb','Home ==> Infox');
 
 // set Iteration with all universities
         $uni = InfoxDB::getUniversity();
@@ -37,8 +39,7 @@ class InfoxController extends PlonkController {
           $array = array('table' => PlonkFilter::getPostValue('table'), 'data' => $_POST['data']);
           $json = json_encode($array);
           $json = str_replace('"',"'",$json);
-          $json = str_replace("''","'",$json);
-		  echo $json;
+//          $json = str_replace("''","'",$json);
         } else if (PlonkSession::exists('infoxJSON'))
           $json = PlonkSession::get('infoxJSON');
         else
@@ -71,6 +72,7 @@ class InfoxController extends PlonkController {
       }
     }
     public function showAdmin() {
+	    $this->mainTpl->assign('breadcrumb','Home ==> Infox ==> Admin');
         $tables = InfoxDB::getAllTables();
         $this->pageTpl->setIteration('iTables');
         foreach ($tables as $key => $value) {

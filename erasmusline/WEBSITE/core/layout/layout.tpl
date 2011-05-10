@@ -46,7 +46,7 @@
       </div>
     </div>
     <div id="main">
-      <div id="breadcrumb">#{breadcrumb}</div>
+      <div id="breadcrumb">{$breadcrumb}</div>
       <div id="content">
 <!-- CONTENT -->
 {$pageContent}
