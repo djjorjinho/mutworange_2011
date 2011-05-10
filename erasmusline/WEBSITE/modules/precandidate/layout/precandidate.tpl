@@ -1,7 +1,7 @@
 <div class="mainDiv">
 <form action="" method="post" enctype="multipart/form-data" id="precandidate" name="precandidate">	
 <fieldset>
-    <p>{$pageJava}</p>
+    {$pageJava}
     <legend>Student Information</legend>    
     <div class="TRdiv">
         <label for="familyName"><span>Last Name : </span></label>
@@ -237,4 +237,24 @@
 	<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
     </div>   
 {/option:oNotFilled}
+    
+{option:oCoor}
+<fieldset>
+    <legend>Motivation</legend>    
+    <div class="TRdiv">
+        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
+        <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
+    </div>
+    <div class="TRdiv">
+<label for="approve"><span>Approve or Deny: </span></label>
+            <span>Yes</span><input class="validate[required] radio" type="radio"  name="approve" value="1" id="yes"  />
+            <span>No</span><input class="validate[required] radio" type="radio"  name="approve" value="0" id="no"  />
+            <span class="req" id="msgApprove">{$msgApprove|htmlentities}</span>
+</div>
+    <div class="TRdiv">               
+        <input type="hidden" name="formAction" id="formPre" value="doMotivate" />
+	<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+    </div>
+</fieldset>
+{/option:oCoor}
 </form>

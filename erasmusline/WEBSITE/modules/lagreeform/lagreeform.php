@@ -34,14 +34,15 @@ class LagreeformController extends PlonkController {
      * check if user is logged in
      */
     public function checkLogged() {
-        //Plonk::dump(PlonkSession::get('id').'hgdjdh');
-        if (!PlonkSession::exists('id')) {
+         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            $this->id = PlonkSession::get('id');
-            $this->mainTpl->assignOption('oLogged');
             if (PlonkSession::get('id') == 0) {
-                $this->mainTpl->assignOption('oAdmin');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                $this->id = PlonkSession::get('id');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
             }
         }
     }
@@ -629,6 +630,7 @@ class LagreeformController extends PlonkController {
                     'ectsCredits' => htmlentities(PlonkFilter::getPostValue('ectsPoints')),
                     'motherTongue' => htmlentities(PlonkFilter::getPostValue('motherTongue')),
                     'beenAbroad' => htmlentities(PlonkFilter::getPostValue('abroad')),
+                    'action' => 2
                 );
 
                 LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'studentId = ' . PlonkSession::get('id'));
@@ -652,7 +654,7 @@ class LagreeformController extends PlonkController {
                     'timestamp' => date("Y-m-d"),
                     'motivation' => '',
                     'erasmusStudentId' => PlonkSession::get('id'),
-                    'action' => 'pending',
+                    'action' => 2,
                     'erasmusLevelId' => $erasmusLevel['levelId']
                 );
 
@@ -730,7 +732,7 @@ class LagreeformController extends PlonkController {
                 'timestamp' => date("Y-m-d"),
                 'motivation' => '',
                 'erasmusStudentId' => PlonkSession::get('id'),
-                'action' => 'pending',
+                'action' => 2,
                 'erasmusLevelId' => $erasmusLevel['levelId']
             );
 

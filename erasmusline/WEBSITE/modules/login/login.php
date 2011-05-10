@@ -58,8 +58,6 @@ class LoginController extends PlonkController {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             }
         }
-        $this->mainTpl->assignOption('oNotLogged');
-        $this->pageTpl->assignOption('oNotLogged');
     }
 
 }

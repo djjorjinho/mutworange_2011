@@ -41,42 +41,39 @@ class HomeController extends PlonkController {
         // assign vars in our main layout tpl
 
         if (PlonkSession::exists('id')) {
-            $this->id = PlonkSession::get('id');
-
-            if (PlonkSession::get('id') === '1') {
+            
+            if (PlonkSession::get('id') == 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-            } else {
+            } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
             }
-        } else {
-            $this->mainTpl->assignOption('oNotLogged');
-            $this->pageTpl->assignOption('oNotLogged');
         }
-
         $this->mainTplAssigns('Home');
 
-        // assign menu active state
-        $this->mainTpl->assignOption('oNavHome');
     }
 
     public function showUserhome() {
         // Main Layout
         // Logged or not logged, that is the question...
 
-        if (!PlonkSession::exists('loggedIn')) {
+        if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            $this->id = PlonkSession::get('id');
-            $this->mainTpl->assignOption('oLogged');
+            if (PlonkSession::get('id') == 0) {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                $this->id = PlonkSession::get('id');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+            }
         }
 
         if (($user = HomeDB::getNameById($this->id)) !== null) {
             $this->pageTpl->assign('user', $user['firstName']);
             // assign vars in our main layout tpl
             $this->mainTplAssigns('Welcome ' . $user['firstName']);
-
-            $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-            $this->mainTpl->assign('profile', 'index.php?module=profile&view=ownprofile');
 
             $this->getErasmusInfo();
         }
@@ -89,7 +86,17 @@ class HomeController extends PlonkController {
         }
 
         if (!empty($latestEvent)) {
+            $action = "";
             $this->pageTpl->assign('action', '<a href="index.php?module=' . $latestEvent['module'] . '&view=' . $latestEvent['view'] . '" title="' . $latestEvent['levelName'] . '">' . $latestEvent['levelName'] . '</a>');
+            if($latestEvent['action'] == 2) {
+                $action = "Pending";
+            }
+            else if($latestEvent['action'] == 1) {
+                $action = 'Approved';
+            }
+            else {
+                $action = "Denied";
+            }
             $this->pageTpl->assign('status', $latestEvent['action']);
             $this->pageTpl->assign('next', '<a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a>');
         } else {

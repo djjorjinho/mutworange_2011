@@ -111,6 +111,11 @@ class PrecandidateDB {
         return $id;
     }
     
+    public static function updateErasmusStudent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
 
 }
 

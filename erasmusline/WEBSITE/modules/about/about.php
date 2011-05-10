@@ -14,7 +14,7 @@ class AboutController extends PlonkController {
     private function mainTplAssigns() {
        
         // Assign main properties
-        $this->mainTpl->assign('siteTitle', 'ErasmusLine');
+        $this->mainTpl->assign('siteTitle', 'About');
         $this->mainTpl->assign('pageMeta', '');
     }
     
@@ -24,22 +24,9 @@ class AboutController extends PlonkController {
     }
     
     public function showAbout() {
-        
-        $this->checkLogged();
         $this->mainTplAssigns();
         
     }
     
-    public function checkLogged() {
-
-        if (PlonkSession::exists('loggedIn')) {
-
-            $this->mainTpl->assignOption('oLogged');
-            $this->id = PlonkSession::get('id');
-        } else {
-
-            $this->mainTpl->assignOption('oNotLogged');
-        }
-    }
 }
 ?>

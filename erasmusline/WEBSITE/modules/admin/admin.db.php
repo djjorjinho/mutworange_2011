@@ -16,7 +16,7 @@ class AdminDB {
 		$db = PlonkWebsite::getDB();
 
 		// retrieve info from table gebruikers
-		$usersInfo = $db->retrieve("SELECT * FROM users WHERE userLevel = 'Student'");
+		$usersInfo = $db->retrieve("SELECT * FROM users inner join erasmusStudent on users.userId = erasmusStudent.studentId WHERE userLevel = 'Student' AND isValidUser = 2");
 
 		return $usersInfo;
 
@@ -52,7 +52,7 @@ class AdminDB {
 		$db = PlonkWebsite::getDB();
 
 		// retrieve info from table gebruikers
-		$nonConfirmed = $db->retrieve("SELECT * FROM users WHERE isValidUser = 0");
+		$nonConfirmed = $db->retrieve("SELECT * FROM users WHERE isValidUser = 1");
 
 		return $nonConfirmed;
         }

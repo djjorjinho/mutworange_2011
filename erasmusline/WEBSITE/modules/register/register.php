@@ -212,17 +212,17 @@ class RegisterController extends PlonkController {
 
 
     public function checkLogged() {
-        if (PlonkSession::exists('id')) {
-            if (PlonkSession::get('id') == '0') {
-                $this->mainTpl->assignOption('oAdmin');
+         if (!PlonkSession::exists('id')) {
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        } else {
+            if (PlonkSession::get('id') == 0) {
+                $this->id = PlonkSession::get('id');
                 $this->pageTpl->assignOption('oAdmin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
                 $this->id = PlonkSession::get('id');
             } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
             }
-        }
-        else {
-            $this->mainTpl->assignOption('oNotLogged');
         }
     }
 

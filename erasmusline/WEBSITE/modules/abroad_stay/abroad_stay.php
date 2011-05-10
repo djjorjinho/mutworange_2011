@@ -6,13 +6,11 @@
  */
 
 class Abroad_stayController extends PlonkController {
-    
+
     protected $id;
     private $courses = 0;
     private $errors = array(); // set the errors array to empty, by default
     private $fields = array(); // stores the field values
-
-
     protected $views = array(
         'cert_arrival', 'cert_stay', 'cert_departure', 'changagreement'
     );
@@ -61,8 +59,8 @@ class Abroad_stayController extends PlonkController {
 		setTimeout("$(\'#suggestions\').hide();", 200);
                 
 	}</script>');
-        
-        
+
+
         $this->pageTpl->assign('academicYear', " 2010-2011");
         foreach ($this->variables as $value)
             if (empty($this->fields)) {
@@ -177,18 +175,15 @@ class Abroad_stayController extends PlonkController {
      * check if user is logged in
      */
     public function checkLogged() {
-
-        if (!PlonkSession::exists('loggedIn')) {
+         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            $this->id = PlonkSession::get('id');
-            if ($this->id === '1') {
-                $this->mainTpl->assignOption('oAdmin');
+            if (PlonkSession::get('id') == 0) {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                $this->id = PlonkSession::get('id');
             } else {
-                $this->mainTpl->assignOption('oLogged');
-
-                $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-                $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
             }
         }
     }

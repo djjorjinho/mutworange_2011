@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
     {$pageMeta}
     {$pageJava}
+    
   </head>
   
   <body>
@@ -39,9 +40,6 @@
 {option:oNotLogged}
       <a href="index.php?module=login&amp;view=login" title="Login">Login</a>
 {/option:oNotLogged}
-{option:oAdmin}
-     <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
-{/option:oAdmin}
       </div>
     </div>
     <div id="main">
@@ -54,23 +52,31 @@
 {option:oAdmin}
 <div id="subnav">
 <ul>
+    <li class="level2"><a href="index.php?module=admin&amp;view=toconfirm">Users to be confirmed</a></li>
     <li class="level2"><a href="index.php?module=admin&amp;view=students">Students</a></li>
     <li class="level2"><a href="index.php?module=admin&amp;view=staff">Staff</a></li>
     <li class="level2"><a href="index.php?module=register&amp;view=register">Add staff member</a></li>
-    <li class="level2"><a href="">Subnavbar 1st Level (inactive)</a></li>
 </ul>
 </div>
 {/option:oAdmin}
-{option:oLogged}
+
+{option:oCoor}
 <div id="subnav">
 <ul>
-    <li class="active"><a href="">Progess</a></li>
-    <li class="level2"><a href="">Profile</a></li>
-    <li class="level3"><a href="">Subnavbar 3rd Level</a></li>
-    <li><a href="">Subnavbar 1st Level (inactive)</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=precandidates">Show precandidates</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=applics">Students</a></li>
 </ul>
 </div>
-{/option:oLogged}
+{/option:oCoor}
+      
+{option:oStudent}
+<div id="subnav">
+<ul>
+    <li class="lavel2"><a href="">Progess</a></li>
+    <li class="level2"><a href="">Edit profile</a></li>
+</ul>
+</div>
+{/option:oStudent}
 <!-- END SUBNAVBAR -->
       
       <div id="footer">

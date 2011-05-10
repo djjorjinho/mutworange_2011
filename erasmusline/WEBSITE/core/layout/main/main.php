@@ -6,21 +6,17 @@
  */
 
 class MainController extends PlonkController {
-    
+
     public function assignMain() {
-        //$this->mainTpl->assign('test', 'Ahaaaaaaaa');
-        
+        MainController::checkLogged();
     }
-    
+
     public function doFunction($action) {
         // Action does exist
-        call_user_func('MainController::'.ucfirst($action));
-        
+        call_user_func('MainController::' . ucfirst($action));
     }
-    
 
     public static function login() {
-        
         $msgEmail = "Email and/or password is not filled in.";
         $msgName = "Name is not filled in.";
 
@@ -35,14 +31,21 @@ class MainController extends PlonkController {
             if (!empty($values)) {
 
                 if (strtolower($email) === 'admin') {
-                    PlonkSession::set('loggedIn', true);
                     PlonkSession::set('id', 0);
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+                    
                 } else {
-                    PlonkSession::set('loggedIn', true);
                     PlonkSession::set('id', $values['userId']);
-
-                    PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+                    PlonkSession::set('userLevel', $values['userLevel']);
+                    
+                    if (PlonkSession::get('id') == 0) {
+                        PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+                    } else if (PlonkSession::get('userLevel') == 'Student') {
+                        PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+                    } else {
+                        
+                        PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . 'staff&' . PlonkWebsite::$viewKey . '=staff');
+                    }
                 }
             } else {
                 PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=login&' . PlonkWebsite::$viewKey . '=login&error=2');
@@ -72,10 +75,34 @@ class MainController extends PlonkController {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne("select userId from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "'");
+        $items = $db->retrieveOne("select userId, userLevel from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "'");
 
         // return the result
         return $items;
     }
+
+    public function checkLogged() {
+
+        if (PlonkSession::exists('id')) {
+            $this->mainTpl->assignOption('oLogged');
+            if (PlonkSession::get('id') == 0) {
+                $this->mainTpl->assignOption('oAdmin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                $this->mainTpl->assignOption('oStudent');
+            } else if (PlonkSession::get('userLevel') == 'Erasmus Coordinator') {
+                $this->mainTpl->assignOption('oCoor');
+            } else if (PlonkSession::get('userLevel') == 'Teaching Staff') {
+                $this->mainTpl->assignOption('oTeacher');
+            } else if (PlonkSession::get('userLevel') == 'International Relations Office Staff') {
+                $this->mainTpl->assignOption('oOffice');
+            } else if (PlonkSession::get('userLevel') == 'Industrial Institution') {
+                $this->mainTpl->assignOption('oIndustrial');
+            }
+        } else {
+            $this->mainTpl->assignOption('oNotLogged');
+        }
+    }
+
 }
+
 ?>
