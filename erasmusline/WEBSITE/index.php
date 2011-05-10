@@ -17,12 +17,6 @@ require_once './library/validation/validation.php';
 
 $website = new PlonkWebsite(
 		array(
-<<<<<<< HEAD
-		'home','about','register','info','admin','profile', 'abroad_stay','lagreeform','pre_leave','precandidate','teardown_finish','login', 'staff'
-=======
-		'home','about','register','info','admin','profile', 'abroad_stay','lagreeform','pre_leave','precandidate','teardown_finish','login','infox'
->>>>>>> 0c3977bf10fcc263d846cf1e61cc63decfd21911
-		)
-	);
+		'home','about','register','info','admin','profile', 'abroad_stay','lagreeform','pre_leave','precandidate','teardown_finish','login', 'staff', 'infox'));
 
 ?>
