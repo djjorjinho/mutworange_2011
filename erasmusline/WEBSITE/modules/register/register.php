@@ -213,7 +213,7 @@ class RegisterController extends PlonkController {
 
     public function checkLogged() {
          if (!PlonkSession::exists('id')) {
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+            $this->pageTpl->assignOption('oNotLogged');
         } else {
             if (PlonkSession::get('id') == 0) {
                 $this->id = PlonkSession::get('id');
