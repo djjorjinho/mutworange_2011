@@ -1,0 +1,5 @@
+{
+	"sockType" : "tcp",
+	"unixAddr" : "unix:///tmp/erasmusline/statsd_slave/statsd_slave.sock",
+	"tcpAddr" : "tcp://127.0.0.1:8119"
+}

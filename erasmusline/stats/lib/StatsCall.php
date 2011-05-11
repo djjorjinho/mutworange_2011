@@ -10,10 +10,14 @@ class StatsCall{
 	private $socket;
 	private $sock_path;
 	private static $id;
+	private $config;
 	
 	function __construct(){
-		$daemon = "statsd_slave";
-		$this->sock_path = "unix:///tmp/erasmusline/${daemon}/${daemon}.sock";
+		$this->config =
+				json_decode(file_get_contents(
+								dirname(__FILE__).DIRECTORY_SEPARATOR.
+									'statscall_config.json'),true);
+		$this->sock_path = $this->config[$this->config['sockType'].'Addr'];
 		$this->socket = stream_socket_client($this->sock_path);
 		self::$id = 0;
 	}
@@ -24,9 +28,10 @@ class StatsCall{
 	 * @param str $method - method name
 	 * @param mixed $params - method parameters, 
 	 * 				recommended you use assoc. arrays
+	 * @param bool $direct - if true, returns json string without decoding
 	 * @return mixed - the response value
 	 */
-	function call($method,$params=array()){
+	function call($method,$params=array(),$direct=false){
 		$rpc = array(
 			'jsonrpc' => '2.0',
 			'id' => ++self::$id,
@@ -35,6 +40,8 @@ class StatsCall{
 		);
 		
 		$this->directCall($rpc,$msg);
+		
+		if($direct) return $msg;
 		
 		// parse response message
 		$rsp = json_decode($msg,true);
