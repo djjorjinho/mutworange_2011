@@ -46,7 +46,7 @@
 <h4>Where from - where to</h4>
 <ul>
 <li>
-    Home institution: {$host}
+    Home institution: {$home}
 </li>
 <li>
     Home coordinator: {$hCooordinator}

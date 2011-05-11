@@ -63,7 +63,59 @@ class ProfileController extends PlonkController {
     public function showOwnprofile() {
         $this->showProfile();
 
-        //$erasmus = ProfileDB::getErasmusById($this->id);
+        $erasmus = ProfileDB::getErasmusById($this->id);
+        //Plonk::dump($erasmus);
+        if ($erasmus['startDate'] != null) {
+            $this->pageTpl->assign('start', $erasmus['startDate']);
+            $this->pageTpl->assign('end', $erasmus['endDate']);
+        }
+        else {
+            $this->pageTpl->assign('start', '');
+            $this->pageTpl->assign('end', '');
+        }
+
+        $home = ProfileDB::getHome($this->id);
+        if (!empty($home)) {
+            $this->pageTpl->assign('home', $home['instName']);
+            $this->pageTpl->assign('hCooordinator', $home['familyName'] . ' ' . $home['firstName']);
+        }
+        else {
+            $this->pageTpl->assign('home', '');
+            $this->pageTpl->assign('hCooordinator', '');
+        }
+
+        $host = ProfileDB::getHost($this->id);
+        if (!empty($host)) {
+            $this->pageTpl->assign('destination', $host['instName']);
+            $this->pageTpl->assign('dCoordinator', $host['familyName'] . ' ' . $host['firstName']);
+        }
+        else {
+            $this->pageTpl->assign('destination','');
+            $this->pageTpl->assign('dCoordinator', '');
+        }
+
+        $study = ProfileDB::getStudy($this->id);
+        if ($study['educationName'] != null) {
+            $this->pageTpl->assign('study', $study['educationName']);
+        }
+        else {
+            $this->pageTpl->assign('study', '');
+        }
+
+        $courses = ProfileDB::getCourses($this->id);
+
+        if (!empty($courses)) {
+            $this->pageTpl->setIteration('iCourses');
+            $i = 0;
+            foreach ($courses as $course) {
+                $this->pageTpl->assignIteration('course', $course['courseName']);
+                $this->pageTpl->assignIteration('ects', $course['ectsCredits']);
+                $i += $course['ectsCredits'];
+                $this->pageTpl->refillIteration();
+            }
+            $this->pageTpl->parseIteration();
+            $this->pageTpl->assign('total', $i);
+        }
     }
 
     public function showProfile() {
@@ -83,6 +135,7 @@ class ProfileController extends PlonkController {
         $this->pageTpl->assign('fName', $info['firstName']);
         $this->pageTpl->assign('faName', $info['familyName']);
         $this->pageTpl->assign('postal', $info['postalCode']);
+        $this->pageTpl->assign('street', $info['streetNr']);
         $this->pageTpl->assign('city', $info['city']);
         if ($info['sex'] === '1') {
             $this->pageTpl->assign('sex', 'Male');
@@ -91,7 +144,7 @@ class ProfileController extends PlonkController {
         }
         $this->pageTpl->assign('sex', $info['sex']);
         $this->pageTpl->assign('userLevel', $info['userLevel']);
-        
+
         if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
             $this->erasmusLevel = 1 * 10;
         }
@@ -99,11 +152,11 @@ class ProfileController extends PlonkController {
             $this->erasmusLevel = 1.5 * 10;
         }
         if ($erasmuslevel['statusOfErasmus'] == 'Learning Agreement') {
-            $this->erasmusLevel =100;
+            $this->erasmusLevel = 100;
         }
-        
+
         $this->mainTpl->assign('progress', $this->erasmusLevel);
-        
+
         $this->pageTpl->assign('nationality', $info['country']);
     }
 

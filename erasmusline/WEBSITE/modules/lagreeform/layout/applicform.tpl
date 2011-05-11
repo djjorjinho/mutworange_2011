@@ -293,18 +293,25 @@
 
 <p><strong>PLEASE ATTACH YOUR TRANSCIPT OF RECORDS WITH PREVIOUS COURSE UNITS TAKEN !</strong></p>
 
-<h3>Receiving institution</h3>
 
+
+{option:oCoor}
+<h3>Receiving institution</h3>
 <fieldset>
 <p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
 </p>
 
 <div class="TRdiv">
 <label for="accepted">The above mentioned student is: </label>
-            <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" {$acceptedYes} />
-            <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0" {$acceptedNo} />
+            <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
+            <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
             <span class="req" id="msgAccepted">{$msgAccepted|htmlentities}</span>
 </div>
+
+<div class="TRdiv">
+        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
+        <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
+    </div>
 
 <div class="TRdiv">
 <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
@@ -335,9 +342,20 @@
 <fieldset>
 <legend>Submit the application</legend>
         <div class="TRdiv">
-		<input type="hidden" name="formAction" id="formRegister" value="doApplic" />
+		<input type="hidden" name="formAction" id="formRegister" value="doMotivateapplic" />
 		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
 	</div>
 </fieldset>
-</form>
+{/option:oCoor}
+
+{option:oNotFilled}
+<fieldset>
+<legend>Submit the application and go to Learning Agreement</legend>
+        <div class="TRdiv">
+		<input type="hidden" name="formAction" id="formRegister" value="doApplic" />
+		<input class="button" name="btnSend" id="btnSend" type="submit" value="Save and fill in Learning Agreement"/>
+	</div>
+</fieldset>
+{/option:oNotFilled}
+
 

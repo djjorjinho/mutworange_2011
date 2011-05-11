@@ -9,7 +9,7 @@ class HomeDB {
 	 *
 	 * @return array
 	 */
-	public static function userExist($email, $password)
+	public static function userExist($email, $password) 
 	{
 		// get DB instance
 		$db = PlonkWebsite::getDB();
@@ -57,4 +57,18 @@ class HomeDB {
             
             return $nextLevel;
         }
+        
+        public static function getEvents($id) {
+            $db = PlonkWebsite::getDB();
+            
+            $events = $db->retrieve("select * from studentsEvents where reader = 'Student' AND erasmusStudentId = ".$id. ' AND readIt = 0');
+            
+            return $events;
+        }
+        
+        public static function updateEvent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
 }

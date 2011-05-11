@@ -1,6 +1,7 @@
 <h2>Learning agreement</h2>
 
 <form action="" method="post" enctype="multipart/form-data" id="lagreement" name="lagreement">
+    <p><span class="req">{$error}</span></p>
     <p>
         <span>Academic Year: </span>
         {$acaYear}
@@ -25,6 +26,9 @@
         <p>
             <span>Country: </span>
             {$countrySendingInstitution}
+        </p>
+        <p>
+            <span>ECTS credits:</span> {$credits}
         </p>
     </fieldset>
 
@@ -80,8 +84,16 @@
 
 
     </fieldset>
+    
+    <fieldset>
+        <legend>Submit Learning Agreement</legend>
+        <p>
+            <input type="hidden" name="formAction" id="formRegister" value="doAgree" />
+            <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+        </p>
+    </fieldset>
 
-
+{option:oCoor}
     <fieldset>
         <legend>Sending Institution</legend>
         <p>We confirm that this proposed programme of study/learning agreement is approved.</p>
@@ -142,12 +154,15 @@
         </div>
 
     </fieldset>
-
+    
     <fieldset>
-        <legend>Submit changes</legend>
-        <p>
-            <input type="hidden" name="formAction" id="formRegister" value="doAgree" />
-            <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-        </p>
-    </fieldset>
+<legend>Submit the Learning Agreement</legend>
+        <div class="TRdiv">
+		<input type="hidden" name="formAction" id="formRegister" value="doMotivateagree" />
+		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+	</div>
+</fieldset>
+    {/option:oCoor}
+
+    
 </form>

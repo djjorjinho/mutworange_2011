@@ -64,7 +64,10 @@
 {option:oCoor}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=staff&amp;view=precandidates">Show precandidates</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=precandidates">Show Precandidate Forms</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=applics">Show Student Application Forms</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=agreements">Show Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=changes">Show Change of Learning Agreements</a></li>
     <li class="level2"><a href="index.php?module=staff&amp;view=applics">Students</a></li>
 </ul>
 </div>

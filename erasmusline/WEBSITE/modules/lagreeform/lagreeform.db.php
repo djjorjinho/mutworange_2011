@@ -12,7 +12,7 @@ class LagreeformDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne('select familyName,firstName,educationName from erasmusStudent
+        $items = $db->retrieveOne('select familyName,firstName,educationName,ectsCredits from erasmusStudent
 	                                            inner join educationPerInstitute on erasmusStudent.educationPerInstId = educationPerInstitute.educationperInstId
 	                                            inner join education on studyId = educationId
 	                                            inner join users on studentId = userId

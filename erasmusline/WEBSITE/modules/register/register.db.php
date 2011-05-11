@@ -47,5 +47,13 @@ class RegisterDB {
         return $id;
     }
     
+    public static function userExists($email) {
+        $db = PlonkWebsite::getDB();
+        
+        $user = $db->retrieveOne("select * from users where email = '".$db->escape($email)."'");
+        
+        return $user;
+    }
+    
 }
 ?>

@@ -13,7 +13,8 @@ class HomeController extends PlonkController {
      */
     protected $views = array(
         'home',
-        'userhome'
+        'userhome',
+        'notify'
     );
     /**
      * The actions allowed for this module
@@ -41,7 +42,7 @@ class HomeController extends PlonkController {
         // assign vars in our main layout tpl
 
         if (PlonkSession::exists('id')) {
-            
+
             if (PlonkSession::get('id') == 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
@@ -51,7 +52,6 @@ class HomeController extends PlonkController {
             }
         }
         $this->mainTplAssigns('Home');
-
     }
 
     public function showUserhome() {
@@ -88,17 +88,26 @@ class HomeController extends PlonkController {
         if (!empty($latestEvent)) {
             $action = "";
             $this->pageTpl->assign('action', '<a href="index.php?module=' . $latestEvent['module'] . '&view=' . $latestEvent['view'] . '" title="' . $latestEvent['levelName'] . '">' . $latestEvent['levelName'] . '</a>');
-            if($latestEvent['action'] == 2) {
+            if ($latestEvent['action'] == 2) {
                 $action = "Pending";
-            }
-            else if($latestEvent['action'] == 1) {
+            } else if ($latestEvent['action'] == 1) {
                 $action = 'Approved';
-            }
-            else {
+            } else {
                 $action = "Denied";
             }
-            $this->pageTpl->assign('status', $latestEvent['action']);
-            $this->pageTpl->assign('next', '<a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a>');
+            $this->pageTpl->assign('status', $action);
+            if ($latestEvent['levelName'] == "Certificate Of Arrival") {
+                $this->pageTpl->assign('next', '<li><a href="index.php?module=learnagr_ch&view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
+                        <li><a href="index.php?module=mobility&view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
+            } else if ($action == 'Pending' && $latestEvent['levelName'] != "Student Application Form") {
+                $this->pageTpl->assign('next', '<li>Waiting for confirmation of ' . $latestEvent['levelName'].'</li>');
+            }
+            else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
+                $this->pageTpl->assign('next',"<li>Your Precandidate has been denied. Sorry</li>");
+            }
+            else {
+                $this->pageTpl->assign('next', '<li><a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a></li>');
+            }
         } else {
             $this->pageTpl->assign('action', 'No current action taken.');
             $this->pageTpl->assign('status', 'No status');
@@ -120,6 +129,33 @@ class HomeController extends PlonkController {
         } else {
             $this->pageTpl->assignOption('noForms');
         }
+
+        $events = HomeDB::getEvents($this->id);
+
+        if (!empty($events)) {
+            $this->pageTpl->setIteration('iEvents');
+
+            foreach ($events as $event) {
+                $this->pageTpl->assignIteration('event', '<li>' . $event['timestamp'] . ' - ' . $event['eventDescrip'] . '<a href="index.php?module=home&view=notify&event=' . $event['eventId'] . '" title="read" >Read it</a></li>');
+                $this->pageTpl->refillIteration('iEvents');
+            }
+
+            $this->pageTpl->parseIteration('iEvents');
+        }
+    }
+
+    public function showNotify() {
+        $array = array(
+            'readIt' => 1
+        );
+
+        $id = PlonkFilter::getGetValue('event');
+
+        if ($id != null) {
+            HomeDB::updateEvent('studentsEvents', $array, 'eventId = ' . $id);
+        }
+
+        PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
     }
 
 }

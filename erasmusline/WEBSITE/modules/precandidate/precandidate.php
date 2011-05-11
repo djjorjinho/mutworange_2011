@@ -42,9 +42,12 @@ class PrecandidateController extends PlonkController {
 
         //Plonk::dump(PlonkSession::get('id'));
         if (PlonkFilter::getGetValue('student') != null) {
+
             $this->id = PlonkFilter::getGetValue('student');
             $this->pageTpl->assign('coordinator', '');
             $this->pageTpl->assign('msgCoordinator', '');
+            $this->pageTpl->assign('msgApprove', '');
+            
         } else {
             $this->id = PlonkSession::get('id');
             $this->pageTpl->assign('pageJava', '<script language="Javascript">
@@ -75,7 +78,6 @@ class PrecandidateController extends PlonkController {
                 $this->extraShow();
             }
         } else {
-
             $this->pageTpl->assignOption('oNotFilled');
             $this->fillVariables();
             $this->extraShow();
@@ -83,6 +85,7 @@ class PrecandidateController extends PlonkController {
     }
 
     private function filledPrecandidate() {
+        
         $this->pageTpl->assignOption('oFilled');
         $uploadedWhat = PrecandidateDB::getUploadedWhat($this->id);
         $upload = explode(',', $uploadedWhat['uploadedWhat']);
@@ -101,6 +104,8 @@ class PrecandidateController extends PlonkController {
     }
 
     private function fillVariables() {
+        $this->user = PrecandidateDB::getUser($this->id);
+        
         foreach ($this->variablesFixed as $value) {
             $this->pageTpl->assign($value, $this->user[$value]);
         }
@@ -225,7 +230,7 @@ class PrecandidateController extends PlonkController {
 
             $jsonArray = json_encode($newArray);
             $values = array(
-                'type' => 'precandidate',
+                'type' => 'Precandidate',
                 'date' => date("Y-m-d"),
                 'content' => $jsonArray,
                 'studentId' => PlonkSession::get('id'),
@@ -245,12 +250,13 @@ class PrecandidateController extends PlonkController {
             PrecandidateDB::insertErasmusStudent('erasmusstudent', $valueStatus);
 
             $valueEvent = array(
-                'event' => 'sdfsdf',
+                'reader' => 'Student',
                 'timestamp' => date("Y-m-d"),
                 'motivation' => '',
                 'erasmusStudentId' => PlonkSession::get('id'),
                 'action' => '2',
-                'erasmusLevelId' => $erasmusLevelId['levelId']
+                'erasmusLevelId' => $erasmusLevelId['levelId'],
+                'eventDescrip' => 'Precandidate ingevuld.'
             );
 
             PrecandidateDB::insertStudentEvent('studentsEvents', $valueEvent);
@@ -261,17 +267,26 @@ class PrecandidateController extends PlonkController {
 
     public function doMotivate() {
         $erasmusLevelId = PrecandidateDB::getErasmusLevelId('Precandidate');
+        $descrip = "";
+        
+        if(PlonkFilter::getPostValue('approve') == 1) {
+            $descrip = "Precandidate approved";
+        }
+        else {
+            $descrip = "Precandidate denied";
+        }
         $valueEvent = array(
-            'event' => 'sdfsdf',
+            'reader' => 'Student',
             'timestamp' => date("Y-m-d"),
             'motivation' => PlonkFilter::getPostValue('coordinator'),
             'erasmusStudentId' => PlonkFilter::getGetValue('student'),
             'action' => (int) PlonkFilter::getPostValue('approve'),
-            'erasmusLevelId' => $erasmusLevelId['levelId']
+            'erasmusLevelId' => $erasmusLevelId['levelId'],
+            'eventDescrip' => $descrip
         );
 
         $values = array(
-            'action' => (int)PlonkFilter::getPostValue('approve')
+            'action' => (int) PlonkFilter::getPostValue('approve')
         );
 
         PrecandidateDB::updateErasmusStudent('erasmusstudent', $values, 'studentId = ' . PlonkFilter::getGetValue('student'));
@@ -291,7 +306,7 @@ class PrecandidateController extends PlonkController {
         $this->pageTpl->assign('rentYes', 'checked');
         $this->pageTpl->assign('cribYes', 'checked');
         $this->pageTpl->assign('scolYes', 'checked');
-
+        
         $studies = PrecandidateDB::getEducations();
         $countries = PrecandidateDB::getCountries();
 

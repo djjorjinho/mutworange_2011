@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Genereertijd: 05 Mei 2011 om 17:50
+-- Genereertijd: 11 Mei 2011 om 23:08
 -- Serverversie: 5.1.53
 -- PHP-Versie: 5.3.4
 
@@ -29,7 +29,6 @@ GRANT ALL PRIVILEGES  ON erasmusline.* TO 'erasmusline'@'%' IDENTIFIED BY 'orang
 -- Tabelstructuur voor tabel `companies`
 --
 
-DROP TABLE IF EXISTS `companies`;
 CREATE TABLE IF NOT EXISTS `companies` (
   `companyId` int(11) NOT NULL AUTO_INCREMENT,
   `companyName` varchar(200) NOT NULL,
@@ -57,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Tabelstructuur voor tabel `country`
 --
 
-DROP TABLE IF EXISTS `country`;
 CREATE TABLE IF NOT EXISTS `country` (
   `Code` char(3) NOT NULL DEFAULT '',
   `Name` char(52) NOT NULL DEFAULT '',
@@ -79,7 +77,6 @@ INSERT INTO `country` (`Code`, `Name`) VALUES
 -- Tabelstructuur voor tabel `coursespereducperinst`
 --
 
-DROP TABLE IF EXISTS `coursespereducperinst`;
 CREATE TABLE IF NOT EXISTS `coursespereducperinst` (
   `courseId` int(11) NOT NULL AUTO_INCREMENT,
   `courseCode` varchar(45) NOT NULL,
@@ -107,12 +104,11 @@ INSERT INTO `coursespereducperinst` (`courseId`, `courseCode`, `courseName`, `ec
 -- Tabelstructuur voor tabel `education`
 --
 
-DROP TABLE IF EXISTS `education`;
 CREATE TABLE IF NOT EXISTS `education` (
   `educationId` int(11) NOT NULL AUTO_INCREMENT,
   `educationName` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`educationId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `education`
@@ -121,7 +117,9 @@ CREATE TABLE IF NOT EXISTS `education` (
 INSERT INTO `education` (`educationId`, `educationName`) VALUES
 (3, 'ICT'),
 (4, 'Elektronics'),
-(5, 'Engels');
+(5, 'Engels'),
+(6, 'ICT'),
+(7, 'Engels');
 
 -- --------------------------------------------------------
 
@@ -129,7 +127,6 @@ INSERT INTO `education` (`educationId`, `educationName`) VALUES
 -- Tabelstructuur voor tabel `educationperinstitute`
 --
 
-DROP TABLE IF EXISTS `educationperinstitute`;
 CREATE TABLE IF NOT EXISTS `educationperinstitute` (
   `educationPerInstId` int(11) NOT NULL AUTO_INCREMENT,
   `institutionId` int(11) NOT NULL,
@@ -155,7 +152,6 @@ INSERT INTO `educationperinstitute` (`educationPerInstId`, `institutionId`, `stu
 -- Tabelstructuur voor tabel `erasmuslevel`
 --
 
-DROP TABLE IF EXISTS `erasmuslevel`;
 CREATE TABLE IF NOT EXISTS `erasmuslevel` (
   `levelId` int(11) NOT NULL AUTO_INCREMENT,
   `levelName` varchar(45) DEFAULT NULL,
@@ -164,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `erasmuslevel` (
   `view` varchar(45) DEFAULT NULL,
   `next` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`levelId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `erasmuslevel`
@@ -176,7 +172,9 @@ INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `levelDescrip`, `module`, `v
 (8, 'Learning Agreement', NULL, 'lagreeform', 'lagreement', 'Offical Erasmus Contract'),
 (9, 'Offical Erasmus Contract', NULL, 'preleave', 'contract', 'Accomodation Registration Form'),
 (10, 'Accomodation Registration Form', NULL, 'accomodation', 'accomodation', 'Certificate Of Arrival'),
-(11, 'Certificate Of Arrival', NULL, 'abroadstay', 'certarrival', 'Change to Learning Agreement');
+(11, 'Certificate Of Arrival', NULL, 'abroadstay', 'certarrival', 'Change to Learning Agreement'),
+(12, 'Redo Student Application Form', NULL, 'lagreeform', 'applicform', NULL),
+(13, 'Redo Learning Agreement', NULL, 'lagreeform', 'lagreement', NULL);
 
 -- --------------------------------------------------------
 
@@ -184,7 +182,6 @@ INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `levelDescrip`, `module`, `v
 -- Tabelstructuur voor tabel `erasmusstudent`
 --
 
-DROP TABLE IF EXISTS `erasmusstudent`;
 CREATE TABLE IF NOT EXISTS `erasmusstudent` (
   `studentId` int(11) NOT NULL,
   `homeCoordinatorId` int(11) DEFAULT NULL,
@@ -200,6 +197,7 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
   `ectsCredits` int(11) DEFAULT NULL,
   `mothertongue` varchar(45) DEFAULT NULL,
   `beenAbroad` varchar(3) DEFAULT NULL,
+  `action` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`studentId`),
   KEY `fk_ErasmusInfo_Users2` (`studentId`),
   KEY `fk_ErasmusInfo_Users1` (`homeCoordinatorId`),
@@ -213,9 +211,11 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
 -- Gegevens worden uitgevoerd voor tabel `erasmusstudent`
 --
 
-INSERT INTO `erasmusstudent` (`studentId`, `homeCoordinatorId`, `hostCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`) VALUES
-(9, NULL, NULL, 5, NULL, NULL, NULL, 5, 'Precandidate', NULL, ',,', NULL, NULL, NULL),
-(11, NULL, NULL, 5, NULL, NULL, NULL, 5, 'Precandidate', NULL, '(1) Multicasting Overzicht.pdf,,', NULL, NULL, NULL);
+INSERT INTO `erasmusstudent` (`studentId`, `homeCoordinatorId`, `hostCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`, `action`) VALUES
+(9, NULL, NULL, 5, NULL, NULL, NULL, 5, 'Precandidate', NULL, ',,', NULL, NULL, NULL, 1),
+(11, NULL, NULL, 5, NULL, NULL, NULL, 5, 'Precandidate', NULL, '(1) Multicasting Overzicht.pdf,,', NULL, NULL, NULL, 0),
+(13, 9, NULL, 5, 5, '2011-05-09', '2011-05-19', 4, 'Learning Agreement', '1', '(3) ipimt_ov.pdf,(4)multi_configuration.pdf,(3) ipimt_ov.pdf', 2, 'sdfsdf', 'No', 2),
+(15, 14, NULL, 5, 4, '2011-05-12', '2011-05-13', 4, 'Learning Agreement', '1', '(3) ipimt_ov.pdf,,', 5, 'sdfsdf', 'No', 0);
 
 -- --------------------------------------------------------
 
@@ -223,7 +223,6 @@ INSERT INTO `erasmusstudent` (`studentId`, `homeCoordinatorId`, `hostCoordinator
 -- Tabelstructuur voor tabel `forms`
 --
 
-DROP TABLE IF EXISTS `forms`;
 CREATE TABLE IF NOT EXISTS `forms` (
   `formId` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) NOT NULL,
@@ -234,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `forms` (
   PRIMARY KEY (`formId`),
   KEY `fk_Forms_ErasmusInfoPerStudent1` (`studentId`),
   KEY `fk_forms_erasmusLevel1` (`erasmusLevelId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `forms`
@@ -242,7 +241,13 @@ CREATE TABLE IF NOT EXISTS `forms` (
 
 INSERT INTO `forms` (`formId`, `type`, `date`, `content`, `studentId`, `erasmusLevelId`) VALUES
 (18, 'precandidate', '2011-05-05', '{"familyName":"Van Assche","firstName":"Stephane","email":"nathan.vanassche@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Grote Elsdries 9","tel":"222222","mobilePhone":"222222","study":"Elektronics","choice1":"Germany","choice2":"Spain","choice3":"Belgium","motivation":"sdfsqdf","traineeOrStudy":"Study","cribb":"No","cribRent":"Yes","scolarship":"Yes"}', 9, 6),
-(19, 'precandidate', '2011-05-05', '{"familyName":"Moens","firstName":"Jonas","email":"nathan.vanassche@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Grote Elsdries 9","tel":"34567890","mobilePhone":"34567890","study":"Elektronics","choice1":"Germany","choice2":"Germany","choice3":"Belgium","motivation":"kqsdjflkqjsdlfk","traineeOrStudy":"Study","cribb":"No","cribRent":"No","scolarship":"No"}', 11, 6);
+(19, 'precandidate', '2011-05-05', '{"familyName":"Moens","firstName":"Jonas","email":"nathan.vanassche@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Grote Elsdries 9","tel":"34567890","mobilePhone":"34567890","study":"Elektronics","choice1":"Germany","choice2":"Germany","choice3":"Belgium","motivation":"kqsdjflkqjsdlfk","traineeOrStudy":"Study","cribb":"No","cribRent":"No","scolarship":"No"}', 11, 6),
+(21, 'precandidate', '2011-05-06', '{"familyName":"Marchand","firstName":"Yannick","email":"stephane.polet@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Grote Elsdries 9","tel":"34567890","mobilePhone":"0473430801","study":"ICT","choice1":"Germany","choice2":"Spain","choice3":"Belgium","traineeOrStudy":"Study","cribb":"Yes","cribRent":"Yes","scolarship":"No","motivation":"falallalaaa"}', 13, 6),
+(22, 'Student Application Form', '2011-05-06', '{"acaYear":"2010-2011","study":"ICT","sendInstName":"KAHO Sint-Lieven","sendInstAddress":"Gebroeders Desmetstraat - 9000 - Aalst - Germany","sendDepCoorName":"Van Assche Stephane","sendDepCoorTel":"222222","sendDepCoorMail":"bob.vanassche@kahosl.be","sendInstCoorName":"Schoofs Luc","sendInstCoorTel":"12345678","sendInstCoorMail":"nathan.vanassche@kahosl.be","fName":"Yannick","faName":"Marchand","dateBirth":"1989-01-24","sex":"Male","nation":"Belgium","birthPlace":"Ghent","cAddress":"Grote Elsdries 9 - 9000 Ronse","daateValid":"2012-11-12","cTel":"34567890","pAddress":"sdfs","pTel":"234543","mail":"stephane.polet@kahosl.be","recInstitut":"KAHO Sint-Lieven","coountry":"Germany","daateFrom":"2011-05-09","daateUntill":"2011-05-19","duration":"2","ectsPoints":"2","motivation":"sdfsd","motherTongue":"sdfsdf","instrLanguage":"dsfqsdf","languageCount":"1","language0":"sdfs","studyThis0":"0","knowledgeThis0":"0","extraPrep0":"0","language1":"sdfsd","studyThis1":"1","knowledgeThis1":"0","extraPrep1":"0","workCount":"2","type0":"sdf","firm0":"sdf","date0":"sdf","country0":"sqdf","type1":"sqdf","firm1":"sdf","date1":"sdf","country1":"sdf","type2":"sdf","firm2":"sdf","date2":"sdf","country2":"sd","diplome":"dsf","yEducation":"2","abroad":"No","whichInst":"sdf","accepted":"0","signDepSign":"sdf","signDepSignDate":"2011-05-13","signInstSign":"sdfsd","signInstSignDate":"2011-05-20"}', 13, 7),
+(23, 'Learning Agreement', '2011-05-06', '{"courseCount":"1","code0":"ELEK","title0":"Elektronica","ects0":"2","code1":"ICT","title1":"ICT","ects1":"5","sign":"sdfsd","signDate":"2011-05-07","signDepSign":"sdfs","signDepSignDate":"2011-05-07","signInstSign":"sdf","signInstSignDate":"2011-05-20","signDepSign2":"sdf","signDepSignDate2":"2011-05-20","signInstSign2":"sfqs","signInstSignDate2":"2011-05-13"}', 13, 8),
+(24, 'precandidate', '2011-05-11', '{"familyName":"Doe","firstName":"John","email":"stephan.polet@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Grote Elsdries 9","tel":"222222","mobilePhone":"34567890","study":"Elektronics","choice1":"Germany","choice2":"Spain","choice3":"Belgium","traineeOrStudy":"Study","cribb":"Yes","cribRent":"Yes","scolarship":"No","motivation":"erasmus is tof"}', 15, 6),
+(26, 'Student Application Form', '2011-05-11', '{"acaYear":"2010-2011","study":"ICT","sendInstName":"KAHO Sint-Lieven","sendInstAddress":"Gebroeders Desmetstraat - 9000 - Aalst - Germany","sendDepCoorName":"Van Assche Jonas","sendDepCoorTel":"1233456","sendDepCoorMail":"erasmus.coordinator@kahosl.be","sendInstCoorName":"Schoofs Luc","sendInstCoorTel":"12345678","sendInstCoorMail":"luk.schoofs@kaho.be","fName":"John","faName":"Doe","dateBirth":"1989-12-12","sex":"Male","nation":"Belgium","birthPlace":"Ghent","cAddress":"Grote Elsdries 9 - 9000 Ronse","daateValid":"2012-11-12","cTel":"222222","pAddress":"sdfs","pTel":"234543","mail":"stephan.polet@kahosl.be","recInstitut":"KAHO Aalst","coountry":"Germany","daateFrom":"2011-05-12","daateUntill":"2011-05-13","duration":"2","ectsPoints":"5","motivation":"because it''s fun","motherTongue":"sdfsdf","instrLanguage":"dsfqsdf","languageCount":"1","language0":"french","studyThis0":"0","knowledgeThis0":"1","extraPrep0":"0","language1":"english","studyThis1":"1","knowledgeThis1":"0","extraPrep1":"1","workCount":"1","type0":"df","firm0":"dfg","date0":"dfsg","country0":"dfsgsd","type1":"fsg","firm1":"dfg","date1":"fsg","country1":"dfg","diplome":"qsdf","yEducation":"2","abroad":"No","whichInst":"sdf"}', 15, 7),
+(28, 'Learning Agreement', '2011-05-11', '{"courseCount":"1","code0":"ELEK","title0":"Elektronica","ects0":"2","code1":"ICT","title1":"ICT","ects1":"3","sign":"sdfsdfsdq","signDate":"2011-05-13"}', 15, 8);
 
 -- --------------------------------------------------------
 
@@ -250,7 +255,6 @@ INSERT INTO `forms` (`formId`, `type`, `date`, `content`, `studentId`, `erasmusL
 -- Tabelstructuur voor tabel `grades`
 --
 
-DROP TABLE IF EXISTS `grades`;
 CREATE TABLE IF NOT EXISTS `grades` (
   `courseId` int(11) NOT NULL,
   `studentId` int(11) NOT NULL,
@@ -266,6 +270,10 @@ CREATE TABLE IF NOT EXISTS `grades` (
 -- Gegevens worden uitgevoerd voor tabel `grades`
 --
 
+INSERT INTO `grades` (`courseId`, `studentId`, `localGrade`, `ectsGrade`, `courseDuration`) VALUES
+(3, 15, NULL, NULL, NULL),
+(4, 13, NULL, NULL, NULL),
+(4, 15, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -273,7 +281,6 @@ CREATE TABLE IF NOT EXISTS `grades` (
 -- Tabelstructuur voor tabel `institutions`
 --
 
-DROP TABLE IF EXISTS `institutions`;
 CREATE TABLE IF NOT EXISTS `institutions` (
   `instId` int(11) NOT NULL AUTO_INCREMENT,
   `instName` varchar(200) NOT NULL,
@@ -288,6 +295,7 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `instWebsite` varchar(100) DEFAULT NULL,
   `traineeOrStudy` int(11) NOT NULL,
   `url` varchar(250) NOT NULL,
+  `scale` int(11) NOT NULL,
   PRIMARY KEY (`instId`),
   KEY `fk_Institutions_Country1` (`instCountry`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
@@ -296,9 +304,9 @@ CREATE TABLE IF NOT EXISTS `institutions` (
 -- Gegevens worden uitgevoerd voor tabel `institutions`
 --
 
-INSERT INTO `institutions` (`instId`, `instName`, `instStreetNr`, `instCity`, `instPostalCode`, `instCountry`, `instTel`, `instFax`, `instEmail`, `instDescription`, `instWebsite`, `traineeOrStudy`, `url`) VALUES
-(4, 'KAHO Aalst', 'Gebroeders Desmetstraat', 'Ghent', '9000', 'DEU', '00000000', '00000000', 'info@kahosl.be', 'lorem ipsum', 'www.kahosl.be', 1, ''),
-(5, 'KAHO Sint-Lieven', 'Gebroeders Desmetstraat', 'Aalst', '9000', 'DEU', '0000000', '0000000', 'info@kahosl.be', NULL, 'www.kahosl.be', 1, '');
+INSERT INTO `institutions` (`instId`, `instName`, `instStreetNr`, `instCity`, `instPostalCode`, `instCountry`, `instTel`, `instFax`, `instEmail`, `instDescription`, `instWebsite`, `traineeOrStudy`, `url`, `scale`) VALUES
+(4, 'KAHO Aalst', 'Gebroeders Desmetstraat', 'Ghent', '9000', 'DEU', '00000000', '00000000', 'info@kahosl.be', 'lorem ipsum', 'www.kahosl.be', 1, '', 0),
+(5, 'KAHO Sint-Lieven', 'Gebroeders Desmetstraat', 'Aalst', '9000', 'DEU', '0000000', '0000000', 'info@kahosl.be', NULL, 'www.kahosl.be', 1, 'http://127.0.0.1/MUTWW/mutworange/erasmusline/WEBSITE', 0);
 
 -- --------------------------------------------------------
 
@@ -306,7 +314,6 @@ INSERT INTO `institutions` (`instId`, `instName`, `instStreetNr`, `instCity`, `i
 -- Tabelstructuur voor tabel `leasing`
 --
 
-DROP TABLE IF EXISTS `leasing`;
 CREATE TABLE IF NOT EXISTS `leasing` (
   `rentalId` int(11) NOT NULL AUTO_INCREMENT,
   `outboundUser` int(11) DEFAULT NULL,
@@ -332,7 +339,6 @@ CREATE TABLE IF NOT EXISTS `leasing` (
 -- Tabelstructuur voor tabel `owner`
 --
 
-DROP TABLE IF EXISTS `owner`;
 CREATE TABLE IF NOT EXISTS `owner` (
   `ownerId` int(11) NOT NULL AUTO_INCREMENT,
   `familyName` varchar(200) DEFAULT NULL,
@@ -359,7 +365,6 @@ CREATE TABLE IF NOT EXISTS `owner` (
 -- Tabelstructuur voor tabel `residence`
 --
 
-DROP TABLE IF EXISTS `residence`;
 CREATE TABLE IF NOT EXISTS `residence` (
   `residenceId` int(11) NOT NULL AUTO_INCREMENT,
   `price` int(11) NOT NULL,
@@ -392,28 +397,38 @@ CREATE TABLE IF NOT EXISTS `residence` (
 -- Tabelstructuur voor tabel `studentsevents`
 --
 
-DROP TABLE IF EXISTS `studentsevents`;
 CREATE TABLE IF NOT EXISTS `studentsevents` (
   `eventId` int(11) NOT NULL AUTO_INCREMENT,
-  `event` text NOT NULL,
+  `reader` text NOT NULL,
   `timestamp` date NOT NULL,
   `motivation` text,
-  `read_Notification` tinyint(1) NOT NULL,
+  `readIt` tinyint(1) NOT NULL,
   `erasmusStudentId` int(11) NOT NULL,
   `action` tinyint(1) NOT NULL,
   `erasmusLevelId` int(11) NOT NULL,
+  `eventDescrip` text NOT NULL,
   PRIMARY KEY (`eventId`),
   KEY `fk_ErasmusProgressPerStudent_ErasmusInfoPerStudent1` (`erasmusStudentId`),
   KEY `fk_studentEvents_erasmusLevel1` (`erasmusLevelId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `studentsevents`
 --
 
-INSERT INTO `studentsevents` (`eventId`, `event`, `timestamp`, `motivation`, `read_Notification`, `erasmusStudentId`, `action`, `erasmusLevelId`) VALUES
-(10, 'sdfsdf', '2011-05-05', '', 0, 9, 0, 6),
-(11, 'sdfsdf', '2011-05-05', '', 0, 11, 0, 6);
+INSERT INTO `studentsevents` (`eventId`, `reader`, `timestamp`, `motivation`, `readIt`, `erasmusStudentId`, `action`, `erasmusLevelId`, `eventDescrip`) VALUES
+(10, 'Student', '2011-05-05', '', 0, 9, 2, 6, ''),
+(11, 'Erasmus Coordinator', '2011-05-05', '', 0, 11, 2, 6, ''),
+(13, 'Student', '2011-05-06', '', 0, 13, 0, 6, ''),
+(15, 'Student', '2011-05-06', '', 0, 13, 0, 8, ''),
+(20, 'Erasmus Coordinator', '2011-05-10', 'qsdf', 0, 9, 1, 6, ''),
+(24, 'Student', '2011-05-10', 'sdfsdfsd', 0, 11, 0, 6, ''),
+(25, 'Erasmus Coordinator', '2011-05-11', 'sdfsd', 0, 13, 1, 6, ''),
+(26, 'Student', '2011-05-11', '', 1, 15, 2, 6, 'Filled in Precandidate.'),
+(28, 'Student', '2011-05-11', 'Hezaa you re in', 1, 15, 1, 6, 'Precandidate approved'),
+(30, 'Student', '2011-05-11', '', 1, 15, 2, 7, 'Filled in Student Application Form'),
+(32, 'Student', '2011-05-11', '', 1, 15, 2, 8, 'Filled in Learning Agreement'),
+(33, 'Student', '2011-05-11', 'sorry dude', 0, 15, 0, 7, 'Student Application Form is denied.');
 
 -- --------------------------------------------------------
 
@@ -421,7 +436,6 @@ INSERT INTO `studentsevents` (`eventId`, `event`, `timestamp`, `motivation`, `re
 -- Tabelstructuur voor tabel `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `userId` int(11) NOT NULL AUTO_INCREMENT,
   `familyName` varchar(45) NOT NULL,
@@ -445,7 +459,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`userId`),
   KEY `fk_Users_Country1` (`country`),
   KEY `fk_Users_Institutions1` (`institutionId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `users`
@@ -455,7 +469,10 @@ INSERT INTO `users` (`userId`, `familyName`, `firstName`, `password`, `birthDate
 (9, 'Van Assche', 'Stephane', 'Azerty123', '1989-12-12', 'Ghent', 1, '222222', '222222', NULL, 'bob.vanassche@kahosl.be', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 1, 'tabxvxj1XkuFE7uyuLczBcqcQxGHvLuJ', 5),
 (10, 'admin', 'admin', 'admin', '1989-12-12', 'admin', 1, '1233456', '222222', NULL, 'admin', 'Grote Elsdries 9', 'ghent', '9000', 'ESP', 'Industrial Institution', 2, 'd1TMtPNuwaRXtI77V8Je8gJUjrRABSmc', 5),
 (11, 'Moens', 'Jonas', 'Azerty123', '1989-01-24', 'Ghent', 1, '34567890', '34567890', NULL, 'nathan.vanassche@kahosl.be', 'Grote Elsdries 9', 'Ghent', '9000', 'BEL', 'Student', 1, '7i3IhgVFX5jxsjaKH6Hgb0NhRVt22FuF', 5),
-(12, 'Schoofs', 'Luc', 'schoofs', '2011-05-01', 'Ghent', 1, '12345678', '123456789', '123456789', 'nathan.vanassche@kahosl.be', 'klsqjdf', 'lkqjsdf', '9000', 'BEL', 'International Relations Office Staff', 5, '123456789', 5);
+(12, 'Schoofs', 'Luc', 'schoofs', '2011-05-01', 'Ghent', 1, '12345678', '123456789', '123456789', 'luk.schoofs@kaho.be', 'klsqjdf', 'lkqjsdf', '9000', 'BEL', 'International Relations Office Staff', 5, '123456789', 5),
+(13, 'Marchand', 'Yannick', 'Azerty123', '1989-01-24', 'Ghent', 1, '34567890', '0473430801', NULL, 'stephane.polet@kahosl.be', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 1, '0adbnSqJ7ODtWwsmG58WDCTWcWIjkQFp', 5),
+(14, 'Van Assche', 'Jonas', 'Azerty123', '2011-05-19', 'Ghent', 1, '1233456', '222222', '12333333', 'erasmus.coordinator@kahosl.be', 'Grote Elsdries 9', 'ghent', '9000', 'BEL', 'Erasmus Coordinator', 2, 'd1TMtPNuwaRXtI77V8Je8gJUjrRABSmc', 4),
+(15, 'Doe', 'John', 'Azerty123', '1989-12-12', 'Ghent', 1, '222222', '34567890', NULL, 'stephan.polet@kahosl.be', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 1, 'RCu3REaJQ2s9wwQPWoRwOLbA8ecw2qBi', 5);
 
 --
 -- Beperkingen voor gedumpte tabellen

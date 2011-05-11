@@ -73,9 +73,9 @@ class MainController extends PlonkController {
     public static function userExist($email, $password) {
         // get DB instance
         $db = PlonkWebsite::getDB();
-
+        
         // query DB
-        $items = $db->retrieveOne("select userId, userLevel from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "'");
+        $items = $db->retrieveOne("select userId, userLevel from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "' AND isValidUser > 0");
 
         // return the result
         return $items;
