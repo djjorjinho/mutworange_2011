@@ -1,6 +1,6 @@
 <h2>Student Application Form</h2>
 
-<form action=" " method="post" enctype="multipart/form-data" id="studApplicForm" name="studApplicForm" >
+<form action=" " method="post" enctype="multipart/form-data" id="studApplicForm">
 
     <div class="TRdiv">
 <label for="acaYear"><span>Academic year: </span></label>
@@ -10,41 +10,40 @@
 
 <div class="TRdiv">
 <label for="study"><span>Field of Study: </span></label>
-            <select name="study" value="{$study}" >
-               {iteration:iStudy}
-                     {$stud}
-               {/iteration:iStudy}
-            </select>
-            <span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>
-</div>  
+<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="study" name="study" value="{$study|htmlentities}" />
+<span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>
+</div>
 
 <h3>Sending Institution</h3>
 <fieldset>
 <legend>Contact info</legend>
 <div class="TRdiv">
 <label for="sendInstName"><span>Name: </span></label>
-<input type="text" id="sendInstName" name="sendInstName" value="{$sendInstName|htmlentities}" />
+<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="sendInstName" name="sendInstName" value="{$sendInstName|htmlentities}" />
+<span class="req" id="msgSendInstName">{$msgSendInstName|htmlentities}</span>
 </div>
 <div class="TRdiv">
     <label for="sendInstAddress"><span>Address: </span></label>
 <input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" id="sendInstAddress" name="sendInstAddress" value="{$sendInstAddress|htmlentities}" />
+<span class="req" id="msgSendInstAddress">{$msgSendInstAddress|htmlentities}</span>
 </div>
 
 <div class="TRdiv">
 <label for="sendDepCoorName"><span>Departmental co-ordinator – name: </span></label>
-<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="sendDepCoorName" onkeyup="lookup2(this.value);" onclick="fill2();" name="sendDepCoorName" value="{$sendDepCoorName|htmlentities}" />
+<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="sendDepCoorName" name="sendDepCoorName" value="{$sendDepCoorName|htmlentities}" />
 <span class="req" id="msgSendDepCoorName">{$msgSendDepCoorName|htmlentities}</span>
 </div>
-<div class="suggestionsBox" id="suggestions2" style="display: none;">
-		<div class="suggestionList" id="autoSuggestionsList2">
-			&nbsp;
-                </div>
-	</div>  
 
 <div class="TRdiv">
 <label for="sendDepCoorTel"><span>Departmental co-ordinator – telephone: </span></label>
 <input class="validate[required,custom[onlyNumberSp]] text-input" type="text" id="sendDepCoorTel" name="sendDepCoorTel" value="{$sendDepCoorTel|htmlentities}" />
 <span class="req" id="msgSendDepCoorTel">{$msgSendDepCoorTel|htmlentities}</span>
+</div>
+
+<div class="TRdiv">
+<label for="sendDepCoorFax"><span>Departmental co-ordinator – telefax: </span></label>
+<input class="validate[custom[onlyNumberSp]] text-input" type="text" id="sendDepCoorFax" name="sendDepCoorFax" value="{$sendDepCoorFax|htmlentities}" />
+<span class="req" id="msgSendDepCoorFax">{$msgSendDepCoorFax|htmlentities}</span>
 </div>
 
 <div class="TRdiv">
@@ -55,17 +54,26 @@
 
 <div class="TRdiv">
 <label for="sendInstCoorName"><span>Institutional co-ordinator – name: </span></label>
-<input type="text" id="sendInstCoorName" name="sendInstCoorName" value="{$sendInstCoorName|htmlentities}" />
+<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="sendInstCoorName" name="sendInstCoorName" value="{$sendInstCoorName|htmlentities}" />
+<span class="req" id="msgSendInstCoorName">{$msgSendInstCoorName|htmlentities}</span>
 </div>
 
 <div class="TRdiv">
 <label for="sendInstCoorTel"><span>Institutional co-ordinator – telephone: </span></label>
-<input type="text" id="sendInstCoorTel" name="sendInstCoorTel" value="{$sendInstCoorTel|htmlentities}" />
+<input class="validate[required,custom[onlyNumberSp]] text-input" type="text" id="sendInstCoorTel" name="sendInstCoorTel" value="{$sendInstCoorTel|htmlentities}" />
+<span class="req" id="msgSendInstCoorTel">{$msgSendInstCoorTel|htmlentities}</span>
+</div>
+
+<div class="TRdiv">
+<label for="sendInstCoorFax"><span>Institutional co-ordinator – telefax: </span></label>
+<input class="validate[custom[onlyNumberSp]] text-input" type="text" id="sendInstCoorFax" name="sendInstCoorFax" value="{$sendInstCoorFax|htmlentities}" />
+<span class="req" id="msgSendInstCoorFax">{$msgSendInstCoorFax|htmlentities}</span>
 </div>
 
 <div class="TRdiv">
 <label for="sendInstCoorMail"><span>Institutional co-ordinator – e-mail box: </span></label>
-<input type="text" id="sendInstCoorMail" name="sendInstCoorMail" value="{$sendInstCoorMail|htmlentities}" />
+<input class="validate[required,custom[email]] text-input" type="text" id="sendInstCoorMail" name="sendInstCoorMail" value="{$sendInstCoorMail|htmlentities}" />
+<span class="req" id="msgSendInstCoorMail">{$msgSendInstCoorMail|htmlentities}</span>
 </div>
 
 </fieldset>
@@ -138,15 +146,9 @@
 <fieldset>
 <div class="TRdiv">
 <label for="recInstitut"><span>Receiving Institution: </span></label>
-<input class="validate[required] text-input" type="text" id="recInstitut" onkeyup="lookup3(this.value);" onclick="fill3();" name="recInstitut" value="{$recInstitut|htmlentities}" />
+<input class="validate[required] text-input" type="text" id="recInstitut" name="recInstitut" value="{$recInstitut|htmlentities}" />
 <span class="req" id="msgRecInstitut">{$msgRecInstitut|htmlentities}</span>
 </div>
-    
-    <div class="suggestionsBox3" id="suggestions3" style="display: none;">
-		<div class="suggestionList3" id="autoSuggestionsList3">
-			&nbsp;
-                </div>
-	</div>  
 
 <div class="TRdiv">
 <label for="coountry"><span>Country: </span></label>
@@ -218,7 +220,7 @@
     <th></th>
 </tr>
 <tr>
-<td><input type="button" name="addLanguage" value="Add" id="addLanguage"/><input type="button" name="removeLanguage" value="Remove" id="remLanguage" /><input type="hidden" id="languageCount" name="languageCount" value="{$languageCount}" /></td>
+<td><input type="button" name="addLanguage" value="Add" id="addLanguage"/><input type="button" name="removeLanguage" value="Remove" id="remLanguage" /><input type="text" id="languageCount" name="languageCount" value="{$languageCount}" /></td>
 </tr>
 
 {iteration:iLanguages}
@@ -241,7 +243,7 @@
 </tr>
 <tr>
                             <td></td><td></td><td></td><td></td>
-                            <td><input type="button" name="addWork" value="Add" id="addWork"/><input type="button" name="removeWork" value="Remove" id="remWork" /><input type="hidden" id="workCount" name="workCount" value="{$workCount}" /></td>
+                            <td><input type="button" name="addWork" value="Add" id="addWork"/><input type="button" name="removeWork" value="Remove" id="remWork" /><input type="text" id="workCount" name="workCount" value="{$workCount}" /></td>
                         </tr>
 
 {iteration:iWorks}
@@ -268,8 +270,8 @@
 
 <div class="TRdiv">
 <label for="abroad"><span>Have you already been studying abroad?: </span></label>
-            <span>Yes</span><input class="validate[required] radio" type="radio" {$abroadYes} name="abroad" value="Yes" id="eena"  />
-            <span>No</span><input class="validate[required] radio" type="radio" {$abroadNo} name="abroad" value="No" id="nula"  />
+            <span>Yes</span><input class="validate[required] radio" type="radio" {$abroadYes} name="abroad" value="1" id="eena"  />
+            <span>No</span><input class="validate[required] radio" type="radio" {$abroadNo} name="abroad" value="0" id="nula"  />
             <span class="req" id="msgSex">{$msgAbroad|htmlentities}</span>
 </div>
 

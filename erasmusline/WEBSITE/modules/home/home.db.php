@@ -26,36 +26,8 @@ class HomeDB {
 
             $db = PlonkWebsite::getDB();
 
-            $items = $db->retrieveOne("select firstName from users where userId = " . $db->escape($id));
+            $items = $db->retrieveOne("select firstName from users where userId =" . $db->escape($id));
 
             return $items;
-        }
-        
-        public static function getLatestEvent($id) {
-            $id = (int) $id;
-            
-            $db = PlonkWebsite::getDB();
-            
-            $eventInfo = $db ->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where erasmusStudentId = ".$db->escape($id));
-            
-            return $eventInfo;
-        }
-        
-        public static function getForms($id) {
-            $id = (int) $id;
-            
-            $db = PlonkWebsite::getDB();
-            
-            $forms = $db->retrieve('SELECT type, date, module, view FROM forms inner join erasmusLevel on forms.erasmusLevelId = erasmusLevel.levelId WHERE studentId ='.$db->escape($id));
-            
-            return $forms;
-        }
-        
-        public static function getNext($next) {
-            $db = PlonkWebsite::getDB();
-            
-            $nextLevel = $db->retrieveOne("select * from erasmuslevel where levelName = '" . $db->escape($next). "'");
-            
-            return $nextLevel;
         }
 }

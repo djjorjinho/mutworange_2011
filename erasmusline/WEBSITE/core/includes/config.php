@@ -42,29 +42,20 @@
                 
         
         /**
-        * Sender
+        * Afzender
          */
-                define('MAIL_SENDER','info@kahosl.be');
+                define('MAIL_SENDER','info@erasmusline.be');
                 
        /**
         * Smpt-server
         */
-                define('MAIL_SMTP','smtp.kahosl.be');
+                define('MAIL_SMTP','');
        
        /**
-        *Subject
+        *Onderwerp
         */
                 define('MAIL_SUBJECT','Task completed: ');
                 
-       /**
-        * Institute
-        */
-              define('INSTITUTE', 'KAHO Sint-Lieven');  
-              
-       /**
-        * Academic Year
-        */
-              define('ACADEMICYEAR','2010-2011');
 	
 	
 // EOF

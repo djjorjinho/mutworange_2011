@@ -7,7 +7,7 @@ class LoginController extends PlonkController {
      * @var array
      */
     protected $views = array(
-        'login','logout'
+        'login'
     );
     /**
      * The actions allowed for this module
@@ -16,10 +16,6 @@ class LoginController extends PlonkController {
     protected $actions = array(
         'login'
     );
-    
-    public function showLogout() {
-        MainController::logout();
-    }
 
     /**
      * Assign variables that are main and the same for every view
