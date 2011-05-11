@@ -20,7 +20,9 @@ cd stats/scripts
 ./run_sql
 ./populateDB.php
 cd ../bin
-./restart_daemons
+./restart_daemons &
+
+sleep 2
 
 cd ../test
 ./run

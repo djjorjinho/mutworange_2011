@@ -1,6 +1,7 @@
 <?php
 $ipath = get_include_path();
-set_include_path($ipath.":".dirname(__FILE__)."/../");
+$sep = DIRECTORY_SEPARATOR;
+set_include_path($ipath.":".dirname(__FILE__)."${sep}..${sep}");
 require_once 'PHPUnit.php';
 require_once 'lib/Cache.php';
 class CacheTest extends PHPUnit_TestCase {

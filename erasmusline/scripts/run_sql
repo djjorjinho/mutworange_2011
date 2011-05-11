@@ -9,3 +9,4 @@ read password
 stty echo
 echo "drop database if exists erasmusline; create database erasmusline;" | mysql -uroot -p${password}
 mysql -uroot -p${password} erasmusline < erasmusline.sql
+echo ""

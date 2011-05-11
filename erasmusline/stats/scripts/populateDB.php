@@ -1,7 +1,8 @@
 #!/usr/bin/env php
 <?php
 $ipath = get_include_path();
-set_include_path($ipath.":".dirname(__FILE__)."/../");
+$sep = DIRECTORY_SEPARATOR;
+set_include_path($ipath.":".dirname(__FILE__)."${sep}..${sep}");
 
 require_once 'lib/DB.php';
 require_once 'lib/TSample.php';
@@ -14,6 +15,9 @@ class PopulateDB {
     
     var $fact_tables = array('fact_efficacy','fact_efficiency');
     
+    var $ods_tables = array('ods_efficiency');
+    var $meta_tables = array('meta_semester');
+    
     var $dict_dir;
     
     var $rnd;
@@ -23,36 +27,40 @@ class PopulateDB {
         $this->db = DB::getInstance();
         $this->db->connect();
         $this->rnd = new TSample();
-        $this->dict_dir = dirname(__FILE__).'/pop_dict';
+        $this->dict_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'pop_dict';
     }
     
     function populate_gender(){
-    	foreach (CsvToArray::open($this->dict_dir."/gender.csv") as $R){
+    	foreach (CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
+    						"gender.csv") as $R){
             $this->db->insert($R,$this->dim_tables[0]);
         }
     }
     
 	function populate_lodging(){
-    	foreach (CsvToArray::open($this->dict_dir."/lodging.csv") as $R){
+    	foreach (CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
+    						"lodging.csv") as $R){
             $this->db->insert($R,$this->dim_tables[1]);
         }
     }
     
     function populate_mobility(){
-    	foreach (CsvToArray::open($this->dict_dir."/mobility.csv") as $R){
+    	foreach (CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
+    							"mobility.csv") as $R){
             $this->db->insert($R,$this->dim_tables[2]);
         }
     }
     
     function populate_institution(){
-        foreach (CsvToArray::open($this->dict_dir."/institution.csv") as $R){
+        foreach (CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
+        					"institution.csv") as $R){
             $this->db->insert($R,$this->dim_tables[3]);
         }
         
     }
     
     function populate_date1(){
-        $year='2011';
+        $year='2010';
         $semester='1';
         
         $month='9';
@@ -94,7 +102,7 @@ class PopulateDB {
     }
     
 	function populate_date2(){
-        $year='2011';
+        $year='2010';
         $semester='2';
         
         $month='3';
@@ -135,19 +143,30 @@ class PopulateDB {
     }
     
     function populate_phase(){
-        foreach (CsvToArray::open($this->dict_dir."/phase.csv") as $R){
+        foreach (CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
+        					"phase.csv") as $R){
             $this->db->insert($R,$this->dim_tables[5]);
         }
     }
     
     function populate_study(){
-        foreach (CsvToArray::open($this->dict_dir."/study.csv") as $R){
+        foreach (CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR
+        					."study.csv") as $R){
             $this->db->insert($R,$this->dim_tables[6]);
         }
     }
     
-    function populate_efficiency(){
-        error_log("populate_efficiency not implemented yet");
+    function createDummyEfficiencyMRG(){
+    	$db = $this->db;
+		$efficiency_table = $this->fact_tables[1];
+		$year = 2009;
+		$semester = 2;
+		
+		// create a merging table based on template
+        $mrg_table = $efficiency_table."_${year}_${semester}s";
+        $db->execute("drop table if exists $mrg_table");
+		$db->execute("create table $mrg_table like $efficiency_table");
+        $db->execute("alter table $mrg_table engine=MyISAM");
     }
     
     function populate_efficacy($semester=1){
@@ -158,7 +177,7 @@ class PopulateDB {
         $ftpl = $this->fact_tpl;
         
         // create a merging table based on template
-        $mrg_table = $ftb[0]."_2011_${semester}s";
+        $mrg_table = $ftb[0]."_2010_${semester}s";
         $db->execute("create table $mrg_table like $ftb[0]");
         $db->execute("alter table $mrg_table engine=MyISAM");
         $db->execute("alter table $mrg_table disable keys");
@@ -212,12 +231,128 @@ class PopulateDB {
         
         // uniting merging tables
         $mrg_tables = $db->getMergedTables($ftb[0]);
-        $db->execute("alter table $ftb[0] UNION=(".implode(",",$mrg_tables).")");
+        $db->execute("alter table $ftb[0] UNION=(".
+        									implode(",",$mrg_tables).")");
         
         // load indices to cache
         $db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
-        $db->execute("LOAD INDEX INTO CACHE ".implode(",",$dtb)." IGNORE LEAVES");
-        $db->execute("LOAD INDEX INTO CACHE ".implode(",",$mrg_tables)." IGNORE LEAVES");
+        $db->execute("LOAD INDEX INTO CACHE ".
+        				implode(",",$dtb)." IGNORE LEAVES");
+        $db->execute("LOAD INDEX INTO CACHE ".
+        				implode(",",$mrg_tables)." IGNORE LEAVES");
+    }
+    
+    function populate_efficiency_ods(){
+    	$rnd = $this->rnd;
+    	$db = $this->db;
+    	
+    	$csv = CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
+        					"phase.csv");
+    	
+    	$dt1 = new DateTime('2011-01-02 10:00:00');
+    	$dt2 = new DateTime('2011-01-02 10:00:00');
+    	$dt2->add(new DateInterval("P10D"));
+    	
+        // one approved student
+        $obj = array(
+        	student_id => "PT-ISEP-1",
+        	institution_code => 'isep',
+        	institution_host_code => 'fkl',
+        	country_code => 'pt',
+        	country_host_code => 'de',
+        	year => 2011,
+        	semester => 1,
+        	dim_mobility_id => 'study',
+        	dim_gender_id => 'M',
+        	lodging_available => 1
+        );
+        
+    	foreach ($csv as $R){
+    		
+    		$dt1->add(new DateInterval("P10D"));
+    		$dt2->add(new DateInterval("P10D"));
+    		
+    		$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+    		$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+    		$obj['dim_phase_id'] = $R['dim_phase_id'];
+    		
+            $db->insert($obj,$this->ods_tables[0]);
+        }
+        
+    	$dt1 = new DateTime('2011-01-05 10:00:00');
+    	$dt2 = new DateTime('2011-01-05 10:00:00');
+    	$dt2->add(new DateInterval("P10D"));
+    	
+        // another approved student
+        $obj = array(
+        	student_id => "PT-ISEP-2",
+        	institution_code => 'isep',
+        	institution_host_code => 'gent',
+        	country_code => 'pt',
+        	country_host_code => 'be',
+        	year => 2011,
+        	semester => 1,
+        	dim_mobility_id => 'study',
+        	dim_gender_id => 'M',
+        	lodging_available => 1
+        );
+        
+    	foreach ($csv as $R){
+    		
+    		$dt1->add(new DateInterval("P10D"));
+    		$dt2->add(new DateInterval("P10D"));
+    		
+    		$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+    		$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+    		$obj['dim_phase_id'] = $R['dim_phase_id'];
+    		
+            $db->insert($obj,$this->ods_tables[0]);
+        }
+    	
+    	
+        // one rejected student
+    	$dt1 = new DateTime('2011-01-05 10:00:00');
+    	$dt2 = new DateTime('2011-01-05 10:00:00');
+    	$dt2->add(new DateInterval("P2D"));
+    	
+
+        $obj = array(
+        	student_id => "PT-ISEP-3",
+        	institution_code => 'isep',
+        	institution_host_code => 'gun',
+        	country_code => 'pt',
+        	country_host_code => 'en',
+        	year => 2011,
+        	semester => 1,
+        	dim_mobility_id => 'both',
+        	dim_gender_id => 'F',
+        	lodging_available => 1
+        );
+        
+        $cnt=0;
+        $reject=false;
+    	foreach ($csv as $R){
+    		$cnt++;
+    		
+    		$dt1->add(new DateInterval("P20D"));
+    		$dt2->add(new DateInterval("P20D"));
+    		
+    		$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+    		$obj['dim_phase_id'] = $R['dim_phase_id'];
+    		
+    		if($cnt>3){
+    			$obj['reject_date'] = $dt2->format('Y-m-d H:i:s');
+    			unset($obj['approve_date']);
+    			$reject=true;
+    		}else{
+    			$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+    		}
+    		
+    		
+            $db->insert($obj,$this->ods_tables[0]);
+            if($reject) break;
+        }
+    	
     }
     
     function run(){
@@ -234,7 +369,10 @@ class PopulateDB {
         // fact tables
         $this->populate_efficacy(1);
         $this->populate_efficacy(2);
-        $this->populate_efficiency();
+        
+        // ODS
+        $this->populate_efficiency_ods();
+        $this->createDummyEfficiencyMRG();
     }
     
 }
