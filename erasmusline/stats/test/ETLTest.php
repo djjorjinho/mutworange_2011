@@ -55,16 +55,29 @@ class ETLTest extends PHPUnit_TestCase {
 	
 	function testTransformODSRow(){
 		$rules = $this->etl->getEfficiencyTransformationRules();
-		$context = array();
+		$context = array(count=>1,max_rsp=>0,min_rsp=>0,total_rsp=>0);
 		$row = array(
 			year => 2011,
 			semester => 1,
-			dim_phase_id => 'douche'
-			
+			dim_phase_id => 'precandidate',
+			institution_code => 'fkl',
+			country_code => 'de',
+			institution_host_code => 'isep',
+			country_host_code => 'pt',
+			dim_mobility_id => 'study',
+			dim_gender_id => 'M',
+			create_date => '2011-01-05 00:00:00',
+			approve_date => '2011-01-30 00:00:00'
 		);
 		
 		$NRow = $this->etl->transformODSRow($rules,$row,$context);
 		print_r($NRow);
+		print_r($context);
+		
+		$context['count']++;
+		$NRow = $this->etl->transformODSRow($rules,$row,$context);
+		print_r($NRow);
+		print_r($context);
 	}
 	
 }

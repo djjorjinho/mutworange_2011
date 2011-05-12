@@ -55,8 +55,9 @@ class ETL{
 		$rules = $this->etl->getEfficiencyTransformationRules();
 		
 		// transform,load and calculate statistical values by context
-		$context = array();
+		$context = array(count=>0,max_rsp=>0,min_rsp=>0,total_rsp=>0);
 		foreach($res as $row){
+			$context['count']++;
 			$NRow = $this->etl->transformODSRow($rules,$row,$context);
 			$db->insert($NRow,$efficiency_table);
 		}
@@ -206,22 +207,60 @@ class ETL{
 						,"dim_phase",array(description=>$row['dim_phase_id']));
 			},
 			
-			dim_institution_id => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
-				
+			dim_institution_id => 
+					function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+						$NRow[$field] = $obj->getDimId(
+						array(institution_code => $row['institution_code'],
+							country_code=>$row['country_code'])
+						,"dim_institution",
+						array(description=>$row['country_code']."-".
+									$row['institution_code']));
 			},
 			
 			dim_institution_host_id => 
 					function(&$field,&$row,&$NRow)use($db,$obj){
-						
+						$NRow[$field] = $obj->getDimId(
+						array(institution_code => $row['institution_host_code'],
+							country_code=>$row['country_host_code'])
+						,"dim_institution",
+						array(description=>$row['country_host_code']."-".
+									$row['institution_host_code']));
 			},
 			
-			dim_bobility_id => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
-				
+			dim_mobility_id => 
+					function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+						$NRow[$field] = $obj->getDimId(
+						array(dim_mobility_id => $row['dim_mobility_id'])
+						,"dim_mobility",
+						array(description=>$row['dim_mobility_id']));
 			},
 			
 			dim_gender_id => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
-				
+				$NRow[$field] = $obj->getDimId(
+						array(dim_gender_id => $row['dim_gender_id'])
+						,"dim_gender",
+						array(description=>$row['dim_gender_id']));
 			},
+			
+			_response => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+				$begin = new DateTime($row['create_date']);
+				$end_date = isset($row['approve_date']) ? $row['approve_date'] :
+													$row['reject_date'];
+				$end = new DateTime($end_date);
+				
+				$day_diff = $begin->diff($end);
+				$days = $day_diff->d;
+				
+				if($ctx['count']==1) $ctx['min_rsp']=$days;
+				
+				if($ctx['min_rsp'] > $days) $ctx['min_rsp']=$days;
+				
+				if($ctx['max_rsp'] < $days) $ctx['max_rsp']=$days;
+				
+				$ctx['total_rsp'] += $days;
+				
+				$ctx['avg_rsp'] = $ctx['total_rsp'] / $ctx['count'];
+			}
 		
 		);
 		return $map;
@@ -236,7 +275,7 @@ class ETL{
 	 * @param array $context - hold context info for statistical values
 	 * @return array $NRow - the new row for the fact table
 	 */
-	function transformODSRow(&$rules,&$row,$context){
+	function transformODSRow(&$rules,&$row,&$context){
 		$NRow = array();
 		
 		foreach($rules as $field => $trans){
