@@ -1,13 +1,14 @@
 #!/usr/bin/env php
 <?php
 $ipath = get_include_path();
-set_include_path($ipath.":".dirname(__FILE__)."/../../");
+$sep = DIRECTORY_SEPARATOR;
+set_include_path($ipath.":".dirname(__FILE__)."${sep}..${sep}..${sep}");
 
 require_once("lib/System/Daemon.php");                 // Include the Class
 require_once("lib/LooPHP/Autoload.php");
 LooPHP_Autoloader::register();
 
-$configfile = dirname(__FILE__).'/config.json';
+$configfile = dirname(__FILE__).$sep.'config.json';
 $options = json_decode(file_get_contents($configfile),true);
 if(!isset($options)){
 	throw new Exception("Invalid JSON: ${configfile}");

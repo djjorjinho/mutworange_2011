@@ -74,7 +74,10 @@ class PrecandidateDB {
     public static function getEducations() {
         $db = PlonkWebsite::getDB();
         
-        $educations = $db->retrieve('select educationName from education');
+        $educations = $db->retrieve('select educationName from education inner join educationPerInstitute 
+            on education.educationId = educationPerInstitute.studyId 
+            inner join institutions on educationPerInstitute.institutionId = institutions.instId 
+            WHERE institutions.instName = "'.INSTITUTE.'"');
         
         return $educations;
     }
@@ -111,6 +114,11 @@ class PrecandidateDB {
         return $id;
     }
     
+    public static function updateErasmusStudent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
 
 }
 

@@ -9,7 +9,7 @@ class HomeDB {
 	 *
 	 * @return array
 	 */
-	public static function userExist($email, $password)
+	public static function userExist($email, $password) 
 	{
 		// get DB instance
 		$db = PlonkWebsite::getDB();
@@ -36,12 +36,7 @@ class HomeDB {
             
             $db = PlonkWebsite::getDB();
             
-<<<<<<< HEAD
-            $eventInfo = $db ->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where erasmusStudentId = ".$db->escape($id));
-            
-=======
             $eventInfo = $db ->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where erasmusStudentId = ".$db->escape($id).' ORDER BY timestamp,eventId DESC');
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
             return $eventInfo;
         }
         
@@ -62,4 +57,18 @@ class HomeDB {
             
             return $nextLevel;
         }
+        
+        public static function getEvents($id) {
+            $db = PlonkWebsite::getDB();
+            
+            $events = $db->retrieve("select * from studentsEvents where reader = 'Student' AND erasmusStudentId = ".$id. ' AND readIt = 0');
+            
+            return $events;
+        }
+        
+        public static function updateEvent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
 }

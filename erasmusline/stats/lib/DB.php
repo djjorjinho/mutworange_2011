@@ -32,7 +32,8 @@ class DB{
 		}else{
 			$this->config =
 				json_decode(file_get_contents(
-								dirname(__FILE__).'/dbconfig.json'),true);
+								dirname(__FILE__).DIRECTORY_SEPARATOR.
+									'dbconfig.json'),true);
 		}
 		
 		if(!isset($this->config)){
@@ -332,7 +333,9 @@ class DB{
 		foreach($result as $row){
 			array_push($tables,$row["Tables_in_$config[schema]"]);
 		}
-
+		
+		sort($tables);
+		
 		return $tables;
 	}
 	
@@ -367,6 +370,14 @@ class DB{
 	
 	function flushTableInfoCache(){
 		$this->tinfo_cache = array();
+	}
+	
+	function enableKeys($table){
+		$db->execute("alter table $table enable keys");
+	}
+	
+	function disableKeys($table){
+		$db->execute("alter table $table disable keys");
 	}
 }
 

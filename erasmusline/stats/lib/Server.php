@@ -18,12 +18,14 @@ class Server{
 		$tcpSock = new TCPSocketSource($options,$this);
 		$this->tcpLoop = new LooPHP_EventLoop( $tcpSock );
 		
-		$unixSock = new UnixSocketSource($options,$this);
-		$this->unixLoop = new LooPHP_EventLoop( $unixSock );
+		if(! preg_match("/WIN/", PHP_OS)){
+			$unixSock = new UnixSocketSource($options,$this);
+			$this->unixLoop = new LooPHP_EventLoop( $unixSock );
+		}
 		
 		$this->tcpLoop->run(true);
 		
-		$this->unixLoop->run();
+		if(isset($this->unixLoop)) $this->unixLoop->run();
 	}
 	
     function onMessage(&$message,&$response,$event_loop){

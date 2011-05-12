@@ -7,6 +7,7 @@ require_once("lib/Scheduler.php");
 require_once("lib/OLAP.php");
 require_once("lib/ETL.php");
 require_once("lib/Cache.php");
+require_once("lib/pqp/classes/PhpQuickProfiler.php");
 /**
  * Deamon that communicates with Erasmusline and delivers summary information
  * to EIS interface.
@@ -22,11 +23,15 @@ class StatsdMaster extends Server implements JsonRpcI{
 	private $olap;
 	private $etl;
 	private $cache;
+	private $profiler;
 	
 	function __construct($options){
 		
 		$this->config = $options;
 		
+		$this->profiler = new PhpQuickProfiler(
+					PhpQuickProfiler::getMicroTime());
+					
 		$this->cache = ObjectCache::getInstance();
 		
 		try{
@@ -72,7 +77,8 @@ class StatsdMaster extends Server implements JsonRpcI{
     	$methods = array(
     		'ping' => true,
     		'query' => true,
-    		'pingSlave' => true
+    		'pingSlave' => true,
+    		'profile' => true
     	);
     	
     	return $methods;
@@ -104,6 +110,10 @@ class StatsdMaster extends Server implements JsonRpcI{
 			$this->db->insert($obj, "slaves");
 		}
 		return array(OK=>true);	
+	}
+	
+	function profile(){
+		return $this->profiler->display();
 	}
 }
 

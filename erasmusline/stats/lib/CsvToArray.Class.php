@@ -3,9 +3,9 @@
  * PontopHP
  *
  * LICENSE
- * Arquivo de livre reproduÁ„o
+ * Arquivo de livre reprodu√ß√£o
  * 
- * UtilizaÁ„o:
+ * Utiliza√ß√£o:
  * 
  * echo '<pre>';
  * print_r(CsvToArray('teste.csv'));
@@ -21,7 +21,9 @@
  final class CsvToArray{
 
  	/**
- 	 * FunÁ„o est·tica principal. O par‚metro $delimiter n„o È obrigatÛrio, apenas se for utilizado outro tipo de caractere, por exemplo a vÌrgula (,).
+ 	 * Fun√ß√£o est√°tica principal. O par√¢metro $delimiter n√£o √© obrigat√≥rio,
+ 	 *  apenas se for utilizado outro tipo de caractere, 
+ 	 *  por exemplo a v√≠rgula (,).
  	 *
  	 * @param string $file
  	 * @param char $delimiter
@@ -57,7 +59,7 @@
  	{
  		while (list($firstIndex, ) = each($multiArray))
  		$indexMap[$firstIndex] = $multiArray[$firstIndex][$secondIndex];
- 		asort($indexMap);
+ 		#asort($indexMap);
  		while (list($firstIndex, ) = each($indexMap))
  		if (is_numeric($firstIndex))
  		$sortedArray[] = $multiArray[$firstIndex];

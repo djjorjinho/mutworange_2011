@@ -1,0 +1,29 @@
+* {
+    font-family:"times new roman",times,serif;
+    text-align:justify;
+} 
+
+#header {
+    display: none;
+}
+#footer {
+    display: none;
+}
+#nav-main {
+    display: none;
+}
+#headNavi {
+    display: none;
+}
+#main {
+    border: 1px solid #000;
+}
+#subnav {
+    display: none;
+}
+.button {
+    background: LightGrey;
+    color: #000;
+    font-weight: normal;
+    padding: 1px;
+}

@@ -7,11 +7,7 @@ class LoginController extends PlonkController {
      * @var array
      */
     protected $views = array(
-<<<<<<< HEAD
-        'login','logout'
-=======
         'login', 'logout'
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
     );
     /**
      * The actions allowed for this module
@@ -20,10 +16,6 @@ class LoginController extends PlonkController {
     protected $actions = array(
         'login'
     );
-    
-    public function showLogout() {
-        MainController::logout();
-    }
 
     public function showLogout() {
         MainController::logout();
@@ -66,8 +58,6 @@ class LoginController extends PlonkController {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             }
         }
-        $this->mainTpl->assignOption('oNotLogged');
-        $this->pageTpl->assignOption('oNotLogged');
     }
 
 }

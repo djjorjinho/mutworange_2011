@@ -1,5 +1,7 @@
 dim_phase_id;description
-phase1;Phase 1
-phase2;Phase 2
-phase3;Phase 3
-phase4;Phase 4
+precandidate;Precandidate
+applicform;Application Form
+lagreement;Learning Agreement
+contract;Erasmus Contract
+accomodation;Accomodation Form
+certarrival;Certificate of Arrival

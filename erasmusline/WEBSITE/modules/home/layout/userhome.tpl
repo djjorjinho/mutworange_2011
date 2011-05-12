@@ -5,7 +5,7 @@
 <p>Status of action: {$status}</p>
 
 <h3>What's next?</h3>
-<p>{$next}</p>
+<ul>{$next}</ul>
 
 <h3>Forms that you already filled in</h3>
 {option:noForms}
@@ -16,6 +16,13 @@
 {iteration:iForms}
 {$form}
 {/iteration:iForms}
+    </ul>
+
+<h3>Latest events</h3>
+<ul>
+{iteration:iEvents}
+{$event}
+{/iteration:iEvents}
     </ul>
 
 

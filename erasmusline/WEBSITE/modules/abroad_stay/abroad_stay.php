@@ -5,193 +5,421 @@
  * and open the template in the editor.
  */
 
-class Abroad_stayController extends PlonkController {
-    
-    protected $id;
-    private $courses = 0;
-    private $errors = array(); // set the errors array to empty, by default
-    private $fields = array(); // stores the field values
-
+class abroad_stayController extends PlonkController {
 
     protected $views = array(
-        'cert_arrival', 'cert_stay', 'cert_departure', 'changagreement'
+        'select','cert_ar'
     );
     protected $actions = array(
-        'submit', 'agree'
+        'submit', 'selectuser', 'selectuserrec', 'selectaction', 'next', 'prev', 'search', 'viewsended', 'resend', 'resenddep'
     );
     protected $variables = array(
         'hostInstitution', 'dateArrival', 'dateDeparture', 'student'
     );
+    private $errors = '';
+    private $student = '';
+    private $form = '1';
+    private $position = 'showSelect';
+    private $searchSt = '';
+    private $rows = 0;
+    private $resultRows = 1;
+    private $searchFor = '';
+    private $mail = '';
 
-    public function showCert_departure() {
-        $this->mainTplAssigns();
+    
+    public function showselect() {
+        $this->mainTpl->assign('pageMeta', '<script src="./core/js/jquery/jquery-1.5.js" type="text/javascript"></script>
+        <script src="./core/js/jquery/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="./core/js/jquery/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="./core/js/sorttable.js" type="text/javascript"></script>');
+        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
+        $this->pageTpl->assign('errorString', $this->errors);
+        $this->pageTpl->assign('back', 'index.php?module=abroad_stay&view=select');
+
+
+
+        /* First Step : Show Select User */
+
+        if ($this->position == 'showSelect') {
+            $this->showList();
+        }
+
+
+        /* Second Step : Show Cerificate Form Select  */
+
+        if ($this->position == 'showCertificates') {
+            $this->Certificates();
+        }
+
+
+
+
+        /* Third Step : Show Records Select */
+
+        if ($this->position == 'showSended') {
+            $this->sendedList();
+        }
     }
 
-    public function showCert_arrival() {
-        $this->mainTplAssigns();
-    }
+    public function Certificates() {
+        $this->pageTpl->assignOption('showCertificates');
+        $this->pageTpl->assign('student', $this->student);
+        //For List
+        $this->pageTpl->assign('seluser', $this->student);
+        $this->getDBdata($this->student, 'Cert');
 
-    public function showCert_stay() {
-        $this->mainTplAssigns();
-    }
+        if ($this->form == '1') {
 
-    private function mainTplAssigns() {
-        // Assign main properties
-        $this->mainTpl->assign('siteTitle', 'ErasmusLine');
-        $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/cert.java.tpl');
-        $this->mainTpl->assign('pageMeta', $java->getContent(true));
-        $this->mainTpl->assign('pageJava', '<script type="text/javascript">         
-	function lookup(inputString) {
-		if(inputString.length == 0) {
-			// Hide the suggestion box.
-			$(\'#suggestions\').hide();
-		} else {
-			$.post("modules/abroad_stay/rpc.php", {queryString: ""+inputString+""}, function(data){
-                        
-				if(data.length >0) {
-					$(\'#suggestions\').show();
-					$(\'#autoSuggestionsList\').html(data);
-				}
-			});
-		}
-	} // lookup
-	function fill(User,Institution) {
-		$(\'#inputString\').val(User);
-                $(\'#hostInstitution\').val(Institution);
-		setTimeout("$(\'#suggestions\').hide();", 200);
-                
-	}</script>');
-        
-        
-        $this->pageTpl->assign('academicYear', " 2010-2011");
-        foreach ($this->variables as $value)
-            if (empty($this->fields)) {
-                $this->pageTpl->assign('msg' . ucfirst($value), '*');
-                $this->pageTpl->assign($value, '');
-                $this->pageTpl->assign('dateArrival', date("Y-m-d"));
-                $this->pageTpl->assign('dateDeparture', date("Y-m-d"));
+            $this->pageTpl->assignOption('showCertS');
+            $this->mainTpl->assign('pageTitle', 'Certificate of Arrival');
+            $this->pageTpl->assign('form', 'Date of Arrival');
+            $query = abroad_stayDB::checkRecords($this->student, 'startDate');
+            if (!empty($query)) {
+                $this->pageTpl->assign('field', '<div class="TRdiv">Date : ' . $query[0]['startDate'] . '</div>');
+                $this->pageTpl->assignOption('showResend');
             } else {
-                if (!array_key_exists($value, $this->errors)) {
-                    $this->pageTpl->assign('msg' . ucfirst($value), '');
-                    $this->pageTpl->assign($value, $this->fields[$value]);
-                } else {
-                    $this->pageTpl->assign('msg' . ucfirst($value), $this->errors[$value]);
-                    $this->pageTpl->assign($value, $this->fields[$value]);
-                }
+                $this->pageTpl->assign('field', '<div class="TRdiv"><label for="date">Date (yyyy-mm-dd) :  </label><input type="text" name="startDate"  id="startDate" class="validate[required,custom[date]] text-input"  /></div>');
+                $this->pageTpl->assignOption('showSubmit');
             }
+        }
+
+        if ($this->form == '2') {
+
+            $this->pageTpl->assignOption('showCertS');
+
+            $this->mainTpl->assign('pageTitle', 'Certificate of Departure');
+            $this->pageTpl->assign('form', 'Date of Departure');
+            $query = abroad_stayDB::checkRecords($this->student, 'endDate');
+            if (!empty($query)) {
+                $this->pageTpl->assign('field', '<div class="TRdiv">Date : ' . $query[0]['endDate'] . '</div>');
+                $this->pageTpl->assignOption('showResend');
+            } else {
+                $this->pageTpl->assign('field', '<div class="TRdiv"><label for="date">Date (yyyy-mm-dd) :  </label><input type="text" name="endDate"  id="dateDep" class="validate[required,custom[date]] text-input"  /></div>');
+                $this->pageTpl->assignOption('showSubmit');
+            }
+        }
+
+        if ($this->form == '3') {
+            $this->pageTpl->assignOption('showResenddep');
+
+            $this->mainTpl->assign('pageTitle', 'Certificate of Stay');
+            $this->pageTpl->assign('form', 'Staying Period');
+            $query = abroad_stayDB::checkRecords($this->student, 'endDate');
+            $query2 = abroad_stayDB::checkRecords($this->student, 'startDate');
+            if (!empty($query)) {
+                $this->pageTpl->assign('field', '<div class="TRdiv">From : ' . $query2[0]['startDate'] . '</div>
+                        <div class="TRdiv">To : ' . $query[0]['endDate'] . '</div>');
+            } else {
+                $this->pageTpl->assign('field', '');
+            }
+        }
     }
 
-    private function fillRules() {
-        $this->rules[] = "required,datepickerArrival,Date of Arrival Required";
-        $this->rules[] = "required,datepickerDeparture,Date of departure is required.";
-        $this->rules[] = "required,student,Student name required.";
-        $this->rules[] = "required,hostInstitution,Host Institution required.";
+    public function sendedList() {
+        $this->pageTpl->assign('view', 'Send a Cerification');
+        $this->pageTpl->assignOption('showSelectAboardUser');
+        $this->mainTpl->assign('pageTitle', "Select Student Records");
+        $this->pageTpl->assignOption('showSendedCertificatesList');
+
+        ////Generates Student List
+
+
+        if (!empty($this->searchSt)) {
+            $studentsLName = abroad_stayDB::getSearchRecords($this->searchSt, $this->searchFor);
+            if (empty($studentsLName)) {
+                $this->errors = '<div class="errorPHP">Entry Not Found</div>';
+                $this->pageTpl->assign('selectError', $this->errors);
+            }
+
+            $this->pageTpl->assign('hiddenP', 'type="hidden"');
+            $this->pageTpl->assign('hiddenN', 'type="hidden"');
+        } else {
+
+            if ($this->rows != 0) {
+                $this->pageTpl->assign('prev', $this->rows - $this->resultRows);
+            } else {
+                $this->pageTpl->assign('hiddenP', 'type="hidden"');
+            }
+
+            $this->pageTpl->assign('next', $this->rows + $this->resultRows);
+            $next = abroad_stayDB::getStudentListRecords($this->rows + $this->resultRows);
+            if (empty($next)) {
+                $this->pageTpl->assign('hiddenN', 'type="hidden"');
+            } else {
+                $this->pageTpl->assign('hiddenN', '');
+            }
+            $studentsLName = abroad_stayDB::getStudentListRecords($this->rows);
+        }
+
+        $this->pageTpl->assign('selectError', '');
+
+
+        $this->pageTpl->setIteration('iStudentsList');
+        foreach ($studentsLName as $key => $value) {
+            $this->pageTpl->assignIteration('studentsList', '<tr>
+                <td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] .
+                    '</td><td> ' . $value['familyName'] . '</td>
+                        <td><form  method="post">
+                        <input type="hidden" name="stn" value="' . $value['userId'] . '" />
+                            <input type="hidden" name="formAction" id="formLogin" value="doSelectUserrec" />
+                            <input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
+            $this->pageTpl->refillIteration('iStudentsList');
+        }
+        $this->pageTpl->parseIteration('iStudentsList');
+    }
+
+    public function showList() {
+        $this->pageTpl->assign('view', 'Sended Certificates');
+        $this->pageTpl->assignOption('showSelectAboardUser');
+        $this->mainTpl->assign('pageTitle', "Select Student");
+
+
+
+        //Generates Student List
+
+        /* Checks for Search Post */
+        if (!empty($this->searchSt)) {
+            $studentsLName = abroad_stayDB::getSearch($this->searchSt, $this->searchFor);
+            $this->pageTpl->assign('hiddenP', 'type="hidden"');
+            $this->pageTpl->assign('hiddenN', 'type="hidden"');
+            if (empty($studentsLName)) {
+                $this->errors = '<div class="errorPHP">Entry Not Found</div>';
+                $this->pageTpl->assign('selectError', $this->errors);
+            }
+            $this->pageTpl->assign('selectError', '');
+        } else {
+            /* else continue to main page */
+            $this->pageTpl->assign('selectError', '');
+
+            if ($this->rows != 0) {
+                $this->pageTpl->assign('prev', $this->rows - $this->resultRows);
+            } else {
+                $this->pageTpl->assign('hiddenP', 'type="hidden"');
+            }
+
+            $this->pageTpl->assign('next', $this->rows + $this->resultRows);
+            $next = abroad_stayDB::getStudentList($this->rows + $this->resultRows);
+            if (empty($next)) {
+                $this->pageTpl->assign('hiddenN', 'type="hidden"');
+            } else {
+                $this->pageTpl->assign('hiddenN', '');
+            }
+
+            $studentsLName = abroad_stayDB::getStudentList($this->rows);
+        }
+
+
+        $this->pageTpl->setIteration('iStudentsList');
+        foreach ($studentsLName as $key => $value) {
+            $this->pageTpl->assignIteration('studentsList', '<tr>
+                <td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] .
+                    '</td><td> ' . $value['familyName'] . '</td>
+                        <td><form  method="post">
+                        <input type="hidden" name="stn" value="' . $value['userId'] . '" />
+                            <input type="hidden" name="formAction" id="formLogin" value="doSelectUser" />
+                            <input type="submit" value=">"/></form></td></tr>');
+            $this->pageTpl->refillIteration('iStudentsList');
+        }
+        $this->pageTpl->parseIteration('iStudentsList');
+    }
+
+    public function doNext() {
+        $this->rows = $_POST['next'];
+        $this->checkPos($_POST['pos']);
+    }
+
+    public function doPrev() {
+        $this->rows = $_POST['prev'];
+        $this->checkPos($_POST['pos']);
+    }
+
+    public function doSearch() {
+        if (!empty($_POST['Search'])) {
+            $this->searchSt = $_POST['Search'];
+            $this->searchFor = $_POST['selection'];
+        }
+        $this->checkPos($_POST['pos']);
+    }
+
+    public function checkPos($pos) {
+        if ($pos == 'Send a Cerification') {
+            $this->position = 'showSended';
+        } else {
+            $this->position = 'showSelect';
+        }
+    }
+
+    public function doSelectUser() {
+        $this->student = $_POST["stn"];
+        $this->position = 'showCertificates';
+    }
+
+    public function doSelectUserrec() {
+        $this->student = $_POST["stn"];
+        $this->position = 'showCertificates';
+        $this->form = '3';
+    }
+
+    public function doSelectaction() {
+        unset($_POST['formAction']);
+        $this->position = 'showCertificates';
+        $this->student = $_POST["User"];
+        if ($_POST['postForm'] == 'Certificate of Arrival') {
+            $this->form = '1';
+        }
+        if ($_POST['postForm'] == 'Certificate of Departure') {
+            $this->form = '2';
+        }
+    }
+
+    public function getDBdata($name, $pos) {
+
+        if ($pos == 'mail') {
+            $this->pageTpl = $this->mail;
+        }
+        $query = abroad_stayDB::getStudentInfo($name);
+
+
+        foreach ($query as $key => $value) {
+            $this->pageTpl->assign('stFirstName', $value['firstName']);
+            $this->pageTpl->assign('stLastName', $value['familyName']);
+            $this->pageTpl->assign('stGender', $value['sex'] > 0 ? 'Male' : 'Female');
+            $this->pageTpl->assign('stDtBirh', $value['birthDate']);
+            $this->pageTpl->assign('stPlBirh', $value['birthPlace']);
+            $this->pageTpl->assign('stMatrDate', $value['tel']);
+            $this->pageTpl->assign('stMatrNum', $value['email']);
+            $this->pageTpl->assign('stMail', $value['email']);
+
+            $query2 = abroad_stayDB::getCoordInfo($query[0]['hostCoordinatorId']);
+            foreach ($query2 as $key => $value) {
+                $this->pageTpl->assign('seCorName', $value['familyName'] . '&nbsp;' . $value['firstName']);
+                $this->pageTpl->assign('seCorMail', $value['email']);
+                $this->pageTpl->assign('seCorTel', $value['tel']);
+                $this->pageTpl->assign('seCorFax', $value['fax']);
+            }
+
+            $query2 = abroad_stayDB::getCoordInfo($query[0]['homeCoordinatorId']);
+            foreach ($query2 as $key => $value) {
+                $this->pageTpl->assign('reCorName', $value['familyName'] . '&nbsp;' . $value['firstName']);
+                $this->pageTpl->assign('reCorMail', $value['email']);
+                $this->pageTpl->assign('reCorTel', $value['tel']);
+
+                $this->pageTpl->assign('reCorFax', $value['fax']);
+            }
+
+            $query2 = abroad_stayDB::getInstInfo($query[0]['homeInstitutionId']);
+            foreach ($query2 as $key => $value) {
+                $this->pageTpl->assign('reInName', $value['instName']);
+            }
+            $query2 = abroad_stayDB::getInstInfo($query[0]['hostInstitutionId']);
+            foreach ($query2 as $key => $value) {
+                $this->pageTpl->assign('seInName', $value['instName']);
+            }
+        }
     }
 
     public function doSubmit() {
-        $this->fillRules();
-        $this->errors = validateFields($_POST, $this->rules);
-        if (!empty($this->errors)) {
-            $this->fields = $_POST;
+
+        unset($_POST['formAction'], $_POST['postForm']);
+        if ((isset($_POST['startDate']) && is_valid_date($_POST['startDate'], FALSE))) {
+            $dub = abroad_stayDB::checkDubl($_POST['User'], 'startDate');
+            if ($dub == 'Dub') {
+                $this->errors = '<div class="errorPHP">Entry Exists In DataBase</div>';
+            } else {
+                $this->confirm($_POST, TRUE);
+            }
+        } elseif ((isset($_POST['endDate']) && is_valid_date($_POST['endDate'], FALSE))) {
+            $query2 = abroad_stayDB::checkRecords($_POST['User'], 'startDate');
+
+            if ((isset($query2[0]['startDate'])) && ($_POST['endDate'] > $query2[0]['startDate'])) {
+                $dub = abroad_stayDB::checkDubl($_POST['User'], 'endDate');
+                if ($dub == 'Dub') {
+                    $this->errors = '<div class="errorPHP">Entry Exists In DataBase</div>';
+                } else {
+                    $this->confirm($_POST, TRUE);
+                }
+            } else {
+                $this->errors = '<div class="errorPHP">Departure Date Should be After Arrival Date</div>';
+                $this->position = 'showCertificates';
+                $this->student = $_POST['User'];
+            }
+        } else {
+            $this->errors = '<div class="errorPHP">Please Enter a Valid Date</div>';
+            $this->position = 'showCertificates';
+            $this->student = $_POST['User'];
         }
     }
 
-    public function showChangagreement() {
-        // Main Layout
-        // Logged or not logged, that is the question...
-        $inputs = array('signDate', 'signDate', 'signDate2', 'signDepSignDate', 'signInstSignDate', 'signDepSignDate2', 'signInstSignDate2', 'date');
-
-        $this->checkLogged();
-
-        // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/><link rel="stylesheet" href="./core/css/form.css" type="text/css"/>');
-        $this->mainTpl->assign('siteTitle', 'Changes to Learning Agreement');
-
-        $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-        $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
-
-        $g = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/changagreement.java.tpl');
-
-        $this->mainTpl->assign('pageJava', $g->getContent(true));
-
-        $this->pageTpl->assign('courseCount', $this->courses);
-
-        if (empty($this->errors)) {
-            $this->fields = array('code0' => '', 'ects0' => '', 'title0' => '', 'delOrAdd0' => '0');
-        }
-
-        if (!empty($this->errors)) {
-            foreach ($inputs as $key => $value) {
-                if (array_key_exists($value, $this->errors)) {
-                    $this->pageTpl->assign('msg' . ucfirst($value), $this->errors[$value]);
-                } else {
-                    $this->pageTpl->assign('msg' . ucfirst($value), '*');
-                }
-                $this->pageTpl->assign($value, $this->fields[$value]);
-            }
-        } else {
-            foreach ($inputs as $value) {
-                if (strrpos($value, 'Date') !== false) {
-                    $this->pageTpl->assign($value, date('Y-m-d'));
-                } else {
-                    $this->pageTpl->assign($value, '');
-                }
-                $this->pageTpl->assign('msg' . ucfirst($value), '*');
-            }
-        }
-
-        $this->pageTpl->setIteration('iCoursesOrNot');
-        // loops through all the users (except for the user with id 1 = admin) and assigns the values
-        for ($i = 0; $i <= $this->courses; $i++) {
-            $add = $this->fields["delOrAdd" . $i] == '1' ? "checked" : "";
-            $del = $this->fields["delOrAdd" . $i] == '1' ? "" : "checked";
-
-            if (array_key_exists('code' . $i, $this->errors)) {
-                $error = $this->errors['code' . $i];
-            } else if (array_key_exists('title' . $i, $this->errors)) {
-                $error = $this->errors['title' . $i];
-            } else if (array_key_exists('ects' . $i, $this->errors)) {
-                $error = $this->errors['ects' . $i];
+    public function confirm($post, $flag) {
+        $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/cert_ar.tpl');
+        $this->getDBdata($post['User'], 'mail');
+        if (isset($post['startDate'])) {
+            $this->mail->assign('header', 'Certificate Of Arrrival');
+            $this->mail->assign('form', 'Start Date');
+            $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['startDate'] . '</div>');
+            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
+            if ($return == '1') {
+                abroad_stayDB::PostForm($_POST);
+                $this->errors = '<div class="SuccessPHP"><p>Certificate of Arrival SuccessFully Send</p></div>';
             } else {
-                $error = '*';
+                $this->errors = '<div class="errorPHP"><p>There was an Error Sending Cerificate of Arrival</p><p>' . $return . '</p></div>';
+                $this->position = 'showCertificates';
+                $this->student = $post['User'];
             }
-
-
-            // loops through all the users (except for the user with id 1 = admin) and assigns the values
-            $this->pageTpl->assignIteration('row', '<tr>
-                       <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code' . $i . '" name="code' . $i . '" value="' . $this->fields["code" . $i] . '" /></td>
-                        <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /></td>      
-                        <td><input type="radio" name="delOrAdd' . $i . '" value="1" class="validate[required] radio" id="een2' . $i . '" ' . $add . ' /><input type="radio" name="delOrAdd' . $i . '" value="0" id="nul2' . $i . '" ' . $del . '/></td>
-                        <td><input class="validate[required,custom[onlyNumberSp]]" type="text" id="ects' . $i . '" name="ects' . $i . '" value="' . $this->fields["ects" . $i] . '" /></td>
-                        <td><span class="req">' . $error . '</span></td> 
-                        </tr>');
-
-            $this->pageTpl->refillIteration('iCoursesOrNot');
         }
+        if ((isset($post['endDate'])) && ($flag)) {
+            $this->mail->assign('header', 'Certificate Of Departure');
+            $this->mail->assign('form', 'Departure Date');
+            $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['endDate'] . '</div>');
+            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
+            if ($return == '1') {
+                abroad_stayDB::PostForm($_POST);
+                $this->confirm($post, FALSE);
+            } else {
+                $this->errors = '<div class="errorPHP"><p>There was an Error Sending Cerificate of Departure</p><p>' . $return . '</p></div>';
+                $this->position = 'showCertificates';
+                $this->student = $post['User'];
+            }
+        } elseif (!$flag) {
 
-        // parse the iteration
-        $this->pageTpl->parseIteration('iCoursesOrNot'); // alternative: $tpl->parseIteration();
+            $this->mail->assign('header', 'Certificate of Stay');
+            $this->mail->assign('form', 'Staying Period');
+            $query = abroad_stayDB::checkRecords($post['User'], 'endDate');
+            $query2 = abroad_stayDB::checkRecords($post['User'], 'startDate');
+            $this->mail->assign('field', '<div class="TRdiv">From : ' . $query2[0]['startDate'] . '</div>
+                        <div class="TRdiv">To : ' . $query[0]['endDate'] . '</div>');
+
+            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
+            if ($return == '1') {
+                $this->errors = '<div class="SuccessPHP"><p>Certificates of Departure And Stay SuccessFully Send</p></div>';
+            } else {
+                $this->errors = '<div class="errorPHP"><p>There was an Error Sending Certificate of Stay</p><p>' . $return . '</p></div>';
+                $this->position = 'showCertificates';
+                $this->form = '3';
+                $this->student = $post['User'];
+            }
+        }
     }
 
-    /**
-     * check if user is logged in
-     */
-    public function checkLogged() {
-
-        if (!PlonkSession::exists('loggedIn')) {
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+    public function doViewsended() {
+        if ($_POST['postForm'] == 'Send a Cerification') {
+            $this->position = 'showSelect';
         } else {
-            $this->id = PlonkSession::get('id');
-            if ($this->id === '1') {
-                $this->mainTpl->assignOption('oAdmin');
-            } else {
-                $this->mainTpl->assignOption('oLogged');
-
-                $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-                $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
-            }
+            $this->position = 'showSended';
         }
+    }
+
+    public function doResend() {
+        $query = abroad_stayDB::checkRecords($_POST['User'], 'startDate');
+        $_POST['startDate'] = $query[0]['startDate'];
+
+        $this->confirm($_POST, TRUE);
+    }
+
+    public function doResenddep() {
+        $this->confirm($_POST, FALSE);
     }
 
 }
 
+?>

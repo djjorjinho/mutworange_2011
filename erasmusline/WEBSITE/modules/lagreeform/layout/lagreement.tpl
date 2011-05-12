@@ -1,6 +1,7 @@
 <h2>Learning agreement</h2>
 
 <form action="" method="post" enctype="multipart/form-data" id="lagreement" name="lagreement">
+    <p><span class="req">{$error}</span></p>
     <p>
         <span>Academic Year: </span>
         {$acaYear}
@@ -25,6 +26,9 @@
         <p>
             <span>Country: </span>
             {$countrySendingInstitution}
+        </p>
+        <p>
+            <span>ECTS credits:</span> {$credits}
         </p>
     </fieldset>
 
@@ -53,11 +57,7 @@
             </tr>
             <tr>
                             <td></td><td></td><td></td>
-<<<<<<< HEAD
-                            <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /></td>
-=======
                             <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /><input type="hidden" id="courseCount" name="courseCount" value="{$courseCount}" /></td>
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
                         </tr>
             {iteration:iCourses}
             {$row}
@@ -84,8 +84,16 @@
 
 
     </fieldset>
+    
+    <fieldset>
+        <legend>Submit Learning Agreement</legend>
+        <p>
+            <input type="hidden" name="formAction" id="formRegister" value="doAgree" />
+            <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+        </p>
+    </fieldset>
 
-
+{option:oCoor}
     <fieldset>
         <legend>Sending Institution</legend>
         <p>We confirm that this proposed programme of study/learning agreement is approved.</p>
@@ -146,12 +154,15 @@
         </div>
 
     </fieldset>
-
+    
     <fieldset>
-        <legend>Submit changes</legend>
-        <p>
-            <input type="hidden" name="formAction" id="formRegister" value="doAgree" />
-            <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-        </p>
-    </fieldset>
+<legend>Submit the Learning Agreement</legend>
+        <div class="TRdiv">
+		<input type="hidden" name="formAction" id="formRegister" value="doMotivateagree" />
+		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+	</div>
+</fieldset>
+    {/option:oCoor}
+
+    
 </form>

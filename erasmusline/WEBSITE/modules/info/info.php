@@ -35,24 +35,9 @@ class InfoController extends PlonkController {
         $this->mainTpl->assign('pageMeta', '');
     }
 
-    public function checkLogged() {
-        //Plonk::dump(PlonkSession::get('id').'hgdjdh');
-        if (!PlonkSession::exists('loggedIn')) {
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
-        } else {
-            if (PlonkSession::get('id') == 0) {
-                $this->mainTpl->assignOption('oAdmin');
-                $this->id = PlonkSession::get('id');
-            } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-            }
-        }
-    }
-
     public function showErasmus() {
         // Main Layout
         // assign vars in our main layout tpl
-        $this->checkLogged();
 
         $this->mainTplAssigns();
 
@@ -68,8 +53,6 @@ class InfoController extends PlonkController {
         // Main Layout
         // assign vars in our main layout tpl
 
-        $this->checkLogged();
-
         $this->mainTplAssigns();
 
         // assign menu active state
@@ -83,7 +66,6 @@ class InfoController extends PlonkController {
     public function showFaq() {
         // Main Layout
         // assign vars in our main layout tpl
-        $this->checkLogged();
 
         $this->mainTplAssigns();
 
@@ -98,7 +80,6 @@ class InfoController extends PlonkController {
     public function showPartners() {
         // Main Layout
         // assign vars in our main layout tpl
-        $this->checkLogged();
 
         $this->mainTplAssigns();
 

@@ -30,13 +30,16 @@ class AdminController extends PlonkController {
     public function checkLogged() {
         //Plonk::dump(PlonkSession::get('id').'hgdjdh');
         if (!PlonkSession::exists('id')) {
+            
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
+            //Plonk::dump('test');
             if (PlonkSession::get('id') == 0) {
-                $this->mainTpl->assignOption('oAdmin');
                 $this->id = PlonkSession::get('id');
-            } else {
+            } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
             }
         }
     }
@@ -44,17 +47,11 @@ class AdminController extends PlonkController {
     public function showAdmin() {
         // Main Layout
         // Logged or not logged, that is the question...
-
         $this->checkLogged();
 
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Admin page');
-
-        $this->pageTpl->assignOption('oAdmin');
-        $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-        // assign menu active state
-        $this->mainTpl->assignOption('oNavAdmin');        
     }
 
     public function showStudents() {
@@ -70,8 +67,6 @@ class AdminController extends PlonkController {
 
 
         $this->pageTpl->assignOption('oAdmin');
-        // assign menu active state
-        $this->mainTpl->assignOption('oNavAdmin');        
 
         // gets info of all the users
         $students = AdminDB::getStudentInfo();
@@ -110,7 +105,7 @@ class AdminController extends PlonkController {
 
         $this->pageTpl->assignOption('oAdmin');
         // assign menu active state
-        $this->mainTpl->assignOption('oNavAdmin');        
+        $this->mainTpl->assignOption('oNavAdmin');
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iStudents');
@@ -122,33 +117,29 @@ class AdminController extends PlonkController {
         // loops through all the users (except for the user with id 1 = admin) and assigns the values
         foreach ($students as $student) {
 
-                $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('i', $student['userId']);
-                $this->pageTpl->assignIteration('acceptedYes', '');
-                $this->pageTpl->assignIteration('acceptedNo', '');
-                $this->pageTpl->assignIteration('acceptedWait', 'checked');
+            $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
+            $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
+            $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+            $this->pageTpl->assignIteration('i', $student['userId']);
+            $this->pageTpl->assignIteration('acceptedYes', '');
+            $this->pageTpl->assignIteration('acceptedNo', '');
+            $this->pageTpl->assignIteration('acceptedWait', 'checked');
 
-                // refill the iteration (mandatory!)
-                $this->pageTpl->refillIteration('iStudents');
-                $i++;
+            // refill the iteration (mandatory!)
+            $this->pageTpl->refillIteration('iStudents');
+            $i++;
         }
 
         // parse the iteration
         $this->pageTpl->parseIteration('iStudents'); // alternative: $tpl->parseIteration();
     }
-    
+
     public function showStaff() {
         $this->checkLogged();
 
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Overview staff');
-        
-        $this->pageTpl->assignOption('oAdmin');
-        // assign menu active state
-        $this->mainTpl->assignOption('oNavAdmin');
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iStaff');
@@ -171,7 +162,7 @@ class AdminController extends PlonkController {
                 $i++;
             }
         }
-        
+
         // parse the iteration
         $this->pageTpl->parseIteration('iStaff'); // alternative: $tpl->parseIteration();
     }
@@ -190,18 +181,15 @@ class AdminController extends PlonkController {
         $toAccept = array();
         $toDeny = array();
         foreach ($_POST as $key => $value) {
-            if ($value === '2') {                
-                $toAccept[] = substr($key, 8);                
+            if ($value === '2') {
+                $toAccept[] = substr($key, 8);
             }
             if ($value === '0') {
                 $toDeny[] = substr($key, 8);
             }
         }
-        AdminDB::updateStudents('users','isValidUser','userId','2',$toAccept);        
+        AdminDB::updateStudents('users', 'isValidUser', 'userId', '2', $toAccept);
         //AdminDB::deleteStudents('users','userId',$toDeny);
-        
     }
-    
-    
 
 }

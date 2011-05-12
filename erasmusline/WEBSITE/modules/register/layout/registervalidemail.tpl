@@ -14,11 +14,7 @@
 			</p>
 
 		<p>
-<<<<<<< HEAD
-			<input type="hidden" name="formAction" id="formLogin" value="doLogin" />
-=======
 			<input type="hidden" name="formAction" id="formLogin" value="mainLogin" />
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
 			<input class="button" name="btnLogin" id="btnLogin" type="submit" value="Login"/>
 		</p>
                     </form>

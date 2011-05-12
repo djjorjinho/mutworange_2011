@@ -200,8 +200,11 @@ class PhpQuickProfiler {
 		$this->gatherMemoryData();
 		$this->gatherQueryData();
 		$this->gatherSpeedData();
-		require_once($_SERVER['DOCUMENT_ROOT'].$this->config.'display.php');
-		displayPqp($this->output, $this->config);
+		
+		return $this->output;
+		
+		#require_once($_SERVER['DOCUMENT_ROOT'].$this->config.'display.php');
+		#displayPqp($this->output, $this->config);
 	}
 	
 }
