@@ -23,22 +23,14 @@ class PrecandidateDB {
     public static function getStudentStatus($id) {
         $db = PlonkWebsite::getDB();
         
-<<<<<<< HEAD
-        $status = $db->retrieveOne("select statusOfErasmus from erasmusStudent where studentId ='" . $db->escape($id) . "'");
-=======
         $status = $db->retrieveOne("select statusOfErasmus from erasmusStudent where studentId = " . $db->escape($id));
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
         
         return $status;
     }
     public static function getJson($id) {
         $db = PlonkWebsite::getDB();
         
-<<<<<<< HEAD
-        $string = $db->retrieveOne("select content from forms where studentId ='" . $db->escape($id) . "'");
-=======
         $string = $db->retrieveOne("select content from forms where studentId ='" . $db->escape($id) . "' AND type = 'precandidate'");
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
         
         return $string;
     }
@@ -111,9 +103,6 @@ class PrecandidateDB {
         return $uploadedWhat;
     }
     
-<<<<<<< HEAD
-   
-=======
     public static function getIdLevel($level) {
         $db = PlonkWebsite::getDB();
 
@@ -122,7 +111,6 @@ class PrecandidateDB {
         return $id;
     }
     
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
 
 }
 

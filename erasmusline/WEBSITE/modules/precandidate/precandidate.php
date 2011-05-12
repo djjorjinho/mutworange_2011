@@ -38,12 +38,6 @@ class PrecandidateController extends PlonkController {
         $this->checkLogged();
         $this->CountryAssign();
         $this->MainTplAssigns();
-<<<<<<< HEAD
-
-        $status = PrecandidateDB::getStudentStatus(PlonkSession::get('id'));
-        if (!empty($status)) {
-            if ($status['statusOfErasmus'] === "Precandidate") {
-=======
         
         //Plonk::dump(PlonkSession::get('id'));
         $status = PrecandidateDB::getStudentStatus(PlonkSession::get('id'));
@@ -54,7 +48,6 @@ class PrecandidateController extends PlonkController {
             $erasmusLevel2 = PrecandidateDB::getIdLevel('Student Application Form');
             
             if ($erasmusLevel['levelId'] > $erasmusLevel2['levelId']) {
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
                 $this->filledPrecandidate();
                 
             } else {
@@ -256,12 +249,8 @@ class PrecandidateController extends PlonkController {
     }
 
     private function extraShow() {
-<<<<<<< HEAD
-
-=======
         
         
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
         $this->extra[] = '...';
         $this->extra[] = 'Study';
         $this->extra[] = 'Internship';
@@ -292,7 +281,6 @@ class PrecandidateController extends PlonkController {
 
         $this->pageTpl->setIteration('iChoice2');
         foreach ($countries as $value) {
-<<<<<<< HEAD
             if (!empty($this->fields)) {
                 if ($value['Name'] === $this->fields['choice2']) {
                     $this->pageTpl->assignIteration('choic2', '<option selected=\"true\" value="' . $value['Name'] . '">' . $value['Name'] . '</option>');
@@ -354,69 +342,6 @@ class PrecandidateController extends PlonkController {
                 $this->pageTpl->refillIteration('iDemand');
             }
         }
-=======
-            if (!empty($this->fields)) {
-                if ($value['Name'] === $this->fields['choice2']) {
-                    $this->pageTpl->assignIteration('choic2', '<option selected=\"true\" value="' . $value['Name'] . '">' . $value['Name'] . '</option>');
-                } else {
-                    $this->pageTpl->assignIteration('choic2', '<option value="' . $value['Name'] . '"> ' . $value['Name'] . '</option>');
-                }
-                $this->pageTpl->refillIteration('iChoice2');
-            } else {
-                $this->pageTpl->assignIteration('choic2', '<option value="' . $value['Name'] . '">' . $value['Name'] . '</option>');
-                $this->pageTpl->refillIteration('iChoice2');
-            }
-        }
-        $this->pageTpl->parseIteration('iChoice2');
-
-        $this->pageTpl->setIteration('iChoice3');
-        foreach ($countries as $value) {
-            if (!empty($this->fields)) {
-                if ($value['Name'] === $this->fields['choice3']) {
-                    $this->pageTpl->assignIteration('choic3', '<option selected=\"true\" value="' . $value['Name'] . '">' . $value['Name'] . '</option>');
-                } else {
-                    $this->pageTpl->assignIteration('choic3', '<option value="' . $value['Name'] . '"> ' . $value['Name'] . '</option>');
-                }
-                $this->pageTpl->refillIteration('iChoice3');
-            } else {
-                $this->pageTpl->assignIteration('choic3', '<option value="' . $value['Name'] . '">' . $value['Name'] . '</option>');
-                $this->pageTpl->refillIteration('iChoice3');
-            }
-        }
-        $this->pageTpl->parseIteration('iChoice3');
-
-        $this->pageTpl->setIteration('iStudy');
-        foreach ($studies as $value) {
-            if (!empty($this->fields)) {
-                if ($value['educationName'] === $this->fields['study']) {
-                    $this->pageTpl->assignIteration('stud', '<option selected=\"true\" value="' . $value['educationName'] . '">' . $value['educationName'] . '</option>');
-                } else {
-                    $this->pageTpl->assignIteration('stud', '<option value="' . $value['educationName'] . '"> ' . $value['educationName'] . '</option>');
-                }
-                $this->pageTpl->refillIteration('iStudy');
-            } else {
-                $this->pageTpl->assignIteration('stud', '<option value="' . $value['educationName'] . '">' . $value['educationName'] . '</option>');
-                $this->pageTpl->refillIteration('iStudy');
-            }
-        }
-        $this->pageTpl->parseIteration('iStudy');
-
-        $this->pageTpl->setIteration('iDemand');
-        foreach ($this->extra as $value) {
-            if (!empty($this->fields)) { 
-                Plonk::dump($value);
-                if ($value['traineeOrStudy'] === $this->fields['traineeOrStudy']) {
-                    $this->pageTpl->assignIteration('demand', '<option selected=\"true\" value="' . $value . '">' . $value . '</option>');
-                } else {
-                    $this->pageTpl->assignIteration('demand', '<option value="' . $value . '"> ' . $value . '</option>');
-                }
-                $this->pageTpl->refillIteration('iDemand');
-            } else {
-                $this->pageTpl->assignIteration('demand', '<option value="' . $value . '">' . $value . '</option>');
-                $this->pageTpl->refillIteration('iDemand');
-            }
-        }
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
         $this->pageTpl->parseIteration('iDemand');
     }
 

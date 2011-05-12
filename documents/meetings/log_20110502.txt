@@ -1,0 +1,142 @@
+aggelliki: (20:00)Ênice
+aggelliki: (20:00)Êand also
+aggelliki: (20:01)Êthe values of startdate and enddate in the certifications will be stored in the erasmusstudent table?
+Stephane: (20:01)Êyes, they are saved when you fill them in on the certificate forms
+Stephane: (20:01)Êbut not in a special table
+Stephane: (20:02)Êthey can be saved in the studentEvents table and are actually somewhat saved in the forms table because there is a timestamp for every form
+aggelliki: (20:03)Êok thanx :)
+Arne R. 2: (20:03)Êok folks
+Arne R. 2: (20:03)Êlet's start our meeting
+Arne R. 2: (20:04)Êfirst: please give me a little message, who's there tonight
+Pedro (PT): (20:04)Êp
+Daniel (PT): (20:04)Êh
+aggelliki: (20:04)Êhere 
+Nathan: (20:04)Êcheck
+Ina: (20:04)Êchecked
+aggelliki: (20:04)Êstefanos cannot come
+Stephane: (20:04)Êhere
+Arne R. 2: (20:05)Êok, stefanos is excused
+Arne R. 2: (20:05)Êarne2 is cooking some dinner, he will be here in a few minutes
+Arne R. 2: (20:06)Êok, please give me your working progress. we start with portugal
+Daniel (PT): (20:06)Êok
+Daniel (PT): (20:06)ÊWhats been done:  1. Data Warehouse population and DB tweaks  2. EIS interface specifications gathering and initial development
+Arne L (Germany): (20:07)Êhi guys :-)
+Daniel (PT): (20:07)ÊWhat's next:  1. Continue EIS daemons development  2. Continue EIS interface specs and development
+Daniel (PT): (20:07)Êthat's it
+Daniel (PT): (20:07)Êhi Otto
+Arne R. 2: (20:07)Êthank you. next: belgium
+Stephane: (20:07)Êalrightie
+Stephane: (20:08)Êwe started this week with the flow of the forms
+Stephane: (20:08)Êthere is not much to say about that because it's basically the same for every form
+Stephane: (20:08)Êsave the necessary data in the tables
+Stephane: (20:08)Êand a copy in the forms table
+Stephane: (20:09)Êthis week we will continue with the flow and if everything goes well we should have a nice result by next week
+Stephane: (20:09)Êwe still miss the internship forms though
+Stephane: (20:10)Êand we also have a qsuestion to you(germany) but that's for later i guess
+Stephane: (20:10)Êthat's all
+Arne R. 2: (20:10)Êthanks. next: greece
+aggelliki: (20:10)Êwell,it s almost the same with belgium
+aggelliki: (20:11)Êwe are basically working on storing the data of the forms this week
+aggelliki: (20:12)Êand stefanos is thinkng about some "extra" validations that might illustrate the forms
+aggelliki: (20:12)Êif we have any conclusion to this,we will let you know
+aggelliki: (20:12)Êthat s all for now
+Arne R. 2: (20:13)Êok, thank you
+Arne R. 2: (20:13)Ênext: ina
+Ina: (20:14)Ê:) implementation of the forms for exams; applying the interface for them, some security solutions
+Ina: (20:14)Êdone
+Arne R. 2: (20:15)Êok
+Arne R. 2: (20:15)Ênow me
+Arne R. 2: (20:16)Êwe worked a bit on some layout improvements
+Arne R. 2: (20:17)Êwe made a few changes to the layout and made some thoughts about transferring the data in a secure way
+Arne R. 2: (20:17)Êarne is putting our progess on git right now
+Arne R. 2: (20:17)Êthats it
+aggelliki: (20:18)Êdoes anybody know where is iceland?
+Arne R. 2: (20:18)Êok, now we have some time to discuss several questions
+Arne R. 2: (20:18)Êi haven't heard anything of them
+aggelliki: (20:18)Ê:(
+Stephane: (20:19)Êtoo bad
+Pedro (PT): (20:19)Êthey have been silent, since their part doesnt affect almost nothing we didn't worry to much
+Stephane: (20:19)Êindeed
+Stephane: (20:19)Êthat's what our teacher said
+Stephane: (20:19)Êit doesn't affect us that much
+Stephane: (20:19)Êi have a questionf or germany
+Stephane: (20:20)Êbecause we will be printing the forms to sign it (that's the first option, the other is using a password) we need some sort of layout
+Stephane: (20:21)Êbecause just using a print button will give not the result the more traditional institutions want
+Stephane: (20:21)Êthat's why i think it would be good to have a css layout for printed forms
+Stephane: (20:21)Êso they look more as they are on paper
+Arne R. 2: (20:22)Êok, i understand
+Arne R. 2: (20:22)Êso we have to create a print.css file for displaying the content in a more printer friendly way
+Pedro (PT): (20:23)Êi would like to point something
+Pedro (PT): (20:23)Êonly belgium atempted to deploy their part on git
+Pedro (PT): (20:23)Êtil now
+Stephane: (20:24)Êyes it's just the basic website, please don't try to run everything because it wont ^^
+Daniel (PT): (20:24)Êand pt
+Arne R. 2: (20:24)Êwe are deploying our stuff right in that moment :)
+Stephane: (20:24)Êit's just for giving you guys an impression where you should put your modules/files
+Arne R. 2: (20:25)Êotto pushes it on git in the next few minutes
+Pedro (PT): (20:26)Êwhat about greece and bulgaria?
+Daniel (PT): (20:26)Êyes right now we would like to start developing an interface but we have nothing fromm the other modules
+aggelliki: (20:26)Êwe will upload it tmr or on wednesday
+Daniel (PT): (20:27)Êok fine
+Daniel (PT): (20:27)Êkeep in mind we only have one month for development left
+Pedro (PT): (20:27)Êoh and dun forget about dynamic paths
+Daniel (PT): (20:27)Êjune is for making the report and presentation
+Pedro (PT): (20:27)Êso i dun try to open it and it says it cant find /nathan/documents/main.css :P
+Stephane: (20:28)Êlols
+Arne R. 2: (20:29)Êok. other questions/topics?
+Stephane: (20:33)Êehehehe
+Daniel (PT): (20:34)Êlol
+Stephane: (20:34)ÊAndroid does it too btw
+Pedro (PT): (20:34)Êmaybe he was on the PSN network 
+Daniel (PT): (20:34)Êok can we get back on track?
+Daniel (PT): (20:35)Êis there a day this week we can get together? thursday, friday?
+Stephane: (20:35)ÊI don't have any questions
+Stephane: (20:35)Êjust a lot of work :')
+Daniel (PT): (20:35)Êjust to prepare the directory structure, put the layouts, css sql scripts, then modules...
+Arne R. 2: (20:35)Êsorry guys, i've a little jetlag. just came back from pakistan ;)
+Stephane: (20:35)Êfor the database, do you(portugal) need something extra in the db?
+Arne R. 2: (20:36)Êi think thursday works out for us
+Pedro (PT): (20:37)Ênothing for now
+Pedro (PT): (20:37)Êill have my last word on the working one
+Stephane: (20:38)Êit works :)
+Pedro (PT): (20:39)Êyes but im talking when the full project is deployed
+Daniel (PT): (20:39)Êif we have no site to prove it, yeah it works
+Pedro (PT): (20:39)Êand we test the info being exchanged etc
+Daniel (PT): (20:40)Êok thursday works for everyone?
+Arne R. 2: (20:40)Êok guys: is everybody ok with our little party on thursday?
+Stephane: (20:40)Êfine
+Nathan: (20:40)Êmaybe, i'm not quite sure, but i'll do my best
+Daniel (PT): (20:40)Ê18gmt or earlier?
+Stephane: (20:40)Ê@Arne; is you module on git already, because i just pulled and i only have 1 change form portugal
+Stephane: (20:41)Êyes, i would prefer something earlier in the day
+Daniel (PT): (20:41)Êwe don't mind. how about germany, greece
+Arne R. 2: (20:41)Êarne has some problems with his git abilities ;)
+Daniel (PT): (20:42)Êi'll help him
+aggelliki: (20:42)Êi first have to ask stefanos
+Stephane: (20:42)Êokay, no problem 
+Daniel (PT): (20:42)Êbtw, Frank download this: https://github.com/downloads/brotherbard/gitx/GitX%20Nov-17-2010.zip
+aggelliki: (20:42)Êbut pls not 18 again
+Pedro (PT): (20:42)Êall day long for us minus lunch
+Daniel (PT): (20:43)Ê@Frank it's a fork of GitX that allows push/pull, the original one doens't have that
+aggelliki: (20:43)Êok guys i have to leave
+Pedro (PT): (20:43)Êjsut one thing then
+aggelliki: (20:43)Êplz send me by email about the meeting
+Pedro (PT): (20:43)Êevery body checked the hotel prices?
+Stephane: (20:44)Êi checked them quickly
+Stephane: (20:44)ÊI rely on Nathan ^^
+Arne R. 2: (20:44)Êi would be fine with 18 gmt
+Daniel (PT): (20:45)Êwe need one that's near the faculty no?
+Arne R. 2: (20:45)Ê17 GMT is ok too, but that's the earliest possible time for me
+Stephane: (20:45)Êan hour sooner would be great
+Stephane: (20:45)Ê17 would be great!
+Daniel (PT): (20:46)Êhmm, ok fine by us
+Daniel (PT): (20:46)ÊPedro, do we have the location of the faculty in greece?
+Pedro (PT): (20:46)Ênear those options lol
+Daniel (PT): (20:46)Êaggelliki can you send us a google maps url?
+Pedro (PT): (20:47)Êmake a circle and you get an ideia
+Daniel (PT): (20:47)Êlol but not an exact location
+Daniel (PT): (20:47)Ê5euros a cab
+Daniel (PT): (20:47)Êwhen we could walk...
+Daniel (PT): (20:49)Êok i'll talk with aggelliki later
+Daniel (PT): (20:49)Êand post the location in the forum
+Daniel (PT): (20:49)Êanything elese to discuss?

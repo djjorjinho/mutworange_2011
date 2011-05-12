@@ -5,7 +5,6 @@
  * and open the template in the editor.
  */
 
-
 class LagreeformController extends PlonkController {
 
     protected $id;
@@ -145,27 +144,7 @@ class LagreeformController extends PlonkController {
 
 		}</script>');
 
-<<<<<<< HEAD
-        $sendCountry = LagreeformDB::getSendInst();
-
-        $receivingInst = LagreeformDB::getHostInstitution($this->id);
-
-        $education = LagreeformDB::getStudyById($this->id);
-
-        $this->pageTpl->assign('study', $education['educationName']);
-        $this->pageTpl->assign('nameStudent', $education['firstName'] . ' ' . $education['familyName']);
-
-
-
-        $this->pageTpl->assign('acaYear', ACADEMICYEAR);
-        $this->pageTpl->assign('sendingInstitution', INSTITUTE);
-        $this->pageTpl->assign('countrySendingInstitution', $sendCountry['Name']);
-
-        $this->pageTpl->assign('receivingInstitution', $receivingInst['instName']);
-        $this->pageTpl->assign('countryReceivingInstitution', $receivingInst['Name']);
-=======
         $this->fillFixed();
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
 
 
         if (empty($this->errors)) {
@@ -412,7 +391,6 @@ class LagreeformController extends PlonkController {
         $this->pageTpl->assign('cAddress', $infoStudent['streetNr'] . ' - ' . $infoStudent['postalCode'] . ' ' . $infoStudent['city']);
         $this->pageTpl->assign('cTel', $infoStudent['tel']);
         $this->pageTpl->assign('mail', $infoStudent['email']);
-        
 
 
         $this->pageTpl->assign('workCount', $this->works);
@@ -566,17 +544,10 @@ class LagreeformController extends PlonkController {
         $rules[] = "required,accepted,This field is required";
 
         $rules[] = "letters_only,study,Please only enter letters.";
-<<<<<<< HEAD
-        
-        $rules[] = "is_alpha,sendInstName,This field is required.";
-        $rules[] = "is_alpha,sendInstAddress,This field is required.";
-        
-=======
 
         $rules[] = "is_alpha,sendInstName,This field is required.";
         $rules[] = "is_alpha,sendInstAddress,This field is required.";
 
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
         $rules[] = "is_alpha,sendDepCoorName,Please only enter letters.";
         $rules[] = "digits_only,sendDepCoorTel,Please only enter letters.";
         $rules[] = "valid_email,sendDepCoorMail,Must be of form john@example.com.";
@@ -636,26 +607,6 @@ class LagreeformController extends PlonkController {
             $this->fields = $_POST;
             //Plonk::dump($this->errors);
         } else {
-<<<<<<< HEAD
-            $homeCoor = LagreeformDB::getIdUsers(htmlentities(PlonkFilter::getPostValue('sendDepCoorMail')));
-            $hostCoor = LagreeformDB::getIdUsers(htmlentities(PlonkFilter::getPostValue('sendCoorMail')));
-            $homeInst = LagreeformDB::getIdInst(htmlentities(PlonkFilter::getPostValue('sendInstName')));
-            $hostInst = LagreeformDB::getIdInst(htmlentities(PlonkFilter::getPostValue('recInstitute')));
-            $education = LagreeformDB::getEducation(htmlentities(PlonkFilter::getPostValue('study')));
-            $education = LagreeformDB::getEducationPerInstId($homeInst['instId'],$education['educationId']);
-            if (empty($homecoor) || empty($hosCoor) || empty($hostInst) || empty($homeInst) || empty($education)) {
-                
-            } else {
-                
-                $values = array(
-                    'homeCoordinatorId' => $homeCoor,
-                    'hostCoordinatorId' => $hostCoor,
-                    'homeInstitutionId' => $homeInst,
-                    'hostInstitutionId' => $hostInst,
-                    'startDate' => htmlentities(PlonkFilter::getPostValue('daateFrom')),
-                    'endDate' => htmlentities(PlonkFilter::getPostValue('daateUntill')),
-                    'educationPerInstId' => $education['educationId'],
-=======
 
             $homeCoor = LagreeformDB::getIdUsers(htmlentities(PlonkFilter::getPostValue('sendDepCoorMail')));
             $homeInst = LagreeformDB::getIdInst(htmlentities(PlonkFilter::getPostValue('sendInstName')));
@@ -673,7 +624,6 @@ class LagreeformController extends PlonkController {
                     'startDate' => htmlentities(PlonkFilter::getPostValue('daateFrom')),
                     'endDate' => htmlentities(PlonkFilter::getPostValue('daateUntill')),
                     'educationPerInstId' => $education['educationPerInstId'],
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
                     'statusOfErasmus' => 'Student Application Form',
                     'traineeOrStudy' => '1',
                     'ectsCredits' => htmlentities(PlonkFilter::getPostValue('ectsPoints')),
@@ -681,21 +631,14 @@ class LagreeformController extends PlonkController {
                     'beenAbroad' => htmlentities(PlonkFilter::getPostValue('abroad')),
                 );
 
-<<<<<<< HEAD
-=======
                 LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'studentId = ' . PlonkSession::get('id'));
 
 
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
                 $testArray = $_POST;
                 $newArray = array_slice($testArray, 0, count($_POST) - 2);
 
                 $jsonArray = json_encode($newArray);
-<<<<<<< HEAD
-                $erasmusLevel = PrecandidateDB::getErasmusLevelId('Student Application Form');
-=======
                 $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application Form');
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
                 $values = array(
                     'type' => 'Student Application Form',
                     'date' => date("Y-m-d"),
@@ -703,14 +646,6 @@ class LagreeformController extends PlonkController {
                     'studentId' => PlonkSession::get('id'),
                     'erasmusLevelId' => $erasmusLevel['levelId']
                 );
-<<<<<<< HEAD
-                     $valueStatus = array(
-                    'statusOfErasmus' => 'Student Application Form',
-                    
-                );
-                LagreeformDB::updateErasmusStudent('erasmusstudent', $valueStatus, 'studentId = '.PlonkSession::get('id'));
-=======
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
 
                 $valueEvent = array(
                     'event' => 'sdfsdf',
@@ -721,15 +656,10 @@ class LagreeformController extends PlonkController {
                     'erasmusLevelId' => $erasmusLevel['levelId']
                 );
 
-<<<<<<< HEAD
-                PrecandidateDB::insertStudentEvent('studentsEvents', $valueEvent);
-                PrecandidateDB::insertJson('forms', $values);
-=======
                 LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
                 LagreeformDB::insertJson('forms', $values);
 
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
             }
         }
 
@@ -766,9 +696,6 @@ class LagreeformController extends PlonkController {
         if (!empty($this->errors)) {
             $this->fields = $_POST;
         } else {
-<<<<<<< HEAD
-            
-=======
             for ($i = 0; $i < $this->courses; $i++) {
                 $courseId = LagreeformDB::getCourseIdByCode(PlonkFilter::getPostValue('code' . $i));
                 $grade = array(
@@ -811,7 +738,6 @@ class LagreeformController extends PlonkController {
             LagreeformDB::insertJson('forms', $values);
 
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
->>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
         }
     }
 
