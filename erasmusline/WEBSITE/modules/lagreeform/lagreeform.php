@@ -109,15 +109,7 @@ class LagreeformController extends PlonkController {
             $this->id = PlonkFilter::getGetValue('student');
         } else {
             $this->id = PlonkSession::get('id');
-            $this->pageTpl->assign('pageJava', '<script language="Javascript">
-                                  window.onload = disable;
-                                  function disable() {                                  
-                                    var limit = document.forms["lagreement"].elements.length;
-                                    for (i=0;i<limit;i++) {
-                                      document.forms["lagreement"].elements[i].disabled = true;
-                                    }
-                                  }
-                                </script>');
+            
         }
 
         $status = LagreeformDB::getStudentStatus($this->id);
@@ -126,6 +118,17 @@ class LagreeformController extends PlonkController {
         //Plonk::dump($erasmusLevel['levelId'].' - '.$erasmusLevel2['levelId']);
         if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId']) {
             $this->filledLagreement();
+            if(PlonkFilter::getGetValue('student') == null) {
+                $this->pageTpl->assign('pageJava', '<script language="Javascript">
+                                  window.onload = disable;
+                                  function disable() {                                  
+                                    var limit = document.forms["lagreement"].elements.length;
+                                    for (i=0;i<limit;i++) {
+                                      document.forms["lagreement"].elements[i].disabled = true;
+                                    }
+                                  }
+                                </script>');
+            }
             $this->fillFixed();
             return;
         } else {
@@ -330,7 +333,16 @@ class LagreeformController extends PlonkController {
             
         } else {
             $this->id = PlonkSession::get('id');
-            $this->mainTpl->assign('pageJava', '<script language="Javascript">
+            
+        }
+
+        $status = LagreeformDB::getStudentStatus($this->id);
+        $erasmusLevel = LagreeformDB::getIdLevel($status['statusOfErasmus']);
+        $erasmusLevel2 = LagreeformDB::getIdLevel('Student Application Form');
+        if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId']) {
+            $this->filledApplicform();
+            if(PlonkFilter::getGetValue('student') == null) {
+                $this->mainTpl->assign('pageJava', '<script language="Javascript">
                                   window.onload = disable;
                                   function disable() {                                  
                                     var limit = document.forms["studApplicForm"].elements.length;
@@ -339,14 +351,7 @@ class LagreeformController extends PlonkController {
                                     }
                                   }
                                 </script>');
-        }
-
-        $status = LagreeformDB::getStudentStatus($this->id);
-        $erasmusLevel = LagreeformDB::getIdLevel($status['statusOfErasmus']);
-        $erasmusLevel2 = LagreeformDB::getIdLevel('Student Application Form');
-        if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId']) {
-            $this->filledApplicform();
-            
+            }
             return;
         } else {
             $this->pageTpl->assignOption('oNotFilled');
@@ -662,11 +667,11 @@ class LagreeformController extends PlonkController {
                     'endDate' => htmlentities(PlonkFilter::getPostValue('daateUntill')),
                     'educationPerInstId' => $education['educationPerInstId'],
                     'statusOfErasmus' => 'Student Application Form',
-                    'traineeOrStudy' => '1',
+                    'traineeOrStudy' => 1,
                     'ectsCredits' => htmlentities(PlonkFilter::getPostValue('ectsPoints')),
                     'motherTongue' => htmlentities(PlonkFilter::getPostValue('motherTongue')),
                     'beenAbroad' => htmlentities(PlonkFilter::getPostValue('abroad')),
-                    'action' => 2
+                    'action' => 5
                 );
 
                 LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'studentId = ' . PlonkSession::get('id'));
@@ -714,7 +719,6 @@ class LagreeformController extends PlonkController {
         $this->courses = (int) $_POST['courseCount'];
 
         for ($i = 0; $i < $this->courses; $i++) {
-            echo $i;
             $rules[] = "required,ects" . $i . ",All fields are required";
             $rules[] = "required,title" . $i . ",Organization required";
             $rules[] = "required,code" . $i . ",All fields are required";
@@ -800,13 +804,13 @@ class LagreeformController extends PlonkController {
     public function doMotivateapplic() {
         $erasmusLevelId = LagreeformDB::getIdlevel('Student Application Form');
         $descrip = "";
-        $next = "";
+        $status;
         if (PlonkFilter::getPostValue('accepted') == 1) {
             $descrip = "Student Application Form is approved";
-            $next = "Learning Agreement";
+            $status = 3;
         } else {
             $descrip = "Student Application Form is denied.";
-            $next = "Redo Student Application Form";
+            $status = 
         }
 
         $valueEvent = array(

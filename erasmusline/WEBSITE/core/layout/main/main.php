@@ -35,7 +35,7 @@ class MainController extends PlonkController {
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                     
                 } else {
-                    PlonkSession::set('id', $values['userId']);
+                    PlonkSession::set('id', $values['email']);
                     PlonkSession::set('userLevel', $values['userLevel']);
                     
                     if (PlonkSession::get('id') == 0) {
@@ -75,8 +75,7 @@ class MainController extends PlonkController {
         $db = PlonkWebsite::getDB();
         
         // query DB
-        $items = $db->retrieveOne("select userId, userLevel from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "' AND isValidUser > 0");
-
+        $items = $db->retrieveOne("select userId, email, userLevel from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "' AND isValidUser != 0");
         // return the result
         return $items;
     }
