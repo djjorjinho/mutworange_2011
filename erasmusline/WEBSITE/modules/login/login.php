@@ -7,7 +7,11 @@ class LoginController extends PlonkController {
      * @var array
      */
     protected $views = array(
-        'login'
+<<<<<<< HEAD
+        'login','logout'
+=======
+        'login', 'logout'
+>>>>>>> 4da1c74a776bcc0f2d661d5f6e565de49145ebfd
     );
     /**
      * The actions allowed for this module
@@ -16,6 +20,14 @@ class LoginController extends PlonkController {
     protected $actions = array(
         'login'
     );
+    
+    public function showLogout() {
+        MainController::logout();
+    }
+
+    public function showLogout() {
+        MainController::logout();
+    }
 
     /**
      * Assign variables that are main and the same for every view
@@ -47,19 +59,15 @@ class LoginController extends PlonkController {
 
     public function checkLogged() {
 
-        if (PlonkSession::exists('loggedIn')) {
-
-            if (PlonkSession::get('id') === '1') {
+        if (PlonkSession::exists('id')) {
+            if (PlonkSession::get('id') === '0') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             }
-
-            $this->mainTpl->assignOption('oLogged');
-            $this->pageTpl->assignOption('oLogged');
-
-            $this->id = PlonkSession::get('id');
         }
+        $this->mainTpl->assignOption('oNotLogged');
+        $this->pageTpl->assignOption('oNotLogged');
     }
 
 }
