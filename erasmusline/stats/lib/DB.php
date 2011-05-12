@@ -225,10 +225,11 @@ class DB{
 		}
 		
 		$sql = "INSERT INTO ".$table." (".$fields.")VALUES(".$values.");";
-
+		//error_log($sql);
 		$result = $this->query($sql);
 		
-		return mysql_insert_id();
+		return key_exists("${table}_id",$obj) ? $obj["${table}_id"] : 
+												mysql_insert_id();
 	}
 	
 	/**

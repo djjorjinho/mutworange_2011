@@ -53,6 +53,20 @@ class ETLTest extends PHPUnit_TestCase {
 		$this->assertTrue(is_numeric($id));
 	}
 	
+	function testTransformODSRow(){
+		$rules = $this->etl->getEfficiencyTransformationRules();
+		$context = array();
+		$row = array(
+			year => 2011,
+			semester => 1,
+			dim_phase_id => 'douche'
+			
+		);
+		
+		$NRow = $this->etl->transformODSRow($rules,$row,$context);
+		print_r($NRow);
+	}
+	
 }
  
 $suite = new PHPUnit_TestSuite('ETLTest');
