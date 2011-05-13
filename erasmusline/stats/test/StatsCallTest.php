@@ -1,7 +1,7 @@
 <?php
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
-set_include_path($ipath.":".dirname(__FILE__)."${sep}..${sep}");
+set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}"));
 require_once 'PHPUnit.php';
 require_once("lib/StatsCall.php");
 class StastCallTest extends PHPUnit_TestCase {
