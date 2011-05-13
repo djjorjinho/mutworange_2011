@@ -1,20 +1,22 @@
 <?php
 
 class abroad_stayDB {
+
     //checks for DubliCates Entries in DB 
-    public static function checkDubl($name,$field) {
+    public static function checkDubl($name, $field) {
         $db = PlonkWebsite::getDB();
-        $query = $db->retrieve("SELECT $field FROM erasmusstudent where studentId ='". $db->escape($name)."'");
-        
-        if ($query[0]["$field"]!='0000-00-00') {
+        $query = $db->retrieve("SELECT $field FROM erasmusstudent where studentId ='" . $db->escape($name) . "'");
+
+        if ($query[0]["$field"] != '0000-00-00') {
             return 'Dub';
         }
     }
+
     //Fills tpl withs Student Info
     public static function getStudentInfo($matrNum) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT ers.homeCoordinatorId,ers.hostCoordinatorId,ers.homeInstitutionId,ers.hostInstitutionId,u.firstName, u.familyName, u.sex,u.tel,u.email,u.birthDate,u.birthPlace FROM users as u 
-                JOIN erasmusstudent as ers on u.userId = ers.studentId where u.userId ='". $db->escape($matrNum)."'");
+        $stInfo = $db->retrieve("SELECT ers.startDate,ers.homeCoordinatorId,ers.hostCoordinatorId,ers.homeInstitutionId,ers.hostInstitutionId,u.firstName, u.familyName, u.sex,u.tel,u.email,u.birthDate,u.birthPlace FROM users as u 
+                JOIN erasmusstudent as ers on u.userId = ers.studentId where u.userId ='" . $db->escape($matrNum) . "'");
 
 
         return $stInfo;
@@ -23,7 +25,7 @@ class abroad_stayDB {
     //Fills tpl with Cordinator
     public static function getCoordInfo($coorId) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT u.fax, u.firstName, u.familyName, u.sex,u.tel,u.email FROM users as u where u.userId ='". $db->escape($coorId)."'");
+        $stInfo = $db->retrieve("SELECT u.fax, u.firstName, u.familyName, u.sex,u.tel,u.email FROM users as u where u.userId ='" . $db->escape($coorId) . "'");
 
         return $stInfo;
     }
@@ -31,7 +33,7 @@ class abroad_stayDB {
     //Fille tpl with Institution Info
     public static function getInstInfo($instId) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT instName FROM institutions where  instId='". $db->escape($instId)."'");
+        $stInfo = $db->retrieve("SELECT instName FROM institutions where  instId='" . $db->escape($instId) . "'");
 
         return $stInfo;
     }
@@ -46,7 +48,7 @@ class abroad_stayDB {
                 join erasmusstudent as ers on u.userId=ers.studentId
                 where ers.hostCoordinatorId='$cordId'
                 AND (startDate='0000-00-00' OR endDate='0000-00-00')
-                ORDER BY familyName ASC LIMIT 1 OFFSET ". $db->escape($num)."  ");
+                ORDER BY familyName ASC LIMIT 20 OFFSET " . $db->escape($num) . "  ");
         return $stName;
     }
 
@@ -57,10 +59,10 @@ class abroad_stayDB {
         $stName = $db->retrieve("
                 select u.userId,u.firstName,u.familyName from users as u
                 join erasmusstudent as ers on u.userId=ers.studentId
-                where ers.hostCoordinatorId='". $db->escape($cordId)."'
+                where ers.hostCoordinatorId='" . $db->escape($cordId) . "'
                 AND startDate!='0000-00-00' 
                 AND endDate!='0000-00-00'
-                ORDER BY familyName ASC LIMIT 1 OFFSET ". $db->escape($num )." ");
+                ORDER BY familyName ASC LIMIT 20 OFFSET " . $db->escape($num) . " ");
         return $stName;
     }
 
@@ -70,8 +72,8 @@ class abroad_stayDB {
         $stInfo = $db->retrieve("select u.userId,u.firstName,u.familyName from users as u
                 join erasmusstudent as ers on u.userId=ers.studentId
                WHERE (startDate='0000-00-00' OR endDate='0000-00-00')
-                AND ". $db->escape($SearchFor)." like '%". $db->escape($SearchValue)."%'
-                and ers.hostCoordinatorId='". $db->escape($cordId)."'");
+                AND " . $db->escape($SearchFor) . " like '%" . $db->escape($SearchValue) . "%'
+                and ers.hostCoordinatorId='" . $db->escape($cordId) . "'");
 
         return $stInfo;
     }
@@ -81,11 +83,11 @@ class abroad_stayDB {
         $cordId = PlonkSession::get('id');
         $stInfo = $db->retrieve("select u.userId,u.firstName,u.familyName from users as u
                 join erasmusstudent as ers on u.userId=ers.studentId
-               where ers.hostCoordinatorId='". $db->escape($cordId)."'
+               where ers.hostCoordinatorId='" . $db->escape($cordId) . "'
                 AND startDate!='0000-00-00' 
                 AND endDate!='0000-00-00'
-                AND ". $db->escape($SearchFor)." like '%". $db->escape($SearchValue)."%'
-                and ers.hostCoordinatorId='". $db->escape($cordId)."'");
+                AND " . $db->escape($SearchFor) . " like '%" . $db->escape($SearchValue) . "%'
+                and ers.hostCoordinatorId='" . $db->escape($cordId) . "'");
 
         return $stInfo;
     }
@@ -94,9 +96,9 @@ class abroad_stayDB {
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
         $stInfo = $db->retrieve("select ers.$for from erasmusstudent as ers
-                WHERE ers.studentId='". $db->escape($name)."'
-                AND ers.hostCoordinatorId = '". $db->escape($cordId)."'
-                AND ers.". $db->escape($for)." != '0000-00-00'");
+                WHERE ers.studentId='" . $db->escape($name) . "'
+                AND ers.hostCoordinatorId = '" . $db->escape($cordId) . "'
+                AND ers." . $db->escape($for) . " != '0000-00-00'");
 
         return $stInfo;
     }
@@ -107,17 +109,17 @@ class abroad_stayDB {
         $studentId = $name['User'];
         unset($name['User']);
         foreach ($name as $key => $value) {
-            $query = "UPDATE erasmusstudent SET ". $db->escape($key)." = '". $db->escape($value)."' WHERE studentId='". $db->escape($studentId)."'";
+            $query = "UPDATE erasmusstudent SET " . $db->escape($key) . " = '" . $db->escape($value) . "' WHERE studentId='" . $db->escape($studentId) . "'";
         }
         $db->execute($query);
     }
 
-    public static function SubmitTranscript($form,$student) {
+    public static function SubmitTranscript($form, $student) {
 
         $db = PlonkWebsite::getDB();
         $homeCoorMail = $db->retrieve("SELECT u.email FROM users as u where u.userId =(
-            SELECT ers.homeCoordinatorId FROM erasmusstudent as ers where ers.studentId='". $db->escape($student)."') ");
-        
+            SELECT ers.homeCoordinatorId FROM erasmusstudent as ers where ers.studentId='" . $db->escape($student) . "') ");
+
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->SMTPAuth = true;
@@ -128,7 +130,7 @@ class abroad_stayDB {
         $mail->Password = "";
         $mail->SetFrom('stvakis@gmail.com', 'Erasmus Line');
         $mail->FromName = "Erasmus Line";
-        $mail->AddAddress( $homeCoorMail[0]['email']);
+        $mail->AddAddress($homeCoorMail[0]['email']);
         $mail->Subject = "Certificate";
         $mail->Body = $form;
         $mail->IsHTML(true);
@@ -140,9 +142,7 @@ class abroad_stayDB {
             return '1';
         }
     }
-    
-    
-    
+
 }
 
 ?>
