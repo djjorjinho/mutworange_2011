@@ -38,12 +38,16 @@ class JsonRpcDispatcher{
 			$json = json_decode($msg,true);
 			
 			System_Daemon::debug("Decoded Message: ".print_r($json,true));
+			#error_log("Decoded Message: ".print_r($json,true));
 			
 			if($json==null){
 				return $this->jsonError("NOT_JSON_MSG");
 			}
 			
 			$method = $json['method'];
+			#error_log($method);
+			
+			#error_log("Methods: ".print_r($this->allowed_methods,true));
 			
 			if(!$this->allowed_methods[$method]){
 				return $this->jsonError("NO_METHOD",0,$json['id']);
