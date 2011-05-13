@@ -30,6 +30,7 @@
 {option:oLogged}
       <a href="index.php?module=profile&amp;view=ownprofile">Profile</a>
             <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}">Home</a>
+            <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}">Residences</a>
 {/option:oLogged}
 {option:oNotLogged}
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>

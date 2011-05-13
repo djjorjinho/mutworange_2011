@@ -15,8 +15,8 @@ class LagreeformDB {
         $items = $db->retrieveOne('select familyName,firstName,educationName,ectsCredits from erasmusStudent
 	                                            inner join educationPerInstitute on erasmusStudent.educationPerInstId = educationPerInstitute.educationperInstId
 	                                            inner join education on studyId = educationId
-	                                            inner join users on studentId = userId
-	                                            where studentId = ' . $db->escape($id));
+	                                            inner join users on users_email = email
+	                                            where users_email = "' . $db->escape($id).'"');
 
         // return the result
         return $items;
@@ -27,7 +27,7 @@ class LagreeformDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne('select * from erasmusStudent inner join institutions on erasmusStudent.homeInstitutionId  = institutions.instId inner join country on institution.instCountry = country.Code where erasmusStudent.studentId = ' . $db->escape($id));
+        $items = $db->retrieveOne('select * from erasmusStudent inner join institutions on erasmusStudent.homeInstitutionId  = institutions.instEmail inner join country on institution.instCountry = country.Code where erasmusStudent.users_email = "' . $db->escape($id).'"');
 
         // return the result
         return $items;
@@ -36,10 +36,9 @@ class LagreeformDB {
     public static function getHostInstitution($id) {
         // get DB instance
         $db = PlonkWebsite::getDB();
-
+        //Plonk::dump($id);
         // query DB
-        $items = $db->retrieveOne('select i.instName,c.Name from erasmusStudent as e inner join institutions as i on e.hostInstitutionId = i.instId inner join country as c on i.instCountry = c.Code where e.studentId = ' . $db->escape($id));
-
+        $items = $db->retrieveOne('select i.instName,c.Name from erasmusStudent as e inner join institutions as i on e.hostInstitutionId = i.instEmail inner join country as c on i.instCountry = c.Code where e.users_email = "' . $db->escape($id).'"');
         // return the result
         return $items;
     }
@@ -49,7 +48,7 @@ class LagreeformDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne('select * from erasmusStudent inner join users on homeCoordinatorId = userId where studentId = ' . $db->escape($id));
+        $items = $db->retrieveOne('select * from erasmusStudent inner join users on homeCoordinatorId = email where users_email = "' . $db->escape($id).'"');
 
         // return the result
         return $items;
@@ -60,7 +59,7 @@ class LagreeformDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne('select * from erasmusStudent inner join users on hostCoordinatorId = userId where studentId = ' . $db->escape($id));
+        $items = $db->retrieveOne('select * from erasmusStudent inner join users on hostCoordinatorId = email where users_email = "' . $db->escape($id).'"');
 
         // return the result
         return $items;
@@ -71,7 +70,7 @@ class LagreeformDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $items = $db->retrieveOne('select * from users as u inner join country as c on u.country = c.Code where userId = ' . $db->escape($id));
+        $items = $db->retrieveOne('select * from users as u inner join country as c on u.country = c.Code where email = "' . $db->escape($id).'"');
 
         // return the result
         return $items;
@@ -104,7 +103,7 @@ class LagreeformDB {
     public static function getIdUsers($email) {
         $db = PlonkWebsite::getDB();
 
-        $id = $db->retrieveOne('select userId from users where email = "' . $db->escape($email) . '"');
+        $id = $db->retrieveOne('select email from users where email = "' . $db->escape($email) . '"');
 
         return $id;
     }
@@ -112,7 +111,7 @@ class LagreeformDB {
     public static function getIdInst($name) {
         $db = PlonkWebsite::getDB();
 
-        $id = $db->retrieveOne('select instId from institutions where instName = "' . $db->escape($name) . '"');
+        $id = $db->retrieveOne('select instEmail from institutions where instName = "' . $db->escape($name) . '"');
 
         return $id;
     }
@@ -122,7 +121,7 @@ class LagreeformDB {
 
         $studies = $db->retrieve('SELECT educationName FROM education 
                     inner join educationPerInstitute on education.educationId = educationPerInstitute.studyId 
-                    inner join institutions on educationPerInstitute.institutionId = institutions.instId 
+                    inner join institutions on educationPerInstitute.institutionId = institutions.instEmail 
                     WHERE institutions.instName = "' . INSTITUTE . '"');
         return $studies;
     }
@@ -136,7 +135,7 @@ class LagreeformDB {
     public static function getEducationPerInstId($inst, $edu) {
         $db = PlonkWebsite::getDB();
 
-        $education = $db->retrieveOne("select educationPerInstId from educationPerInstitute where institutionId = " . $inst . " and studyId = " . $edu);
+        $education = $db->retrieveOne("select educationPerInstId from educationPerInstitute where institutionId = '" . $inst . "' and studyId = " . $edu);
 
         return $education;
     }
@@ -181,7 +180,7 @@ class LagreeformDB {
     public static function getStudentStatus($id) {
         $db = PlonkWebsite::getDB();
 
-        $status = $db->retrieveOne("select statusOfErasmus from erasmusStudent where studentId ='" . $db->escape($id) . "'");
+        $status = $db->retrieveOne("select statusOfErasmus, action from erasmusStudent where users_email ='" . $db->escape($id) . "'");
 
         return $status;
     }
@@ -200,6 +199,14 @@ class LagreeformDB {
         $id = $db->retrieveOne('select levelId from erasmusLevel where levelName = "' . $db->escape($level) . '"');
 
         return $id;
+    }
+    
+    public static function getEmail($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $email = $db->retrieveOne('select email from users where userId = '.$db->escape($id));
+        
+        return $email['email'];
     }
 
 }

@@ -8,7 +8,7 @@ if (isset($_POST['queryString'])) {
     if (strlen($queryString) > 0) {
         //$query = "select * from education";
           $query = "SELECT * FROM users 
-                    inner join institutions on users.institutionId = institutions.instId 
+                    inner join institutions on users.institutionId = institutions.instEmail 
                     WHERE users.familyName LIKE '$queryString%' AND users.userLevel = 'Erasmus Coordinator' LIMIT 10";
        
        $result = mysql_query($query);

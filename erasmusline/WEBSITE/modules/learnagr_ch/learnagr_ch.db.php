@@ -11,9 +11,9 @@ class learnagr_chDB {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("
                SELECT u.firstName,u.familyName,ins.instName,c.Name from users as u
-               join institutions as ins on ins.instId=(SELECT hostInstitutionId from erasmusstudent where studentId='".$db->escape($stId)."')
+               join institutions as ins on ins.instEmail=(SELECT hostInstitutionId from erasmusstudent where users_email='".$db->escape($stId)."')
                left join country as c on c.Code=ins.instCountry 
-                where u.userId='".$db->escape($stId)."'");
+                where u.email='".$db->escape($stId)."'");
         return $stInfo;
     }
 
@@ -22,9 +22,9 @@ class learnagr_chDB {
         $stInfo = $db->retrieve("
                     SELECT * FROM education 
                     inner join educationPerInstitute on education.educationId = educationPerInstitute.studyId 
-                    inner join institutions on educationPerInstitute.institutionId = institutions.instId 
-                    inner join coursespereducperinst on institutions.instId = coursespereducperinst.instId
-                    WHERE educationPerInstitute.institutionId=(SELECT ers.hostInstitutionId from erasmusstudent as ers where ers.studentId='".$db->escape($stId)."')");
+                    inner join institutions on educationPerInstitute.institutionId = institutions.instEmail 
+                    inner join coursespereducperinst on institutions.instEmail = coursespereducperinst.instId
+                    WHERE educationPerInstitute.institutionId=(SELECT ers.hostInstitutionId from erasmusstudent as ers where ers.users_email='".$db->escape($stId)."')");
        
         return $stInfo;
         
@@ -42,8 +42,8 @@ class learnagr_chDB {
     public static function SubmitLearCh($form,$post) {
            $db = PlonkWebsite::getDB();
            $student=  PlonkSession::get('id');
-        $instMail = $db->retrieve("SELECT inst.instEmail FROM institutions as inst where instId =(
-            SELECT ers.hostInstitutionId FROM erasmusstudent as ers where ers.studentId='".$db->escape($student)."') ");
+        $instMail = $db->retrieve("SELECT inst.instEmail FROM institutions as inst where instEmail =(
+            SELECT ers.hostInstitutionId FROM erasmusstudent as ers where ers.users_email='".$db->escape($student)."') ");
           
         
         $mail = new PHPMailer();

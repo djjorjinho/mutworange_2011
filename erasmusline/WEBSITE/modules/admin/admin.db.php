@@ -16,7 +16,7 @@ class AdminDB {
 		$db = PlonkWebsite::getDB();
 
 		// retrieve info from table gebruikers
-		$usersInfo = $db->retrieve("SELECT * FROM users inner join erasmusStudent on users.userId = erasmusStudent.studentId WHERE userLevel = 'Student' AND isValidUser = 2");
+		$usersInfo = $db->retrieve("SELECT * FROM users inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE userLevel = 'Student' AND isValidUser = 2");
 
 		return $usersInfo;
 

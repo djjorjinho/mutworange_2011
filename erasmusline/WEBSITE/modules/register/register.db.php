@@ -13,7 +13,7 @@ class RegisterDB {
     public static function getUserById($id) {
         $db = PlonkWebsite::getDB();
         
-        $user = $db->retrieveOne("select * from users where userId = " . $db->escape($id));
+        $user = $db->retrieveOne("select * from users where userId = '" . $db->escape($id)."'");
         
         return $user;        
     }
@@ -42,7 +42,7 @@ class RegisterDB {
     public static function getInstituteId($name) {
         $db = PlonkWebsite::getDB();
         
-        $id = $db->retrieveOne("select instId from institutions where instName = '" . $db->escape($name)."'");
+        $id = $db->retrieveOne("select instEmail from institutions where instName = '" . $db->escape($name)."'");
         
         return $id;
     }

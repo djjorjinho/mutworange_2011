@@ -155,6 +155,11 @@
 
     </fieldset>
     
+    <div class="TRdiv">
+        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
+        <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
+    </div>
+    
     <fieldset>
 <legend>Submit the Learning Agreement</legend>
         <div class="TRdiv">

@@ -10,7 +10,7 @@ if (isset($_POST['queryString'])) {
         //$query = "select * from education";
           $query = "SELECT * FROM education 
                     inner join educationPerInstitute on education.educationId = educationPerInstitute.studyId 
-                    inner join institutions on educationPerInstitute.institutionId = institutions.instId 
+                    inner join institutions on educationPerInstitute.institutionId = institutions.instEmail 
                     WHERE education.educationName LIKE '$queryString%'
                     AND institutions.instName = '".$instName."' LIMIT 10";
        

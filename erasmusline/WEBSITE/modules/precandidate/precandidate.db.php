@@ -9,7 +9,7 @@ class PrecandidateDB {
     
     public static function getUser($id) {
         $db = PlonkWebsite::getDB();
-        $user = $db->retrieveOne("select * from users inner join institutions on users.institutionId = institutions.instId where userId ='" . $db->escape($id) . "'");
+        $user = $db->retrieveOne("select * from users inner join institutions on users.institutionId = institutions.instEmail where email ='" . $db->escape($id) . "'");
         return $user;
     }
     public static function insertJson($table,$values) {
@@ -23,15 +23,14 @@ class PrecandidateDB {
     public static function getStudentStatus($id) {
         $db = PlonkWebsite::getDB();
         
-        $status = $db->retrieveOne("select statusOfErasmus from erasmusStudent where studentId = " . $db->escape($id));
+        $status = $db->retrieveOne("select statusOfErasmus from erasmusStudent where users_email = '" . $db->escape($id)."'");
         
         return $status;
     }
     public static function getJson($id) {
         $db = PlonkWebsite::getDB();
-        
-        $string = $db->retrieveOne("select content from forms where studentId ='" . $db->escape($id) . "' AND type = 'precandidate'");
-        
+        //Plonk::dump($db->escape($id));
+        $string = $db->retrieveOne("select * from forms where studentId ='" . $db->escape($id) . "' AND type = 'Precandidate'");
         return $string;
     }
     
@@ -59,7 +58,7 @@ class PrecandidateDB {
     public static function getEducationPerInstituteId($instId,$educationId) {
         $db = PlonkWebsite::getDB();
         $id = $db->retrieveOne('select * from educationperinstitute 
-                                where institutionId ='  . $db->escape($instId) . ' AND studyId =' . $db->escape($educationId));
+                                where institutionId ="'  . $db->escape($instId) . '" AND studyId =' . $db->escape($educationId));
         return $id;
     }
     
@@ -76,7 +75,7 @@ class PrecandidateDB {
         
         $educations = $db->retrieve('select educationName from education inner join educationPerInstitute 
             on education.educationId = educationPerInstitute.studyId 
-            inner join institutions on educationPerInstitute.institutionId = institutions.instId 
+            inner join institutions on educationPerInstitute.institutionId = institutions.instEmail 
             WHERE institutions.instName = "'.INSTITUTE.'"');
         
         return $educations;
@@ -101,7 +100,7 @@ class PrecandidateDB {
     public static function getUploadedWhat($id) {
         $db = PlonkWebsite::getDB();
         
-        $uploadedWhat = $db->retrieveOne("select uploadedWhat from erasmusstudent where studentId =" . $db->escape($id));
+        $uploadedWhat = $db->retrieveOne("select uploadedWhat from erasmusstudent where users_email ='" . $db->escape($id)."'");
         
         return $uploadedWhat;
     }
@@ -118,6 +117,14 @@ class PrecandidateDB {
         $db = PlonkWebsite::getDB();
 
         $true = $db->update($table, $values, $where);
+    }
+    
+    public static function getEmail($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $email = $db->retrieveOne('select email from users where userId = '.$db->escape($id));
+        
+        return $email['email'];
     }
 
 }

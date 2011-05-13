@@ -111,7 +111,8 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
 
         // gets info of all the users
-        $agrees = StaffDB::getForms('Learning Agreement');
+        $id = StaffDB::getIdLevel("Student Application and Learning Agreement");
+        $agrees = StaffDB::getLagree($id);
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iAgreements');
@@ -176,7 +177,8 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Application forms');
 
         // gets info of all the users
-        $applics = StaffDB::getForms('Student Application Form');
+        $id = StaffDB::getIdLevel("Student Application and Learning Agreement");
+        $applics = StaffDB::getApplics($id);
         
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iApplics');
@@ -204,7 +206,7 @@ class StaffController extends PlonkController {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
             
-            if (PlonkSession::get('id') == 0) {
+            if (PlonkSession::get('id') === 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
