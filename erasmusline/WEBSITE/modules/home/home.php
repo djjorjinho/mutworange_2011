@@ -81,38 +81,67 @@ class HomeController extends PlonkController {
 
     public function getErasmusInfo() {
         $latestEvent = HomeDB::getLatestEvent($this->id);
-        if (!empty($latestEvent)) {
-            $next = HomeDB::getNext($latestEvent['next']);
+        $next;
+        $statusStudent = HomeDB::getStudent($this->id);
+
+        if ($statusStudent['statusOfErasmus'] < 3) {
+            if (!empty($latestEvent)) {
+                $next = HomeDB::getNext($latestEvent['next']);
+            }
+
+            if (!empty($latestEvent)) {
+                $action = "";
+                $this->pageTpl->assign('action', '<a href="index.php?module=' . $latestEvent['module'] . '&view=' . $latestEvent['view'] . '" title="' . $latestEvent['levelName'] . '">' . $latestEvent['levelName'] . '</a>');
+                if ($latestEvent['action'] == 2) {
+                    $action = "Pending";
+                } else if ($latestEvent['action'] == 1) {
+                    $action = 'Approved';
+                } else {
+                    $action = "Denied";
+                }
+                $this->pageTpl->assign('status', $action);
+                if ($latestEvent['levelName'] == "Certificate Of Arrival") {
+                    $this->pageTpl->assign('next', '<li><a href="index.php?module=learnagr_ch&view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
+                        <li><a href="index.php?module=mobility&view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
+                } else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
+                    $this->pageTpl->assign('next', "<li>Your Precandidate has been denied. Sorry</li>");
+                } else {
+                    if($action =="Pending") {
+                        $this->pageTpl->assign('Waiting for confirmation of '.$latestEvent['levelName']);
+                    }
+                    else {
+                    $this->pageTpl->assign('next', '<li><a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a></li>');
+                    }
+                }
+            } else {
+                $this->pageTpl->assign('action', 'No current action taken.');
+                $this->pageTpl->assign('status', 'No status');
+                $this->pageTpl->assign('next', '<a href="index.php?module=precandidate&view=precandidate" title="precandidate">Fill in pre candidate form</a>');
+            }
+        } else if ($statusStudent['statusOfErasmus'] == 3) {
+            $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
+            $this->pageTpl->assign('status', 'Student Application is approved. Learning Agreement is denied');
+            $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
+        } else if ($statusStudent['statusOfErasmus'] == 4) {
+            $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
+            $this->pageTpl->assign('status', 'Learning Agreement is approved. Student Application is denied.');
+            $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=applicform" title="Student Application Form">Student Application Form</a>');
+        } else if($statusStudent['statusOfErasmus'] == 5) {
+            $this->pageTpl->assign('action', 'Filled in Student Application Form.');
+            $this->pageTpl->assign('status', 'Fill in Learning Agreement.');
+            $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
+        }
+        else if($statusStudent['statusOfErasmus'] == 6) {
+            $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
+            $this->pageTpl->assign('status', 'Student Application Form is approved, Learning Agreement is pending.');
+            $this->pageTpl->assign('next', 'Waiting for confirmation of Learning Agreement');
+        }
+        else {
+            $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
+            $this->pageTpl->assign('status', 'Learning Agreement is approved, Student Application Form is pending.');
+            $this->pageTpl->assign('next', 'Waiting for confirmation of Student Application Form');
         }
 
-        if (!empty($latestEvent)) {
-            $action = "";
-            $this->pageTpl->assign('action', '<a href="index.php?module=' . $latestEvent['module'] . '&view=' . $latestEvent['view'] . '" title="' . $latestEvent['levelName'] . '">' . $latestEvent['levelName'] . '</a>');
-            if ($latestEvent['action'] == 2) {
-                $action = "Pending";
-            } else if ($latestEvent['action'] == 1) {
-                $action = 'Approved';
-            } else {
-                $action = "Denied";
-            }
-            $this->pageTpl->assign('status', $action);
-            if ($latestEvent['levelName'] == "Certificate Of Arrival") {
-                $this->pageTpl->assign('next', '<li><a href="index.php?module=learnagr_ch&view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
-                        <li><a href="index.php?module=mobility&view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
-            } else if ($action == 'Pending' && $latestEvent['levelName'] != "Student Application Form") {
-                $this->pageTpl->assign('next', '<li>Waiting for confirmation of ' . $latestEvent['levelName'].'</li>');
-            }
-            else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
-                $this->pageTpl->assign('next',"<li>Your Precandidate has been denied. Sorry</li>");
-            }
-            else {
-                $this->pageTpl->assign('next', '<li><a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a></li>');
-            }
-        } else {
-            $this->pageTpl->assign('action', 'No current action taken.');
-            $this->pageTpl->assign('status', 'No status');
-            $this->pageTpl->assign('next', '<a href="index.php?module=precandidate&view=precandidate" title="precandidate">Fill in pre candidate form</a>');
-        }
 
 
         $forms = HomeDB::getForms($this->id);

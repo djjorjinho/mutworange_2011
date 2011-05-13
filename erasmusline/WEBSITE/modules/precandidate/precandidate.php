@@ -50,15 +50,7 @@ class PrecandidateController extends PlonkController {
             
         } else {
             $this->id = PlonkSession::get('id');
-            $this->pageTpl->assign('pageJava', '<script language="Javascript">
-                                  window.onload = disable;
-                                  function disable() {                                  
-                                    var limit = document.forms["precandidate"].elements.length;
-                                    for (i=0;i<limit;i++) {
-                                      document.forms["precandidate"].elements[i].disabled = true;
-                                    }
-                                  }
-                                </script>');
+            
         }
 
         $status = PrecandidateDB::getStudentStatus($this->id);
@@ -72,6 +64,17 @@ class PrecandidateController extends PlonkController {
             if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId']) {
 
                 $this->filledPrecandidate();
+                if(PlonkFilter::getGetValue('student') == null) {
+                    $this->pageTpl->assign('pageJava', '<script language="Javascript">
+                                  window.onload = disable;
+                                  function disable() {                                  
+                                    var limit = document.forms["precandidate"].elements.length;
+                                    for (i=0;i<limit;i++) {
+                                      document.forms["precandidate"].elements[i].disabled = true;
+                                    }
+                                  }
+                                </script>');
+                }
             } else {
                 $this->pageTpl->assignOption('oNotFilled');
                 $this->fillVariables();
