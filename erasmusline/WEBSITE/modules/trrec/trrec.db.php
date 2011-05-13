@@ -45,8 +45,8 @@ class trrecDB {
             $query = "UPDATE grades SET 
                 localGrade = '" . $db->escape($locGrade) . "',
                 ectsGrade = '" . $db->escape($ectsGrade) . "',
-                courseDuration = '" . $db->escape($corDur) . "'
-                    WHERE studentId='" . $db->escape($name) . "'
+                courseDuration = '" . $db->escape($corDur) . "'             
+WHERE studentId='" . $db->escape($name) . "'
                         AND courseId='" . $db->escape($course) . "'
                             ";
 
@@ -56,7 +56,7 @@ class trrecDB {
         unset($_POST['num'], $_POST['formAction'], $_POST['postForm']);
         $formTable = json_encode($_POST);
         $date = date("y-m-d");
-        $query2 = "INSERT INTO forms (type,date,content,studentId) VALUES( 'TranScript Of Records','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($name) . "') ";
+        $query2 = "INSERT INTO forms (type,date,content,studentId,erasmusLevelId) VALUES( 'TranScript Of Records','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($name) . "','14') ";
         $db->execute($query2);
         $formId = $db->retrieve("Select f.formId from forms as f 
            where f.studentId='" . $db->escape($name) . "'
