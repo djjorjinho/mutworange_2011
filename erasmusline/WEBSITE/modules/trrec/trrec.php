@@ -2,7 +2,7 @@
 
 class trrecController extends PlonkController {
 
-    protected $views = array('select');
+    protected $views = array('select',);
     protected $actions = array('search', 'prev', 'next', 'selectuser', 'selectuserrec', 'postdata', 'resend', 'viewsended');
     private $errors = ''; // set the errors array to empty, by default
     private $fields = array(); // stores the field values
@@ -15,22 +15,22 @@ class trrecController extends PlonkController {
     private $position = 'selectSend';
     private $searchFor = '';
     private $rows = 0;
-    private $resultRows = 1;
+    private $resultRows = 20;
     private $searchSt = '';
     private $mail = '';
+    private $form = '';
 
+    public function showselect() {
 
-    public function showSelect() {
-
-        $this->mainTpl->assign('pageMeta', '<script src="./core/js/jquery/jquery-1.5.js" type="text/javascript"></script>
-        <script src="./core/js/jquery/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="./core/js/jquery/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="./core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="./core/js/sorttable.js" type="text/javascript"></script>');
-        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
+        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
+        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="core/js/sorttable.js" type="text/javascript"></script>');
+        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->errors = '';
-        
-         
+
+
         /* First Step : Select a Student From the List to send a Transcript of Records */
 
         if ($this->position == 'selectSend') {
@@ -83,12 +83,13 @@ class trrecController extends PlonkController {
 
 
 
-        /* or select to see the records*/
+        /* or select to see the records */
 
         if ($this->position == 'selectSended') {
 
             $this->pageTpl->assignOption('showSelectTranscriptSelect');
             $this->pageTpl->assign('view', 'Send a TranScript');
+
             $this->mainTpl->assign('pageTitle', "Sended TranScripts Of Records");
 
 
@@ -125,14 +126,14 @@ class trrecController extends PlonkController {
 
             $this->pageTpl->setIteration('iStudentsList');
             foreach ($studentsLName as $key => $value) {
-                $this->pageTpl->assignIteration('studentsList', '<tr><td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] . '</td><td> ' . $value['familyName'] . '</td><td><form  method="post"><input type="hidden" name="stn" value="' . $value['userId'] . '" /><input type="hidden" name="formAction" id="formLogin" value="doSelectUserRec" /><input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
+                $this->pageTpl->assignIteration('studentsList', '<tr><td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] . '</td><td> ' . $value['familyName'] . '</td><td><form  method="post"><input type="hidden" name="stn" value="' . $value['userId'] . '" /><input type="hidden" name="form" value="' . $value['formId'] . '" /><input type="hidden" name="formAction" id="formLogin" value="doSelectUserRec" /><input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
                 $this->pageTpl->refillIteration('iStudentsList');
             }
             $this->pageTpl->parseIteration('iStudentsList');
         }
 
 
-        /*Second Step: Fill and Send the Form*/
+        /* Second Step: Fill and Send the Form */
 
         if ($this->position == 'sendTranscript') {
             $this->pageTpl->assign('back', 'index.php?module=trrec&view=select');
@@ -144,23 +145,26 @@ class trrecController extends PlonkController {
             $this->getDBdata('reg', $this->student);
         }
 
-        
-        /*Or resend the Form*/
+
+        /* Or resend the Form */
 
         if ($this->position == 'sendedTranscript') {
             $this->pageTpl->assign('back', 'index.php?module=trrec&view=select');
             $name = $this->student;
+            $this->pageTpl->assign('form', $this->form);
+
             $this->pageTpl->assignOption('showTranscript');
             $this->pageTpl->assignOption('showSendedTr');
             $this->pageTpl->assign('action', 'doResend');
             $this->mainTpl->assign('pageTitle', "TranScript Of Records");
             $this->pageTpl->assign('num', $name);
-            $stRec = trrecDB::getRecords($name);
+            $json = trrecDB::getRecords($this->form);
             $this->getDBdata('viewRec', $name);
             $this->pageTpl->setIteration('iStudentRec');
-            $i = 0;
-            while (isset($stRec[$i]['courseCode'])) {
-                $this->pageTpl->assignIteration('studentRec', '<tr><td> ' . $stRec[$i]['courseCode'] . ' ' . $stRec[$i]['courseName'] . '</td><td> ' . $stRec[$i]['ectsCredits'] . '</td><td> ' . $stRec[$i]['courseDuration'] . '</td><td> ' . $stRec[$i]['localGrade'] . '</td><td> ' . $stRec[$i]['ectsGrade'] . '</td></tr>');
+            $i = 1;
+            while (isset($json['coursetitle' . $i . ''])) {
+                $stRec = trrecDB::getCoursName($json['coursetitle' . $i . '']);
+                $this->pageTpl->assignIteration('studentRec', '<tr><td> ' . $stRec[0]['courseCode'] . '</td><td> ' . $stRec[0]['courseName'] . '</td><td> ' . $stRec[0]['ectsCredits'] . '</td><td> ' . $json['corDur' . $i . ''] . '</td><td> ' . $json['locGrade' . $i . ''] . '</td><td> ' . $json['ecGrade' . $i . ''] . '</td></tr>');
                 $this->pageTpl->refillIteration('iStudentRec');
                 $i++;
             }
@@ -170,15 +174,17 @@ class trrecController extends PlonkController {
 
     public function doResend() {
         $this->student = $_POST['num'];
+        $this->form = $_POST['form'];
         $this->formSend('selectSended');
     }
 
     public function doPostdata() {
-
+        $name = $_POST['num'];
         $i = 1;
         $rules = array();
         $array = array();
         $errors = array();
+
         foreach ($_POST AS $key => $value) {
 
             if (stristr($key, 'coursetitle')) {
@@ -191,10 +197,18 @@ class trrecController extends PlonkController {
                 }
                 $array[] = $_POST['coursetitle' . $i];
 
+                $dtDubl = trrecDB::checkDubl($name, $value);
+
+                if (($dtDubl == "Dub" ) || (empty($name))) {
+
+                    $dbDub = 'Entry Exists in Database';
+                    $er = '1';
+                }
+
 
                 $rules[] = "required," . $key . ",Course Title " . $i . " is required.";
                 $rules[] = "required,locGrade" . $i . ",Local Grade " . $i . " is required.";
-                 $rules[] = "digits_only,locGrade" . $i . ",Local Grade " . $i . "  may only contain digits.";
+                $rules[] = "digits_only,locGrade" . $i . ",Local Grade " . $i . "  may only contain digits.";
                 $rules[] = "required,ecGrade" . $i . ",ECTS Grade " . $i . " is required.";
 
 
@@ -214,12 +228,9 @@ class trrecController extends PlonkController {
         }
 
 
-        $name = $_POST['num'];
-        $dtDubl = trrecDB::checkDubl($name);
-        if (($dtDubl == "Dub" ) || (empty($name))) {
-            $dbDub = 'Entry Exists in Database';
-            $er = '1';
-        }
+
+        //$dtDubl = trrecDB::checkDubl($name);
+
 
 
         if (!empty($er)) {
@@ -252,21 +263,22 @@ class trrecController extends PlonkController {
             $this->fields = $_POST;
         } else {
             $this->student = $name;
-            trrecDB::formAp($name);
+            $this->form = trrecDB::formAp($name);
+            ;
             $this->formSend('selectSend');
         }
     }
 
     public function formSend($pos) {
         $name = $this->student;
-
         $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/confirm.tpl');
-        $stRec = trrecDB::getRecords($name);
-        $this->getDBdata('mail',$name);
+        $json = trrecDB::getRecords($this->form);
+        $this->getDBdata('mail', $name);
         $this->mail->setIteration('iStudentRec');
-        $i = 0;
-        while (isset($stRec[$i]['courseCode'])) {
-            $this->mail->assignIteration('studentRec', '<tr><td> ' . $stRec[$i]['courseCode'] . '</td><td> ' . $stRec[$i]['courseName'] . '</td><td> ' . $stRec[$i]['ectsCredits'] . '</td><td> ' . $stRec[$i]['courseDuration'] . '</td><td> ' . $stRec[$i]['localGrade'] . '</td><td> ' . $stRec[$i]['ectsGrade'] . '</td></tr>');
+        $i = 1;
+        while (isset($json['coursetitle' . $i . ''])) {
+            $stRec = trrecDB::getCoursName($json['coursetitle' . $i . '']);
+            $this->mail->assignIteration('studentRec', '<tr><td> ' . $stRec[0]['courseCode'] . '</td><td> ' . $stRec[0]['courseName'] . '</td><td> ' . $stRec[0]['ectsCredits'] . '</td><td> ' . $json['corDur' . $i . ''] . '</td><td> ' . $json['locGrade' . $i . ''] . '</td><td> ' . $json['ecGrade' . $i . ''] . '</td></tr>');
             $this->mail->refillIteration('iStudentRec');
             $i++;
         }
@@ -278,7 +290,6 @@ class trrecController extends PlonkController {
         } else {
             $this->errors = '<div class="errorPHP"><p>' . $return . '</p><p>Try Sending it again</p></div>';
         }
-        
     }
 
     public function doViewsended() {
@@ -303,8 +314,8 @@ class trrecController extends PlonkController {
         if (!empty($_POST['Search'])) {
             $this->searchSt = $_POST['Search'];
             $this->searchFor = $_POST['selection'];
-}
-         $this->checkPos($_POST['pos']);
+        }
+        $this->checkPos($_POST['pos']);
     }
 
     public function checkPos($pos) {
@@ -322,14 +333,15 @@ class trrecController extends PlonkController {
 
     public function doSelectUserrec() {
         $this->student = $_POST["stn"];
+        $this->form = $_POST["form"];
         $this->position = 'sendedTranscript';
     }
 
     public function getDBdata($act, $name) {
 
-if($act=='mail'){
-            $this->pageTpl=$this->mail;
-}
+        if ($act == 'mail') {
+            $this->pageTpl = $this->mail;
+        }
         $query = trrecDB::getStudentInfo($name);
 
 
@@ -339,8 +351,8 @@ if($act=='mail'){
             $this->pageTpl->assign('stGender', $value['sex'] > 0 ? 'Male' : 'Female');
             $this->pageTpl->assign('stDtBirh', $value['birthDate']);
             $this->pageTpl->assign('stPlBirh', $value['birthPlace']);
-            $this->pageTpl->assign('stMatrDate', $value['tel']);
-            $this->pageTpl->assign('stMatrNum', $value['email']);
+            $this->pageTpl->assign('stMatrDate', $value['startDate']);
+            $this->pageTpl->assign('stMatrNum', $name);
             $this->pageTpl->assign('stMail', $value['email']);
 
             $query2 = trrecDB::getCoordInfo($query[0]['hostCoordinatorId']);
@@ -362,8 +374,6 @@ if($act=='mail'){
             $query2 = trrecDB::getInstInfo($query[0]['homeInstitutionId']);
             foreach ($query2 as $key => $value) {
                 $this->pageTpl->assign('reInName', $value['instName']);
-
-                //     $this->pageTpl->assign('reCorFax', $value['reCorFax']);*/
             }
             $query2 = trrecDB::getInstInfo($query[0]['hostInstitutionId']);
             foreach ($query2 as $key => $value) {
@@ -372,15 +382,32 @@ if($act=='mail'){
 
 
             if ($act == "reg") {
-                $cour = trrecDB::getInstCourses($query[0]['hostInstitutionId']);
+
+                $stRec = trrecDB::getSelCourses($name);
+
                 $this->pageTpl->setIteration('iCourses');
-                foreach ($cour as $key => $value) {
-                    $this->pageTpl->assignIteration('courses', '<option value="' . $value['courseId'] . '" name="' . $value['ectsCredits'] . '">' . $value['courseCode'] . '&nbsp;&nbsp;&nbsp;&nbsp;' . $value['courseName'] . '</option>');
+                $i = 0;
+                while (isset($stRec[$i]['courseCode'])) {
+                    $j = $i + 1;
+                    $this->pageTpl->assignIteration('courses', '
+
+    <input type="hidden" name="coursetitle' . $j . '" value="' . $stRec[$i]['courseId'] . '" />                
+<tr>
+<td> ' . $stRec[$i]['courseCode'] . '</td><td> ' . $stRec[$i]['courseName'] . '</td>
+<td> ' . $stRec[$i]['ectsCredits'] . '</td>
+<td> <select  name="corDur' . $j . '" id="corDur' . $j . '" ><option></option><option>Y</option><option>1S</option><option>1T</option><option>2S</option><option>2T</option></select></td>
+<td><input class="validate[required,custom[integer]]" type="text" size="5" maxlength="2" name="locGrade' . $j . '" id="locGrade' . $j . '" /></td>
+<td><select  name="ecGrade' . $j . '" id="ecGrade' . $j . '" class="validate[required]"><option></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>FX</option></select></td>
+</tr>');
                     $this->pageTpl->refillIteration('iCourses');
+                    $i++;
                 }
-                $this->pageTpl->parseIteration('iCourses');
+
                 $this->pageTpl->assign('num', $name);
+
+                $this->pageTpl->parseIteration('iCourses');
             }
         }
     }
+
 }

@@ -278,6 +278,39 @@ class DB{
 		return $result;
 	}
 	
+	function updateMany($obj,$table,$where="1=1"){
+		if(!is_array($obj)) throw new Exception("Not a valid object!");
+		
+		$tinfo = $this->tableInfo($table);
+		
+		$update;
+		$comma=false;
+		foreach(array_keys($obj) as $key){
+			if(key_exists($key,$tinfo)){
+				if($comma){$update .= ",";}
+				$val = $obj[$key];
+				
+				if(preg_match("/^<\?(.*)\?>/",$val,$matches)){
+					$update .=
+						mysql_real_escape_string(
+							$matches[1]);
+				}else{
+					$update .= $key." = '".
+						mysql_real_escape_string($val)
+							."'";
+				}
+				
+				$comma=true;
+			}
+		}
+		
+		$sql = "UPDATE $table SET $update WHERE ${where}";
+		print $sql."\n";
+		$result = $this->query($sql);
+		
+		return $result;
+	}
+	
 	/**
 	 * Deletes a row object from the database table
 	 * @param array assoc. array containing the table and id of the row to be
@@ -374,11 +407,13 @@ class DB{
 	}
 	
 	function enableKeys($table){
-		$db->execute("alter table $table enable keys");
+		if(!isset($table)) throw new Exception("Not a valid table!");
+		$this->execute("alter table $table enable keys");
 	}
 	
 	function disableKeys($table){
-		$db->execute("alter table $table disable keys");
+		if(!isset($table)) throw new Exception("Not a valid table!");
+		$this->execute("alter table $table disable keys");
 	}
 }
 

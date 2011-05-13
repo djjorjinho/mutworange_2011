@@ -36,7 +36,9 @@ class ETL{
 		$efficiency_table = $this->efficiency_table;
 		
 		// get academic date
-		list($year,$semester) = self::getAcademicDate(); 
+		$dt = new DateTime();
+		list($year,$month) = $this->getDate($dt);
+		list($year,$semester) = self::getAcademicDate($year,$month);
 		
 		// create efficiency merge table
 		list($mrg_table,$prev_table) = 
@@ -52,18 +54,43 @@ class ETL{
 		$res = $db->getMany($query);
 		
 		// trasnformation rules
-		$rules = $this->etl->getEfficiencyTransformationRules();
+		$rules = self::getEfficiencyTransformationRules();
 		
 		// transform,load and calculate statistical values by context
-		$context = array(count=>0,max_rsp=>0,min_rsp=>0,total_rsp=>0);
+		$context = array(count=>0,max_rsp=>0,min_rsp=>0,
+						total_rsp=>0,lodg_avail=>0);
 		foreach($res as $row){
 			$context['count']++;
-			$NRow = $this->etl->transformODSRow($rules,$row,$context);
-			$db->insert($NRow,$efficiency_table);
+			$NRow = self::transformODSRow($rules,$row,$context);
+			$db->insert($NRow,$mrg_table);
 		}
 		
 		// data mine - needs previous table for comparisons
+		if(isset($prev_table)){
+			$prev_table_row = 
+					$db->getOne("select * from ${prev_table} limit 1");
+			
+			if(isset($prev_table_row))
+				self::dataMineEfficiency($prev_table_row,$context);
+		}
 		
+		// update records
+		$upd = array(
+			val_participants => $context['count'],
+			avg_response_days => $context['avg_rsp'],
+			max_response_days => $context['max_rsp'],
+			min_response_days => $context['min_rsp'],
+			perc_students => $context['perc_students'],
+			lodging_available => $context['lodg_avail'],
+			perc_lodging => $context['perc_lodging'],
+			prev_participants => $context['prev_participants'],
+			prev_avg_response_days => $context['prev_avg_rsp'],
+			prev_max_response_days => $context['prev_max_rsp'],
+			prev_min_response_days => $context['prev_min_rsp'],
+			prev_lodging => $context['prev_lodging']
+		);
+		
+		$db->updateMany($upd,$mrg_table);
 		
 		// finished -  merge tables
 		$db->enableKeys($mrg_table);
@@ -139,7 +166,7 @@ class ETL{
 	 * @return unknown_type var
 	 */
 	function mergeTables($table){
-		$db = $ths->db;
+		$db = $this->db;
 		// uniting merging tables
         $mrg_tables = $db->getMergedTables($table);
         $db->execute("alter table $table UNION=(".
@@ -260,6 +287,11 @@ class ETL{
 				$ctx['total_rsp'] += $days;
 				
 				$ctx['avg_rsp'] = $ctx['total_rsp'] / $ctx['count'];
+			},
+			
+			lodging_available => 
+				function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+					if($row['lodging_available']==1) $ctx['lodg_avail'] += 1;
 			}
 		
 		);
@@ -327,6 +359,29 @@ class ETL{
 		$this->cache->store($key,$id,1800);
 
 		return $id;
+	}
+	
+	/**
+	 * 
+	 * Takes the values from the previous merged table, 
+	 * compares with current values and saves stats data in context array. 
+	 * @param str $prev_row - analytical data from previous etl process
+	 * @param array $ctx - context array that holds all analytical data
+	 */
+	function dataMineEfficiency($prev_row,&$ctx){
+		$ctx['prev_avg_rsp'] = $prev_row['avg_response_days'];
+		$ctx['prev_max_rsp'] = $prev_row['max_response_days'];
+		$ctx['prev_min_rsp'] = $prev_row['min_response_days'];
+		$ctx['prev_participants'] = $prev_row['val_participants'];
+		$ctx['prev_lodging'] =  $prev_row['lodging_available'];
+		
+		// growth percentage
+		$ctx['perc_students'] = 
+				round((($ctx['count'] / $ctx['prev_participants'])-1) * 100);
+		
+		$ctx['perc_lodging'] = 
+				round((($ctx['lodg_avail'] / $ctx['prev_lodging'])-1) * 100);
+		
 	}
 	
 }

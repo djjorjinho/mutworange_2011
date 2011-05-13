@@ -8,7 +8,7 @@
 class abroad_stayController extends PlonkController {
 
     protected $views = array(
-        'select','cert_ar'
+        'select'
     );
     protected $actions = array(
         'submit', 'selectuser', 'selectuserrec', 'selectaction', 'next', 'prev', 'search', 'viewsended', 'resend', 'resenddep'
@@ -22,17 +22,21 @@ class abroad_stayController extends PlonkController {
     private $position = 'showSelect';
     private $searchSt = '';
     private $rows = 0;
-    private $resultRows = 1;
+    private $resultRows = 20;
     private $searchFor = '';
     private $mail = '';
 
-    
     public function showselect() {
-        $this->mainTpl->assign('pageMeta', '<script src="./core/js/jquery/jquery-1.5.js" type="text/javascript"></script>
-        <script src="./core/js/jquery/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="./core/js/jquery/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="./core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="./core/js/sorttable.js" type="text/javascript"></script>');
-        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
+
+
+
+
+
+        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
+        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="core/js/sorttable.js" type="text/javascript"></script>');
+        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->pageTpl->assign('back', 'index.php?module=abroad_stay&view=select');
 
@@ -286,8 +290,8 @@ class abroad_stayController extends PlonkController {
             $this->pageTpl->assign('stGender', $value['sex'] > 0 ? 'Male' : 'Female');
             $this->pageTpl->assign('stDtBirh', $value['birthDate']);
             $this->pageTpl->assign('stPlBirh', $value['birthPlace']);
-            $this->pageTpl->assign('stMatrDate', $value['tel']);
-            $this->pageTpl->assign('stMatrNum', $value['email']);
+            $this->pageTpl->assign('stMatrDate', $value['startDate']);
+            $this->pageTpl->assign('stMatrNum', $name);
             $this->pageTpl->assign('stMail', $value['email']);
 
             $query2 = abroad_stayDB::getCoordInfo($query[0]['hostCoordinatorId']);
@@ -357,6 +361,7 @@ class abroad_stayController extends PlonkController {
             $this->mail->assign('header', 'Certificate Of Arrrival');
             $this->mail->assign('form', 'Start Date');
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['startDate'] . '</div>');
+
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
                 abroad_stayDB::PostForm($_POST);
@@ -371,6 +376,7 @@ class abroad_stayController extends PlonkController {
             $this->mail->assign('header', 'Certificate Of Departure');
             $this->mail->assign('form', 'Departure Date');
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['endDate'] . '</div>');
+
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
                 abroad_stayDB::PostForm($_POST);

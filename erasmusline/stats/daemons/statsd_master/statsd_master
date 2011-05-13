@@ -2,7 +2,8 @@
 <?php
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
-set_include_path($ipath.":".dirname(__FILE__)."${sep}..${sep}..${sep}");
+$path = realpath(dirname(__FILE__)."${sep}..${sep}..${sep}");
+set_include_path($ipath.":".$path);
 
 require_once("lib/System/Daemon.php");                 // Include the Class
 require_once("lib/LooPHP/Autoload.php");

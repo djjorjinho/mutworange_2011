@@ -103,14 +103,15 @@ class StatsdSlave extends Server implements JsonRpcI{
     /**
      * 
      * Allowed methods by the JsonRpcDispatcher object
-     * @return unknown_type var
+     * @return array $methods
      */
     function rpcMethods(){
     	
     	$methods = array(
     		'ping' => true,
     		'query' => true,
-    		'profile' => true
+    		'profile' => true,
+    		'etl1' => true
     	);
     	
     	return $methods;
@@ -140,6 +141,11 @@ class StatsdSlave extends Server implements JsonRpcI{
 				)
 		));
     	$client->sendMessage($message,$response);
+	}
+	
+	function etl1(){
+		$this->etl->processEfficiency();
+		return $this->profiler->display();
 	}
 	
 	function profile(){

@@ -11,22 +11,20 @@ class learnagr_chController extends PlonkController {
         'learnagrch',
     );
     protected $actions = array(
-        'submitchange'
+        'submitchange', 'add', 'remove'
     );
     private $errors = '';
-    private $fields = array();
-    private $post = '';
 
 
     /* For Using this PlonkSession::get('id'); must be an id of the student */
 
     public function showlearnagrch() {
-        
+
         $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
-        $this->mainTpl->assign('pageMeta', '<script src="./core/js/jquery/jquery-1.5.js" type="text/javascript"></script>
-        <script src="./core/js/jquery/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="./core/js/jquery/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="./core/js/custom.js" type="text/javascript" charset="utf-8"> </script>');
+        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
+        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script>');
         $this->mainTpl->assign('pageTitle', 'Learning Agreement Change');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->errors = '';
@@ -36,6 +34,17 @@ class learnagr_chController extends PlonkController {
 
         //Assigns User Information
         $stuInfo = learnagr_chDB::getStInfo($stId);
+
+
+        $selcourEcts = learnagr_chDB::getSelectedCourseEcts($stId);
+        $studentEcts = learnagr_chDB::getStudentEcts($stId);
+        $i = 0;
+        while (isset($selcourEcts[$i]['ectsCredits'])) {
+            $studentEcts[0]['ectsCredits']-=$selcourEcts[$i]['ectsCredits'];
+            $i++;
+        }
+        $this->pageTpl->assign('ECTS', $studentEcts[0]['ectsCredits']);
+
         if (empty($stuInfo)) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=formselect&' . PlonkWebsite::$viewKey . '=main');
         }
@@ -47,135 +56,102 @@ class learnagr_chController extends PlonkController {
 
 
         //Generates The Interactions For Courses (for Host Institution)
-        $studentCourses = learnagr_chDB::getInstCourses($stId);
+
         $this->pageTpl->setIteration('iStudentCourses');
-        foreach ($studentCourses as $key => $value) {
-            $this->pageTpl->assignIteration('studentCourses', '<option value="' . $value['courseId'] . '" name="' . $value['ectsCredits'] . '">' . $value['courseCode'] . '&nbsp;&nbsp;&nbsp;&nbsp;' . $value['courseName'] . '</option> ');
+        $i = 1;
+
+        $succeedCourses = learnagr_chDB::getSucceedCourses($stId);
+        foreach ($succeedCourses as $key => $value) {
+            $this->pageTpl->assignIteration('studentCourses', '
+ <tr>
+<td>' . $value['courseCode'] . ' </td><td>' . $value['courseName'] . '</td><td>'
+                    . $value['ectsCredits'] . '</td><td><span class"succeedCourse">Succeed</span></td>');
             $this->pageTpl->refillIteration('iStudentCourses');
         }
+
+        $selectedCourses = learnagr_chDB::getSelectedCourses($stId);
+        foreach ($selectedCourses as $key => $value) {
+            $this->pageTpl->assignIteration('studentCourses', '
+<tr>
+<td>' . $value['courseCode'] . '</td>
+<td>' . $value['courseName'] . '</td>
+<td>' . $value['ectsCredits'] . '</td>
+<td><form id="form1"  method="post">
+<input type="hidden" name="coursetitle" value="' . $value['courseId'] . '" />    
+<input type="hidden" name="formAction" id="formValidate" value="doRemove" />
+<input class="button" name="postForm" id="postForm" type="submit" value="Remove"/>
+</form></td></tr>');
+            $this->pageTpl->refillIteration('iStudentCourses');
+        }
+
+        $selectCourses = learnagr_chDB::getSelectCourses($stId);
+        foreach ($selectCourses as $key => $value) {
+            $this->pageTpl->assignIteration('studentCourses', '
+ <tr>
+<td>' . $value['courseCode'] . ' </td>
+<td>' . $value['courseName'] . '</td>
+<td>' . $value['ectsCredits'] . '</td>
+<td><form id="form1" name="form1" method="post">
+<input type="hidden" name="coursetitle" value="' . $value['courseId'] . '" />    
+<input type="hidden" name="formAction" id="formValidate" value="doAdd" />
+            <input class="button" name="postForm" id="postForm" type="submit" value="Add"/></form></td></tr>');
+            $this->pageTpl->refillIteration('iStudentCourses');
+        }
+
         $this->pageTpl->parseIteration('iStudentCourses');
     }
 
-    
-
-
-    public function doSubmitchange() {
-
-        $i = 1;
-        $rules = array();
-        $array = array();
-        $errors = array();
-
-
-        foreach ($_POST AS $key => $value) {
-
-            if (stristr($key, 'coursetitle')) {
-
-                $check = $_POST['coursetitle' . $i];
-                if ((in_array($check, $array)) && ($i != 1)) {
-
-                    $double = 'You have Dublicate Courses Selected';
-                    $er = '1';
-                }
-                $array[] = $_POST['coursetitle' . $i];
-
-
-                $rules[] = "required," . $key . ",Course Title " . $i . " is required.";
-                $rules[] = "required,rad" . $i . ",Please Choise Add/Remove in field " . $i;
-
-
-
-                $this->fields[] = 'coursetitle' . $i;
-                $this->fields[] = 'rad' . $i;
-
-
-                $i++;
-            }
-        }
-        foreach ($_POST AS $key => $value) {
-            $errors = validateFields($_POST, $rules);
-        }
-        if (!empty($errors)) {
-            $er = '1';
-        }
-
-
-
-        if (!empty($er)) {
-            $errorString = '<div class="errorPHP"> ';
-
-            $errorString .= '<p><p>There was an error processing the form.</p>';
-            if (!empty($double)) {
-                $errorString .="<p>" . $double . "</p>";
-            }
-            if (!empty($errors)) {
-                $errorString .= '<p>Please fill all fields marked with *</p>';
-                $errorString .= '</div><div>';
-
-                $errorString .= '<ul>';
-                foreach ($errors as $key) {
-                    $errorString .= "<li>$key</li>";
-                }
-                $errorString .= '</ul>';
-            }
-
-            $errorString .= '</div>';
-            $er = '';
-            // display the previous form */
-            $this->errors = $errorString;
-            $this->fields = $_POST;
-        } else {
-            $this->confirm($_POST);
-}
-    }
-public function confirm($post) {
-
- $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/confirm.tpl');
-  //Gets User Id
+    public function doAdd() {
         $stId = PlonkSession::get('id');
-        
-        //Assigns User Information
-        $stuInfo = learnagr_chDB::getStInfo($stId);
-        $this->mail->assign('studentsName', $stuInfo[0]['familyName'] . '&nbsp;&nbsp;' . $stuInfo[0]['firstName']);
-        $this->mail->assign('instName', $stuInfo[0]['instName']);
-        $this->mail->assign('country', $stuInfo[0]['Name']);
+        $courseId = $_POST['coursetitle'];
+        /* Validates For the ECTS CREDITS */
+        $selcourEcts = learnagr_chDB::getSelectedCourseEcts($stId);
+        $studentEcts = learnagr_chDB::getStudentEcts($stId);
+        $courseEcts = learnagr_chDB::getCourseEcts($courseId);
+        $i = 0;
+        while (isset($selcourEcts[$i]['ectsCredits'])) {
+            $studentEcts[0]['ectsCredits']-=$selcourEcts[$i]['ectsCredits'];
+            $i++;
+        }
+        $ects = $studentEcts[0]['ectsCredits'] - $courseEcts[0]['ectsCredits'];
+        if ($ects < 0) {
+            $this->errors = '<div class="errorPHP">Not Enough ECTS Credits</div>';
+        } else {
+            /* Checks If The course Can Selected */
+            $coursesSel = learnagr_chDB::getSelectedCourses($stId);
+            $coursesSelected = learnagr_chDB::getSelectCourses($stId);
 
-        //Gets The Post
-        $this->post = $post;
-        unset($this->post['formAction'], $this->post['num'], $this->post['postForm']);
-
-        //Generates The Interactions For Courses (for Host Institution)
-        $i = 1;
-
-        $this->mail->setIteration('iStudentCoursesChange');
-        foreach ($this->post as $key => $value) {
-
-            if ((!empty($this->post['coursetitle' . $i])) && ($key == 'coursetitle' . $i)) {
-                $course = learnagr_chDB::getConfCourses($this->post['coursetitle' . $i]);
-
-                $this->mail->assignIteration('studentCoursesChange', '<tr><td align="center">' . $course[0]['courseCode'] . '</td>
-                     <td align="center">' . $course[0]['courseName'] . '</td>
-                     <td align="center">' . $course[0]['ectsCredits'] . '</td>
-                     <td align="center">' . $this->post['rad' . $i] . '</td></tr>'
-                );
-                $this->mail->refillIteration('iStudentCoursesChange');
-
-                $i++;
+            if (($this->checkSelection($coursesSel, $courseId)) || ($this->checkSelection($coursesSelected, $courseId))) {
+                learnagr_chDB::courseAdd($courseId, $stId);
+                $this->errors = '<div class="SuccessPHP">Successfully Added</div>';
+            } else {
+                $this->errors = '<div class="errorPHP">You Are not allowed To select this course</div>';
             }
         }
-        $this->mail->parseIteration('iStudentCoursesChange');
-$return = learnagr_chDB::SubmitLearCh($this->mail->getContent(),$this->post);
-              
-        if ($return == '1') {
-            $this->errors='<div class="SuccessPHP">Application Submited</div>';
+    }
 
+    public function doRemove() {
+        $stId = PlonkSession::get('id');
+        $coursesSel = learnagr_chDB::getSelectedCourses($stId);
+        $coursesSelected = learnagr_chDB::getSelectCourses($stId);
+        $courseId = $_POST['coursetitle'];
+
+        if (($this->checkSelection($coursesSel, $courseId)) || ($this->checkSelection($coursesSelected, $courseId))) {
+            learnagr_chDB::courseRemove($_POST['coursetitle'], $stId);
+            $this->errors = '<div class="SuccessPHP">Successfully Removed</div>';
         } else {
-                        $this->errors='<div class="errorPHP"><p>Application Failed</p><p>'.$return.'</p></div>';
-
-
+            $this->errors = '<div class="errorPHP">You Are not allowed To select this course</div>';
         }
     }
-    
 
+    public function checkSelection($courseList, $course) {
+        $i = 0;
+        while (isset($courseList[$i]['courseId'])) {
+            if (($course == $courseList[$i]['courseId']))
+                return TRUE;
+            $i++;
+        }
+        return FALSE;
+    }
 
 }

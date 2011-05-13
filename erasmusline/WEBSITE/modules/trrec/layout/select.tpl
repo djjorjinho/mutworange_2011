@@ -3,22 +3,22 @@
 {$selectError}
 <div class="selDiv">
     <div class="small"><form method="POST" action=''>
-    <input type="hidden" name="formAction" id="formValidate" value="doViewsended" />
-    <input class="buttonLook" name="postForm" id="postForm" type="submit" value="{$view}"/>
-    </form></div>
-  
+            <input type="hidden" name="formAction" id="formValidate" value="doViewsended" />
+            <input class="buttonLook" name="postForm" id="postForm" type="submit" value="{$view}"/>
+        </form></div>
+
 </div>
 <div class="alCenterDiv">
     <h2>Welcome</h2>
     <p>Select Student from the list</p>
-    
-        <form method="post">Find:<select name="selection">
-  <option value="userId">Matr. Num</option>
-  <option value="familyName">Last Name</option>
-  
-</select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
 
-   
+    <form method="post">Find:<select name="selection">
+            <option value="userId">Matr. Num</option>
+            <option value="familyName">Last Name</option>
+
+        </select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
+
+
     <table id="tblSearch"  class="sortable" width="450px" align="center">
         <tr>
             <th>MatrNum</th>
@@ -32,7 +32,7 @@
 
 
 
-       
+
     </table>
     <p>&nbsp;</p>
     <div class="leftAlDiv" align="right">
@@ -55,15 +55,14 @@
             <input {$hiddenN}  class="button" name="postForm" id="postForm" type="submit" value="Next"/>
         </form>
     </div>
-    
-    
-    
+
+
+
 </div>
 {/option:showSelectTranscriptSelect}
 
 
 {option:showTranscript}
-
 <p align="right"><a href='{$back}'>back</a></p>
 <form id="form1" action="" method="post" enctype="multipart/form-data" >
 
@@ -77,7 +76,6 @@
 
         <div><p class="minHead">Sending Institution Information</p></div>
         <div><span class="spleft">Institution Name :</span><span class="spright">{$seInName}</span></div>
-        <div><span class="spleft">Department :</span><span class="spright">{$seCorDep}</span></div>
         <div><p class="minHead">Departmental Coordinator Information</p></div>
         <div><span class="spleft">Name :</span><span class="spright">{$seCorName}</span></div>
         <div><span class="spleft">E-mail :</span><span class="spright">{$seCorMail}</span></div>
@@ -93,7 +91,6 @@
 
         <div class="TRdiv"><p class="minHead">Receiving Institution Information</p></div>
         <div class="TRdiv"><span class="spleft">Institution Name :</span><span class="spright">{$reInName}</span></div>
-        <div class="TRdiv"><span class="spleft">Department :</span><span class="spright">{$reCorDep}</span></div>
         <div class="TRdiv"><p class="minHead">Departmental Coordinator Information</p></div>
         <div class="TRdiv"><span class="spleft">Name :</span><span class="spright">{$reCorName}</span></div>
         <div class="TRdiv"><span class="spleft">E-mail :</span><span class="spright">{$reCorMail}</span></div>
@@ -107,16 +104,11 @@
         <div class="tblx" >
             <table  id="lol" align="center">
                 <thead>
-               {option:showSendAtrBtn}
-                    <tr>
-                        
-                        <td></td><td></td><td></td><td></td>
-                        <td colspan="5"><input type="button" name="Action" value="Add" id="add"/><input type="button" name="Action" value="Remove" id="rem" /></td>
-                    </tr>
-                    {/option:showSendAtrBtn}
+
                     <tr><td colspan="5">&nbsp;</td></tr>
                     <tr>
-                        <th>Course Title</th>
+                        <th>Course<br/>Code</th>
+                        <th>Course<br/>Title</th>
                         <th>ECTS<br/>Credits</th>
 
                         <th>Duration<br/>of the Course</th>
@@ -125,20 +117,16 @@
                     </tr>
                 </thead>
                 <tbody>
-{option:showSendAtr}
+                    {option:showSendAtr}
                     <tr>
-                        <td><select class="validate[required]" name="coursetitle1" id="1" onChange="onSelectChange(1);"><option value=""></option>{iteration:iCourses}{$courses}{/iteration:iCourses}</select> </td>
-                        <td align="center"><div id="ec1">-</div></td>
-                        <td align="center"><select  name="corDur1" id="corDur1" ><option></option><option>Y</option><option>1S</option><option>1T</option><option>2S</option><option>2T</option></select></td>
-                        <td><input class="validate[required,custom[integer]]" type="text" size="5" maxlength="2" name="locGrade1" id="locGrade1" /></td>
-                        <td align="center"><select  name="ecGrade1" id="ecGrade1" class="validate[required]"><option></option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>FX</option></select></td>
+                        {iteration:iCourses}{$courses}{/iteration:iCourses}
                     </tr>
-{/option:showSendAtr}
-{option:showSendedTr}
-     {iteration:iStudentRec}{$studentRec}{/iteration:iStudentRec}
-{/option:showSendedTr}
-
+                    {/option:showSendAtr}
+                    {option:showSendedTr}
+                    {iteration:iStudentRec}{$studentRec}{/iteration:iStudentRec}
+                    {/option:showSendedTr}
                 </tbody>
+
 
 
             </table>
@@ -209,7 +197,7 @@
     </div>
     <p>&nbsp;</p>
     <div align="center">
-        <p><input type="hidden" name="num" value="{$num}" />
+        <p><input type="hidden" name="num" value="{$num}" /><input type="hidden" name="form" value="{$form}" />
             <input type="hidden" name="formAction" id="formValidate" value="{$action}" />
             <input class="button" name="postForm" id="postForm" type="submit" value="Submit Form"/></p>
     </div>
