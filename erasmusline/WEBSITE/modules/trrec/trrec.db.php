@@ -3,16 +3,15 @@
 class trrecDB {
     /* FOR REGISTER */
 
-//where ers.studentId not in (select studentId from grades)
-    //Get Values For Students List
+    //Get Values For Students List (Changes Done)
     public static function getStudentList($num) {
 
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
         $stName = $db->retrieve("
-                select u.userId,u.firstName,u.familyName from users as u
-                join erasmusstudent as ers on u.userId=ers.studentId
-                where ers.studentId in (select studentId from grades where localGrade is NULL)
+                select u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                where ers.users_email in (select g.studentId from grades as g where localGrade is NULL)
                 AND ers.hostCoordinatorId='$cordId'
                 ORDER BY u.familyName ASC LIMIT 20 OFFSET " . $db->escape($num) . "  ");
         return $stName;
@@ -24,13 +23,13 @@ class trrecDB {
         $query = $db->retrieve("SELECT studentId FROM grades
             where studentId ='" . $db->escape($name) . "'
                 and courseId='" . $db->escape($course) . "'
-             and localGrade!='NULL'");
+             and localGrade is not NULL");
         if (!empty($query)) {
             return 'Dub';
         }
     }
 
-    //Register Student Records
+    //Register Student Records (changes done)
     public static function formAp($name) {
         $db = PlonkWebsite::getDB();
         $i = 1;
@@ -46,7 +45,7 @@ class trrecDB {
                 localGrade = '" . $db->escape($locGrade) . "',
                 ectsGrade = '" . $db->escape($ectsGrade) . "',
                 courseDuration = '" . $db->escape($corDur) . "'             
-WHERE studentId='" . $db->escape($name) . "'
+                WHERE studentId='" . $db->escape($name) . "'
                         AND courseId='" . $db->escape($course) . "'
                             ";
 
@@ -65,14 +64,12 @@ WHERE studentId='" . $db->escape($name) . "'
         return $formId[0]['formId'];
     }
 
-    //Fille tpl with Institution Courses
-
-
-    public static function SubmitTranscript($form, $student) {
+    //Sends Email (changes done)
+     public static function SubmitTranscript($form, $student) {
 
         $db = PlonkWebsite::getDB();
-        $homeCoorMail = $db->retrieve("SELECT u.email FROM users as u where u.userId =(
-            SELECT ers.homeCoordinatorId FROM erasmusstudent as ers where ers.studentId='" . $db->escape($student) . "') ");
+        $homeCoorMail = $db->retrieve("SELECT u.email FROM users as u where u.email =(
+            SELECT ers.homeCoordinatorId FROM erasmusstudent as ers where ers.users_email='" . $db->escape($student) . "') ");
 
         $mail = new PHPMailer();
         $mail->IsSMTP();
@@ -132,46 +129,47 @@ WHERE studentId='" . $db->escape($name) . "'
         return $stInfo;
     }
 
-    //Get Values For Students List 
+    //Get Values For Students List (done)
     public static function getStudentRecords($num) {
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
 
         $stName = $db->retrieve("
-                select f.formId,u.userId,u.firstName,u.familyName from users as u
-                join erasmusstudent as ers on u.userId=ers.studentId
-                left join forms as f on ers.studentId=f.studentId
+                select u.email,f.formId,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                left join forms as f on ers.users_email=f.studentId
                 where f.type='TranScript Of Records'
+                and erasmusLevelId='14'
                 and ers.hostCoordinatorId='" . $db->escape($cordId) . "'
-                ORDER BY familyName ASC LIMIT 20 OFFSET " . $db->escape($num) . " ");
+                ORDER BY date DESC LIMIT 20 OFFSET " . $db->escape($num) . " ");
 
         return $stName;
     }
 
     /* COMMON */
 
-    //Fills tpl withs Student Info
+    //Fills tpl withs Student Info (changes Done)
     public static function getStudentInfo($matrNum) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT ers.startDate,ers.homeCoordinatorId,ers.hostCoordinatorId,ers.homeInstitutionId,ers.hostInstitutionId,u.firstName, u.familyName, u.sex,u.tel,u.email,u.birthDate,u.birthPlace FROM users as u 
-                JOIN erasmusstudent as ers on u.userId = ers.studentId where u.userId ='" . $db->escape($matrNum) . "'");
+        $stInfo = $db->retrieve("SELECT u.userId,ers.startDate,ers.homeCoordinatorId,ers.hostCoordinatorId,ers.homeInstitutionId,ers.hostInstitutionId,u.firstName, u.familyName, u.sex,u.tel,u.email,u.birthDate,u.birthPlace FROM users as u 
+                JOIN erasmusstudent as ers on u.email = ers.users_email where u.email ='" . $db->escape($matrNum) . "'");
 
 
         return $stInfo;
     }
 
-    //Fills tpl with Cordinator
+    //Fills tpl with Cordinator (changes Done)
     public static function getCoordInfo($coorId) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT u.fax, u.firstName, u.familyName, u.sex,u.tel,u.email FROM users as u where u.userId ='" . $db->escape($coorId) . "'");
+        $stInfo = $db->retrieve("SELECT u.fax, u.firstName, u.familyName, u.sex,u.tel,u.email FROM users as u where u.email ='" . $db->escape($coorId) . "'");
 
         return $stInfo;
     }
 
-    //Fille tpl with Institution Info
-    public static function getInstInfo($instId) {
+    //Fille tpl with Institution Info (changes Done)
+    public static function getInstInfo($instEmail) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT instName FROM institutions where  instId='" . $db->escape($instId) . "'");
+        $stInfo = $db->retrieve("SELECT instName FROM institutions where  instEmail='" . $db->escape($instEmail) . "'");
 
         return $stInfo;
     }
@@ -183,18 +181,19 @@ WHERE studentId='" . $db->escape($name) . "'
 
 
         if ($where == 'register') {
-            $stInfo = $db->retrieve("select u.userId,u.firstName,u.familyName from users as u
-                join erasmusstudent as ers on u.userId=ers.studentId
-                where ers.studentId in (select studentId from grades where localGrade is NULL)
+            $stInfo = $db->retrieve("select u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                where ers.users_email in (select g.studentId from grades as g where localGrade is NULL)
                 AND " . $db->escape($SearchFor) . " like '%" . $db->escape($SearchValue) . "%'
                 and ers.hostCoordinatorId='" . $db->escape($cordId) . "'
 ");
         }
         if ($where == 'records') {
-            $stInfo = $db->retrieve("select f.formId,u.userId,u.firstName,u.familyName from users as u
-                join erasmusstudent as ers on u.userId=ers.studentId
-                left join forms as f on ers.studentId=f.studentId
+            $stInfo = $db->retrieve("select u.email,f.formId,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                left join forms as f on ers.users_email=f.studentId
                 where f.type='TranScript Of Records'
+                AND f.erasmusLevelId='14'
                 AND " . $db->escape($SearchFor) . " like '%" . $db->escape($SearchValue) . "%'
                 and ers.hostCoordinatorId='" . $db->escape($cordId) . "'
 ");

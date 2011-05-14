@@ -73,7 +73,7 @@ class trrecController extends PlonkController {
                 <td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] .
                         '</td><td> ' . $value['familyName'] . '</td>
                         <td><form  method="post">
-                        <input type="hidden" name="stn" value="' . $value['userId'] . '" />
+                        <input type="hidden" name="stn" value="' . $value['email'] . '" />
                             <input type="hidden" name="formAction" id="formLogin" value="doSelectUser" />
                             <input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
                 $this->pageTpl->refillIteration('iStudentsList');
@@ -126,7 +126,7 @@ class trrecController extends PlonkController {
 
             $this->pageTpl->setIteration('iStudentsList');
             foreach ($studentsLName as $key => $value) {
-                $this->pageTpl->assignIteration('studentsList', '<tr><td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] . '</td><td> ' . $value['familyName'] . '</td><td><form  method="post"><input type="hidden" name="stn" value="' . $value['userId'] . '" /><input type="hidden" name="form" value="' . $value['formId'] . '" /><input type="hidden" name="formAction" id="formLogin" value="doSelectUserRec" /><input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
+                $this->pageTpl->assignIteration('studentsList', '<tr><td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] . '</td><td> ' . $value['familyName'] . '</td><td><form  method="post"><input type="hidden" name="stn" value="' . $value['email'] . '" /><input type="hidden" name="form" value="' . $value['formId'] . '" /><input type="hidden" name="formAction" id="formLogin" value="doSelectUserRec" /><input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
                 $this->pageTpl->refillIteration('iStudentsList');
             }
             $this->pageTpl->parseIteration('iStudentsList');
@@ -226,12 +226,6 @@ class trrecController extends PlonkController {
         if (!empty($errors)) {
             $er = '1';
         }
-
-
-
-        //$dtDubl = trrecDB::checkDubl($name);
-
-
 
         if (!empty($er)) {
             $errorString = '<div class="errorPHP"> ';
@@ -352,7 +346,7 @@ class trrecController extends PlonkController {
             $this->pageTpl->assign('stDtBirh', $value['birthDate']);
             $this->pageTpl->assign('stPlBirh', $value['birthPlace']);
             $this->pageTpl->assign('stMatrDate', $value['startDate']);
-            $this->pageTpl->assign('stMatrNum', $name);
+            $this->pageTpl->assign('stMatrNum', $value['userId']);
             $this->pageTpl->assign('stMail', $value['email']);
 
             $query2 = trrecDB::getCoordInfo($query[0]['hostCoordinatorId']);
