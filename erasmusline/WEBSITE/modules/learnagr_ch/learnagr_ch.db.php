@@ -35,9 +35,9 @@ class learnagr_chDB {
        
 =======
                SELECT cour.courseCode,cour.courseId, cour.courseName, cour.ectsCredits from coursespereducperinst as cour
-               join educationperinstitute as ed on ed.educationPerInstId=cour.educationPerInstId
+               join educationperinstitute as ed on ed.educationPerInstId=cour.educationId
                join grades as g on cour.courseId=g.courseId
-               where cour.educationPerInstId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.studentId='" . $db->escape($stId) . "')
+               where cour.educationId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.studentId='" . $db->escape($stId) . "')
                and g.localGrade>=(
                 SELECT scale from institutions where instId=(
                 select hostInstitutionId from erasmusstudent where studentId='" . $db->escape($stId) . "'))   ");
@@ -49,9 +49,9 @@ class learnagr_chDB {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("
                SELECT cour.courseCode,cour.courseId, cour.courseName, cour.ectsCredits from coursespereducperinst as cour
-               join educationperinstitute as ed on ed.educationPerInstId=cour.educationPerInstId
+               join educationperinstitute as ed on ed.educationPerInstId=cour.educationId
                right join grades as g on cour.courseId=g.courseId
-               where cour.educationPerInstId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.studentId='" . $db->escape($stId) . "')
+               where cour.educationId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.studentId='" . $db->escape($stId) . "')
                and g.localGrade is NULL
                and g.studentId='" . $db->escape($stId) . "'");
 
@@ -62,8 +62,8 @@ class learnagr_chDB {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("
                SELECT cour.courseCode,cour.courseId, cour.courseName, cour.ectsCredits from coursespereducperinst as cour
-               join educationperinstitute as ed on ed.educationPerInstId=cour.educationPerInstId
-               where cour.educationPerInstId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.studentId='" . $db->escape($stId) . "')
+               join educationperinstitute as ed on ed.educationPerInstId=cour.educationId
+               where cour.educationId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.studentId='" . $db->escape($stId) . "')
                and cour.courseId not in (select g.courseId from grades as g where 
                g.studentId='" . $db->escape($stId) . "'
                and g.localGrade is NULL OR g.localGrade>=(

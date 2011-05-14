@@ -164,7 +164,7 @@ class abroad_stayController extends PlonkController {
                 <td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] .
                     '</td><td> ' . $value['familyName'] . '</td>
                         <td><form  method="post">
-                        <input type="hidden" name="stn" value="' . $value['userId'] . '" />
+                        <input type="hidden" name="stn" value="' . $value['email'] . '" />
                             <input type="hidden" name="formAction" id="formLogin" value="doSelectUserrec" />
                             <input class="nxtBtn" type="submit" value=">"/></form></td></tr>');
             $this->pageTpl->refillIteration('iStudentsList');
@@ -219,7 +219,7 @@ class abroad_stayController extends PlonkController {
                 <td> ' . $value['userId'] . '</td><td> ' . $value['firstName'] .
                     '</td><td> ' . $value['familyName'] . '</td>
                         <td><form  method="post">
-                        <input type="hidden" name="stn" value="' . $value['userId'] . '" />
+                        <input type="hidden" name="stn" value="' . $value['email'] . '" />
                             <input type="hidden" name="formAction" id="formLogin" value="doSelectUser" />
                             <input type="submit" value=">"/></form></td></tr>');
             $this->pageTpl->refillIteration('iStudentsList');
@@ -291,7 +291,7 @@ class abroad_stayController extends PlonkController {
             $this->pageTpl->assign('stDtBirh', $value['birthDate']);
             $this->pageTpl->assign('stPlBirh', $value['birthPlace']);
             $this->pageTpl->assign('stMatrDate', $value['startDate']);
-            $this->pageTpl->assign('stMatrNum', $name);
+            $this->pageTpl->assign('stMatrNum', $value['userId']);
             $this->pageTpl->assign('stMail', $value['email']);
 
             $query2 = abroad_stayDB::getCoordInfo($query[0]['hostCoordinatorId']);
@@ -397,7 +397,7 @@ class abroad_stayController extends PlonkController {
 
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
-                $this->errors = '<div class="SuccessPHP"><p>Certificates of Departure And Stay SuccessFully Send</p></div>';
+                $this->errors = '<div class="SuccessPHP"><p>Certificate of Stay SuccessFully Send</p></div>';
             } else {
                 $this->errors = '<div class="errorPHP"><p>There was an Error Sending Certificate of Stay</p><p>' . $return . '</p></div>';
                 $this->position = 'showCertificates';
