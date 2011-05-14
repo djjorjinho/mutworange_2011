@@ -10,7 +10,7 @@ class acom_regDB {
     public static function getStudentInfo($matrNum) {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("SELECT ers.homeInstitutionId,ers.hostInstitutionId,u.firstName, u.familyName, u.sex,u.tel,u.email,u.birthDate,u.birthPlace FROM users as u 
-                JOIN erasmusstudent as ers on u.userId = ers.studentId where u.userId ='$matrNum'");
+                JOIN erasmusstudent as ers on u.userEmail = ers.studentId where u.userEmail ='$matrNum'");
 
 
         return $stInfo;
@@ -20,7 +20,7 @@ class acom_regDB {
     //Fille tpl with Institution Info
     public static function getInstInfo($instId) {
         $db = PlonkWebsite::getDB();
-        $stInfo = $db->retrieve("SELECT instName FROM institutions where  instId='$instId'");
+        $stInfo = $db->retrieve("SELECT instName FROM institutions where  instEmail='$instId'");
 
         return $stInfo;
     }

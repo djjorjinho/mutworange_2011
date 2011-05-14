@@ -34,7 +34,7 @@ class AdminController extends PlonkController {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
             //Plonk::dump('test');
-            if (PlonkSession::get('id') == 0) {
+            if (PlonkSession::get('id') === 0) {
                 $this->id = PlonkSession::get('id');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');

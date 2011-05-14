@@ -24,31 +24,31 @@ class HomeDB {
     }
 
     public static function getNameById($id) {
-        $id = (int) $id;
+        $id = $id;
 
         $db = PlonkWebsite::getDB();
-
-        $items = $db->retrieveOne("select firstName from users where userId = " . $db->escape($id));
+        
+        $items = $db->retrieveOne("select firstName from users where email = '" . $db->escape($id)."'");
 
         return $items;
     }
 
     public static function getLatestEvent($id) {
-        $id = (int) $id;
+        $id =  $id;
 
         $db = PlonkWebsite::getDB();
 
-        $eventInfo = $db->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where erasmusStudentId = " . $db->escape($id) . " ORDER BY timestamp,eventId DESC");
+        $eventInfo = $db->retrieveOne("SELECT * from studentsEvents inner join erasmusLevel on studentsEvents.erasmusLevelId = erasmusLevel.levelId where studentId = '" . $db->escape($id) . "' ORDER BY timestamp,eventId DESC");
         //Plonk::dump($eventInfo);
         return $eventInfo;
     }
 
     public static function getForms($id) {
-        $id = (int) $id;
+        $id = $id;
 
         $db = PlonkWebsite::getDB();
 
-        $forms = $db->retrieve('SELECT type, date, module, view FROM forms inner join erasmusLevel on forms.erasmusLevelId = erasmusLevel.levelId WHERE studentId =' . $db->escape($id));
+        $forms = $db->retrieve('SELECT type, date, module, view FROM forms inner join erasmusLevel on forms.erasmusLevelId = erasmusLevel.levelId WHERE studentId ="' . $db->escape($id).'"');
 
         return $forms;
     }
@@ -64,7 +64,7 @@ class HomeDB {
     public static function getEvents($id) {
         $db = PlonkWebsite::getDB();
 
-        $events = $db->retrieve("select * from studentsEvents where reader = 'Student' AND erasmusStudentId = " . $id . ' AND readIt = 0');
+        $events = $db->retrieve("select * from studentsEvents where reader = 'Student' AND studentId = '" . $id . "' AND readIt = 0");
 
         return $events;
     }
@@ -78,7 +78,7 @@ class HomeDB {
     public static function getStudent($id) {
         $db = PlonkWebsite::getDB();
 
-        $student = $db->retrieveOne("select * from erasmusStudent where studentId = " . $db->escape($id));
+        $student = $db->retrieveOne("select * from erasmusStudent where users_email = '" . $db->escape($id)."'");
 
         return $student;
     }

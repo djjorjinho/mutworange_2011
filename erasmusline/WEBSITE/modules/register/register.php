@@ -162,7 +162,7 @@ class RegisterController extends PlonkController {
                 'country' => htmlentities(PlonkFilter::getPostValue('nationality')),
                 'sex' => htmlentities(PlonkFilter::getPostValue('sex')),
                 'verificationCode' => $this->code,
-                'institutionId' => $school['instId']
+                'institutionId' => $school['instEmail']
             );
             if (PlonkSession::exists('id')) {
                 if (PlonkSession::get('id') == '0') {

@@ -52,7 +52,7 @@ class LoginController extends PlonkController {
     public function checkLogged() {
 
         if (PlonkSession::exists('id')) {
-            if (PlonkSession::get('id') === '0') {
+            if (PlonkSession::get('id') === 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');

@@ -38,7 +38,8 @@ class MainController extends PlonkController {
                     PlonkSession::set('id', $values['email']);
                     PlonkSession::set('userLevel', $values['userLevel']);
                     
-                    if (PlonkSession::get('id') == 0) {
+                    if (PlonkSession::get('id') === 0) {
+                        
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                     } else if (PlonkSession::get('userLevel') == 'Student') {
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
@@ -84,7 +85,7 @@ class MainController extends PlonkController {
 
         if (PlonkSession::exists('id')) {
             $this->mainTpl->assignOption('oLogged');
-            if (PlonkSession::get('id') == 0) {
+            if (PlonkSession::get('id') === 0) {
                 $this->mainTpl->assignOption('oAdmin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 $this->mainTpl->assignOption('oStudent');

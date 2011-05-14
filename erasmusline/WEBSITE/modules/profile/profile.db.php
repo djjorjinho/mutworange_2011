@@ -21,7 +21,7 @@ class ProfileDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $item = $db->retrieveOne('SELECT * FROM users WHERE userId = ' . $db->escape($id));
+        $item = $db->retrieveOne('SELECT * FROM users WHERE email = "' . $db->escape($id).'"');
 
         // return the result
         return $item;
@@ -33,7 +33,7 @@ class ProfileDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $item = $db->retrieveOne('SELECT * FROM erasmusStudent WHERE studentId = ' . $db->escape($id));
+        $item = $db->retrieveOne('SELECT * FROM erasmusStudent WHERE users_email = "' . $db->escape($id).'"');
 
         // return the result
         return $item;
@@ -43,9 +43,9 @@ class ProfileDB {
         $db = PlonkWebsite::getDB();
 
         $host = $db->retrieveOne("select institutions.instName,users.familyName,users.firstName from institutions 
-            inner join erasmusstudent on institutions.instId = erasmusstudent.hostInstitutionId
-            inner join users on erasmusstudent.hostCoordinatorId = users.userId
-            where studentId = " . $db->escape($id));
+            inner join erasmusstudent on institutions.instEmail = erasmusstudent.hostInstitutionId
+            inner join users on erasmusstudent.hostCoordinatorId = users.email
+            where users_email = '" . $db->escape($id)."'");
 
         return $host;
     }
@@ -54,9 +54,9 @@ class ProfileDB {
         $db = PlonkWebsite::getDB();
 
         $host = $db->retrieveOne("select institutions.instName,users.familyName,users.firstName from institutions 
-            inner join erasmusstudent on institutions.instId = erasmusstudent.homeInstitutionId
-            inner join users on erasmusstudent.homeCoordinatorId = users.userId
-            where studentId = " . $db->escape($id));
+            inner join erasmusstudent on institutions.instEmail = erasmusstudent.homeInstitutionId
+            inner join users on erasmusstudent.homeCoordinatorId = users.email
+            where users_email = '" . $db->escape($id)."'");
 
         return $host;
     }
@@ -67,7 +67,7 @@ class ProfileDB {
         $study = $db->retrieveOne("select education.educationName from erasmusstudent
             inner join educationperinstitute on erasmusstudent.educationPerInstId = educationperinstitute.educationPerInstId
             inner join education on educationperinstitute.studyId = education.educationId
-            where erasmusstudent.studentId = " . $db->escape($id));
+            where erasmusstudent.users_email = '" . $db->escape($id)."'");
         
         return $study;
     }
@@ -77,7 +77,7 @@ class ProfileDB {
         
         $courses = $db->retrieve("select coursespereducperinst.courseCode, coursespereducperinst.courseName, coursespereducperinst.ectsCredits from coursespereducperinst
             inner join grades on coursespereducperinst.courseId = grades.courseId 
-            where grades.studentId = " . $db->escape($id));
+            where grades.studentId = '" . $db->escape($id)."'");
         return $courses;
     }
 
