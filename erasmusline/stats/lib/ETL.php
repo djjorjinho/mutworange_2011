@@ -16,6 +16,11 @@ class ETL{
 	private $config;
 	private $cache;
 	
+	private $dim_tables = array('dim_gender','dim_lodging','dim_mobility',
+                            'dim_institution','dim_date','dim_phase',
+                            'dim_study');
+	
+	
 	private $efficacy_table = "fact_efficacy";
 	private $efficiency_table = "fact_efficiency";
 	private $efficiency_ods = "ods_efficiency";
@@ -34,6 +39,9 @@ class ETL{
 		$db = $this->db;
 		$efficiency_ods = $this->efficiency_ods;
 		$efficiency_table = $this->efficiency_table;
+		
+		// hot cache
+		$this->checkHotCache();
 		
 		// get academic date
 		$dt = new DateTime();
@@ -63,6 +71,7 @@ class ETL{
 			$context['count']++;
 			$NRow = self::transformODSRow($rules,$row,$context);
 			$db->insert($NRow,$mrg_table);
+			$last_id = $row["${efficiency_ods}_id"];
 		}
 		
 		// data mine - needs previous table for comparisons
@@ -96,6 +105,7 @@ class ETL{
 		$db->enableKeys($mrg_table);
 		self::mergeTables($efficiency_table);
 		self::setLastODSId($efficiency_ods,$last_id);
+		self::loadHotCache();
 	}
 	
 	/**
@@ -382,6 +392,26 @@ class ETL{
 		$ctx['perc_lodging'] = 
 				round((($ctx['lodg_avail'] / $ctx['prev_lodging'])-1) * 100);
 		
+	}
+	
+	function checkHotCache(){
+		$db = $this->db;
+		
+		$C = $db->getOne("SELECT @@global.hot_cache.key_buffer_size".
+							" as hot_cache");
+		
+		if($C['hot_cache']==0){
+			$db->execute("SET GLOBAL hot_cache.key_buffer_size=402653184;");
+		}
+		
+	}
+	
+	function loadHotCache(){
+		$db = $this->db;
+		$dtb = $this->dim_tables;
+		$db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
+        $db->execute("LOAD INDEX INTO CACHE ".
+        				implode(",",$dtb)." IGNORE LEAVES");
 	}
 	
 }

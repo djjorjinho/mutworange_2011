@@ -60,86 +60,46 @@ class PopulateDB {
     }
     
     function populate_date1(){
+    	$year='2009';
+        $semester='1';
+        
+
+        $obj = array(
+                    year=>$year,
+                    semester=>$semester
+                    );
+        $this->db->insert($obj,$this->dim_tables[4]);
+                
+        $year='2009';
+        $semester='2';
+        
+
+        $obj = array(
+                    year=>$year,
+                    semester=>$semester
+                    );
+        $this->db->insert($obj,$this->dim_tables[4]);
+    	
+    	
         $year='2010';
         $semester='1';
         
-        $month='9';
-        for($d=1;$d<31;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-        $month='10';
-        for($d=1;$d<32;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-        $month='11';
-        for($d=1;$d<31;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-    	$month='12';
-        for($d=1;$d<32;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-    }
-    
-	function populate_date2(){
+
+        $obj = array(
+                    year=>$year,
+                    semester=>$semester
+                    );
+        $this->db->insert($obj,$this->dim_tables[4]);
+                
         $year='2010';
         $semester='2';
         
-        $month='3';
-        for($d=1;$d<32;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-        $month='4';
-        for($d=1;$d<31;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-        $month='5';
-        for($d=1;$d<32;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
-        
-		$month='6';
-        for($d=1;$d<31;$d++){
-            $obj = array(
-                         year=>$year,
-                         semester=>$semester
-                         );
-            $this->db->insert($obj,$this->dim_tables[4]);
-        }
+
+        $obj = array(
+                    year=>$year,
+                    semester=>$semester
+                    );
+        $this->db->insert($obj,$this->dim_tables[4]);
     }
     
     function populate_phase(){
@@ -249,8 +209,8 @@ class PopulateDB {
     	$csv = CsvToArray::open($this->dict_dir.DIRECTORY_SEPARATOR.
         					"phase.csv");
     	
-    	$dt1 = new DateTime('2011-01-02 10:00:00');
-    	$dt2 = new DateTime('2011-01-02 10:00:00');
+    	$dt1 = new DateTime('2011-05-02 10:00:00');
+    	$dt2 = new DateTime('2011-05-02 10:00:00');
     	$dt2->add(new DateInterval("P10D"));
     	
         // one approved student
@@ -261,7 +221,7 @@ class PopulateDB {
         	country_code => 'pt',
         	country_host_code => 'de',
         	year => 2011,
-        	semester => 1,
+        	semester => 2,
         	dim_mobility_id => 'study',
         	dim_gender_id => 'M',
         	lodging_available => 1
@@ -279,8 +239,8 @@ class PopulateDB {
             $db->insert($obj,$this->ods_tables[0]);
         }
         
-    	$dt1 = new DateTime('2011-01-05 10:00:00');
-    	$dt2 = new DateTime('2011-01-05 10:00:00');
+    	$dt1 = new DateTime('2011-05-05 10:00:00');
+    	$dt2 = new DateTime('2011-05-05 10:00:00');
     	$dt2->add(new DateInterval("P10D"));
     	
         // another approved student
@@ -291,7 +251,7 @@ class PopulateDB {
         	country_code => 'pt',
         	country_host_code => 'be',
         	year => 2011,
-        	semester => 1,
+        	semester => 2,
         	dim_mobility_id => 'study',
         	dim_gender_id => 'M',
         	lodging_available => 1
@@ -311,8 +271,8 @@ class PopulateDB {
     	
     	
         // one rejected student
-    	$dt1 = new DateTime('2011-01-05 10:00:00');
-    	$dt2 = new DateTime('2011-01-05 10:00:00');
+    	$dt1 = new DateTime('2011-05-05 10:00:00');
+    	$dt2 = new DateTime('2011-05-05 10:00:00');
     	$dt2->add(new DateInterval("P2D"));
     	
 
@@ -323,7 +283,7 @@ class PopulateDB {
         	country_code => 'pt',
         	country_host_code => 'en',
         	year => 2011,
-        	semester => 1,
+        	semester => 2,
         	dim_mobility_id => 'both',
         	dim_gender_id => 'F',
         	lodging_available => 1
@@ -353,6 +313,35 @@ class PopulateDB {
             if($reject) break;
         }
     	
+    	$dt1 = new DateTime('2011-05-15 10:00:00');
+    	$dt2 = new DateTime('2011-05-15 10:00:00');
+    	$dt2->add(new DateInterval("P10D"));
+    	
+        // another approved student
+        $obj = array(
+        	student_id => "PT-ISEP-4",
+        	institution_code => 'isep',
+        	institution_host_code => 'gent',
+        	country_code => 'pt',
+        	country_host_code => 'be',
+        	year => 2011,
+        	semester => 2,
+        	dim_mobility_id => 'study',
+        	dim_gender_id => 'F',
+        	lodging_available => 1
+        );
+        
+    	foreach ($csv as $R){
+    		
+    		$dt1->add(new DateInterval("P10D"));
+    		$dt2->add(new DateInterval("P10D"));
+    		
+    		$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+    		$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+    		$obj['dim_phase_id'] = $R['dim_phase_id'];
+    		
+            $db->insert($obj,$this->ods_tables[0]);
+        }
     }
     
     function run(){
@@ -362,7 +351,6 @@ class PopulateDB {
         $this->populate_lodging();
         $this->populate_institution();
         $this->populate_date1();
-        $this->populate_date2();
         $this->populate_phase();
         $this->populate_study();
         
@@ -372,7 +360,7 @@ class PopulateDB {
         
         // ODS
         $this->populate_efficiency_ods();
-        $this->createDummyEfficiencyMRG();
+        //$this->createDummyEfficiencyMRG();
     }
     
 }
