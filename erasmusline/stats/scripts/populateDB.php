@@ -342,6 +342,50 @@ class PopulateDB {
     		
             $db->insert($obj,$this->ods_tables[0]);
         }
+        
+        
+    // one rejected student
+    	$dt1 = new DateTime('2011-05-17 10:00:00');
+    	$dt2 = new DateTime('2011-05-17 10:00:00');
+    	$dt2->add(new DateInterval("P2D"));
+    	
+
+        $obj = array(
+        	student_id => "PT-ISEP-5",
+        	institution_code => 'isep',
+        	institution_host_code => 'gun',
+        	country_code => 'pt',
+        	country_host_code => 'en',
+        	year => 2011,
+        	semester => 2,
+        	dim_mobility_id => 'both',
+        	dim_gender_id => 'F',
+        	lodging_available => 1
+        );
+        
+        $cnt=0;
+        $reject=false;
+    	foreach ($csv as $R){
+    		$cnt++;
+    		
+    		$dt1->add(new DateInterval("P10D"));
+    		$dt2->add(new DateInterval("P15D"));
+    		
+    		$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+    		$obj['dim_phase_id'] = $R['dim_phase_id'];
+    		
+    		if($cnt>2){
+    			$obj['reject_date'] = $dt2->format('Y-m-d H:i:s');
+    			unset($obj['approve_date']);
+    			$reject=true;
+    		}else{
+    			$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+    		}
+    		
+    		
+            $db->insert($obj,$this->ods_tables[0]);
+            if($reject) break;
+        }
     }
     
     function run(){

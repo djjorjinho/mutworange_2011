@@ -279,7 +279,7 @@ class ETL{
 						array(description=>$row['dim_gender_id']));
 			},
 			
-			_response => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+			response_days => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
 				$begin = new DateTime($row['create_date']);
 				$end_date = isset($row['approve_date']) ? $row['approve_date'] :
 													$row['reject_date'];
@@ -297,12 +297,24 @@ class ETL{
 				$ctx['total_rsp'] += $days;
 				
 				$ctx['avg_rsp'] = $ctx['total_rsp'] / $ctx['count'];
+				
+				$NRow[$field] = $days;
+			},
+			
+			rejected => function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+				$rejected = isset($row['approve_date']) ? 0 : 1;
+				$NRow[$field] = $rejected;
 			},
 			
 			lodging_available => 
 				function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
 					if($row['lodging_available']==1) $ctx['lodg_avail'] += 1;
-			}
+			},
+			
+			student_lodging => 
+				function(&$field,&$row,&$NRow,&$ctx)use($db,$obj){
+					$NRow[$field] = $row['lodging_available'];
+				}
 		
 		);
 		return $map;

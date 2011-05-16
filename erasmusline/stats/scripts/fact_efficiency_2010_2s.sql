@@ -9,7 +9,7 @@
  Target Server Version : 50144
  File Encoding         : utf-8
 
- Date: 05/14/2011 17:37:13 PM
+ Date: 05/16/2011 11:25:33 AM
 */
 
 SET NAMES utf8;
@@ -33,6 +33,9 @@ CREATE TABLE `fact_efficiency_2010_2s` (
   `perc_students` smallint(6) DEFAULT '0',
   `lodging_available` int(10) unsigned DEFAULT '0',
   `perc_lodging` smallint(6) DEFAULT '0',
+  `response_days` smallint(5) unsigned DEFAULT NULL,
+  `student_lodging` tinyint(3) unsigned DEFAULT NULL,
+  `rejected` tinyint(3) unsigned DEFAULT NULL,
   KEY `fk_fact_efficiency_dim_enddate` (`dim_date_id`),
   KEY `fk_fact_efficiency_dim_host_institution` (`dim_institution_host_id`),
   KEY `fk_fact_efficiency_dim_home_institution` (`dim_institution_id`),
@@ -47,7 +50,7 @@ CREATE TABLE `fact_efficiency_2010_2s` (
 --  Records of `fact_efficiency_2010_2s`
 -- ----------------------------
 BEGIN;
-INSERT INTO `fact_efficiency_2010_2s` VALUES ('4', '1', '2', 'precandidate', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '2', 'applicform', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '2', 'lagreement', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '2', 'contract', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '2', 'accomodation', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '2', 'certarrival', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '4', 'precandidate', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '4', 'applicform', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '4', 'lagreement', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '4', 'contract', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '4', 'accomodation', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '4', 'certarrival', 'study', 'M', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '3', 'precandidate', 'both', 'F', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '3', 'applicform', 'both', 'F', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '3', 'lagreement', 'both', 'F', '8', '10', '2', '16', '0', '16', '0'), ('4', '1', '3', 'contract', 'both', 'F', '8', '10', '2', '16', '0', '16', '0');
+INSERT INTO `fact_efficiency_2010_2s` VALUES ('4', '1', '2', 'precandidate', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '2', 'applicform', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '2', 'lagreement', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '2', 'contract', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '2', 'accomodation', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '2', 'certarrival', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'precandidate', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'applicform', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'lagreement', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'contract', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'accomodation', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'certarrival', 'study', 'M', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '3', 'precandidate', 'both', 'F', '9', '10', '2', '22', '0', '22', '0', '2', '1', '0'), ('4', '1', '3', 'applicform', 'both', 'F', '9', '10', '2', '22', '0', '22', '0', '2', '1', '0'), ('4', '1', '3', 'lagreement', 'both', 'F', '9', '10', '2', '22', '0', '22', '0', '2', '1', '0'), ('4', '1', '3', 'contract', 'both', 'F', '9', '10', '2', '22', '0', '22', '0', '2', '1', '1'), ('4', '1', '4', 'precandidate', 'study', 'F', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'applicform', 'study', 'F', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'lagreement', 'study', 'F', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'contract', 'study', 'F', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'accomodation', 'study', 'F', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0'), ('4', '1', '4', 'certarrival', 'study', 'F', '9', '10', '2', '22', '0', '22', '0', '10', '1', '0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
