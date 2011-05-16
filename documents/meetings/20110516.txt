@@ -1,0 +1,42 @@
+= Meeting Report  =
+
+Subject: 
+Date: 16/05/2011
+Start Hour: 18:05 GMT
+End Hour: 20:00 GMT
+
+== Personnel ==
+Coordinator: Daniel Lopes
+Transcriber: Pedro Ferreira
+
+Attending: Pedro Ferreira, Daniel Lopes, Arne Reimer,
+Nathan Assche, Stéphane Polet, 
+Ina Ivanova, Stefanos Mountrakis
+
+Excused: Arne Lipfert
+
+Absent: Thordur Bjornsson, Gudmundur Hallgrimsson, 
+Zvezdomir Tsvyatkov, Aggeliki Katsiampouri
+
+== Report ==
+
+Discussion:
+- What did the team do this past week
+- What does the team plan to do next
+- Any doubts/issues about their package
+- Percentage of work done
+
+=== Issues / Discussion ===
+
+- Creation of campus servers to test application workflow and communication
+- DB, Infox changes sucssesful, needs further testing
+- Next meeting to discuss integration issues this week
+
+=== Percentage of work done ===
+
+Germany: 90%
+Belgium: 65%
+Greece: 80%
+Bulgaria:
+Portugal: 75%
+Iceland: ???
