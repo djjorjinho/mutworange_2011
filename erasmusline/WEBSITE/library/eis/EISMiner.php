@@ -5,6 +5,7 @@
  * @author daniel
  *
  */
+require_once('StatsCall.php');
 class EISMiner{
 	
 	private $instance;

@@ -25,6 +25,7 @@
       </div>
       <div id="nav-main">
 {option:oAdmin}
+		<a href="index.php?module=stats" class="{$tabHome}">EIS</a>
            <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}">Admin</a>
 {/option:oAdmin}
 {option:oLogged}
