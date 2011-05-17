@@ -1,0 +1,206 @@
+Daniel (PT): (19:27) can we see them?
+Daniel (PT): (19:27) why didn0t we know?
+Nathan: (19:27) just a second
+Nathan: (19:27) it's just online since friday
+Nathan: (19:27) and not the latest version
+Stephane: (19:27) it was just for testing :)
+Daniel (PT): (19:27) the latest version need to be on git, period
+Daniel (PT): (19:28) i believe your coordenator will agree
+Stephane: (19:28) the latest one is on git
+Stephane: (19:28) now orries
+Stephane: (19:28) no worries*
+Nathan: (19:28) i've uploaded them to our school's webserver friday morning
+Nathan: (19:28) and we made quite some progress friday
+Nathan: (19:28) so .. tomorrow the latest version will be online
+Daniel (PT): (19:29) great tanhk you
+Daniel (PT): (19:29) send the url when it's done
+Nathan: (19:29) http://nathanvanassche.ikdoeict.be/MUTW/index.php?module=home
+Daniel (PT): (19:29) i'll do the same
+Nathan: (19:29) here's the link for mine webspace
+Nathan: (19:29) http://stephanepolet.ikdoeict.be/MUTW/index.php?module=home
+Nathan: (19:30) and that's the other one
+Daniel (PT): (19:30) each version is diferent?
+Pedro (PT): (19:30) that About link, don't forget to change it
+Nathan: (19:30) nope both the samee 
+Daniel (PT): (19:30) ok then i just need one
+Pedro (PT): (19:30) i beleive this were the ones used for the infox testing daniel
+Nathan: (19:30) indeed
+Pedro (PT): (19:31) i have a question for Ina
+Nathan: (19:31) tomorrow i will have to update to the new database
+Daniel (PT): (19:31) great, i wasn't told
+Nathan: (19:31) and put the lastest updates online
+Pedro (PT): (19:31) was Zvez able to run the application? or you?
+Nathan: (19:31) but 10.00 they will be up and running
+Nathan: (19:31) *by
+Daniel (PT): (19:31) ok make sure you follow integration conventions
+Ina: (19:31) i think he run it
+Ina: (19:32) but you are talking about the website??
+Pedro (PT): (19:32) yes
+Pedro (PT): (19:32) it was the problem he had last time
+Pedro (PT): (19:32) well i would like to make a request then
+Pedro (PT): (19:33) as soon as you meet him
+Pedro (PT): (19:33) ask him to give the more complet report by email
+Pedro (PT): (19:33) with the complete % also
+Ina: (19:33) ok
+Pedro (PT): (19:33) thanks
+Daniel (PT): (19:34) thank you pedro
+Daniel (PT): (19:34) ok issues?
+Stephane: (19:34) Daniel, what you mean by 'integration conventions'?
+Daniel (PT): (19:34) you dumped a new version of database under a new name
+Daniel (PT): (19:34) i didn't know which one to use
+Daniel (PT): (19:35) but then i got it
+Stephane: (19:35) ah okay, like that.
+Daniel (PT): (19:35) from your commit messages
+Stephane: (19:35) sorry man 
+Daniel (PT): (19:35) no problem seriously
+Stephane: (19:35) thought it would be clear 
+Daniel (PT): (19:36) I didn't even mention it
+Daniel (PT): (19:36) when we pass the app to the other servers we need to know which scripts need to be run
+Daniel (PT): (19:37) ok issues?
+Stephane: (19:37) ok :)
+Stephane: (19:37) i have a request, but it's for germany :/
+Stephane: (19:37) and a question for greece
+Daniel (PT): (19:37) their late
+Daniel (PT): (19:38) ask greece
+Pedro (PT): (19:38) stephane a question, which funtionalitys of the infox were tested?
+Pedro (PT): (19:38) simple comunication or are already some protocols defined
+stefanos (Greece): (19:39) what ?:P
+Pedro (PT): (19:39) did they just test sending random information between servers by infox
+Stephane: (19:39) first greece
+Pedro (PT): (19:39) or do they have the process of adding an institution complete for example
+Stephane: (19:39) we need to ingerate you modules into the website, wondering if you wanted to do that, or you want us to do that?
+Pedro (PT): (19:39) oh the what was to him nvm then
+Stephane: (19:39) and about the infox testing
+Stephane: (19:40) they have a static form where you can select the tables and the values you want to send
+Stephane: (19:40) that's good for an admin, but it should be transparant for the other users
+
+Daniel (PT): (19:27) can we see them?
+Daniel (PT): (19:27) why didn0t we know?
+Nathan: (19:27) just a second
+Nathan: (19:27) it's just online since friday
+Nathan: (19:27) and not the latest version
+Stephane: (19:27) it was just for testing :)
+Daniel (PT): (19:27) the latest version need to be on git, period
+Daniel (PT): (19:28) i believe your coordenator will agree
+Stephane: (19:28) the latest one is on git
+Stephane: (19:28) now orries
+Stephane: (19:28) no worries*
+Nathan: (19:28) i've uploaded them to our school's webserver friday morning
+Nathan: (19:28) and we made quite some progress friday
+Nathan: (19:28) so .. tomorrow the latest version will be online
+Daniel (PT): (19:29) great tanhk you
+Daniel (PT): (19:29) send the url when it's done
+Nathan: (19:29) http://nathanvanassche.ikdoeict.be/MUTW/index.php?module=home
+Daniel (PT): (19:29) i'll do the same
+Nathan: (19:29) here's the link for mine webspace
+Nathan: (19:29) http://stephanepolet.ikdoeict.be/MUTW/index.php?module=home
+Nathan: (19:30) and that's the other one
+Daniel (PT): (19:30) each version is diferent?
+Pedro (PT): (19:30) that About link, don't forget to change it
+Nathan: (19:30) nope both the samee 
+Daniel (PT): (19:30) ok then i just need one
+Pedro (PT): (19:30) i beleive this were the ones used for the infox testing daniel
+Nathan: (19:30) indeed
+Pedro (PT): (19:31) i have a question for Ina
+Nathan: (19:31) tomorrow i will have to update to the new database
+Daniel (PT): (19:31) great, i wasn't told
+Nathan: (19:31) and put the lastest updates online
+Pedro (PT): (19:31) was Zvez able to run the application? or you?
+Nathan: (19:31) but 10.00 they will be up and running
+Nathan: (19:31) *by
+Daniel (PT): (19:31) ok make sure you follow integration conventions
+Ina: (19:31) i think he run it
+Ina: (19:32) but you are talking about the website??
+Pedro (PT): (19:32) yes
+Pedro (PT): (19:32) it was the problem he had last time
+Pedro (PT): (19:32) well i would like to make a request then
+Pedro (PT): (19:33) as soon as you meet him
+Pedro (PT): (19:33) ask him to give the more complet report by email
+Pedro (PT): (19:33) with the complete % also
+Ina: (19:33) ok
+Pedro (PT): (19:33) thanks
+Daniel (PT): (19:34) thank you pedro
+Daniel (PT): (19:34) ok issues?
+Stephane: (19:34) Daniel, what you mean by 'integration conventions'?
+Daniel (PT): (19:34) you dumped a new version of database under a new name
+Daniel (PT): (19:34) i didn't know which one to use
+Daniel (PT): (19:35) but then i got it
+Stephane: (19:35) ah okay, like that.
+Daniel (PT): (19:35) from your commit messages
+Stephane: (19:35) sorry man 
+Daniel (PT): (19:35) no problem seriously
+Stephane: (19:35) thought it would be clear 
+Daniel (PT): (19:36) I didn't even mention it
+Daniel (PT): (19:36) when we pass the app to the other servers we need to know which scripts need to be run
+Daniel (PT): (19:37) ok issues?
+Stephane: (19:37) ok :)
+Stephane: (19:37) i have a request, but it's for germany :/
+Stephane: (19:37) and a question for greece
+Daniel (PT): (19:37) their late
+Daniel (PT): (19:38) ask greece
+Pedro (PT): (19:38) stephane a question, which funtionalitys of the infox were tested?
+Pedro (PT): (19:38) simple comunication or are already some protocols defined
+stefanos (Greece): (19:39) what ?:P
+Pedro (PT): (19:39) did they just test sending random information between servers by infox
+Stephane: (19:39) first greece
+Pedro (PT): (19:39) or do they have the process of adding an institution complete for example
+Stephane: (19:39) we need to ingerate you modules into the website, wondering if you wanted to do that, or you want us to do that?
+Pedro (PT): (19:39) oh the what was to him nvm then
+Stephane: (19:39) and about the infox testing
+Stephane: (19:40) they have a static form where you can select the tables and the values you want to send
+Stephane: (19:40) that's good for an admin, but it should be transparant for the other users
+stefanos (Greece): (19:40) i believe its better you to ingerate them...
+stefanos (Greece): (19:41) i havent studied other codes...
+Daniel (PT): (19:41) infox is a web form
+stefanos (Greece): (19:41) integrate
+Daniel (PT): (19:41) ?
+stefanos (Greece): (19:41) ?
+Stephane: (19:42) now i'm lost too
+Daniel (PT): (19:42) forget it go on, ill test later
+Pedro (PT): (19:43) you shouldn't need to study the others code
+Pedro (PT): (19:43) only if your talking about plonk but doesn't seem so
+stefanos (Greece): (19:43) about the modules
+stefanos (Greece): (19:44) i suppose there is a admin panel thats active when the id is an coordinator
+Stephane: (19:44) yes
+stefanos (Greece): (19:44) so you just add it there right?
+stefanos (Greece): (19:44) (i dont want to mess with others codes)
+Pedro (PT): (19:45) as is i believe
+Pedro (PT): (19:45) you have to put something like a check logged
+Pedro (PT): (19:45) and depending on their level
+Stephane: (19:45) want to add what?
+Pedro (PT): (19:45) you active an option that is laready included in the main template
+Pedro (PT): (19:46) o Logged, oAdmin etc i beleive
+Stephane: (19:46) yes
+stefanos (Greece): (19:46) stephan can you put them on?
+Pedro (PT): (19:46) in other words its all code in your page so in the worst case
+Pedro (PT): (19:46) you won't change the otehrs code
+Arne R.: (19:47) good evening guys
+Daniel (PT): (19:47) i suppose you can arranja a date and discuss this?
+Daniel (PT): (19:47) belgium help out greece
+Daniel (PT): (19:48) arranje internally a date
+Stephane: (19:49) aaaight
+Daniel (PT): (19:49) cool thnks Stephane
+Stephane: (19:49) no problem :)
+Daniel (PT): (19:49) hi everybody. Its Nuno
+Daniel (PT): (19:49) I must leave now
+Daniel (PT): (19:50) We will set a server to deploy ErasmusLinbe here as Daniel already mentioned
+stefanos (Greece): (19:50) ok
+Daniel (PT): (19:50) Apparently things are running well; however I hgot a little concerned with Infox. I was not sure if it can work in a trasparent way
+Daniel (PT): (19:51) please just check tha among yoursefves
+Daniel (PT): (19:51) Try also to find some time to start writing a draft report so you cab easily produce the final document in the end
+Stephane: (19:51) I was going to ask that to Germany today :)
+Daniel (PT): (19:52) I will try to attend one or two more meetings. In the meanwhile keep on with the good work
+Daniel (PT): (19:52) Pedro, I hope you recover fast
+Daniel (PT): (19:52) Greetings everubo
+stefanos (Greece): (19:52) bye
+Stephane: (19:52) bye
+Nathan: (19:52) bye
+stefanos (Greece): (19:52) stephan can you add my modules?
+stefanos (Greece): (19:52) or can you tell me how?
+Stephane: (19:53) we need to discuss that
+Stephane: (19:53) we can do it, but that you can make some more form (internship) but I don't want to give all the form work to you :)
+stefanos (Greece): (19:54) whats this?
+Stephane: (19:54) sentence makes any sense?
+stefanos (Greece): (19:54) you want me to make a form?
+Stephane: (19:55) well, if you want to inegrate the modules yourself, we can do something else (like integrating the infox so it's transparent to the user) or create internship forms (although we still don't have those)
+
