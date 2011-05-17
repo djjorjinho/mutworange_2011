@@ -77,8 +77,8 @@ class trrecDB {
         $mail->SMTPSecure = "tls";
         $mail->Host = "smtp.gmail.com";
         $mail->Port = 587;
-        $mail->Username = "stvakis@gmail.com";
-        $mail->Password = "";
+        $mail->Username = "erasmusline@gmail.com";
+        $mail->Password = "stvakis1";
         $mail->SetFrom('stvakis@gmail.com', 'Erasmus Line');
         $mail->FromName = "Erasmus Line";
         $mail->AddAddress($homeCoorMail[0]['email']);

@@ -10,7 +10,7 @@ class acom_regDB {
     public static function getStudentInfo($matrNum) {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("SELECT ers.homeInstitutionId,ers.hostInstitutionId,u.firstName, u.familyName, u.sex,u.tel,u.email,u.birthDate,u.birthPlace FROM users as u 
-                JOIN erasmusstudent as ers on u.userEmail = ers.studentId where u.userEmail ='$matrNum'");
+                JOIN erasmusstudent as ers on u.email = ers.users_email where u.email ='$matrNum'");
 
 
         return $stInfo;

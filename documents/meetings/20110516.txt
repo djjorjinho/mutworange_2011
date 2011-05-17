@@ -3,7 +3,7 @@
 Subject: 
 Date: 16/05/2011
 Start Hour: 18:05 GMT
-End Hour: 20:00 GMT
+End Hour: 19:00 GMT
 
 == Personnel ==
 Coordinator: Daniel Lopes

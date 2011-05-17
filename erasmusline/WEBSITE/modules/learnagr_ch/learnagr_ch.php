@@ -11,15 +11,15 @@ class learnagr_chController extends PlonkController {
         'learnagrch',
     );
     protected $actions = array(
-        'submitchange', 'add', 'remove'
+        'submitchange', 'submit'
     );
     private $errors = '';
+    private $mail = '';
 
 
     /* For Using this PlonkSession::get('id'); must be an id of the student */
 
     public function showlearnagrch() {
-
         $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
         <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
@@ -28,22 +28,29 @@ class learnagr_chController extends PlonkController {
         $this->mainTpl->assign('pageTitle', 'Learning Agreement Change');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->errors = '';
+        $this->fillData('main');
+    }
 
+    public function fillData($pos) {
+
+        if ($pos == 'mail') {
+            $this->pageTpl = $this->mail;
+        }
         //Gets User Id
         $stId = PlonkSession::get('id');
 
         //Assigns User Information
         $stuInfo = learnagr_chDB::getStInfo($stId);
-
-
         $selcourEcts = learnagr_chDB::getSelectedCourseEcts($stId);
         $studentEcts = learnagr_chDB::getStudentEcts($stId);
+        $remEcts = $studentEcts[0]['ectsCredits'];
         $i = 0;
         while (isset($selcourEcts[$i]['ectsCredits'])) {
-            $studentEcts[0]['ectsCredits']-=$selcourEcts[$i]['ectsCredits'];
+            $remEcts-=$selcourEcts[$i]['ectsCredits'];
             $i++;
         }
-        $this->pageTpl->assign('ECTS', $studentEcts[0]['ectsCredits']);
+        $this->pageTpl->assign('ECTS', $remEcts);
+        $this->pageTpl->assign('ECTStot', $studentEcts[0]['ectsCredits']);
 
         if (empty($stuInfo)) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=formselect&' . PlonkWebsite::$viewKey . '=main');
@@ -58,30 +65,26 @@ class learnagr_chController extends PlonkController {
         //Generates The Interactions For Courses (for Host Institution)
 
         $this->pageTpl->setIteration('iStudentCourses');
-        $i = 1;
-
         $succeedCourses = learnagr_chDB::getSucceedCourses($stId);
         foreach ($succeedCourses as $key => $value) {
             $this->pageTpl->assignIteration('studentCourses', '
  <tr>
 <td>' . $value['courseCode'] . ' </td><td>' . $value['courseName'] . '</td><td>'
-                    . $value['ectsCredits'] . '</td><td><span class"succeedCourse">Succeed</span></td>');
+                    . $value['ectsCredits'] . '</td><td><span class"succeedCourse">Succeed</span></td></tr>');
             $this->pageTpl->refillIteration('iStudentCourses');
         }
 
         $selectedCourses = learnagr_chDB::getSelectedCourses($stId);
+        $i = 1;
         foreach ($selectedCourses as $key => $value) {
             $this->pageTpl->assignIteration('studentCourses', '
 <tr>
 <td>' . $value['courseCode'] . '</td>
 <td>' . $value['courseName'] . '</td>
-<td>' . $value['ectsCredits'] . '</td>
-<td><form id="form1"  method="post">
-<input type="hidden" name="coursetitle" value="' . $value['courseId'] . '" />    
-<input type="hidden" name="formAction" id="formValidate" value="doRemove" />
-<input class="button" name="postForm" id="postForm" type="submit" value="Remove"/>
-</form></td></tr>');
+<td id="ects' . $i . '">' . $value['ectsCredits'] . '</td>
+<td><input onclick="getEcts(' . $i . ')" id="course' . $i . '" type="checkbox" name="coursetitle' . $i . '" value="' . $value['courseId'] . '" checked /></td></tr>');
             $this->pageTpl->refillIteration('iStudentCourses');
+            $i++;
         }
 
         $selectCourses = learnagr_chDB::getSelectCourses($stId);
@@ -90,57 +93,63 @@ class learnagr_chController extends PlonkController {
  <tr>
 <td>' . $value['courseCode'] . ' </td>
 <td>' . $value['courseName'] . '</td>
-<td>' . $value['ectsCredits'] . '</td>
-<td><form id="form1" name="form1" method="post">
-<input type="hidden" name="coursetitle" value="' . $value['courseId'] . '" />    
-<input type="hidden" name="formAction" id="formValidate" value="doAdd" />
-            <input class="button" name="postForm" id="postForm" type="submit" value="Add"/></form></td></tr>');
+<td id="ects' . $i . '">' . $value['ectsCredits'] . '</td>
+<td><input onclick="getEcts(' . $i . ')" id="course' . $i . '" type="checkbox" name="coursetitle' . $i . '" value="' . $value['courseId'] . '" /></td></tr>');
             $this->pageTpl->refillIteration('iStudentCourses');
+            $i++;
         }
 
         $this->pageTpl->parseIteration('iStudentCourses');
     }
 
-    public function doAdd() {
-        $stId = PlonkSession::get('id');
-        $courseId = $_POST['coursetitle'];
-        /* Validates For the ECTS CREDITS */
-        $selcourEcts = learnagr_chDB::getSelectedCourseEcts($stId);
-        $studentEcts = learnagr_chDB::getStudentEcts($stId);
-        $courseEcts = learnagr_chDB::getCourseEcts($courseId);
-        $i = 0;
-        while (isset($selcourEcts[$i]['ectsCredits'])) {
-            $studentEcts[0]['ectsCredits']-=$selcourEcts[$i]['ectsCredits'];
-            $i++;
-        }
-        $ects = $studentEcts[0]['ectsCredits'] - $courseEcts[0]['ectsCredits'];
-        if ($ects < 0) {
-            $this->errors = '<div class="errorPHP">Not Enough ECTS Credits</div>';
+    public function formSend($post) {
+        $name = PlonkSession::get('id');
+        $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/confirm.tpl');
+        $this->fillData('mail');
+        $send = learnagr_chDB::SubmitTranscript($this->mail->getContent(), $post);
+        if ($send == '1') {
+            return TRUE;
         } else {
-            /* Checks If The course Can Selected */
-            $coursesSel = learnagr_chDB::getSelectedCourses($stId);
-            $coursesSelected = learnagr_chDB::getSelectCourses($stId);
-
-            if (($this->checkSelection($coursesSel, $courseId)) || ($this->checkSelection($coursesSelected, $courseId))) {
-                learnagr_chDB::courseAdd($courseId, $stId);
-                $this->errors = '<div class="SuccessPHP">Successfully Added</div>';
-            } else {
-                $this->errors = '<div class="errorPHP">You Are not allowed To select this course</div>';
-            }
+            $this->errors = '<div class="errorPHP">' . $send . '</div>';
+            return FALSE;
         }
     }
 
-    public function doRemove() {
+    public function doSubmit() {
+        $flag = FALSE;
         $stId = PlonkSession::get('id');
-        $coursesSel = learnagr_chDB::getSelectedCourses($stId);
-        $coursesSelected = learnagr_chDB::getSelectCourses($stId);
-        $courseId = $_POST['coursetitle'];
-
-        if (($this->checkSelection($coursesSel, $courseId)) || ($this->checkSelection($coursesSelected, $courseId))) {
-            learnagr_chDB::courseRemove($_POST['coursetitle'], $stId);
-            $this->errors = '<div class="SuccessPHP">Successfully Removed</div>';
+        unset($_POST['formAction'], $_POST['postForm']);
+        /* Validation */
+        /*  Calculate the Selected ECTS Credits */
+        $sum = 0;
+        $studentEcts = learnagr_chDB::getStudentEcts($stId);
+        foreach ($_POST as $key => $value) {
+            $selcourEcts = learnagr_chDB::getCourseEcts($value);
+            $sum+=$selcourEcts[0]['ectsCredits'];
+        }
+        if (($studentEcts[0]['ectsCredits'] - $sum) < 0) {
+            $this->errors = '<div class="errorPHP">Not Enough ECTS Credits</div>';
         } else {
-            $this->errors = '<div class="errorPHP">You Are not allowed To select this course</div>';
+            /* If the selected courses CAN Be selected */
+            $coursesSel = learnagr_chDB::getSelectedCourses($stId);
+            $coursesSelected = learnagr_chDB::getSelectCourses($stId);
+            foreach ($_POST as $key => $value) {
+                if (($this->checkSelection($coursesSel, $value)) || ($this->checkSelection($coursesSelected, $value))) {
+                    $flag = TRUE;
+                } else {
+                    $flag = FALSE;
+                    $this->errors = '<div class="errorPHP">You Are not allowed To select this course</div>';
+                }
+            }
+        }
+        if ($flag) {
+
+            learnagr_chDB::courseRemove($stId);
+            foreach ($_POST as $key => $value)
+                learnagr_chDB::courseAdd($value, $stId);
+            if ($this->formSend($_POST)) {
+                $this->errors = '<div class="SuccessPHP">Changes made Successfully</div>';
+            }
         }
     }
 

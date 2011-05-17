@@ -1,6 +1,6 @@
 {$errorString}
 
-<form id="form1" name="form1" method="post" action="">
+<form id="learnCH" name="learnCH" method="post" action="">
     <div class="XDiv">
 
         <div class="minHead"><p>Student Information</p></div>
@@ -12,7 +12,7 @@
 
         <div class="minHead" align="center"><p>Changes to Original Learning Agreement</p></div>
 
-        <h3>ECTS Credits Remaining: {$ECTS}</h3>
+        <h3>ECTS Credits Remaining: <span id="points">{$ECTS}</span> / {$ECTStot}</h3>
         <div class="TRDiv" align="center">
 
 
@@ -35,16 +35,10 @@
             </table>
         </div>
 
-
-
+        <div class="alCenterDiv" style="padding-top: 30px;">
+                    <input type="hidden" name="formAction" id="formValidate" value="doSubmit" />
+                    <input class="button" name="postForm" id="postForm" type="submit" value="Submit"/></p></div>
+       
 
     </div>
-
-
-
 </form>
-
-
-
-
-
