@@ -10,6 +10,7 @@ class PrecandidateDB {
     public static function getUser($id) {
         $db = PlonkWebsite::getDB();
         $user = $db->retrieveOne("select * from users inner join institutions on users.institutionId = institutions.instEmail where email ='" . $db->escape($id) . "'");
+       
         return $user;
     }
     public static function insertJson($table,$values) {
@@ -29,8 +30,8 @@ class PrecandidateDB {
     }
     public static function getJson($id) {
         $db = PlonkWebsite::getDB();
-        //Plonk::dump($db->escape($id));
         $string = $db->retrieveOne("select * from forms where studentId ='" . $db->escape($id) . "' AND type = 'Precandidate'");
+        
         return $string;
     }
     

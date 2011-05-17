@@ -1,6 +1,8 @@
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+<div class="mainDiv">
 <h2>Student Application Form</h2>
 
-<form action=" " method="post" enctype="multipart/form-data" id="studApplicForm" name="studApplicForm" >
+<form action="" method="post" enctype="multipart/form-data" id="studApplicForm" name="studApplicForm" >
 
     <div class="TRdiv">
 <label for="acaYear"><span>Academic year: </span></label>
@@ -97,7 +99,7 @@
 </div>
 
 <div class="TRdiv">
-<span>Sex: </span>
+<label for="sex"><span>Sex: </span></label>
 <input class="validate[required] text-input" type="text" id="sex" name="sex" value="{$sex|htmlentities}" />
 </div>
 
@@ -122,7 +124,7 @@
 <span class="req" id="msgDaateValid">{$msgDaateValid|htmlentities}</span>
 </div>
 <div class="TRdiv">
-<label for="cTel"><span>Tel: </span</label>
+<label for="cTel"><span>Tel: </span></label>
 <input class="validate[required] text-input" type="text" id="cTel" name="cTel" value="{$cTel|htmlentities}" />
 <span class="req" id="msgCTel">{$msgCTel|htmlentities}</span>
 </div>
@@ -161,13 +163,15 @@
 <input class="validate[required] text-input" type="text" id="coountry" name="coountry" value="{$coountry|htmlentities}" />
 <span class="req" id="msgCoountry">{$msgCoountry|htmlentities}</span>
 </div>
-
+<h3>Period of study: </h3>
 <div class="TRdiv">
-<span>Period of study: </span>
-<label for="from">From: </label>
+
+<label for="daateFrom"><span>From: </span></label>
 <input class="validate[required,custom[date]] text-input" type="text" id="daateFrom" name="daateFrom" value="{$daateFrom|htmlentities}" />
 <span class="req" id="msgDaateFrom">{$msgDaateFrom|htmlentities}</span>
-<label for="from">Untill: </label>
+</div>
+<div class="TRdiv">
+<label for="daateUntill"><span>Until: </span></label>
 <input class="validate[required,custom[date]] text-input" type="text" id="daateUntill" name="daateUntill" value="{$daateUntill|htmlentities}" />
 <span class="req" id="msgDaateUntill">{$msgDaateUntill|htmlentities}</span>
 </div>
@@ -294,7 +298,6 @@
 <p><strong>PLEASE ATTACH YOUR TRANSCIPT OF RECORDS WITH PREVIOUS COURSE UNITS TAKEN !</strong></p>
 
 
-
 {option:oCoor}
 <h3>Receiving institution</h3>
 <fieldset>
@@ -313,11 +316,18 @@
         <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
     </div>
 
+{option:oPaper}
 <div class="TRdiv">
 <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
-<input type="text" id="signDepSign" name="signDepSign" value="{$signDepSign|htmlentities}" />
-<span class="req" id="msgSignDepSign">{$msgSignDepSign|htmlentities}</span>
 </div>
+{/option:oPaper}
+
+{option:oDigital}
+<div class="TRdiv">
+<label for="signDepSign"><span>Departamental coordinator's signature</span></label>
+<img src="{$sourceDep}" alt="signature" >
+</div>
+{/option:oDigital}
 
 <div class="TRdiv">
 <label for="signDepSignDate"><span>Date: </span></label>
@@ -325,11 +335,18 @@
 <span class="req" id="msgSignDepSignDate">{$msgSignDepSignDate|htmlentities}</span>
 </div>
 
+{option:oPaper}
 <div class="TRdiv">
 <label for="signInstSign"><span>Institutional coordinator's signature</span></label>
-<input type="text" id="signInstSign" name="signInstSign" value="{$signInstSign|htmlentities}" />
-<span class="req" id="msgSignInstSign">{$msgSignInstSign|htmlentities}</span>
 </div>
+{/option:oPaper}
+
+{option:oDigital}
+<div class="TRdiv">
+<label for="signInstSign"><span>Institutional coordinator's signature</span></label>
+<img src="{$sourceInst}" alt="signature" >
+</div>
+{/option:oDigital}
 
 <div class="TRdiv">
 <label for="signInstSignDate"><span>Date: </span></label>
@@ -358,4 +375,4 @@
 </fieldset>
 {/option:oNotFilled}
 
-
+</div>

@@ -65,7 +65,7 @@ class ProfileController extends PlonkController {
 
         $erasmus = ProfileDB::getErasmusById($this->id);
         //Plonk::dump($erasmus);
-        if ($erasmus['startDate'] != null) {
+        if (!empty($erasmus)) {
             $this->pageTpl->assign('start', $erasmus['startDate']);
             $this->pageTpl->assign('end', $erasmus['endDate']);
         }
@@ -95,7 +95,7 @@ class ProfileController extends PlonkController {
         }
 
         $study = ProfileDB::getStudy($this->id);
-        if ($study['educationName'] != null) {
+        if (!empty($study)) {
             $this->pageTpl->assign('study', $study['educationName']);
         }
         else {
@@ -144,15 +144,16 @@ class ProfileController extends PlonkController {
         }
         $this->pageTpl->assign('sex', $info['sex']);
         $this->pageTpl->assign('userLevel', $info['userLevel']);
-
-        if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
-            $this->erasmusLevel = 1 * 10;
-        }
-        if ($erasmuslevel['statusOfErasmus'] == 'Student Application Form') {
-            $this->erasmusLevel = 1.5 * 10;
-        }
-        if ($erasmuslevel['statusOfErasmus'] == 'Learning Agreement') {
-            $this->erasmusLevel = 100;
+        if(!empty($erasmuslevel)) {
+            if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
+                $this->erasmusLevel = 1 * 10;
+            }
+            if ($erasmuslevel['statusOfErasmus'] == 'Student Application Form') {
+                $this->erasmusLevel = 1.5 * 10;
+            }
+            if ($erasmuslevel['statusOfErasmus'] == 'Learning Agreement') {
+                $this->erasmusLevel = 100;
+            }
         }
 
         $this->mainTpl->assign('progress', $this->erasmusLevel);

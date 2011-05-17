@@ -39,7 +39,7 @@ class RegisterController extends PlonkController {
         if ($string === $user['verificationCode']) {
             $this->pageTpl->assignOption('oSuccess');
             $array['isValidUser'] = 1;
-            RegisterDB::updateUserField($array, 'userId = ' . (int) $id);
+            RegisterDB::updateUserField($array, 'email = "' . $id . '"');
         } else {
             $this->pageTpl->assignOption('oNoSuccess');
         }
@@ -134,8 +134,6 @@ class RegisterController extends PlonkController {
     }
 
     public function doSubmit() {
-        $test = RegisterDB::getMaxId('users', 'userId');
-        $this->id = $test['MAX(userId)'] + 1;
         $this->fillRules();
         $this->errors = validateFields($_POST, $this->rules);
         if (!empty($this->errors)) {
@@ -193,7 +191,7 @@ class RegisterController extends PlonkController {
         $mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
         $mail->IsSMTP(); // telling the class to use SMTP
 
-        $link = $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=register&' . PlonkWebsite::$viewKey . "=registervalidemail&id=" . $this->id . "&string=" . $this->code;
+        $link = "nathanvanassche.ikdoeict.be/" . $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=register&' . PlonkWebsite::$viewKey . "=registervalidemail&id=" . $email . "&string=" . $this->code;
 
         $htmlBody = '<html>
                     <h1>Test</h1>

@@ -1,19 +1,19 @@
-<h2>Login</h2>
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+<div class="mainDiv">
+    <h2>Login</h2>
 {$errorMsg}
 <form action=" " method="post" enctype="multipart/form-data">
-                <p>
-				<label>Email</label>
-				<input class="field" type="text" name="Email" />
-			</p>
-
-			<p>
-				<label>Password</label>
-				<input class="field" type="password" name="Password"/>
-                                
-			</p>
-
-		<p>
+                <div class="TRdiv">
+			<label for="Email"><span>Email</span></label>
+			<input class="field" type="text" name="Email" />
+                </div>
+                <div class="TRdiv">
+			<label for="password">Password</span></label>
+			<input class="field" type="password" name="Password"/>
+                </div>    
+                <div class="TRdiv">
 			<input type="hidden" name="formAction" id="formLogin" value="doLogin" />
 			<input class="button" name="btnLogin" id="btnLogin" type="submit" value="Login"/>
-		</p>
-                    </form>
+		</div>
+</form>
+</div>

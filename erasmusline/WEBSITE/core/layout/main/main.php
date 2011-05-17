@@ -26,7 +26,7 @@ class MainController extends PlonkController {
         if ($email !== null && $password !== null) {
 
 
-            $values = MainController::userExist($email, $password);
+            $values = MainController::userExist($email, md5($password));
 
             if (!empty($values)) {
 

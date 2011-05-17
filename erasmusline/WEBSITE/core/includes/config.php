@@ -49,7 +49,7 @@
        /**
         * Smpt-server
         */
-                define('MAIL_SMTP','smtp.kahosl.be');
+                define('MAIL_SMTP','smtp2.kahosl.be');
 
        /**
         *Subject

@@ -13,7 +13,7 @@ class RegisterDB {
     public static function getUserById($id) {
         $db = PlonkWebsite::getDB();
         
-        $user = $db->retrieveOne("select * from users where userId = '" . $db->escape($id)."'");
+        $user = $db->retrieveOne("select * from users where email = '" . $db->escape($id)."'");
         
         return $user;        
     }

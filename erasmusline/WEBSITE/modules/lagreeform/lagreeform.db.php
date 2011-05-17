@@ -208,5 +208,13 @@ class LagreeformDB {
         
         return $email['email'];
     }
+    
+    public static function getSignature() {
+        $db = PlonkWebsite::getDB();
+        
+        $digital = $db->retrieveOne("select digital from institutions where instName = '".INSTITUTE."'");
+        
+        return $digital;
+    }
 
 }

@@ -302,6 +302,7 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `traineeOrStudy` int(11) NOT NULL,
   `url` varchar(250) NOT NULL,
   `scale` int(11) NOT NULL,
+  `digital` boolean,
   PRIMARY KEY (`instId`),
   UNIQUE KEY `instEmail_UNIQUE` (`instEmail`),
   KEY `fk_Institutions_Country1` (`instCountry`)

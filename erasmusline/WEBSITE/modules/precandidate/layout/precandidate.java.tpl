@@ -8,3 +8,6 @@
            jQuery("#precandidate").validationEngine();
        });
 </script> 
+
+
+<script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>

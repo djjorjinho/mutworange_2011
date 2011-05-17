@@ -145,24 +145,21 @@
     <legend>CV</legend>    
       <div class="TRdiv">
         <label for="cv"><span>Upload your CV here :</span></label>
-        <input type="file" class="validate[custom[onlyPdf]]" name="cv" id="cv" value="{$cv|htmlentities}"/>
-        <span class="req" id="msgCv">{$msgCv|htmlentities}</span>	
+        <input type="file" class="multi" maxlength="1" accept="pdf" id="cv" name="pic[]" /><span id="errRegPicture"></span>
     </div>
 </fieldset>
 <fieldset>
     <legend>Transcript of records</legend>    
       <div class="TRdiv">
         <label for="transcript"><span>Upload your Transcript of Records here :</span></label>
-        <input type="file" class="validate[custom[onlyPdf]]" name="transcript" id="transcript" value="{$transcript|htmlentities}"/>
-        <span class="req" id="msgTranscript">{$msgTranscript|htmlentities}</span>	
+        <input type="file" class="multi" maxlength="1" accept="pdf" id="transcript" name="pic[]" /><span id="errRegPicture"></span>
     </div>
 </fieldset>
 <fieldset>
     <legend>Certificate of Foreign Language</legend>    
       <div class="TRdiv">
         <label for="certificate"><span>Upload your Certificate of Foreign Language here :</span></label>
-        <input type="file" class="validate[custom[onlyPdf]]" name="certificate" id="certificate" value="{$certificate|htmlentities}"/>
-        <span class="req" id="msgCertificate">{$msgCertificate|htmlentities}</span>	
+        <input type="file" class="multi" maxlength="1" accept="pdf" id="certificate" name="pic[]" /><span id="errRegPicture"></span>
     </div>
 </fieldset>
 <fieldset>
