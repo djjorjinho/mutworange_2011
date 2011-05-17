@@ -5,11 +5,8 @@
  * and open the template in the editor.
  */
 
-#require_once 'StatsCall.php';
-#require_once("library/plonk/template/template.php");
+require_once('library/eis/StatsCall.php');
 class StatsController extends PlonkController {
-
-	
 	
     protected $views = array(
         'stats'
@@ -17,19 +14,6 @@ class StatsController extends PlonkController {
     protected $actions = array(
         'submit'
     );
-    protected $variablesFixed = array(
-        
-    );
-    protected $variablesRequired = array(
-      
-    );
-    protected $variablesOptional = array(
-        
-    );
-
-    protected $errors = array();
-    protected $rules = array();
-    protected $user;
     
 
     private function MainTplAssigns() {
@@ -37,9 +21,7 @@ class StatsController extends PlonkController {
         
         $this->mainTpl->assign('breadcrumb', "");
         
-        $this->mainTpl->assign('pageJava', 
-        	'<script type="text/javascript"' .
-        	' src="core/js/jquery/jquery-1.5.js"></script');
+        $this->mainTpl->assign('pageJava', "");
         
         $this->mainTpl->assign('pageMeta', 
         	'<link rel="stylesheet" href="core/css/stats.css"' .
@@ -48,7 +30,6 @@ class StatsController extends PlonkController {
 
     public function showStats() {
     	//Metodo chamado a quando a pagina é chamada
-    	
         $this->checkLogged();
         $this->MainTplAssigns();
         $this->fillTest();
@@ -79,7 +60,24 @@ class StatsController extends PlonkController {
      	}
     	
     }
-
+	
+    function loadRules(){
+    	$call = new StatsCall();
+    }
+    
+    function listScenarios(){
+    	$call = new StatsCall();
+    }
+    
+    function loadScenario(){
+    	$call = new StatsCall();
+    }
+    
+	function saveScenario(){
+    	$call = new StatsCall();
+    }
+    
+    
 }
 
 ?>

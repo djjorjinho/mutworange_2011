@@ -1,9 +1,10 @@
 <?php
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
-set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}"));
+set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}WEBSITE${sep}modules"));
+set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}WEBSITE${sep}library"));
 require_once 'PHPUnit.php';
-require_once("lib/StatsCall.php");
+require_once("eis/StatsCall.php");
 class StastCallTest extends PHPUnit_TestCase {
 	
 	private $daemon;

@@ -19,12 +19,21 @@ cd ..
 cd stats/scripts
 ./run_sql
 
+echo "======== RUNNING STATS DAEMONS ======="
 cd ../bin
+pwd
 ./restart_daemons &
 
 sleep 2
 
-cd ../test
+echo "======== RUNNING TESTS ======="
+
+cd ../../test/
+pwd
+./run
+
+cd ../stats/test
+pwd
 ./run
 
 cd ..
