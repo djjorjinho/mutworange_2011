@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `grades` (
   `ectsGrade` varchar(3) DEFAULT NULL,
   `courseDuration` varchar(45) DEFAULT NULL,
   `studentId` varchar(100) NOT NULL,
-  PRIMARY KEY (`courseId`),
+  PRIMARY KEY (`courseId`,`studentId`),
   KEY `fk_Grades_Institutions_has_Study_has_Courses1` (`courseId`),
   KEY `fk_grades_erasmusstudent1` (`studentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
