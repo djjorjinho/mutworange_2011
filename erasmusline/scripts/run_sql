@@ -2,11 +2,7 @@
 dir=$(cd `dirname $0` && pwd)
 cd ${dir}
 
-echo -n "Mysql root Password: "
 
-stty -echo
-read password
-stty echo
-echo "drop database if exists erasmusline; create database erasmusline;" | mysql -uroot -p${password}
-mysql -uroot -p${password} erasmusline < erasmusline.sql
+echo "drop database if exists erasmusline; create database erasmusline;" | mysql -uerasmusline -porange
+mysql -uerasmusline -porange erasmusline < erasmusline.sql
 echo ""

@@ -2,18 +2,10 @@
 dir=$(cd `dirname $0` && pwd)
 cd ${dir}
 
-echo -n "Mysql root Password: "
-
-stty -echo
-read password
-stty echo
-
-mysql -uroot -p${password} < create_user.sql
-
-mysql -uroot -p${password} < p8statsdw.sql
+mysql -uerasmusline -porange < p8statsdw.sql
 
 ./populateDB.php
 
-mysql -uroot -p${password} p8statsdw < fact_efficiency_2010_2s.sql
+mysql -uerasmusline -porange p8statsdw < fact_efficiency_2010_2s.sql
 
 echo ""

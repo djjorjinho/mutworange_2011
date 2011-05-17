@@ -2,7 +2,7 @@
 
 #
 # install script for UNIX systems
-#
+# run ../scripts/create_user.sql on a vanilla mysql install
 
 # main dir
 dir=$(cd `dirname $0` && pwd)
@@ -18,7 +18,7 @@ cd ..
 # p8 stats
 cd stats/scripts
 ./run_sql
-./populateDB.php
+
 cd ../bin
 ./restart_daemons &
 
