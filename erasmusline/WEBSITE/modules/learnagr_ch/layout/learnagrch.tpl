@@ -5,15 +5,15 @@
 
         <div class="minHead"><p>Student Information</p></div>
 
-        <div class="TRdiv"><span class="spleft">Students Name :</span><span class="spright">{$studentsName}</span></div>
-        <div class="TRdiv"><span class="spleft">Sending Institution :</span><span class="spright">{$instName}</span></div>
-        <div class="TRdiv"><span class="spleft">Country :</span><span class="spright">{$country}</span></div>
+        <div ><span class="spleft">Students Name :</span><span class="spright">{$studentsName}</span></div>
+        <div ><span class="spleft">Sending Institution :</span><span class="spright">{$instName}</span></div>
+        <div ><span class="spleft">Country :</span><span class="spright">{$country}</span></div>
 
 
         <div class="minHead" align="center"><p>Changes to Original Learning Agreement</p></div>
 
         <h3>ECTS Credits Remaining: <span id="points">{$ECTS}</span> / {$ECTStot}</h3>
-        <div class="TRDiv" align="center">
+        <div  align="center">
 
 
             <table id="LearnAgrChange">
@@ -27,7 +27,7 @@
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody align="center">
 
                     {iteration:iStudentCourses}{$studentCourses}{/iteration:iStudentCourses}
 

@@ -69,10 +69,10 @@
 
     <div class="leftAlDiv">
         <p class="minHead">Student Information</p>
-        <div class="TRdiv"><span class="spleft">First Name :</span><span class="spright" id="lol" name="lol">{$stFirstName}</span></div>
-        <div class="TRdiv"><span class="spleft">Last Name :</span><span class="spright">{$stLastName}</span></div>
-        <div class="TRdiv"><span class="spleft">Gender :</span><span class="spright">{$stGender}</span></div>
-        <div class="TRdiv"><span class="spleft">Date of Birth :</span><span class="spright">{$stDtBirh}</span></div>
+        <div ><span class="spleft">First Name :</span><span class="spright" id="lol" name="lol">{$stFirstName}</span></div>
+        <div ><span class="spleft">Last Name :</span><span class="spright">{$stLastName}</span></div>
+        <div ><span class="spleft">Gender :</span><span class="spright">{$stGender}</span></div>
+        <div ><span class="spleft">Date of Birth :</span><span class="spright">{$stDtBirh}</span></div>
 
         <div><p class="minHead">Sending Institution Information</p></div>
         <div><span class="spleft">Institution Name :</span><span class="spright">{$seInName}</span></div>
@@ -84,18 +84,18 @@
     </div>
     <div class="rightAlDiv">
         <p class="minHead">&nbsp;</p>
-        <div class="TRdiv"><span class="spleft">Place of Birth :</span><span class="spright">{$stPlBirh}</span></div>
-        <div class="TRdiv"><span class="spleft">Matriculation Date :</span><span class="spright">{$stMatrDate}</span></div>
-        <div class="TRdiv"><span class="spleft">Matriculation Number :</span><span class="spright">{$stMatrNum}</span></div>
-        <div class="TRdiv"><span class="spleft">E-mail :</span><span class="spright">{$stMail}</span></div>
+        <div ><span class="spleft">Place of Birth :</span><span class="spright">{$stPlBirh}</span></div>
+        <div ><span class="spleft">Matriculation Date :</span><span class="spright">{$stMatrDate}</span></div>
+        <div ><span class="spleft">Matriculation Number :</span><span class="spright">{$stMatrNum}</span></div>
+        <div ><span class="spleft">E-mail :</span><span class="spright">{$stMail}</span></div>
 
-        <div class="TRdiv"><p class="minHead">Receiving Institution Information</p></div>
-        <div class="TRdiv"><span class="spleft">Institution Name :</span><span class="spright">{$reInName}</span></div>
-        <div class="TRdiv"><p class="minHead">Departmental Coordinator Information</p></div>
-        <div class="TRdiv"><span class="spleft">Name :</span><span class="spright">{$reCorName}</span></div>
-        <div class="TRdiv"><span class="spleft">E-mail :</span><span class="spright">{$reCorMail}</span></div>
-        <div class="TRdiv"><span class="spleft">Tel :</span><span class="spright">{$reCorTel}</span></div>
-        <div class="TRdiv"><span class="spleft">Fax :</span><span class="spright">{$reCorFax}</span></div>
+        <div ><p class="minHead">Receiving Institution Information</p></div>
+        <div ><span class="spleft">Institution Name :</span><span class="spright">{$reInName}</span></div>
+        <div ><p class="minHead">Departmental Coordinator Information</p></div>
+        <div ><span class="spleft">Name :</span><span class="spright">{$reCorName}</span></div>
+        <div ><span class="spleft">E-mail :</span><span class="spright">{$reCorMail}</span></div>
+        <div ><span class="spleft">Tel :</span><span class="spright">{$reCorTel}</span></div>
+        <div ><span class="spleft">Fax :</span><span class="spright">{$reCorFax}</span></div>
     </div>
 
     <div class="alCenterDiv">

@@ -1,0 +1,228 @@
+@CHARSET "UTF-8";
+/******* GENERAL RESET *******/
+
+body{
+	background: #fff;
+	line-height:14px;
+	font-size: 12px;
+	font-family: Arial,  Verdana, Helvetica, sans-serif;
+	margin:0pt;
+	cursor:default;
+
+}
+.accomodationList{
+    width: 350px;
+    padding-top: 20px;
+}
+.aHead {
+padding-top: 15px;
+padding-left: 10px;
+    font-size: medium;
+
+
+}
+.spleft label{
+    padding-top: 4px;
+    vertical-align: middle;
+}
+.errorPHP {
+position:relative;
+background: #f0d3d3;
+text-align: center;
+padding-top: 15px;
+padding-bottom: 15px;
+font-size: medium;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.SuccessPHP {
+ position:relative;
+text-align: center;
+padding-top: 15px;
+padding-bottom: 15px;
+font-size: medium;
+    font-weight: bold;
+    background-color: #ccffcc;
+}
+.mainDiv{
+    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-size:12px;
+    border:solid 2px #b7ddf2;
+    background:#ebf4fb;
+    width:850px;
+    margin-left: 20%;
+}
+
+
+.TRDiv table {
+    text-align: center;
+}
+
+.TRdiv input{
+    font-size:12px;
+    border:solid 1px #aacfe4;
+
+
+}
+
+
+/******* Transip Records *******/
+div.curFocus {
+    background: #a9ef96;
+}
+
+
+/*label {
+    width: 14em;
+    display: block;
+    float: left;
+    padding-top: 4px;
+    vertical-align: middle;
+
+}*/
+/*.TRdiv {
+    display: inline-block;
+    min-width:1px;
+    padding: 0.2em;
+    position: relative;
+
+}
+
+
+/*.req {
+    margin-left: 2px;
+    color: #ee0101;
+    font-size:16px;
+
+}*/
+
+
+
+
+/* CSS for Transcript Of Records (select.tpl & vselect.tpl)*/
+.selDiv {
+    text-align: center;
+}
+.selDiv th tr {
+font-size: small;
+}
+
+
+
+
+
+
+/* CSS for Transcript Of Records (main.tpl & mainRecords.tpl)*/
+.spright {
+    padding-left: 150px;
+    font-size:small;
+    font-size: 15px;
+
+}
+.spleft {
+    display: block;
+position:absolute;
+width: 120px;
+text-align: right;
+   
+}
+.minHead {
+padding-top: 15px;
+padding-left: 10px;
+    font-size: medium;
+
+
+}
+.rightAlDiv {
+    width:425px;
+    position: relative;
+
+    float: right;
+
+
+
+
+}
+.leftAlDiv {
+    width:425px;
+    position: relative;
+    float: left;
+
+
+}
+.alCenterDiv {
+    position: relative;
+text-align: center;
+    display: inline-block;
+    width: 100%;
+
+
+}
+
+.min {
+    
+    width:200px;
+    
+    
+}
+.buttonPanel {
+    display:inline-block;
+ text-align: center;
+    width:100%;
+
+    vertical-align: middle;
+}
+.small {
+text-align: left;
+float: left;
+width: 150px; 
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-bottom-width: 2px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-right-color: #00ff00;
+    border-left-color: #00ff00;
+    border-bottom-color: #00ff00;
+    border-top-color: #00ff00;
+    vertical-align: middle;
+}
+
+.backbtn {
+    float :right;
+}
+/* button  CSS*/
+
+.buttonPro {
+    
+    background-image: url(../img/nextBtn.png);
+    width: 20px;
+    height: 20px;
+    text-align: left;
+border: none;
+
+}
+
+.buttonLook  {
+    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    background: transparent;
+    border: none;
+
+    font-size: small;
+}
+
+/* Sortable tables */
+table.sortable thead {
+    background-color:#eee;
+    font-weight: bold;
+    cursor: default;
+}
+
+
+
+acomDiv {
+        display:block;
+background: #000; 
+
+}
