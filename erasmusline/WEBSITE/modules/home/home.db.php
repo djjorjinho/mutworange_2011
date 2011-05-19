@@ -48,8 +48,9 @@ class HomeDB {
 
         $db = PlonkWebsite::getDB();
 
-        $forms = $db->retrieve('SELECT type, date, module, view FROM forms inner join erasmusLevel on forms.erasmusLevelId = erasmusLevel.levelId WHERE studentId ="' . $db->escape($id).'"');
+        $forms = $db->retrieve('SELECT type, date, module, view, formId FROM forms inner join erasmusLevel on forms.erasmusLevelId = erasmusLevel.levelId WHERE studentId ="' . $db->escape($id).'"');
 
+        //Plonk::dump($forms);
         return $forms;
     }
 

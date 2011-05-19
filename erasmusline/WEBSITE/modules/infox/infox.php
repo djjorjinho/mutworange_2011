@@ -1,18 +1,13 @@
 <?php
 
+include('curl.php');
+
 class InfoxController extends PlonkController {
 
     protected $views = array('infox', 'transfer', 'admin');
     protected $actions = array('transfer');
     protected $debug = false;
     protected $debugMsg = "";
-
-    public function InfoxController() {
-        include('curl.php');
-        if (PlonkFilter::getGetValue('debug') != null) {
-            $this->debug = true;
-        }
-    }
 
     public function showInfox() {
         $this->mainTpl->assign('pageTitle', 'ERASMUS line');
@@ -111,7 +106,7 @@ class InfoxController extends PlonkController {
 
     public function doTransfer() {
         if (PlonkSession::exists('id')) {
-            
+
             if (PlonkFilter::getPostValue('idUni') == 0) {
                 PlonkSession::set('infoxJSON', PlonkFilter::getPostValue('json'));
                 PlonkWebsite::redirect('index.php?module=infox');

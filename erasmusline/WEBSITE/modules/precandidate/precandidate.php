@@ -26,7 +26,8 @@ class PrecandidateController extends PlonkController {
     protected $errors = array();
     protected $rules = array();
     protected $user;
-    protected $id;
+    protected $userid;
+    protected $formid;
 
     private function MainTplAssigns() {
         $this->mainTpl->assign('siteTitle', 'ErasmusLine');
@@ -41,29 +42,29 @@ class PrecandidateController extends PlonkController {
         $this->MainTplAssigns();
 
         //Plonk::dump(PlonkSession::get('id'));
-        if (PlonkFilter::getGetValue('student') != null) {
+        if (PlonkFilter::getGetValue('form') != null) {
 
-            $ide = PlonkFilter::getGetValue('student');
-            $this->id = PrecandidateDB::getEmail($ide);
+            $this->formid = PlonkFilter::getGetValue('form');
+            $this->userid = PrecandidateDB::getstudentByForm($this->formid);
             //Plonk::dump($this->id);
             $this->pageTpl->assign('coordinator', '');
             $this->pageTpl->assign('msgCoordinator', '');
             $this->pageTpl->assign('msgApprove', '');
         } else {
-            $this->id = PlonkSession::get('id');
+            $this->userid = PlonkSession::get('id');
         }
 
-        $status = PrecandidateDB::getStudentStatus($this->id);
+        $status = PrecandidateDB::getStudentStatus($this->userid);
         if (!empty($status)) {
 
-            $status = PrecandidateDB::getStudentStatus($this->id);
+            $status = PrecandidateDB::getStudentStatus($this->userid);
             $erasmusLevel = PrecandidateDB::getIdLevel($status['statusOfErasmus']);
             $erasmusLevel2 = PrecandidateDB::getIdLevel('Precandidate');
 
             if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId']) {
 
                 $this->filledPrecandidate();
-                if (PlonkFilter::getGetValue('student') == null) {
+                if (PlonkFilter::getGetValue('form') == null) {
                     $this->pageTpl->assign('pageJava', '<script language="Javascript">
                                   window.onload = disable;
                                   function disable() {                                  
@@ -92,14 +93,14 @@ class PrecandidateController extends PlonkController {
     private function filledPrecandidate() {
 
         $this->pageTpl->assignOption('oFilled');
-        $uploadedWhat = PrecandidateDB::getUploadedWhat($this->id);
+        $uploadedWhat = PrecandidateDB::getUploadedWhat($this->userid);
         $upload = explode(',', $uploadedWhat['uploadedWhat']);
         $this->pageTpl->assign('cv', $upload[0]);
         $this->pageTpl->assign('transcript', $upload[1]);
         $this->pageTpl->assign('certificate', $upload[2]);
 
 
-        $json = PrecandidateDB::getJson($this->id);
+        $json = PrecandidateDB::getJson($this->formid);
         $jsonArray = json_decode($json['content']);
 
         foreach ($jsonArray as $key => $value) {
@@ -110,7 +111,7 @@ class PrecandidateController extends PlonkController {
 
     private function fillVariables() {
         //Plonk::dump($this->id);
-        $this->user = PrecandidateDB::getUser($this->id);
+        $this->user = PrecandidateDB::getUser($this->userid);
         foreach ($this->variablesFixed as $value) {
             $this->pageTpl->assign($value, $this->user[$value]);
         }
@@ -241,7 +242,8 @@ class PrecandidateController extends PlonkController {
                 'date' => date("Y-m-d"),
                 'content' => $jsonArray,
                 'studentId' => PlonkSession::get('id'),
-                'erasmusLevelId' => $erasmusLevelId['levelId']
+                'erasmusLevelId' => $erasmusLevelId['levelId'],
+                'action' => 2
             );
             $institution = PrecandidateDB::getHomeInstitution();
             $education = PrecandidateDB::getEducation($this->fields['study']);
@@ -277,15 +279,16 @@ class PrecandidateController extends PlonkController {
     public function doMotivate() {
         $erasmusLevelId = PrecandidateDB::getErasmusLevelId('Precandidate');
         $descrip = "";
+        $this->formid = PlonkFilter::getGetValue('form');
+            $this->userid = PrecandidateDB::getstudentByForm($this->formid);
         
         if (PlonkFilter::getPostValue('approve') == 1) {
             $descrip = "Precandidate approved";
             $user = array(
                 'isValidUser' => 2
             );
-            $ide = PlonkFilter::getGetValue('student');
-            $this->id = PrecandidateDB::getEmail($ide);
-            PrecandidateDB::updateErasmusStudent('users', $user, 'email = "' . $this->id.'"');
+            $this->formid = PlonkFilter::getGetValue('form');
+            PrecandidateDB::updateErasmusStudent('users', $user, 'email = "' . $this->userid.'"');
         } else {
             $descrip = "Precandidate denied";
         }
@@ -293,7 +296,7 @@ class PrecandidateController extends PlonkController {
             'reader' => 'Student',
             'timestamp' => date("Y-m-d"),
             'motivation' => PlonkFilter::getPostValue('coordinator'),
-            'studentId' => $this->id,
+            'studentId' => $this->userid,
             'action' => (int) PlonkFilter::getPostValue('approve'),
             'erasmusLevelId' => $erasmusLevelId['levelId'],
             'eventDescrip' => $descrip,
@@ -304,8 +307,8 @@ class PrecandidateController extends PlonkController {
             'action' => (int) PlonkFilter::getPostValue('approve')
         );
 
-
-        PrecandidateDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->id.'"');
+        PrecandidateDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid.'"');
+        PrecandidateDB::updateErasmusStudent('forms', $values, 'formId = '.$this->formid);
 
         PrecandidateDB::insertStudentEvent('studentsEvents', $valueEvent);
         PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=precandidates');
@@ -443,9 +446,9 @@ class PrecandidateController extends PlonkController {
             if (PlonkSession::get('id') === 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
-                $this->id = PlonkSession::get('id');
+                $this->userid = PlonkSession::get('id');
             } else {
-                if (PlonkFilter::getGetValue('student') != null) {
+                if (PlonkFilter::getGetValue('form') != null) {
                     $this->pageTpl->assignOption('oCoor');
                 } else {
                     PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
@@ -455,7 +458,6 @@ class PrecandidateController extends PlonkController {
     }
     private function upload() {
         $id = PlonkSession::get('id');
-        mkdir("files/" . $id . '/',0777);
         $uploaddir = "files/" . $id . "/";
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {

@@ -2,7 +2,7 @@
 <div class="mainDiv">
     <h2>Login</h2>
 {$errorMsg}
-<form action=" " method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data">
                 <div class="TRdiv">
 			<label for="Email"><span>Email</span></label>
 			<input class="field" type="text" name="Email" />

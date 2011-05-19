@@ -46,6 +46,7 @@ class LoginController extends PlonkController {
     }
 
     public function doLogin() {
+        
         MainController::Login();
     }
 

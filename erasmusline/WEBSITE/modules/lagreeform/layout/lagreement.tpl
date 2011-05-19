@@ -71,12 +71,20 @@
 
     <fieldset>
 
-
+        {option:oDigital}
         <div class="TRdiv">
             <label for="sign"><span>Student's signature: </span></label>
-            <input class="validate[required] text-input" type="text" id="sign" name="sign" value="{$sign|htmlentities}" />
-            <span class="req">{$msgSign}</span>
+            <img src="{$sourceStud}" alt="students signature" />
+             <label for="passwordStud"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="passwordStud" id="passwordStud" />
         </div>
+        {/option:oDigital}
+            
+        {option:oPaper}
+        <div class="TRdiv">
+            <label for="sign"><span>Student's signature: </span></label>
+        </div>
+        {/option:oPaper}
 
         <div class="TRdiv">
             <label for="signDate"><span>Date: </span></label>
@@ -104,6 +112,8 @@
         <div class="TRdiv">
             <label for="signDepSignSend"><span>Departamental coordinator's signature</span></label>
             <img src="{$sourceDepSend}" alt="signature" >
+            <label for="passwordDepSend"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="passwordDepSend" id="passwordDepSend" />
         </div>
         {/option:oDigital}
         
@@ -116,7 +126,7 @@
         
         <div class="TRdiv">
             <label for="signDepSignDateSend"><span>Date: </span></label>
-            <input class="validate[required,custom[date]] text-input" type="text" id="signDepSignDate" name="signDepSignDate" value="{$signDepSignDate|htmlentities}" />
+            <input class="validate[required,custom[date]] text-input" type="text" id="signDepSignDateSend" name="signDepSignDateSend" value="{$signDepSignDateSend|htmlentities}" />
             <span class="req">{$msgSignDepSignDateSend}</span>
         </div>
         
@@ -129,28 +139,31 @@
         
         {option:oDigital}
         <div class="TRdiv">
-            <label for="signDepSignSend"><span>Departamental coordinator's signature</span></label>
+            <label for="signInstSignSend"><span>Institutional coordinator's signature</span></label>
             <img src="{$sourceInstSend}" alt="signature" >
+             <label for="passwordInstSend"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="passwordInstSend" id="passwordInstSend" />
         </div>
         {/option:oDigital}
 
         <div class="TRdiv">
             <label for="signInstSignDateSend"><span>Date: </span></label>
-            <input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDate" name="signInstSignDate" value="{$signInstSignDate|htmlentities}" />
+            <input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDateSend" name="signInstSignDateSend" value="{$signInstSignDateSend|htmlentities}" />
             <span class="req">{$msgSignInstSignDateSend}</span>
         </div>
 
     </fieldset>
 
-    <fieldset>
+   <fieldset>
         <legend>Receiving Institution</legend>
-        
         <p>We confirm that this proposed programme of study/learning agreement is approved.</p>
-
+        
         {option:oDigital}
         <div class="TRdiv">
-            <label for="signDepSignRec"><span>Departamental coordinator's signature</span></label>
+            <label for="signRecSignSend"><span>Departamental coordinator's signature</span></label>
             <img src="{$sourceDepRec}" alt="signature" >
+            <label for="passwordDepRec"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="passwordDepRec" id="passwordDepRec" />
         </div>
         {/option:oDigital}
         
@@ -163,7 +176,7 @@
         
         <div class="TRdiv">
             <label for="signDepSignDateRec"><span>Date: </span></label>
-            <input class="validate[required,custom[date]] text-input" type="text" id="signDepSignDate" name="signDepSignDate" value="{$signDepSignDate|htmlentities}" />
+            <input class="validate[required,custom[date]] text-input" type="text" id="signDepSignDateRec" name="signDepSignDateRec" value="{$signDepSignDateRec|htmlentities}" />
             <span class="req">{$msgSignDepSignDateRec}</span>
         </div>
         
@@ -176,14 +189,16 @@
         
         {option:oDigital}
         <div class="TRdiv">
-            <label for="signDepSignRec"><span>Departamental coordinator's signature</span></label>
+            <label for="signInstSignRec"><span>Institutional coordinator's signature</span></label>
             <img src="{$sourceInstRec}" alt="signature" >
+             <label for="passwordInstRec"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="passwordInstRec" id="passwordInstRec" />
         </div>
         {/option:oDigital}
 
         <div class="TRdiv">
             <label for="signInstSignDateRec"><span>Date: </span></label>
-            <input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDate" name="signInstSignDate" value="{$signInstSignDate|htmlentities}" />
+            <input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDateRec" name="signInstSignDateRec" value="{$signInstSignDateRec|htmlentities}" />
             <span class="req">{$msgSignInstSignDateRec}</span>
         </div>
 

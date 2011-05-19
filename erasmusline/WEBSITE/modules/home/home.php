@@ -55,6 +55,7 @@ class HomeController extends PlonkController {
     }
 
     public function showUserhome() {
+        
         // Main Layout
         // Logged or not logged, that is the question...
 
@@ -118,7 +119,7 @@ class HomeController extends PlonkController {
                 if ($statusStudent['action'] == 0) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application is denied. Learning Agreement is denied');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=applicformt" title="Fill in Student Application and Learning Agreement">Fill in Student Application and Learning Agreement</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=applicform" title="Fill in Student Application and Learning Agreement">Fill in Student Application and Learning Agreement</a>');
                 } else if ($statusStudent['action'] == 1) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application is denied. Learning Agreement is approved.');
@@ -171,8 +172,13 @@ class HomeController extends PlonkController {
             $this->pageTpl->setIteration('iForms');
 
             foreach ($forms as $form) {
-                $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=' . $form['view'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
-                $this->pageTpl->refillIteration('iForms');
+                if ($form['type'] == "Student Application Form") {
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=applicform&form='.$form['formId'].'" title="' . $form['type'] .'">' . $form['type'] . '</a></li>');
+                } else if ($form['type'] == "Learning Agreement") {
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=lagreement&form='.$form['formId'].'" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                } else {
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=' . $form['view'] . '&form='.$form['formId'].'" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                }$this->pageTpl->refillIteration('iForms');
             }
 
             $this->pageTpl->parseIteration('iForms');

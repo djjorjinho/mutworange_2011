@@ -30,7 +30,7 @@ class PrecandidateDB {
     }
     public static function getJson($id) {
         $db = PlonkWebsite::getDB();
-        $string = $db->retrieveOne("select * from forms where studentId ='" . $db->escape($id) . "' AND type = 'Precandidate'");
+        $string = $db->retrieveOne("select * from forms where formId ='" . $db->escape($id) . "' AND type = 'Precandidate'");
         
         return $string;
     }
@@ -123,9 +123,17 @@ class PrecandidateDB {
     public static function getEmail($id) {
         $db = PlonkWebsite::getDB();
         
-        $email = $db->retrieveOne('select email from users where userId = '.$db->escape($id));
+        $email = $db->retrieveOne('select email from users where userId = "'.$db->escape($id).'"');
         
         return $email['email'];
+    }
+    
+    public static function getStudentByForm($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select studentId from forms where formId = '".$id."'");
+        
+        return $student['studentId'];
     }
 
 }
