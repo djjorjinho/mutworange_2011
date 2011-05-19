@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-require_once('library/eis/StatsCall.php');
+
 class StatsController extends PlonkController {
 	
     protected $views = array(
@@ -35,7 +35,8 @@ class StatsController extends PlonkController {
         $this->fillTest();
         
     }
-
+	
+    
  	private function fillTest(){
  		$array=array();
  		//Preencher a lista de dimensoes
@@ -52,7 +53,7 @@ class StatsController extends PlonkController {
  	}
 
     private function checkLogged() {
-    	
+    	return;
     	if (!PlonkSession::exists('id')) {
             	 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' 
             	 . PlonkWebsite::$moduleKey . '=home&' 
@@ -61,6 +62,8 @@ class StatsController extends PlonkController {
     	
     }
 	
+    
+    
     function loadRules(){
     	$call = new StatsCall();
     }

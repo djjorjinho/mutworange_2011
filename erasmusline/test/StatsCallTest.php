@@ -45,6 +45,15 @@ class StastCallTest extends PHPUnit_TestCase {
 		$this->assertTrue($rsp['ping']=='world');
 	}
 	
+	
+	function testGetRules(){
+		$call = $this->call;
+		
+		$rsp = $call->call('getRules',array());
+		
+		print_r( $rsp);
+	}
+	
 	function kill(){
 		//exec(dirname(__FILE__)."/../bin/stop_daemons &> /dev/null &");
 	}

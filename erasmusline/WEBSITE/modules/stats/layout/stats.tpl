@@ -141,3 +141,7 @@
 
 	</div>
 </div>
+
+<script type="text/javascript" src="core/js/jquery/jquery-1.5.js"></script>
+<script type="text/javascript" src="core/js/eis/eis.app.js"></script>
+<ol id="qunit-tests"></ol>

@@ -18,8 +18,11 @@ class Client{
 	function sendMessage(&$message,&$response){
 		
 		stream_socket_sendto($this->socket,$message);
-		$response = stream_socket_recvfrom($this->socket,1500);
-
+		
+		// receive response message
+		while(($buff = stream_socket_recvfrom($this->socket,1500)) != ""){
+			$response .= $buff;
+		}
 	}
 	
 }

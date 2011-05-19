@@ -63,7 +63,14 @@ class UnixSocketSource extends LooPHP_EventSource{
 				} else {
 					$obj = $this->callback_obj;
 					$event_loop->addEvent( function() use ( $read_resource, $obj,$event_loop ) {
-						$msg = stream_socket_recvfrom($read_resource,1500);
+						
+						$msg="";
+						// receive response message
+						while(($buff = 
+							stream_socket_recvfrom($read_resource,1500)) != ""){
+								
+							$msg .= $buff;
+						}
 	
 						$obj->onMessage($msg,$send_data,$event_loop);
 						

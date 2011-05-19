@@ -34,12 +34,13 @@ class StatsCall{
 	function call($method,$params=array(),$direct=false){
 		$rpc = array(
 			'jsonrpc' => '2.0',
-			'id' => ++self::$id,
+			'id' => $this->nextId(),
 			'method' => $method,
 			'params' => $params
 		);
 		
 		$this->directCall($rpc,$msg);
+
 		
 		if($direct) return $msg;
 		
@@ -62,12 +63,24 @@ class StatsCall{
 	function directCall($rpc,&$msg){
 		// send message
 		$json = json_encode($rpc);
-		stream_socket_sendto($this->socket,$json);
 		
-		// receive response message
-		$msg = stream_socket_recvfrom($this->socket,1500);
+		$this->makeCall($json,$msg);
 	}
 	
+	function makeCall(&$json,&$msg){
+		stream_socket_sendto($this->socket,$json);
+		
+		$msg="";
+		// receive response message
+		while(($buff = stream_socket_recvfrom($this->socket,1500)) != ""){
+			$msg .= $buff;
+		}
+
+	}
+	
+	function nextId(){
+		return ++self::$id;
+	}
 }
 
 ?>

@@ -80,6 +80,8 @@ class StatsdSlave extends Server implements JsonRpcI{
     	
     	// no rules matched
 		$response = $this->dispatcher->dispatch($message);
+		
+		//System_Daemon::debug("JSON response: \n".$response);
     }
     
     function getTasks(){
@@ -111,7 +113,8 @@ class StatsdSlave extends Server implements JsonRpcI{
     		'ping' => true,
     		'query' => true,
     		'profile' => true,
-    		'etl1' => true
+    		'etl1' => true,
+    		'getRules' => true,
     	);
     	
     	return $methods;
@@ -151,6 +154,11 @@ class StatsdSlave extends Server implements JsonRpcI{
 	function profile(){
 		return $this->profiler->display();
 	}
+	
+	function getRules($params){
+		return $this->olap->rules;
+	}
+	
 }
 
 ?>

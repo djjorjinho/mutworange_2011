@@ -14,13 +14,13 @@ class OLAP{
 	private $db;
 	private $config;
 	private $cache;
-	private $rules;
+	public $rules;
 	
 	function __construct($options){
 		$this->config = $options;
 		$this->cache = ObjectCache::getInstance();
 		$this->db = DB::getInstance();
-		$this->rules = $this->getRules();
+		$this->rules = $this->loadRules();
 	}
 	
 	/**
@@ -28,7 +28,7 @@ class OLAP{
 	 * Read the rules config file and returns an associative array
 	 * @return array $json - associative array, product o json parsing
 	 */
-	function getRules(){
+	function loadRules(){
     	$file = dirname(__FILE__).'/../config/'.$this->config['rulefile'];
     	if(!file_exists($file)){
     		throw new Exception("Not Found: ${file}");
