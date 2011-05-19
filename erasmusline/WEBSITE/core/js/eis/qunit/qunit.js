@@ -282,8 +282,10 @@ var QUnit = {
 		if ( config.currentModule ) {
 			name = '<span class="module-name">' + config.currentModule + "</span>: " + name;
 		}
-
-		if ( !validTest(config.currentModule + ": " + testName) ) {
+		
+		var testname = config.currentModule + ": " + testName;
+		if ( !validTest(testname) ) {
+			//console.log("invalid test: "+testname);
 			return;
 		}
 		
@@ -793,6 +795,7 @@ function done() {
 }
 
 function validTest( name ) {
+	return true;
 	var filter = config.filter,
 		run = false;
 
