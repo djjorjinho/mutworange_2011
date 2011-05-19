@@ -61,6 +61,7 @@ class PlonkSession
 	public static function get($key)
 	{
 		
+            
 		// start session if needed
 		if(!session_id()) self::start();
 
@@ -118,7 +119,6 @@ class PlonkSession
     	
     	// start session if needed
     	if(!session_id()) self::start();
-
     	// redefine arguments
     	$key = (string) $key;
 

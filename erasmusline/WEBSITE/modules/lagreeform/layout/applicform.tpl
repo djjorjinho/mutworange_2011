@@ -345,6 +345,8 @@
 <div class="TRdiv">
 <label for="signInstSign"><span>Institutional coordinator's signature</span></label>
 <img src="{$sourceInst}" alt="signature" >
+            <label for="passwordSend"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="password" id="password" />	 
 </div>
 {/option:oDigital}
 

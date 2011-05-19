@@ -12,29 +12,29 @@ class StaffDB {
         $db = PlonkWebsite::getDB();
 
         // retrieve info from table gebruikers
-        $pres = $db->retrieve("SELECT * FROM users inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE erasmusStudent.statusOfErasmus = '".$formtype."' AND erasmusStudent.action = 2");
+        $pres = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email WHERE forms.type = '".$formtype."' AND forms.action = 2");
 
         return $pres;
     }
     
-    public static function getLagree($id) {
+    public static function getLagree() {
         // create db instance
         $db = PlonkWebsite::getDB();
 
         // retrieve info from table gebruikers
-        $lagrees = $db->retrieve("SELECT * FROM users inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE (action = 12 OR action = 22 OR action = 2) && (statusOfErasmus = 'Student Application and Learning Agreement')");
+        $lagrees = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email WHERE (forms.type = 'Learning Agreement') AND (forms.action = 2)");
         
         //Plonk::dump("SELECT * FROM users inner join studentsEvents on users.email = studentsEvents.studentId WHERE studentsEvents.action == 2 OR studentsEvents.action == 12 OR studentsEvents.action == 22 AND studentsEvents.erasmusLevelId = ".$id['levelId']);
         return $lagrees;
         
     }
     
-    public static function getApplics($id) {
+    public static function getApplics() {
         // create db instance
         $db = PlonkWebsite::getDB();
 
         // retrieve info from table gebruikers
-        $applics = $db->retrieve("SELECT * FROM users inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE (action = 20 OR action = 21 OR action = 22) && (statusOfErasmus = 'Student Application and Learning Agreement')");
+        $applics = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email WHERE (forms.type = 'Student Application Form') AND (forms.action = 2)");
         
         //Plonk::dump($applics);
         //Plonk::dump("SELECT * FROM users inner join studentsEvents on users.email = studentsEvents.studentId WHERE studentsEvents.action == 2 OR studentsEvents.action == 12 OR studentsEvents.action == 22 AND studentsEvents.erasmusLevelId = ".$id['levelId']);

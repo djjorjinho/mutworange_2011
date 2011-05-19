@@ -172,8 +172,8 @@ class LagreeformDB {
     public static function getJson($id, $type) {
         $db = PlonkWebsite::getDB();
 
-        $string = $db->retrieveOne("select content from forms where studentId ='" . $db->escape($id) . "' AND type = '".$db->escape($type)."'");
-
+        $string = $db->retrieveOne("select content from forms where formId ='" . $db->escape($id) . "' AND type = '".$db->escape($type)."'");
+        
         return $string;
     }
 
@@ -204,7 +204,7 @@ class LagreeformDB {
     public static function getEmail($id) {
         $db = PlonkWebsite::getDB();
         
-        $email = $db->retrieveOne('select email from users where userId = '.$db->escape($id));
+        $email = $db->retrieveOne('select email from users where userId = "'.$db->escape($id).'"');
         
         return $email['email'];
     }
@@ -215,6 +215,22 @@ class LagreeformDB {
         $digital = $db->retrieveOne("select digital from institutions where instName = '".INSTITUTE."'");
         
         return $digital;
+    }
+    
+    public static function checkHome($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $home = $db->retrieveOne("select origin from users where email = '".$id."'");
+        
+        return $home['origin'];
+    }
+    
+    public static function getStudentByForm($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select studentId from forms where formId = '".$id."'");
+        
+        return $student['studentId'];
     }
 
 }

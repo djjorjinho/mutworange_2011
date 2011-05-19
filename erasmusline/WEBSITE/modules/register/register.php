@@ -152,7 +152,7 @@ class RegisterController extends PlonkController {
                 'streetNr' => htmlentities(PlonkFilter::getPostValue('street')),
                 'city' => htmlentities(PlonkFilter::getPostValue('city')),
                 'postalCode' => htmlentities(PlonkFilter::getPostValue('postalCode')),
-                'password' => htmlentities(PlonkFilter::getPostValue('password')),
+                'password' => md5(htmlentities(PlonkFilter::getPostValue('password'))),
                 'tel' => htmlentities(PlonkFilter::getPostValue('telephone')),
                 'mobilePhone' => htmlentities(PlonkFilter::getPostValue('mobilePhone')),
                 'birthDate' => htmlentities(PlonkFilter::getPostValue('birthDate')),
@@ -160,7 +160,8 @@ class RegisterController extends PlonkController {
                 'country' => htmlentities(PlonkFilter::getPostValue('nationality')),
                 'sex' => htmlentities(PlonkFilter::getPostValue('sex')),
                 'verificationCode' => $this->code,
-                'institutionId' => $school['instEmail']
+                'institutionId' => $school['instEmail'],
+                'origin' => 0
             );
             if (PlonkSession::exists('id')) {
                 if (PlonkSession::get('id') == '0') {
@@ -180,6 +181,10 @@ class RegisterController extends PlonkController {
                 $values['isValidUser'] = 0;
 
                 RegisterDB::insertUser('users', $values);
+                
+                if(!empty($_FILES['pic'])) {
+                    $this->upload();
+                }
 
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=register&' . PlonkWebsite::$viewKey . '=registersucces');
             }
@@ -245,6 +250,26 @@ class RegisterController extends PlonkController {
             $i++;
         }
         $this->pageTpl->parseIteration('iUserLevel');
+    }
+    
+    private function upload() {
+        $id = PlonkSession::get('id');
+        mkdir("files/" . $id . '/',0777);
+        $uploaddir = "files/" . $id . "/";
+
+        foreach ($_FILES["pic"]["error"] as $key => $error) {
+            if ($error == UPLOAD_ERR_OK) {
+                $tmp_name = $_FILES["pic"]["tmp_name"][$key];
+                $name = $_FILES["pic"]["name"][$key];
+                $uploadfile = $uploaddir . basename($name);
+
+                if (move_uploaded_file($tmp_name, $uploadfile)) {
+                    $cover = $uploadfile;
+                } else {
+                    echo "Error: File " . $name . " cannot be uploaded.<br/>";
+                }
+            }
+        }
     }
 
 }

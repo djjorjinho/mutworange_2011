@@ -58,7 +58,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&student=".$student['userId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iReApplics');
@@ -90,7 +90,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=precandidate&view=precandidate&student=".$student['userId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=precandidate&view=precandidate&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iPres');
@@ -111,8 +111,7 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
 
         // gets info of all the users
-        $id = StaffDB::getIdLevel("Student Application and Learning Agreement");
-        $agrees = StaffDB::getLagree($id);
+        $agrees = StaffDB::getLagree();
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iAgreements');
@@ -123,7 +122,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&student=".$student['userId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iAgreements');
@@ -155,7 +154,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&student=".$student['userId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iChanges');
@@ -178,7 +177,7 @@ class StaffController extends PlonkController {
 
         // gets info of all the users
         $id = StaffDB::getIdLevel("Student Application and Learning Agreement");
-        $applics = StaffDB::getApplics($id);
+        $applics = StaffDB::getApplics();
         
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iApplics');
@@ -189,7 +188,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&student=".$student['userId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iApplics');
@@ -214,8 +213,6 @@ class StaffController extends PlonkController {
                 $this->id = PlonkSession::get('id');
             }
         }
-    }
-    
-    
+    }  
 
 }

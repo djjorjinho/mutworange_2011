@@ -91,6 +91,10 @@
             <span class="req" id="msgUserLevel">{$msgUserLevel|htmlentities}</span>
             {/option:oAdmin}
 	</div>
+        <div class="TRdiv">
+        <label for="cv"><span>Upload your signature here</span></label>
+        <input type="file" class="multi" maxlength="1" accept="jpg" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
+    </div>
 </fieldset>
         <div class="TRdiv">               
 		<input type="hidden" name="formAction" id="formRegister" value="doSubmit" />
