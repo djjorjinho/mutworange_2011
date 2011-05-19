@@ -2,21 +2,33 @@
  * EIS Application class
  * 
  */
-function EIS(){
-}
-EIS.prototype = {
+var eis = {
+		
+	rules : {},
+	
 	init : function(){
+		
 		this.loadDependencies();
+		
 	},
+	
 	loadDependencies : function(){
+		
+		$.ajaxSetup({async: false});
+		
 		jQuery.getScript('core/js/eis/jquery.json-2.2.min.js');
-		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
+		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
+		
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		// comment when done
 		this.loadQunit();
-		//this.runTests();
+		
+		$.ajaxSetup({async: true});
+	},
+	loadBlockUI : function(){
+		
 	},
 	loadQunit : function(){
 		var css_href = "core/js/eis/qunit/qunit.css";
@@ -31,13 +43,14 @@ EIS.prototype = {
 		jQuery("#qunit-testresult").show();
 		jQuery.getScript('core/js/eis/test/test.js');
 	},
-	rpcCall : function(func,args,callSuccess,callError){
+	rpcCall : function(func,args,callSuccess,callError,async){
 		jQuery.ajax({
 			url: "modules/stats/rpc.php",
 			type : "POST",
 			data : {method : func, 
 					params : jQuery.toJSON(args)},
 			dataType : 'json',
+			async : async,
 			success: function(obj){
 				if(obj.hasOwnProperty('error')){
 					callError(obj['error']);
@@ -49,8 +62,41 @@ EIS.prototype = {
 				callError({message:"CANT_CONNECT",exception:thrownError});
             }    
 		});
+	},
+	loadRules : function(){
+
+		this.rpcCall("getRules",{},
+				function(result){
+					eis.rules = result;
+	  			}, 
+				function(error){
+					console.log(error);
+				},false);
+	},
+	
+	fillCubes : function(){
+		var cubes = eis.rules.cubes;
+		
+		var len = cubes.length;
+		for(var i=0;i<len;i++){
+			var cube = cubes[i];
+			jQuery('#eis_option_tmpl').tmpl( 
+					{value : cube.table, text : cube.description} 
+					).appendTo('#eis_cube_select');
+			
+		}
+		
 	}
+	
 };
 
-var eis = new EIS();
+$.blockUI();
+
 eis.init();
+jQuery(document).ready(function($) {
+	
+	eis.loadRules();
+	eis.fillCubes();
+	$.unblockUI();
+});
+

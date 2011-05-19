@@ -2,11 +2,9 @@
 	<div class="leftcol">
 
 
-		<div>
-			<select size="1" name="Cubes">
-				<option selected value="Selecione">Selecione!</option>
-				<option value="2000">2000</option>
-				<option value="2001">2001</option>
+		<div id="eis_cube_container">
+			<select size="1" name="Cubes" id="eis_cube_select">
+				<option selected value="Selecione">Selecione</option>
 			</select>
 		</div>
 
@@ -143,5 +141,10 @@
 </div>
 
 <script type="text/javascript" src="core/js/jquery/jquery-1.5.js"></script>
+<script type="text/javascript" src="core/js/eis/jquery.blockUI.js"></script>
 <script type="text/javascript" src="core/js/eis/eis.app.js"></script>
 <ol id="qunit-tests"></ol>
+
+<script id="eis_option_tmpl" type="text/x-jquery-tmpl"> 
+    <option ${sel} value="${value}">${text}</option>
+</script>
