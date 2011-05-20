@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <title>ErasmusLine - {$siteTitle}</title>
 
     <link rel="stylesheet" href="./core/css/layout.css" type="text/css" media="screen" />

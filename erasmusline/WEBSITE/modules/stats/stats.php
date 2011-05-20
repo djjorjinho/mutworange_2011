@@ -32,7 +32,7 @@ class StatsController extends PlonkController {
     	//Metodo chamado a quando a pagina é chamada
         $this->checkLogged();
         $this->MainTplAssigns();
-        $this->fillTest();
+        //$this->fillTest();
         
     }
 	
