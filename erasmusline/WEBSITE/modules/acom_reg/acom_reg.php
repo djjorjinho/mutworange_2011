@@ -11,18 +11,16 @@ class acom_regController extends PlonkController {
         'acom_reg'
     );
     protected $actions = array(
-        'next'
-    );
-    protected $variables = array(
-        'hostInstitution', 'dateArrival', 'dateDeparture', 'student'
+        'next', 'submit', 'submitno'
     );
     private $error = '';
     private $position = '1';
+    private $mail = '';
 
     public function showacom_reg() {
         // Assign main properties
         $this->mainTpl->assign('pageTitle', 'Accomodation Registration');
-$this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
+        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
         <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
         <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
         <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="core/js/sorttable.js" type="text/javascript"></script>');
@@ -33,13 +31,27 @@ $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" ty
 
         if ($this->position == '1') {
             $this->pageTpl->assignOption('showSelectAccommodationYN');
-            $this->getDBdata(PlonkSession::get('id'));
+            $this->getDBdata(PlonkSession::get('id'), '');
         }
 
         if ($this->position == '2yes') {
             $this->mainTpl->assign('pageMeta', '');
             $this->mainTpl->assign('pageCSS', '');
             $this->pageTpl->assignOption('showSelectAccomodation');
+
+            $resAvail = acom_regDB::getResidences(PlonkSession::get('id'));
+            $this->fillResidence($resAvail, '');
+        }
+
+        if ($this->position == '2no') {
+            $this->pageTpl->assignOption('showAccomNo');
+            $this->getDBdata(PlonkSession::get('id'), '');
+        }
+
+        if ($this->position == '3') {
+            $this->pageTpl->assignOption('showComplete');
+
+            $this->pageTpl->assign('success', $this->mail->getContent());
         }
     }
 
@@ -49,14 +61,73 @@ $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" ty
                 $this->error = '<div class="errorPHP">Please Select An Option</div>';
             } elseif ($_POST['option1'] == 'con') {
                 $this->position = '2yes';
-                echo 'tes';
             } elseif ($_POST['option1'] == 'nocon') {
                 $this->position = '2no';
             }
         }
     }
 
-    public function getDBdata($name) {
+    public function doSubmit() {
+        /* Validation */
+        if (isset($_POST['startDate']) && isset($_POST['startDate']) && isset($_POST['startDate']) &&
+                isset($_POST['res']) && isset($_POST['stAcName']) && isset($_POST['stAcIban']) && isset($_POST['stAcBic'])) {
+
+            if ((is_valid_date($_POST['startDate'], FALSE)) && (is_valid_date($_POST['endDate'], FALSE))) {
+                if ($_POST['startDate']<$_POST['endDate']){
+                    $this->sendMail($_POST);
+                }else {
+                    $this->error = '<div class="errorPHP">Date of Departure should be after Date of Arrival</div>';
+                $this->position = '2yes';
+                }
+            } else {
+                $this->error = '<div class="errorPHP">Please enter a Valid Date</div>';
+                $this->position = '2yes';
+            }
+        } else {
+            $this->error = '<div class="errorPHP">Please fill All Fields</div>';
+            $this->position = '2yes';
+        }
+    }
+
+    public function doSubmitno() {
+        $name = PlonkSession::get('id');
+        $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/confirmNo.tpl');
+        $this->getDBdata($name, 'mail');
+        $post['sel'] = 'I confirm that I dont want to make a reservation for a student room';
+        $return = acom_regDB::SubmitTranscript($this->mail->getContent(), $name, $post);
+        if ($return == '1') {
+            $this->position = '3';
+            $this->error = '<div class="SuccessPHP"><p>Your Application Was Success</p></div>';
+        } else {
+            $this->position = '2no';
+            $this->error = '<div class="errorPHP"><p>' . $return . '</p><p>Try Sending it again</p></div>';
+        }
+    }
+
+    private function sendMail($post) {
+        $name = PlonkSession::get('id');
+        $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/confirm.tpl');
+        $this->getDBdata($name, 'mail');
+        $this->fillResidence(acom_regDB::getResidence($name, $post['res']), 'mail');
+        $this->mail->assign('startDate', $post['startDate']);
+        $this->mail->assign('endDate', $post['endDate']);
+        $this->mail->assign('acName', $post['stAcName']);
+        $this->mail->assign('stiban', $post['stAcIban']);
+        $this->mail->assign('stbic', $post['stAcBic']);
+        $return = acom_regDB::SubmitTranscript($this->mail->getContent(), $name, $post);
+        if ($return == '1') {
+            $this->position = '3';
+            $this->error = '<div class="SuccessPHP"><p>Your Application Was Success</p></div>';
+        } else {
+            $this->position = '2yes';
+            $this->error = '<div class="errorPHP"><p>' . $return . '</p><p>Try Sending it again</p></div>';
+        }
+    }
+
+    private function getDBdata($name, $act) {
+        if ($act == 'mail') {
+            $this->pageTpl = $this->mail;
+        }
 
 
         $query = acom_regDB::getStudentInfo($name);
@@ -75,6 +146,70 @@ $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" ty
                 $this->pageTpl->assign('seInName', $value['instName']);
             }
         }
+    }
+
+    private function fillResidence($resAvail, $act) {
+        if ($act == 'mail') {
+            $this->pageTpl = $this->mail;
+        }
+        $this->pageTpl->setIteration('iResidence');
+
+        $i = 0;
+        while (isset($resAvail[$i]['residenceId'])) {
+            $row = '
+              <div class="accomodationList"><p class="acHead"><input {$Acselection} class="validate[required]"  type="radio" id="ac' . $i . '" name="res" value="' . $resAvail[$i]['residenceId'] . '"/><label for="ac' . $i . '" class="acHead"><b> ' . $resAvail[$i]['price'] . '&#128</b> '
+                    . $resAvail[$i]['city'] . ', ' . $resAvail[$i]['streetNr'] . ', PC : ' . $resAvail[$i]['postalCode'] . '</label></p><p>'
+                    . $resAvail[$i]['beds'] . ' beds, ';
+            foreach ($resAvail[$i] as $key => $value) {
+
+                if ($key == "kitchen" || $key == "bathroom") {
+                    if ($value == 1) {
+                        $row .= 'Personal ' . $key . ', ';
+                    } else {
+                        $row .= 'Communal ' . $key . ', ';
+                    }
+                }
+                if ($key == "water" || $key == "elektricity" || $key == "television" || $key == "internet") {
+                    if ($value == 1) {
+                        $row .= ucfirst($key) . " available but not included in the price, ";
+                    } else if ($value == 2) {
+                        $row .= ucfirst($key) . " available and included in the price, ";
+                    } else {
+                        $row .= ucfirst($key) . " not available, ";
+                    }
+                }
+
+                if ($key == "elektricity") {
+                    if ($value == 1) {
+                        $row .= "Electricity available but not included in the price";
+                    } else if ($value == 2) {
+                        $row .= "Electricity available and included in the price";
+                    } else {
+                        $row .= "Electricity not available ";
+                    }
+                }
+            }
+            $this->pageTpl->assignIteration('resid', $row . '</p></div>');
+            $this->pageTpl->refillIteration('iResidence');
+            $i++;
+        }
+
+        if ($act == 'mail') {
+            $this->pageTpl->assign('Acselection', 'checked');
+        } else {
+            $this->pageTpl->assign('Acselection', '');
+        }
+
+
+        if (!isset($resAvail[0]['residenceId'])) {
+            $this->pageTpl->assignIteration('resid', '<p class="minHead"><b>No Rooms Available</b></p>');
+            $this->pageTpl->refillIteration('iResidence');
+        }
+        $this->pageTpl->parseIteration('iResidence');
+        $instInfo = acom_regDB::getInst(PlonkSession::get('id'));
+        $this->pageTpl->assign('iban', $instInfo[0]['iBan']);
+        $this->pageTpl->assign('bic', $instInfo[0]['bic']);
+        $this->pageTpl->assign('insName', $instInfo[0]['instName']);
     }
 
 }
