@@ -14,7 +14,7 @@ class InfoxDB {
     
     public static function getURL($id) {
     	$db = PlonkWebsite::getDB();
-    	$rs = $db->retrieveOne("SELECT url FROM institutions WHERE instEmail = '".$id."'");
+    	$rs = $db->retrieveOne("SELECT url FROM institutions WHERE instId = '".$id."'");
       if (!empty($rs)) {
         return $rs['url'];
       } else

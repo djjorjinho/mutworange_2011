@@ -7,7 +7,6 @@ $db = new DB();
 if (isset($_REQUEST['json'])) {
   $json = str_replace("'",'"',$_REQUEST['json']);
   $obj = json_decode($json);
-
   if ($db->checkTable($obj->table)) {
     if (is_array($obj->data)) {
 	  for ($i = 0; $i < count($obj->data);$i++) {
@@ -31,7 +30,7 @@ if (isset($_REQUEST['json'])) {
     } else {
         $field = null;		//Variable for the fieldnames which will be written to db
 		$row = null;			//Variable for the fieldvalues which will be written to db
-        foreach($obj->data[$i] as $key => $value) {
+        foreach($obj->data as $key => $value) {
 		  if (!empty($row)) {
 		    $field .= ",";
 		    $row .= ",";
@@ -40,7 +39,7 @@ if (isset($_REQUEST['json'])) {
 		  $row .= "'" . $value . "'";
 		}
 		$db->insertData($field, $row);
-    }
+	}
   }
   if ($db->checkInsert()) {
     echo "Data Transfer succeed";

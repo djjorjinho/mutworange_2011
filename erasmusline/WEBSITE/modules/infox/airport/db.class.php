@@ -27,6 +27,17 @@ class DB {
     return false;
   }
   
+  public function checkUserEntry($mail) {
+    $SQL = "SELECT * FROM users WHERE email = '".$mail."'";
+	$rs = mysql_query($SQL);
+	
+	$row = mysql_fetch_assoc($rs);
+	if (empty($row))
+	  return true;
+	else
+	  return false;
+  }
+  
   function insertData($key, $value) {
     $SQL = "INSERT INTO ".$this->tbl." (".$key.") VALUES (".$value.")";
     mysql_query($SQL);
