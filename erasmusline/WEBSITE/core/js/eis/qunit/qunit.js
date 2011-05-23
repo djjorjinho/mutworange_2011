@@ -795,7 +795,7 @@ function done() {
 }
 
 function validTest( name ) {
-	return true;
+	//return true;
 	var filter = config.filter,
 		run = false;
 

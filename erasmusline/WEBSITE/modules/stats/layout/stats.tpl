@@ -6,9 +6,9 @@
 			<div>
 				Cubes
 			</div>
-			<select size="1" name="Cubes" title="OLAP Cubes / KPI"
+			<select name="Cubes" title="OLAP Cubes / KPI"
 				onchange="eis.fillDimensionsAndMeasures();">
-				<option selected="selected" value="">Selecione</option>
+				<option selected="selected" value="">Select</option>
 			</select>
 		</div>
 
@@ -44,44 +44,44 @@
 		
 		<div id="eis_highlight_container">
 			<div>
-				Highlight
+				Highlight Values
 			</div>
 			<div id="eis_highlight">
+				<select name="Highlight" title="Highlight Values">
+					<option selected="selected" value="ge">Greater/Equal</option>
+					<option value="le">Less/Equal</option>
+					<option value="lt">Less</option>
+					<option value="gt">Greater</option>
+					<option value="qe">Equal</option>
+				</select>
+				<input type="text" title="Highlight Value input"/>
+				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
+				<a onclick="return false;">Add</a>
 			</div>
 		</div>
 		
 		
 	</div>
 	<div class="rightcol">
-		<div>
-			<label>label menu</label>
-		</div>
-
-		<div>
-			<label>label colunas</label>
-		</div>
-
-		<div>
-			<label>label linhas</label>
-		</div>
-
-		<div>
-			<label>label filtros</label>
-		</div>
-		
-		
-		//Aqui estava a testar mas mais vale ignorar e fazer do 0
 		
 		<div class="workspace_fields">
 			<div class="fields_list" title="COLUMNS">
-				<div class="fields_list_header i18n">Columns</div>
+				<div class="fields_list_header i18n">
+				Columns 
+					<a onclick="eis.addToColumns();return false;">+</a>
+
+				</div>
 				<div class="fields_list_body columns">
 					<ul class="connectable ui-sortable"></ul>
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="fields_list" title="ROWS">
-				<div class="fields_list_header i18n">Rows</div>
+				<div class="fields_list_header i18n">
+				Rows 
+					<a onclick="eis.addToRows();return false;">+</a> 
+
+				</div>
 				<div class="fields_list_body rows">
 					<ul class="connectable ui-sortable">
 					</ul>
@@ -97,14 +97,20 @@
 				<div class="clear"></div>
 			</div>
 		</div>
-
+		
+		
+		
 	</div>
 </div>
 
 <script type="text/javascript" src="core/js/jquery/jquery-1.5.js"></script>
 <script type="text/javascript" src="core/js/eis/jquery.blockUI.js"></script>
 <script type="text/javascript" src="core/js/eis/eis.app.js"></script>
-<ol id="qunit-tests"></ol>
+<script type="text/javascript"> 
+var _userid = {$userid};
+var _userlevel = '{$userlevel}';
+</script>
+<ol id="qunit-tests"><li></li></ol>
 
 <script id="eis_option_tmpl" type="text/x-jquery-tmpl"> 
     <option ${sel} value="${value}">${text}</option>

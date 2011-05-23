@@ -9,9 +9,9 @@
 
 
     <div class="leftAlDiv">
-        
+
         <p class="minHead">Student Information</p>
-          <div class="TRdiv"><span class="spleft">First Name :</span><span class="spright">{$stFirstName}</span></div>
+        <div class="TRdiv"><span class="spleft">First Name :</span><span class="spright">{$stFirstName}</span></div>
         <div class="TRdiv"><span class="spleft">Last Name :</span><span class="spright">{$stLastName}</span></div>
         <div class="TRdiv"><span class="spleft">Gender :</span><span class="spright">{$stGender}</span></div>
         <div class="TRdiv"><span class="spleft">E-mail :</span><span class="spright">{$stMail}</span></div>
@@ -19,67 +19,99 @@
     <div class="rightAlDiv">
 
 
-<div><p class="minHead">Sending Institution Information</p></div>
+        <div><p class="minHead">Sending Institution Information</p></div>
         <div class="TRdiv"><span class="spleft">Institution Name :</span><span class="spright">{$seInName}</span></div>
- <div><p class="minHead">Receiving Institution Information</p></div>
+        <div><p class="minHead">Receiving Institution Information</p></div>
         <div class="TRdiv"><span class="spleft">Institution Name :</span><span class="spright">{$reInName}</span></div>
-        </div>
-  
-           
+    </div>
+
+
 
     <div class="alCenterDiv">
-                <p class="minHead">Accommodation</p>
+        <p class="minHead">Accommodation</p>
 
         <input class="validate[required]" type="radio" id="radio1" name="option1" value="nocon"/><label for="radio1">I confirm that I don't want to make a reservation for a student room.</label><br/>
         <input class="validate[required]"  type="radio" id="radio2" name="option1" value="con"/><label for="radio2">I confirm that I want to make a reservation for a student room,<br/>organized by the student accommodation office and I agree with the following stipulations</label>
-     <p><input type="hidden" name="formAction" id="formValidate" value="doNext" />
+        <p><input type="hidden" name="formAction" id="formValidate" value="doNext" />
             <input class="button" name="postForm" id="postForm" type="submit" value="Next"/></p>
-    
+
     </div>
 
-   </form>
-   
+</form>
 {/option:showSelectAccommodationYN}
 {option:showSelectAccomodation}
 <form id="form1" action="" method="post" enctype="multipart/form-data" >
-    <p>The rooms are available for reservation from:</p> 
-    <select id="option" class="validate[required]" ><option></option><option value="1">February / March until June</option><option value="2">September / October until January</option></select>
-    
-
- 
-    <div class="TRdiv"><span class="spleft"><label for="date"> Arrival :  </label</span><span class="spright"><input type="text" name="startDate"  id="startDate" class="validate[required,custom[date]] text-input"  /></span></div>
-
-    <div class="TRdiv"><label for="date"> Departure :  </label><input type="text" name="endate"  id="endate" class="validate[required,custom[date]] text-input"  /></div>
-
-
-<p>- It is very important to state your arrival and departure day, the room reservations will happen for the period indicated.</p>
-
-<p>- There are 3 different categories.  Choose one from the below :</p>
-
-
-Please select the type of room you prefer :
-<select>
- <option value=""></option>
- 
-</select>
+    <div class="leftAlDiv">
+        <p class="minHead">Arrival and Departure Information : </p> 
+        <div class="TRdiv"><p><span class="spleft"><label for="startDate"> Arrival : </label></span><span class="spright"><input type="text" name="startDate"  id="startDate" class="validate[required,custom[date]] text-input"  /></span></p></div>
+        <div class="TRdiv"><p><span class="spleft"><label for="endate"> Departure :  </label></span><span class="spright"><input type="text" name="endDate"  id="endate" class="validate[required,custom[date]] text-input"  /></span></p></div>
 
 
 
-<p>- If I don't pay the deposit at least one month before my start of the period, I won't get a room.</p>
+        <p class="minpar">I agree to pay the rent of one month, one month before my start of the period in order to confirm 
+            my accommodation reservation. At the end of the exchange period the guarantee will be refunded 
+            to students after inspection of the room, at the very latest 14 days after departure.</p>
+        <p class="minpar">If I don't pay the deposit at least one month before my start of the period, I won't get a room guaranteed by 
+            {$insName}.<br/> <b>Payment has to be made at : <br/>
+                IBAN : {$iban}<br/>BIC : {$bic}<br/>International bank transfer costs are at your own expenses.</b></p>
 
-<p>-  :</p>
+        <p class="minpar">Arriving before/Leaving after the reservation period is at your own risk. We do not automatically extend the period of reservation if a student wants to stay longer. </p>
+        <p class="minpar">After inspection of the room, {$insName} can refund the deposit by bank transfer on the following account :
+        </p>
+        <div class="TRdiv"><span class="spleft" >Account Holder Name:</span><span class="spright"><input class="validate[required]" type="text" name="stAcName"  id="startDate"/></span></div>
+        <div class="TRdiv"><span class="spleft">IBAN :</span><span class="spright"><input class="validate[required]" type="text" name="stAcIban"  id="startDate"/></span></div>
+        <div class="TRdiv" ><span class="spleft">BIC :</span><span class="spright"><input class="validate[required]" type="text" name="stAcBic"  id="startDate"/></span></div>
 
 
 
- 
-   <p>&nbsp;</p>  <p>&nbsp;</p>
+    </div>
+    <div class="rightAlDiv">
+        <p class="minHead">Please select the type of room you prefer :</p>
+        {iteration:iResidence}{$resid}{/iteration:iResidence}
+    </div>
 
 
 
-
-
-    <div align="center"><p><input type="hidden" name="formAction" id="formValidate" value="doShit" />
+    <div class="alCenterDiv"><p><input type="hidden" name="formAction" id="formValidate" value="doSubmit" />
             <input class="button" name="postForm" id="postForm" type="submit" value="Submit Form"/></p>
     </div>  
 </form>
 {/option:showSelectAccomodation}
+
+{option:showAccomNo}
+<form id="form1" action="" method="post" enctype="multipart/form-data" >
+
+<div class="leftAlDiv">
+
+        <p class="minHead">Student Information</p>
+        <div class="TRdiv"><span class="spleft">First Name :</span><span class="spright">{$stFirstName}</span></div>
+        <div class="TRdiv"><span class="spleft">Last Name :</span><span class="spright">{$stLastName}</span></div>
+        <div class="TRdiv"><span class="spleft">Gender :</span><span class="spright">{$stGender}</span></div>
+        <div class="TRdiv"><span class="spleft">E-mail :</span><span class="spright">{$stMail}</span></div>
+    </div>
+    <div class="rightAlDiv">
+
+
+        <div><p class="minHead">Sending Institution Information</p></div>
+        <div class="TRdiv"><span class="spleft">Institution Name :</span><span class="spright">{$seInName}</span></div>
+        <div><p class="minHead">Receiving Institution Information</p></div>
+        <div class="TRdiv"><span class="spleft">Institution Name :</span><span class="spright">{$reInName}</span></div>
+    </div>
+
+
+
+    <div class="alCenterDiv">
+        <p class="minHead">Accommodation</p>
+
+        <p><b>I confirm that I don't want to make a reservation for a student room.</b></p>
+        <p><input type="hidden" name="formAction" id="formValidate" value="doSubmitno" />
+            <input class="button" name="postForm" id="postForm" type="submit" value="Submit"/></p>
+
+    </div>
+</form>
+{/option:showAccomNo}
+
+
+{option:showComplete}
+{$success}
+{/option:showComplete}

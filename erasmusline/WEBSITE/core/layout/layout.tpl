@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
     <title>ErasmusLine - {$siteTitle}</title>
 
     <link rel="stylesheet" href="./core/css/layout.css" type="text/css" media="screen" />
