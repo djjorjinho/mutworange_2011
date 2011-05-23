@@ -11,9 +11,37 @@ var eis = {
 	selectedItem : "",
 	
 	init : function(){
+		$.blockUI();
 		
 		this.loadDependencies();
+		$.ajaxSetup({async: true});
 		
+		this.loadLayout();
+	},
+	
+	loadLayout : function(){
+		
+		jQuery(document).ready(function($) {
+			
+			eis.loadRules();
+			eis.fillCubes();
+			$('#colorSelector').ColorPicker({
+				color: '#0000ff',
+				onShow: function (colpkr) {
+					$(colpkr).fadeIn(500);
+					return false;
+				},
+				onHide: function (colpkr) {
+					$(colpkr).fadeOut(500);
+					return false;
+				},
+				onChange: function (hsb, hex, rgb) {
+					$('#colorSelector div').css('backgroundColor', '#' + hex);
+				}
+			});
+			
+			$.unblockUI();
+		});
 	},
 	
 	loadDependencies : function(){
@@ -26,12 +54,34 @@ var eis = {
 		
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
+		this.loadColorPicker();
+		this.loadEditableSelect();
+		
 		// comment when done
 		this.loadQunit();
-		
-		$.ajaxSetup({async: true});
 	},
-
+	
+	loadEditableSelect : function(){
+		var css_href = "core/js/editableselect/jquery.editable-select.css";
+		var head = document.getElementsByTagName('head')[0]; 
+		jQuery(document.createElement('link')).attr({type: 'text/css', 
+				href: css_href, rel: 'stylesheet', 
+		    	media: 'screen'}).appendTo(head);
+		
+		jQuery.getScript('core/js/editableselect/'+
+				'jquery.editable-select.pack.js');
+	},
+	
+	loadColorPicker : function(){
+		var css_href = "core/js/colorpicker/colorpicker.css";
+		var head = document.getElementsByTagName('head')[0]; 
+		jQuery(document.createElement('link')).attr({type: 'text/css', 
+				href: css_href, rel: 'stylesheet', 
+		    	media: 'screen'}).appendTo(head);
+		
+		jQuery.getScript('core/js/colorpicker/colorpicker.js');
+	},
+	
 	loadQunit : function(){
 		var css_href = "core/js/eis/qunit/qunit.css";
 		var head = document.getElementsByTagName('head')[0]; 
@@ -179,19 +229,42 @@ var eis = {
 	selectListItem : function(itm){
 		eis.selectedItem = itm;
 		console.log("selected: "+itm);
+	},
+	
+	addToColumns : function(){
+		if(eis.selectedItem == "") return;
+		
+		// TODO validation
+		
+		eis.scenario.columns.push(eis.selectedItem);
+		
+		eis.selectedItem = "";
+	},
+	
+	addToRows : function(){
+		if(eis.selectedItem == "") return;
+		
+		// TODO validation
+		
+		eis.scenario.rows.push(eis.selectedItem);
+		
+		eis.selectedItem = "";
+	},
+	
+	getHighlightColor : function(){
+		return $('#colorSelector div').css('backgroundColor');
+	},
+	
+	paintScenario : function(){
+		
 	}
 	
 };
 
 
 // main app cycle
-$.blockUI();
+
 
 eis.init();
-jQuery(document).ready(function($) {
-	
-	eis.loadRules();
-	eis.fillCubes();
-	$.unblockUI();
-});
+
 

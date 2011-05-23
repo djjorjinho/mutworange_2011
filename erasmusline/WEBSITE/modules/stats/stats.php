@@ -23,17 +23,29 @@ class StatsController extends PlonkController {
         
         $this->mainTpl->assign('pageJava', "");
         
+        
+        
+        
         $this->mainTpl->assign('pageMeta', 
         	'<link rel="stylesheet" href="core/css/stats.css"' .
         		' type="text/css" media="screen"/>');
     }
 
+    public function pageTplAssigns(){
+    	$id = PlonkSession::exists('id') ? PlonkSession::get('id') : 0;
+        $this->pageTpl->assign("userid",$id);
+        
+        $ul = PlonkSession::exists('userLevel') ? 
+        		PlonkSession::get('userLevel') : '';
+       	$this->pageTpl->assign("userlevel",$ul);
+    }
+    
     public function showStats() {
     	//Metodo chamado a quando a pagina é chamada
         $this->checkLogged();
         $this->MainTplAssigns();
-        //$this->fillTest();
-        
+        $this->pageTplAssigns();
+        //$this->fillTest();       
     }
 	
     
