@@ -32,7 +32,8 @@ $dconfig = array_merge($options['daemonconfig'],array(
     'usePEAR' => false,
 ));
 
-mkdir(dirname($dconfig['logLocation']),0777,true);
+if(!is_dir(dirname($dconfig['logLocation'])))
+	mkdir(dirname($dconfig['logLocation']),0777,true);
 
 //print_r($dconfig);
 

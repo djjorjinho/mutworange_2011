@@ -97,6 +97,11 @@ class ObjectCache{
 		$this->store($key,$result,$ttl);
 		return $result;
 	}
+	
+	function deleteCache($key){
+		unset($this->cache[$key]);
+	}
+	
 }
 
 ?>
