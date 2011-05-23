@@ -33,3 +33,16 @@ asyncTest( "json rpc call", function() {
 	 
 	  setTimeout( start, 2000 );
 });
+
+test("selected items",function(){
+	
+	jQuery('#eis_cube_container select').val('fact_efficiency');
+	
+	eis.fillDimensionsAndMeasures();
+	
+	eis.selectListItem('measure.M1');
+	eis.addToColumns();
+	
+	equals('measure.M1',eis.scenario.columns[0]);
+	
+});

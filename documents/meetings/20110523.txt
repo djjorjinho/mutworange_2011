@@ -1,0 +1,36 @@
+= Meeting Report  =
+
+Subject: 
+Date: 23/05/2011
+Start Hour: 18:05 GMT
+End Hour: 19:00 GMT
+
+== Personnel ==
+Coordinator: Daniel Lopes
+Transcriber: Pedro Ferreira
+
+Attending: Pedro Ferreira, Daniel Lopes, Arne Reimer,
+Nathan Assche, Stéphane Polet, 
+ Stefanos Mountrakis, Arne Lipfert, 
+ Gudmundur Hallgrimsson
+
+Excused: Ina Ivanova, Aggeliki Katsiampouri
+
+Absent: Thordur Bjornsson, Zvezdomir Tsvyatkov
+
+== Report ==
+
+Discussion:
+- What did the team do this past week
+- What does the team plan to do next
+- Any doubts/issues about their package
+- Is the integration going along well?
+- How can we test the application?
+- Given the time we have left, do we have to sacrifice features?
+
+
+=== Discussion ===
+
+- Some countries are almost finished and will begin working on the report
+- Next meeting this wednesday at 6AM GMT to work out the infox functionalities and integration
+- Some features may be trimmed from a few packages

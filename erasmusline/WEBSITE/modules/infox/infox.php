@@ -10,7 +10,33 @@ class InfoxController extends PlonkController {
     protected $debugMsg = "";
 
     public function showInfox() {
+	    if (PlonkFilter::getGetValue('debug') == 1) {
+		    $this->debug = true;
+		}
+// set JSON String
+		if (PlonkFilter::getPostValue('table') != null) {
+			if (PlonkFilter::getPostValue('admin') != null) {
+				$_POST['data'] = array();
+				for ($i = 0; $i < count($_POST['row']); $i++) {
+					array_push($_POST['data'], InfoxDB::getRowFromDB(PlonkFilter::getPostValue('table'), $_POST['row'][$i]));
+				}
+			}
+			$array = array('table' => PlonkFilter::getPostValue('table'), 'data' => $_POST['data']);
+			$json = json_encode($array);
+			$json = str_replace('"', "'", $json);
+//          $json = str_replace("''","'",$json);
+    	    // if university is set
+			if (PlonkFilter::getPostValue('idUni')) {
+				PlonkSession::set('infoxJSON', $json);
+				PlonkWebsite::redirect('index.php?module=infox&view=transfer&transfer=1&idUni='.PlonkFilter::getPostValue('idUni'));
+			}
+		} else if (PlonkSession::exists('infoxJSON'))
+			$json = PlonkSession::get('infoxJSON');
+		else
+			PlonkWebsite::redirect('index.php');
+	
         $this->mainTpl->assign('pageTitle', 'ERASMUS line');
+
         if (PlonkSession::exists('id')) {
 
             $this->mainTpl->assign('breadcrumb', 'Home ==> Infox');
@@ -24,22 +50,6 @@ class InfoxController extends PlonkController {
             }
             $this->pageTpl->parseIteration('iUniversity');
 
-// set JSON String
-            if (PlonkFilter::getPostValue('table') != null) {
-                if (PlonkFilter::getPostValue('admin') != null) {
-                    $_POST['data'] = array();
-                    for ($i = 0; $i < count($_POST['row']); $i++) {
-                        array_push($_POST['data'], InfoxDB::getRowFromDB(PlonkFilter::getPostValue('table'), $_POST['row'][$i]));
-                    }
-                }
-                $array = array('table' => PlonkFilter::getPostValue('table'), 'data' => $_POST['data']);
-                $json = json_encode($array);
-                $json = str_replace('"', "'", $json);
-//          $json = str_replace("''","'",$json);
-            } else if (PlonkSession::exists('infoxJSON'))
-                $json = PlonkSession::get('infoxJSON');
-            else
-                PlonkWebsite::redirect('index.php');
             $this->pageTpl->assign('json', $json);
 
             if ($this->debug) {
@@ -56,6 +66,12 @@ class InfoxController extends PlonkController {
     }
 
     public function showTransfer() {
+	    if (PlonkFilter::getGetValue('debug') == 1) {
+		    $this->debug = true;
+		}
+		if (PlonkFilter::getGetValue('transfer') == 1) {
+		    $this->transfer();
+		}
         if (curl::getHTTPCode() == 200) {
             $this->pageTpl->assign('success', curl::getResult());
         } else {
@@ -70,7 +86,6 @@ class InfoxController extends PlonkController {
     }
 
     public function showAdmin() {
-        //Plonk::dump('efsd');
         $this->mainTpl->assign('breadcrumb', 'Home ==> Infox ==> Admin');
         $tables = InfoxDB::getAllTables();
         $this->pageTpl->setIteration('iTables');
@@ -111,15 +126,61 @@ class InfoxController extends PlonkController {
                 PlonkSession::set('infoxJSON', PlonkFilter::getPostValue('json'));
                 PlonkWebsite::redirect('index.php?module=infox');
             } else {
-                PlonkSession::remove('infoxJSON');
+				if (PlonkSession::exists('infoxJSON')) {
+					$json = PlonkSession::get('infoxJSON');
+					PlonkSession::remove('infoxJSON');
+				} else {
+					$json = PlonkFilter::getPostValue('json');
+				}
+				if (PlonkFilter::getPostValue('idUni')) {
+				  $idUni = PlonkFilter::getPostValue('idUni');
+				} else {
+				  if (PlonkFilter::getGetValue('idUni'))
+				    $idUni = PlonkFilter::getGetValue('idUni');
+				}
                 curl::start();
-                curl::setOption(CURLOPT_URL, InfoxDB::getURL(PlonkFilter::getPostValue('idUni')) . "/modules/infox/airport/airport.php");
+                curl::setOption(CURLOPT_URL, InfoxDB::getURL($idUni) . "/modules/infox/airport/airport.php");
                 curl::setOption(CURLOPT_POST, 1);
                 curl::setOption(CURLOPT_RETURNTRANSFER, true);
                 curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
-                curl::setOption(CURLOPT_POSTFIELDS, "json=" . PlonkFilter::getPostValue('json'));
+                curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
                 curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
                 curl::execute();
+
+                if ($this->debug) {
+                    $this->debugMsg['curl'] = curl::getInfo();
+                }
+            }
+        }
+    }
+
+    public function transfer() {
+        if (PlonkSession::exists('id')) {
+            if (PlonkFilter::getGetValue('idUni') == 0) {
+                PlonkSession::set('infoxJSON', PlonkFilter::getPostValue('json'));
+                PlonkWebsite::redirect('index.php?module=infox');
+            } else {
+				if (PlonkSession::exists('infoxJSON')) {
+					$json = PlonkSession::get('infoxJSON');
+					PlonkSession::remove('infoxJSON');
+				} else {
+					$json = PlonkFilter::getPostValue('json');
+				}
+				if (PlonkFilter::getPostValue('idUni')) {
+				  $idUni = PlonkFilter::getPostValue('idUni');
+				} else {
+				  if (PlonkFilter::getGetValue('idUni'))
+				    $idUni = PlonkFilter::getGetValue('idUni');
+				}
+                curl::start();
+                curl::setOption(CURLOPT_URL, InfoxDB::getURL($idUni) . "/modules/infox/airport/airport.php");
+                curl::setOption(CURLOPT_POST, 1);
+                curl::setOption(CURLOPT_RETURNTRANSFER, true);
+                curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
+                curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
+                curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                curl::execute();
+
                 if ($this->debug) {
                     $this->debugMsg['curl'] = curl::getInfo();
                 }

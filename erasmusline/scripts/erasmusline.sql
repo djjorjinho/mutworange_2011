@@ -303,6 +303,8 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `url` varchar(250) NOT NULL,
   `scale` int(11) NOT NULL,
   `digital` boolean,
+  `iBan` varchar(25) DEFAULT NULL,
+  `bic` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`instId`),
   UNIQUE KEY `instEmail_UNIQUE` (`instEmail`),
   KEY `fk_Institutions_Country1` (`instCountry`)
