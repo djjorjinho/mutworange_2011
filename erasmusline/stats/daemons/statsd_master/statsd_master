@@ -5,6 +5,8 @@ $sep = DIRECTORY_SEPARATOR;
 $path = realpath(dirname(__FILE__)."${sep}..${sep}..${sep}");
 set_include_path($ipath.":".$path);
 
+date_default_timezone_set('UTC');
+
 require_once("lib/System/Daemon.php");                 // Include the Class
 require_once("lib/LooPHP/Autoload.php");
 LooPHP_Autoloader::register();
@@ -26,6 +28,7 @@ $dconfig = array_merge($options['daemonconfig'],array(
     'appRunAsUID' => posix_getuid(),
     'logLocation' => '/tmp/erasmusline/statsd_master/statsd_master.log',
     'appPidLocation' => '/tmp/erasmusline/statsd_master/statsd_master.pid',
+    'usePEAR' => false,
 ));
 
 mkdir(dirname($dconfig['logLocation']),0777,true);
