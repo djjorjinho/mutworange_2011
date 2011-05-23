@@ -15,7 +15,8 @@ class Functions {
         }
         return $string;
     }
-
+    
+    
 
 }
 
