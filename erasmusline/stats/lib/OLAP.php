@@ -203,12 +203,16 @@ class OLAP{
 	
 	private function processAggregatorOp($op,$field,$column,&$fields){
 		$aggregator = $op;
+		
 		if($op=='distinct'){
 			if($fields[0]!='distinct') array_unshift($fields, $op);
 			$aggregator='';
+		}elseif($op == 'sum-dis'){
+			$aggregator = 'sum';
+			$auxop = 'distinct';
 		}
 		
-		array_push($fields,"${aggregator}(${field}) as ${column}");
+		array_push($fields,"${aggregator}(${auxop} ${field}) as ${column}");
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,

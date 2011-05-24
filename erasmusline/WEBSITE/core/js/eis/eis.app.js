@@ -304,6 +304,7 @@ var eis = {
 		function(result){
 				eis.scenario = result;
 				jQuery('#eis_cube_container select').val(result.cube);
+				eis.fillDimensionsAndMeasures();
 				eis.paintScenario();
 				eis.runScenario();
 				$.unblockUI();

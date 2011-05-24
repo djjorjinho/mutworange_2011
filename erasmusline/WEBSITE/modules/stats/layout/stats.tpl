@@ -56,7 +56,7 @@
 				</select>
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
-				<a onclick="return false;">Add</a>
+				<button onclick="eis.addFilter(this);">Add</button>
 			</div>
 		</div>
 		
@@ -83,8 +83,7 @@
 			<div class="fields_list" title="COLUMNS">
 				<div class="fields_list_header i18n">
 				Columns 
-					<a onclick="eis.addToColumns();return false;">+</a>
-
+					<button onclick="eis.addToColumns();">+</button>
 				</div>
 				<div class="fields_list_body columns">
 					<ul class="connectable ui-sortable"></ul>
@@ -94,8 +93,7 @@
 			<div class="fields_list" title="ROWS">
 				<div class="fields_list_header i18n">
 				Rows 
-					<a onclick="eis.addToRows();return false;">+</a> 
-
+					<button onclick="eis.addToRows();">+</button>
 				</div>
 				<div class="fields_list_body rows">
 					<ul class="connectable ui-sortable">
