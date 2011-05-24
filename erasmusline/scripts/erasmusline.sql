@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Genereertijd: 13 Mei 2011 om 21:44
+-- Genereertijd: 24 Mei 2011 om 12:42
 -- Serverversie: 5.1.53
 -- PHP-Versie: 5.3.4
 
@@ -21,8 +21,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP DATABASE `erasmusline`;
 CREATE DATABASE `erasmusline` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `erasmusline`;
-/* use create_usel.sql on vanilla install. only needs to be run once*/
-/*GRANT ALL PRIVILEGES  ON erasmusline.* TO 'erasmusline'@'%' IDENTIFIED BY 'orange' WITH GRANT OPTION;*/
 
 -- --------------------------------------------------------
 
@@ -302,21 +300,22 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `traineeOrStudy` int(11) NOT NULL,
   `url` varchar(250) NOT NULL,
   `scale` int(11) NOT NULL,
-  `digital` boolean,
+  `digital` tinyint(1) DEFAULT NULL,
   `iBan` varchar(25) DEFAULT NULL,
   `bic` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`instId`),
   UNIQUE KEY `instEmail_UNIQUE` (`instEmail`),
   KEY `fk_Institutions_Country1` (`instCountry`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `institutions`
 --
 
-INSERT INTO `institutions` (`instId`, `instEmail`, `instName`, `instStreetNr`, `instCity`, `instPostalCode`, `instCountry`, `instTel`, `instFax`, `instDescription`, `instWebsite`, `traineeOrStudy`, `url`, `scale`) VALUES
-(6, 'info@kahosl.be', 'KAHO Sint-Lieven', 'Gebroeders Desmetstraat', 'Ghent', '9000', 'BEL', '2243223', '23344323', 'sdfs', 'www.kahosl.be', 1, 'sdf', 20),
-(7, 'info@kaalst.be', 'KAHO Aalst', 'Aalstrstraat 27', 'Aalst', '9000', 'BEL', '2243223', '23344323', 'sdfsdf', 'www.kahosl.be', 1, 'sdf', 20);
+INSERT INTO `institutions` (`instId`, `instEmail`, `instName`, `instStreetNr`, `instCity`, `instPostalCode`, `instCountry`, `instTel`, `instFax`, `instDescription`, `instWebsite`, `traineeOrStudy`, `url`, `scale`, `digital`, `iBan`, `bic`) VALUES
+(6, 'info@kahosl.be', 'KAHO Sint-Lieven', 'Gebroeders Desmetstraat', 'Ghent', '9000', 'BEL', '2243223', '23344323', 'sdfs', 'www.kahosl.be', 1, 'sdf', 20, NULL, NULL, NULL),
+(7, 'info@kaalst.be', 'KAHO Aalst', 'Aalstrstraat 27', 'Aalst', '9000', 'BEL', '2243223', '23344323', 'sdfsdf', 'www.kahosl.be', 1, 'sdf', 20, NULL, NULL, NULL),
+(8, 'info@kul.pt', 'Katholieke Universiteit Leuven', 'leuvense steenweg 99', 'Leuven', '3000', 'ESP', '2243223', '23344323', 'An aweomse school!', 'www.kul.pt', 1, 'unknown', 20, 1, '0000000000', '0000000000');
 
 -- --------------------------------------------------------
 
