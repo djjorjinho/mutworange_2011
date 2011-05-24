@@ -1042,7 +1042,8 @@ class System_Daemon
 
         // Determine what process the log is originating from and forge a logline
         //$str_ident = '@'.substr(self::_whatIAm(), 0, 1).'-'.posix_getpid();
-        $str_date  = '[' . date('M d H:i:s') . ']';
+        $dt = new DateTime();
+        $str_date  = '[' . $dt->format('M d H:i:s') . ']';
         $str_level = str_pad(self::$_logLevels[$level] . '', 8, ' ', STR_PAD_LEFT);
         $log_line  = $str_date . ' ' . $str_level . ': ' . $str . $log_tail; // $str_ident
 
@@ -1502,6 +1503,9 @@ class System_Daemon
     static protected function _fork()
     {
         self::debug('forking {appName} daemon');
+        if (! function_exists('pcntl_fork')) 
+        	die('PCNTL functions not available on this PHP installation');
+
         $pid = pcntl_fork();
         if ($pid === -1) {
             // Error

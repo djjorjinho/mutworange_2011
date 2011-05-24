@@ -41,13 +41,9 @@ class LagreeformController extends PlonkController {
             if (PlonkSession::get('id') === 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
-                $this->pageTpl->assignOption('oStudent');
-            } else if(PlonkSession::get('userLevel') == 'International Relations Office Staff') {
-                $this->pageTpl->assignOption('oCoor');
-                $this->pageTpl->assignOption('oOffice');
-            }
-            else {
-                if (PlonkFilter::getGetValue('form') != null) {
+                $this->userid = PlonkSession::get('id');
+            } else {
+                if (PlonkFilter::getGetValue('student') != null) {
                     $this->pageTpl->assignOption('oCoor');
                 } else {
                     PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
@@ -129,7 +125,15 @@ class LagreeformController extends PlonkController {
         if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId'] && $status['action'] != 30) {
             $this->filledLagreement();
             if (PlonkFilter::getGetValue('student') == null) {
-                $this->mainTpl->assign('pageJava', '');
+                $this->mainTpl->assign('pageJava', '<script language="Javascript">
+                                  window.onload = disable;
+                                  function disable() {                                  
+                                    var limit = document.forms["lagreement"].elements.length;
+                                    for (i=0;i<limit;i++) {
+                                      document.forms["lagreement"].elements[i].disabled = true;
+                                    }
+                                  }
+                                </script>');
             }
             $this->fillFixed();
             return;
@@ -324,13 +328,6 @@ class LagreeformController extends PlonkController {
             $this->pageTpl->assign($key, $value);
             $this->pageTpl->assign('msg' . ucfirst($key), '');
         }
-        
-        if(file_exists('./files/'.$this->userid.'/Transcript.pdf')) {
-        $this->pageTpl->assign('source','./files/'.$this->userid.'/Transcript.pdf');
-        }
-        else {
-            $this->pageTpl->assign('source', 'No transcript Of Records Attached');
-        }
     }
 
     public function showApplicform() {
@@ -350,7 +347,15 @@ class LagreeformController extends PlonkController {
         if ($erasmusLevel['levelId'] >= $erasmusLevel2['levelId'] && $this->formid != null ) {
             $this->filledApplicform();
             if (PlonkFilter::getGetValue('student') == null) {
-                $this->mainTpl->assign('pageJava', '');
+                $this->mainTpl->assign('pageJava', '<script language="Javascript">
+                                  window.onload = disable;
+                                  function disable() {                                  
+                                    var limit = document.forms["studApplicForm"].elements.length;
+                                    for (i=0;i<limit;i++) {
+                                      document.forms["studApplicForm"].elements[i].disabled = true;
+                                    }
+                                  }
+                                </script>');
             }
             return;
         } else {
@@ -675,9 +680,7 @@ class LagreeformController extends PlonkController {
                 );
 
                 LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . PlonkSession::get('id') . '"');
-                if(!empty($_POST['pic'])) {
-                    $this->upload();
-                }
+
 
                 $testArray = $_POST;
                 $newArray = array_slice($testArray, 0, count($_POST) - 2);
@@ -960,25 +963,6 @@ class LagreeformController extends PlonkController {
             }
         } else {
             $this->pageTpl->assignOption('oPaper');
-        }
-    }
-    
-    private function upload() {
-        
-        $uploaddir = "files/" . PlonkFilter::getPostValue('email') . "/";
-
-        foreach ($_FILES["pic"]["error"] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES["pic"]["tmp_name"][$key];
-                $name = 'Transcript.pdf';
-                $uploadfile = $uploaddir . basename($name);
-
-                if (move_uploaded_file($tmp_name, $uploadfile)) {
-                    $cover = $uploadfile;
-                } else {
-                    echo "Error: File " . $name . " cannot be uploaded.<br/>";
-                }
-            }
         }
     }
 

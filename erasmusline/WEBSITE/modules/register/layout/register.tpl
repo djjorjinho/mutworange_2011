@@ -92,7 +92,7 @@
             {/option:oAdmin}
 	</div>
         <div class="TRdiv">
-        <label for="cv"><span>Upload your profile picture here</span></label>
+        <label for="cv"><span>Upload your signature here</span></label>
         <input type="file" class="multi" maxlength="1" accept="jpg" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
     </div>
 </fieldset>

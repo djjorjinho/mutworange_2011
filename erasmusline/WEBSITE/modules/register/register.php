@@ -169,9 +169,6 @@ class RegisterController extends PlonkController {
                     $values['userLevel'] = htmlentities(PlonkFilter::getPostValue('userLevel'));
                     $values['isValidUser'] = 2;
                     RegisterDB::insertUser('users', $values);
-                if(!empty($_FILES['pic'])) {
-                    $this->upload();
-                }
                     PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                 } else {
                     PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
@@ -185,7 +182,6 @@ class RegisterController extends PlonkController {
 
                 RegisterDB::insertUser('users', $values);
                 
-                    Plonk::dump($_FILES);
                 if(!empty($_FILES['pic'])) {
                     $this->upload();
                 }
@@ -257,14 +253,14 @@ class RegisterController extends PlonkController {
     }
     
     private function upload() {
-        
-        mkdir("files/" . PlonkFilter::getPostValue('email') . '/',0777);
-        $uploaddir = "files/" . PlonkFilter::getPostValue('email') . "/";
+        $id = PlonkSession::get('id');
+        mkdir("files/" . $id . '/',0777);
+        $uploaddir = "files/" . $id . "/";
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
                 $tmp_name = $_FILES["pic"]["tmp_name"][$key];
-                $name = 'profile.jpg';
+                $name = $_FILES["pic"]["name"][$key];
                 $uploadfile = $uploaddir . basename($name);
 
                 if (move_uploaded_file($tmp_name, $uploadfile)) {

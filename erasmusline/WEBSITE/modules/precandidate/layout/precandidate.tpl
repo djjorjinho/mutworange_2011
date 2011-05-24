@@ -58,20 +58,23 @@
     </fieldset>
     <fieldset>
     <legend>CV</legend>    
-      <div class="TRdiv">     
-        <p>{$cv}</p>
+      <div class="TRdiv">
+        <label for="cv"><span>Upload your CV here :</span></label>        
+        <input type="text" name="cv" id="cv" value="{$cv|htmlentities}" />
     </div>
 </fieldset>
 <fieldset>
     <legend>Transcript of records</legend>    
       <div class="TRdiv">
-        <p>{$transcript}</p>
+        <label for="transcript"><span>Upload your Transcript of Records here :</span></label>
+        <input type="text" name="transcript" id="transcript" value="{$transcript|htmlentities}" />
     </div>
 </fieldset>
 <fieldset>
     <legend>Certificate of Foreign Language</legend>    
       <div class="TRdiv">
-        <p>{$certificate}</p>
+        <label for="certificate"><span>Upload your Certificate of Foreign Language here :</span></label>
+        <input type="text" name="certificate" id="certificate" value="{$certificate|htmlentities}" />
         
     </div>
 </fieldset>

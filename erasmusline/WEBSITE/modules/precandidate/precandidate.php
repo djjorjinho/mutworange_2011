@@ -95,9 +95,9 @@ class PrecandidateController extends PlonkController {
         $this->pageTpl->assignOption('oFilled');
         $uploadedWhat = PrecandidateDB::getUploadedWhat($this->userid);
         $upload = explode(',', $uploadedWhat['uploadedWhat']);
-        $this->pageTpl->assign('cv', '<a href="./files/'.$this->userid.'/'.$upload[0].'" title="CV">'.$upload[0].'</a>');
-        $this->pageTpl->assign('transcript', '<a href="./files/'.$this->userid.'/'.$upload[1].'" title="Transcript of Records">'.$upload[1].'</a>');
-        $this->pageTpl->assign('certificate', '<a href="./files/'.$this->userid.'/'.$upload[2].'" title="Certificate of foreign language">'.$upload[2].'</a>');
+        $this->pageTpl->assign('cv', $upload[0]);
+        $this->pageTpl->assign('transcript', $upload[1]);
+        $this->pageTpl->assign('certificate', $upload[2]);
 
 
         $json = PrecandidateDB::getJson($this->formid);

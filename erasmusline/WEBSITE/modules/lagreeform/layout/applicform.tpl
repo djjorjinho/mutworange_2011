@@ -296,17 +296,9 @@
 </fieldset>
 
 <p><strong>PLEASE ATTACH YOUR TRANSCIPT OF RECORDS WITH PREVIOUS COURSE UNITS TAKEN !</strong></p>
-<p>Must be a PDF</p>
-{option:oNotFilled}
-<div class="TRdiv">
-        <label for="cv"><span>Upload your profile picture here</span></label>
-        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
-    </div>
-{/option:oNotFilled}
-{option:oFilled}
-<p><a href="{$source}" title="Transcrip of Record">Transcript of Record</a></p>
-{/option:oFilled}
 
+
+{option:oCoor}
 <h3>Receiving institution</h3>
 <fieldset>
 <p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
@@ -316,60 +308,55 @@
 <label for="accepted">The above mentioned student is: </label>
             <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
             <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
+            <span class="req" id="msgAccepted">{$msgAccepted|htmlentities}</span>
 </div>
 
+<div class="TRdiv">
+        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
+        <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
+    </div>
+
+{option:oPaper}
 <div class="TRdiv">
 <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
 </div>
+{/option:oPaper}
+
+{option:oDigital}
+<div class="TRdiv">
+<label for="signDepSign"><span>Departamental coordinator's signature</span></label>
+<img src="{$sourceDep}" alt="signature" >
+</div>
+{/option:oDigital}
 
 <div class="TRdiv">
 <label for="signDepSignDate"><span>Date: </span></label>
-<input class="validate[required,custom[date]] text-input" type="text" id="signDepSignDate" name="signDepSignDate" />
+<input class="validate[required,custom[date]] text-input" type="text" id="signDepSignDate" name="signDepSignDate" value="{$signDepSignDate|htmlentities}" />
+<span class="req" id="msgSignDepSignDate">{$msgSignDepSignDate|htmlentities}</span>
 </div>
 
-
+{option:oPaper}
 <div class="TRdiv">
 <label for="signInstSign"><span>Institutional coordinator's signature</span></label>
 </div>
+{/option:oPaper}
 
+{option:oDigital}
+<div class="TRdiv">
+<label for="signInstSign"><span>Institutional coordinator's signature</span></label>
+<img src="{$sourceInst}" alt="signature" >
+            <label for="passwordSend"><span>Confirm signature: </span></label>
+            <input class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="password" id="password" />	 
+</div>
+{/option:oDigital}
 
 <div class="TRdiv">
 <label for="signInstSignDate"><span>Date: </span></label>
-<input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDate" name="signInstSignDate"  />
+<input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDate" name="signInstSignDate" value="{$signInstSignDate|htmlentities}" />
+<span class="req" id="msgSignInstSignDate">{$msgSignInstSignDate|htmlentities}</span>
 </div>
 
 </fieldset>
-
-{option:oCoor}
-<script language="javascript">
- function printpage()
-  {
-   window.print();
-  }
-</script>
-<div class="TRdiv">
-<label for="print">Print dit formulier af</label>
-<input type="button" value="Print" onclick="printpage();">
-</div>
-{/option:oCoor}
-
-{option:oOffice}
-<div class="TRdiv">
-        <label for="printed"><span>Attach signed Application Form</span></label>
-        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
-    </div>
-<div class="TRdiv">
-		<input type="hidden" name="formAction" id="formRegister" value="doTohost" />
-		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-	</div>
-{/option:oOffice}
-
-{option:oHost}
-<p><a href="{$source}" title="Attached signed Application Form">Signed Application Form</a></p>
-
-<div class="TRdiv">
-        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5"></textarea>	
-    </div>
 
 <fieldset>
 <legend>Submit the application</legend>
@@ -378,12 +365,7 @@
 		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
 	</div>
 </fieldset>
-
-<div class="TRdiv">
-        <label for="printed"><span>Attach signed Application Form</span></label>
-        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
-    </div>
-{/option:oHost}
+{/option:oCoor}
 
 {option:oNotFilled}
 <fieldset>

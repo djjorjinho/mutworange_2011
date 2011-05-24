@@ -76,14 +76,7 @@
 </ul>
 </div>
 {/option:oCoor}
- {option:oOffice}     
-      <div id="subnav">
-    <li class="level2"><a href="index.php?module=office&amp;view=applics">Show Student Application Forms</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=agreements">Show Learning Agreements</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=changes">Show Change of Learning Agreements</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=applics">Students</a></li>
-      </div>
- {/option:oOffice}     
+      
 {option:oStudent}
 <div id="subnav">
 <ul>

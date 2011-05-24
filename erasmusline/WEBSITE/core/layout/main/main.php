@@ -22,32 +22,33 @@ class MainController extends PlonkController {
 
         $email = PlonkFilter::getPostValue('Email');
         $password = PlonkFilter::getPostValue('Password');
-
-
-
+        
+        
+        
         if ($email !== null && $password !== null) {
 
-
+            
             $values = MainController::userExist($email, md5($password));
 
             if (!empty($values)) {
 
                 if (strtolower($email) === 'admin') {
                     PlonkSession::set('id', 0);
-
+                    
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+                    
                 } else {
-
+                    
                     PlonkSession::set('id', $values['email']);
                     PlonkSession::set('userLevel', $values['userLevel']);
-                    
                     if (PlonkSession::get('id') === 0) {
+                        
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-                    } else if (PlonkSession::get('userLevel') === 'Student') {  
+                    } else if (PlonkSession::get('userLevel') == 'Student') {
+                        
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-                    } else if (PlonkSession::get('userLevel') === 'International Relations Office Staff') {
-                        PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=office&' . PlonkWebsite::$viewKey . '=office');
                     } else {
+                        
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . 'staff&' . PlonkWebsite::$viewKey . '=staff');
                     }
                 }
@@ -77,7 +78,7 @@ class MainController extends PlonkController {
     public static function userExist($email, $password) {
         // get DB instance
         $db = PlonkWebsite::getDB();
-
+        
         // query DB
         $items = $db->retrieveOne("select userId, email, userLevel from users where email = '" . $db->escape($email) . "' AND password ='" . $db->escape($password) . "' AND isValidUser != 0");
         // return the result
@@ -85,7 +86,7 @@ class MainController extends PlonkController {
     }
 
     public function checkLogged() {
-
+        
         session_id();
         if (PlonkSession::exists('id')) {
             $this->mainTpl->assignOption('oLogged');

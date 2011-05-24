@@ -72,7 +72,7 @@ class JsonRpcDispatcher{
 			
 		}catch(Exception $e){
 			System_Daemon::err("EXCEPTION:\n".$e->getMessage());
-			return $this->jsonError($e->getMessage);
+			return $this->jsonError($e->getMessage());
 		}
 		
 	}

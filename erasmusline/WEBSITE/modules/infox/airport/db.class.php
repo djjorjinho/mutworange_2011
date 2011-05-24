@@ -44,12 +44,37 @@ class DB {
     $this->id = mysql_insert_id();
   }
   
+  function updateUser($key, $value, $mail) {
+    $array = explode(",", $key);
+    $array2 = explode(",", $value);
+	for ($i = 0; $i < count($array); $i++) {
+	  $c = count($array2[$i]);
+	  $array2[$i] = substr($array2[$i],1,($c - 2));
+	  $SQL = "UPDATE users SET ".$array[$i]." = '".$array2[$i]."' WHERE email = '".$mail."'";
+	  mysql_query($SQL);
+	}
+	
+	return true;
+  }
+  
   function checkInsert() {
     if ($this->id != 0)
       return true;
     else
       return false;
   }
+  
+  function checkUserExist($mail) {
+    $SQL = "SELECT * FROM users WHERE email = '".$mail."'";
+	$rs = mysql_query($SQL);
+	$row = mysql_fetch_assoc($rs);
+	
+	if (empty($row))
+	  return null;
+	else
+	  return $mail;
+  }
+
 }
 
 ?>
