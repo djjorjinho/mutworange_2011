@@ -85,6 +85,7 @@ class StatsdSlave extends Server implements JsonRpcI{
     }
     
     function getTasks(){
+    	$dt = new DateTime('@'.time());
     	$tasks = array(
 			new ScheduledTask(array(
 				timeout => 0,
@@ -118,6 +119,7 @@ class StatsdSlave extends Server implements JsonRpcI{
     		'getScenarioList' => true,
     		'getScenarioConfig' => true,
     		'saveScenario' => true,
+    		'runScenario' => true,
     	);
     	
     	return $methods;
@@ -163,26 +165,29 @@ class StatsdSlave extends Server implements JsonRpcI{
 	}
 	
 	function getScenarioConfig($params){
+		
 		$userid = $params['user_id'];
 		$name = $params['scenario_name'];
 		
-		
-		if(empty($userid))
+		if(empty($userid) && $userid!=0)
 			throw new Exception("NO_USER_ID");
 			
 		if(empty($name))
 			throw new Exception("NO_SCENARIO_NAME");
 		
 		$db = $this->db;
-		$res = $this->cache->cacheFunc("getScenarioConfig:${userid}:${name}",320,
-			function()use($db){
-			
+		$res = $this->cache->cacheFunc("getScenarioConfig:${userid}:${name}",420,
+			function()use($db,$userid,$name){
 				$row = $db->getOne("select config".
 					" from scenarios where users_id='${userid}'".
 					" and scenarios_id='${name}'");
+				
+				$obj = json_decode($row['config'],true);
 			
-			return $row;
+			return $obj;
 		});
+		
+		System_Daemon::debug("Scenario(${userid}:${name}): ".print_r($res,true));
 		
 		return $res;
 	}
@@ -190,13 +195,13 @@ class StatsdSlave extends Server implements JsonRpcI{
 	function getScenarioList($params){
 		$userid = $params['user_id'];
 		$db = $this->db;
-		if(empty($userid))
+		if(empty($userid) && $userid!=0)
 			throw new Exception("NO_USER_ID");
 			
 		$res = $this->cache->cacheFunc("getScenarioList:${userid}",320,
-			function()use($db){
+			function()use($db,$userid){
 			
-				$list = $db->getMany("select scenarios_id as scenario_name,".
+				$list = $db->getMany("select scenarios_id as scenario_name".
 					" from scenarios where users_id='${userid}'");
 			
 			return $list;
@@ -210,7 +215,7 @@ class StatsdSlave extends Server implements JsonRpcI{
 		$name = $params['scenario_name'];
 		$config = json_encode($params);
 		
-		if(empty($userid))
+		if(empty($userid) && $userid!=0)
 			throw new Exception("NO_USER_ID");
 		
 		if(empty($name))
@@ -219,10 +224,10 @@ class StatsdSlave extends Server implements JsonRpcI{
 		$db = $this->db;
 		
 		$scenario = $this->getScenarioConfig($params);
-		
+				
 		if(isset($scenario)){
-			$scenario['users_id'] = $scenario['user_id'];
-			$scenario['scenarios_id'] = $scenario['scenario_name'];
+			$scenario['users_id'] = $userid;
+			$scenario['scenarios_id'] = $name;
 			$scenario['config'] = $config;
 			$scenario['table'] = 'scenarios';
 			$db->update($scenario);
@@ -238,6 +243,10 @@ class StatsdSlave extends Server implements JsonRpcI{
 		$this->cache->deleteCache("getScenarioList:${userid}");
 		$this->cache->deleteCache("getScenarioConfig:${userid}:${name}");
 		return array(ok=>true);
+	}
+	
+	function runScenario($params){
+		return $this->olap->runScenario($params);
 	}
 	
 }

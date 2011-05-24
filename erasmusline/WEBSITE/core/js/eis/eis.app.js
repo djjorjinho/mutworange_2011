@@ -10,13 +10,15 @@ var eis = {
 	
 	selectedItem : "",
 	
+	scenarioSelect : "",
+	
 	init : function(){
 		$.blockUI();
 		
-		this.loadDependencies();
+		eis.loadDependencies();
 		$.ajaxSetup({async: true});
 		
-		this.loadLayout();
+		eis.loadLayout();
 	},
 	
 	loadLayout : function(){
@@ -25,6 +27,7 @@ var eis = {
 			
 			eis.loadRules();
 			eis.fillCubes();
+			// color picker
 			$('#colorSelector').ColorPicker({
 				color: '#0000ff',
 				onShow: function (colpkr) {
@@ -39,6 +42,18 @@ var eis = {
 					$('#colorSelector div').css('backgroundColor', '#' + hex);
 				}
 			});
+			
+			// editable select box
+			eis.scenarioSelect = 
+				jQuery('#eis_toolbar select:first').editableSelect({
+				case_sensitive: false,
+				items_then_scroll: 10,
+				onSelect : function(item){
+					eis.getScenario(item.text());
+				}
+			});
+			
+			eis.getScenarios();
 			
 			$.unblockUI();
 		});
@@ -115,9 +130,10 @@ var eis = {
             }    
 		});
 	},
+	
 	loadRules : function(){
 
-		this.rpcCall("getRules",{},
+		eis.rpcCall("getRules",{},
 				function(result){
 					eis.rules = result;
 	  			}, 
@@ -180,7 +196,7 @@ var eis = {
 			
 			if(dimension.hasAll){
 				levels.push(jQuery('#eis_listitem_tmpl').tmpl( 
-						{item : table+"."+pk, text : "All"}
+						{item : table+".all", text : "All"}
 						));
 			}
 			
@@ -257,8 +273,75 @@ var eis = {
 	
 	paintScenario : function(){
 		
-	}
+	},
 	
+	getScenarios : function(){
+		eis.scenarioSelect.find('option').remove();
+		eis.rpcCall("getScenarioList",{
+					user_id : _userid
+				},
+				function(result){
+
+					var instance = eis.scenarioSelect.
+									editableSelectInstances()[0];
+					
+					var len = result.length;
+					for(var i=0;i<len;i++)
+						instance.addOption(result[i].scenario_name);
+					
+	  			}, 
+				function(error){
+					console.log(error);
+				},true);
+	},
+	
+	getScenario : function(name){
+		$.blockUI();
+		eis.rpcCall("getScenarioConfig",{
+			user_id : _userid,
+			scenario_name : name
+		},
+		function(result){
+				eis.scenario = result;
+				jQuery('#eis_cube_container select').val(result.cube);
+				eis.paintScenario();
+				eis.runScenario();
+				$.unblockUI();
+			}, 
+		function(error){
+			console.log(error);
+			$.unblockUI();
+		},true);
+	},
+	
+	saveScenario : function(){
+		$.blockUI();
+		eis.scenario.scenario_name = jQuery(eis.scenarioSelect)
+										.find(':selected').text();
+		eis.scenario.user_id = _userid;
+		eis.rpcCall("saveScenario",eis.scenario,
+		function(result){
+				
+				$.unblockUI();
+			}, 
+		function(error){
+			console.log(error);
+			$.unblockUI();
+		},true);
+	},
+	
+	runScenario : function(){
+		$.blockUI();
+		eis.rpcCall("runScenario",eis.scenario,
+		function(result){
+				console.log(result);
+				$.unblockUI();
+			}, 
+		function(error){
+			console.log(error);
+			$.unblockUI();
+		},true);
+	}
 };
 
 

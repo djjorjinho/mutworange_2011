@@ -4,7 +4,7 @@
 
 		<div id="eis_cube_container">
 			<div>
-				Cubes
+				Key Performance Indicators
 			</div>
 			<select name="Cubes" title="OLAP Cubes / KPI"
 				onchange="eis.fillDimensionsAndMeasures();">
@@ -65,6 +65,21 @@
 	<div class="rightcol">
 		
 		<div class="workspace_fields">
+			<div class="fields_list" title="Toolbar" id="eis_toolbar">
+				<div class="fields_list_header i18n">
+				Scenario
+				</div>
+				<select name="Scenarios" title="Scenario Select">
+					<option selected="selected" value="">Select</option>
+				</select>
+				
+				<button onclick="eis.saveScenario();">Save</button>
+				<button onclick="eis.newScenario();">New</button>
+				<button onclick="eis.runScenario();">Run</button>
+				<button>Swap</button>
+				<button>Export</button>
+				
+			</div>
 			<div class="fields_list" title="COLUMNS">
 				<div class="fields_list_header i18n">
 				Columns 

@@ -22,11 +22,12 @@ class ObjectCache{
 	
 	function get($key){
 		$time = time();
-		$arr =  $this->cache[$key];
 		
-		if(! is_array($arr)){
+		if(! key_exists($key, $this->cache)){
 			return null;
 		}
+		
+		$arr =  $this->cache[$key];
 		
 		if($arr[0] <= $time){
 			unset($this->cache[$key]);

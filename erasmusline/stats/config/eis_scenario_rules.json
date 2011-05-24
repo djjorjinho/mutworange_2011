@@ -11,7 +11,7 @@
 				{"id" : "M3", "name" : "Applications (Homologous)", 
 					"column" : "last_applications", "aggregator" : "sum"},
 				{"id" : "M4", "name" : "Applications (Relative)", 
-					"column" : "last_applications", "aggregator" : "perc"},
+					"column" : "last_applications", "aggregator" : "distinct"},
 				{"id" : "M5", "name" : "Avg. Applications", 
 					"column" : "total_applications", "aggregator" : "avg"},
 				{"id" : "M6", "name" : "Max. Applications", 
@@ -30,9 +30,9 @@
 			"table" : "fact_efficiency","description" : "Efficiency",
 			"measures" : [
 				{"id" : "M1", "name" : "Student Participation", 
-					"column" : "val_participation", "aggregator" : "sum"},
+					"column" : "val_participants", "aggregator" : "distinct"},
 				{"id" : "M4", "name" : "Student Participation", 
-					"column" : "val_participation", "aggregator" : "sum"},
+					"column" : "perc_students", "aggregator" : "distinct"},
 				{"id" : "M5", "name" : "Avg. Response Days", 
 					"column" : "avg_response_days", "aggregator" : "avg"},
 				{"id" : "M6", "name" : "Max. Response Days", 
@@ -48,17 +48,17 @@
 		{"id" : "D1", "name" : "Gender", "table" : "dim_gender", 
 			"pk" : "dim_gender_id", "hasAll" : true, "measure" : "M1",
 			"levels" : [
-				{"name" : "Gender", "column" : "code"}]
+				{"name" : "Gender", "column" : "dim_gender_id"}]
 		},
 		{"id" : "D2", "name" : "Lodging", "table" : "dim_lodging", 
 			"pk" : "dim_lodging_id", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
-				{"name" : "Residence Type", "column" : "code"}]
+				{"name" : "Residence Type", "column" : "dim_lodging_id"}]
 		},
 		{"id" : "D3", "name" : "Mobility", "table" : "dim_mobility", 
 			"pk" : "dim_mobility_id", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
-				{"name" : "Mobility Type", "column" : "code"}]
+				{"name" : "Mobility Type", "column" : "dim_mobility_id"}]
 		},
 		{"id" : "D4", "name" : "Academic Date", "table" : "dim_date", 
 			"pk" : "dim_date_id", "hasAll" : true, "measure" : "M1", 
@@ -82,7 +82,7 @@
 		{"id" : "D7", "name" : "Process", "table" : "dim_phase", 
 			"pk" : "dim_phase_id", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
-				{"name" : "Phase", "column" : "code"}]
+				{"name" : "Phase", "column" : "dim_phase_id"}]
 		}
 	]
 }

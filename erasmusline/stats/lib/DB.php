@@ -245,8 +245,8 @@ class DB{
 		if(empty($table)) $table = $obj['table'];
 		if(empty($id)) $id = $obj["${table}_id"];
 
-		if(empty($table) or empty($id))
-			throw new Exception("Can't update! check id or table");
+		if(empty($table) || empty($id))
+			throw new Exception("Can't update! (id:'${id}'), table:'${table}'");
 		
 		$tinfo = $this->tableInfo($table);
 		
