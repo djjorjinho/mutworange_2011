@@ -86,7 +86,7 @@
 					<button onclick="eis.addToColumns();">+</button>
 				</div>
 				<div class="fields_list_body columns">
-					<ul class="connectable ui-sortable"></ul>
+					<ul class=""></ul>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -96,19 +96,24 @@
 					<button onclick="eis.addToRows();">+</button>
 				</div>
 				<div class="fields_list_body rows">
-					<ul class="connectable ui-sortable">
+					<ul class="">
 					</ul>
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="fields_list" title="FILTER">
 				<div class="fields_list_header i18n">Filter</div>
-				<div class="fields_list_body filter">
-					<ul class="connectable ui-sortable">
+				<div class="">
+					<ul class="">
 					</ul>
 				</div>
 				<div class="clear"></div>
 			</div>
+			
+		</div>
+		<div class="presentation_div border_eis" id="resultTableDiv">
+			<table class="presentation_table" id="resultTable">
+			</table>
 		</div>
 		
 		
