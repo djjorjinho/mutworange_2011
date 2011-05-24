@@ -388,7 +388,21 @@ class PopulateDB {
         }
     }
     
+    function checkHotCache(){
+		$db = $this->db;
+		
+		$C = $db->getOne("SELECT @@global.hot_cache.key_buffer_size".
+							" as hot_cache");
+		
+		if($C['hot_cache']==0){
+			$db->execute("SET GLOBAL hot_cache.key_buffer_size=402653184;");
+		}
+		
+	}
+    
     function run(){
+    	$this->checkHotCache();
+    	
         // dimension tables
     	$this->populate_gender();
         $this->populate_mobility();

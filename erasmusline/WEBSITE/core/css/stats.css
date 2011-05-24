@@ -15,7 +15,6 @@
 .mainDiv{
     font-family: Arial,  Verdana, Helvetica, sans-serif;
     font-size:12px;
-    border:solid 2px #b7ddf2;
     background:#ebf4fb;
     width:650px;
     height:600px;
@@ -23,20 +22,38 @@
 
 }
 
+.border_eis {
+	border: solid 1px black;
+}
 
 .leftcol {
-  background: lightgrey;
+  background: #A0A0A0;
   float: left;
-  width: 30%;
+  width: 29%;
   height: 100%;
 }
 
 .rightcol {
-  background: white;
+  background: lightgrey;
   float: right;
-  width: 70%;
+  width: 70.5%;
   height: 100%;
 }
+
+
+.presentation_div {
+  background: white;
+  width: 98.1%;
+  height: 69.6%;
+  margin-left: 1%;
+  margin-top: 1%;
+  
+}
+
+.presentation_table {
+	
+}
+	
 
 
 
@@ -449,7 +466,7 @@
     padding: 2px 5px 3px 5px;
     line-height: 23px;
     text-shadow: 1px 1px 0 #FFFFFF;
-    width: 62px;
+    width: 70px;
 }
 .fields_list .fields_list_body {
     float: left;

@@ -85,6 +85,7 @@ class StatsdSlave extends Server implements JsonRpcI{
     }
     
     function getTasks(){
+    	$dt = new DateTime('@'.time());
     	$tasks = array(
 			new ScheduledTask(array(
 				timeout => 0,
@@ -115,6 +116,10 @@ class StatsdSlave extends Server implements JsonRpcI{
     		'profile' => true,
     		'etl1' => true,
     		'getRules' => true,
+    		'getScenarioList' => true,
+    		'getScenarioConfig' => true,
+    		'saveScenario' => true,
+    		'runScenario' => true,
     	);
     	
     	return $methods;
@@ -157,6 +162,91 @@ class StatsdSlave extends Server implements JsonRpcI{
 	
 	function getRules($params){
 		return $this->olap->rules;
+	}
+	
+	function getScenarioConfig($params){
+		
+		$userid = $params['user_id'];
+		$name = $params['scenario_name'];
+		
+		if(empty($userid) && $userid!=0)
+			throw new Exception("NO_USER_ID");
+			
+		if(empty($name))
+			throw new Exception("NO_SCENARIO_NAME");
+		
+		$db = $this->db;
+		$res = $this->cache->cacheFunc("getScenarioConfig:${userid}:${name}",420,
+			function()use($db,$userid,$name){
+				$row = $db->getOne("select config".
+					" from scenarios where users_id='${userid}'".
+					" and scenarios_id='${name}'");
+				
+				$obj = json_decode($row['config'],true);
+			
+			return $obj;
+		});
+		
+		System_Daemon::debug("Scenario(${userid}:${name}): ".print_r($res,true));
+		
+		return $res;
+	}
+	
+	function getScenarioList($params){
+		$userid = $params['user_id'];
+		$db = $this->db;
+		if(empty($userid) && $userid!=0)
+			throw new Exception("NO_USER_ID");
+			
+		$res = $this->cache->cacheFunc("getScenarioList:${userid}",320,
+			function()use($db,$userid){
+			
+				$list = $db->getMany("select scenarios_id as scenario_name".
+					" from scenarios where users_id='${userid}'");
+			
+			return $list;
+		});
+		
+		return $res;
+	}
+	
+	function saveScenario($params){
+		$userid = $params['user_id'];
+		$name = $params['scenario_name'];
+		$config = json_encode($params);
+		
+		if(empty($userid) && $userid!=0)
+			throw new Exception("NO_USER_ID");
+		
+		if(empty($name))
+			throw new Exception("NO_SCENARIO_NAME");
+		
+		$db = $this->db;
+		
+		$scenario = $this->getScenarioConfig($params);
+				
+		if(isset($scenario)){
+			$scenario['users_id'] = $userid;
+			$scenario['scenarios_id'] = $name;
+			$scenario['config'] = $config;
+			$scenario['table'] = 'scenarios';
+			$db->update($scenario);
+		}else{
+			$scenario = array(
+				users_id => $userid,
+				scenarios_id => $name,
+				config => $config
+			);
+			$db->insert($scenario,'scenarios');
+		}
+		
+		$this->cache->deleteCache("getScenarioList:${userid}");
+		$this->cache->deleteCache("getScenarioConfig:${userid}:${name}");
+		return array(ok=>true);
+	}
+	
+	function runScenario($params){
+		return $this->olap->runScenario($params);
 	}
 	
 }

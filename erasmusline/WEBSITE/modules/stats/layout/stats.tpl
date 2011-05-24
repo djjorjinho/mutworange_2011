@@ -4,7 +4,7 @@
 
 		<div id="eis_cube_container">
 			<div>
-				Cubes
+				Key Performance Indicators
 			</div>
 			<select name="Cubes" title="OLAP Cubes / KPI"
 				onchange="eis.fillDimensionsAndMeasures();">
@@ -56,7 +56,7 @@
 				</select>
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
-				<a onclick="return false;">Add</a>
+				<button onclick="eis.addFilter(this);">Add</button>
 			</div>
 		</div>
 		
@@ -65,37 +65,55 @@
 	<div class="rightcol">
 		
 		<div class="workspace_fields">
+			<div class="fields_list" title="Toolbar" id="eis_toolbar">
+				<div class="fields_list_header i18n">
+				Scenario
+				</div>
+				<select name="Scenarios" title="Scenario Select">
+					<option selected="selected" value="">Select</option>
+				</select>
+				
+				<button onclick="eis.saveScenario();">Save</button>
+				<button onclick="eis.newScenario();">New</button>
+				<button onclick="eis.runScenario();">Run</button>
+				<button>Swap</button>
+				<button>Export</button>
+				
+			</div>
 			<div class="fields_list" title="COLUMNS">
 				<div class="fields_list_header i18n">
 				Columns 
-					<a onclick="eis.addToColumns();return false;">+</a>
-
+					<button onclick="eis.addToColumns();">+</button>
 				</div>
 				<div class="fields_list_body columns">
-					<ul class="connectable ui-sortable"></ul>
+					<ul class=""></ul>
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="fields_list" title="ROWS">
 				<div class="fields_list_header i18n">
 				Rows 
-					<a onclick="eis.addToRows();return false;">+</a> 
-
+					<button onclick="eis.addToRows();">+</button>
 				</div>
 				<div class="fields_list_body rows">
-					<ul class="connectable ui-sortable">
+					<ul class="">
 					</ul>
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="fields_list" title="FILTER">
 				<div class="fields_list_header i18n">Filter</div>
-				<div class="fields_list_body filter">
-					<ul class="connectable ui-sortable">
+				<div class="">
+					<ul class="">
 					</ul>
 				</div>
 				<div class="clear"></div>
 			</div>
+			
+		</div>
+		<div class="presentation_div border_eis" id="resultTableDiv">
+			<table class="presentation_table" id="resultTable">
+			</table>
 		</div>
 		
 		

@@ -25,6 +25,7 @@ pwd
 ./restart_daemons &
 
 sleep 2
+./local_call statsd_slave '{"method":"etl1","params":{}}'
 
 echo "======== RUNNING TESTS ======="
 

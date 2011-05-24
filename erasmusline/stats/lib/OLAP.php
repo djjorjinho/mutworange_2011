@@ -76,7 +76,11 @@ class OLAP{
 		#print("fields\n");
 		#print_r($fields);
 		
-		$sql .= "SELECT ".implode(',',$fields);
+		if($fields[0]=='distinct'){
+			$op = array_shift($fields);
+		}
+				
+		$sql .= "SELECT $op ".implode(',',$fields);
 		
 		#print("tables\n");
 		#print_r($tables);
@@ -86,12 +90,12 @@ class OLAP{
 		#print("where\n");
 		#print_r($where);
 		
-		$sql .= " WHERE ".implode(' AND ',$where);
+		if(!empty($where)) $sql .= " WHERE ".implode(' AND ',$where);
 		
 		#print("groupby\n");
 		#print_r($groupby);
 		
-		$sql .= " GROUP BY ".implode(',',$groupby);
+		if(!empty($groupby)) $sql .= " GROUP BY ".implode(',',$groupby);
 		
 		#print $sql."\n";
 		
@@ -122,7 +126,8 @@ class OLAP{
 	
 	private function processFields(&$params,&$fields,&$tables,&$where,
 		&$groupby,&$having,&$limit){
-			
+		
+		$hasMeasure=false;
 		$cube = $params['cube'];
 		$columns = array_merge($params['columns'],$params['rows']);
 		
@@ -130,6 +135,7 @@ class OLAP{
 			$field_array = self::splitField($field);
 			
 			if($field_array[0] == 'measure'){
+				$hasMeasure=true;
 				$this->processMeasure($cube,$field_array[1],$fields,
 						$tables,$where,$limit);				
 			}else{
@@ -148,6 +154,11 @@ class OLAP{
 			
 		}
 		
+		if(!$hasMeasure){
+			$field = 'M1';
+			$this->processMeasure($cube,$field,$fields,
+						$tables,$where,$limit);
+		}
 		
 	}
 	
@@ -192,8 +203,16 @@ class OLAP{
 	
 	private function processAggregatorOp($op,$field,$column,&$fields){
 		$aggregator = $op;
-		//TODO percentage, or implement it in the data mining
-		array_push($fields,"${aggregator}(${field}) as ${column}");
+		
+		if($op=='distinct'){
+			if($fields[0]!='distinct') array_unshift($fields, $op);
+			$aggregator='';
+		}elseif($op == 'sum-dis'){
+			$aggregator = 'sum';
+			$auxop = 'distinct';
+		}
+		
+		array_push($fields,"${aggregator}(${auxop} ${field}) as ${column}");
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,
