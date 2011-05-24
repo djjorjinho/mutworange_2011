@@ -76,8 +76,8 @@
 				<button onclick="eis.saveScenario();">Save</button>
 				<button onclick="eis.newScenario();">New</button>
 				<button onclick="eis.runScenario();">Run</button>
-				<button>Swap</button>
-				<button>Export</button>
+				<button onclick="eis.swapColumnsRows();">Swap</button>
+				<button onclick="eis.exportScenario();">Export</button>
 				
 			</div>
 			<div class="fields_list" title="COLUMNS">
@@ -112,8 +112,6 @@
 			
 		</div>
 		<div class="presentation_div border_eis" id="resultTableDiv">
-			<table class="presentation_table" id="resultTable">
-			</table>
 		</div>
 		
 		

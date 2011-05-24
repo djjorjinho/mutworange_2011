@@ -308,8 +308,12 @@ class OLAP{
 		
 		$records = array_merge($columns,$rows);
 		$measures = array_values(preg_grep("/^measure/",$records));
+		
 		$columns = array_values(preg_grep("/^measure/",$columns,PREG_GREP_INVERT));
 		$rows = array_values(preg_grep("/^measure/",$rows,PREG_GREP_INVERT));
+		
+		//$columns = array_values(preg_grep("/\.all$/",$columns,PREG_GREP_INVERT));
+		//$rows = array_values(preg_grep("/\.all$/",$rows,PREG_GREP_INVERT));
 		
 		foreach(range(0,count($measures)-1) as $i){
 			$measures[$i] = $this->translateMeasure($measures[$i],$cube);
@@ -322,6 +326,7 @@ class OLAP{
 			->fetch();
 			System_Daemon::debug(print_r(
 				array($data,$result,$columns,$rows,$measures),true));
+				
 		return $data;
 	}
 	

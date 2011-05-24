@@ -63,7 +63,7 @@ var eis = {
 		jQuery.getScript('core/js/eis/jquery.json-2.2.min.js');
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
-		
+		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
@@ -107,9 +107,10 @@ var eis = {
 		jQuery("#qunit-testresult").show();
 		jQuery.getScript('core/js/eis/test/test.js');
 	},
-	rpcCall : function(func,args,callSuccess,callError,async){
+	rpcCall : function(func,args,callSuccess,callError,async,url){
+		if(url==undefined) url="modules/stats/rpc.php";
 		jQuery.ajax({
-			url: "modules/stats/rpc.php",
+			url: url,
 			type : "POST",
 			data : {method : func, 
 					params : jQuery.toJSON(args)},
@@ -381,21 +382,24 @@ var eis = {
 	},
 	
 	exportScenario : function(){
-		
+		$.blockUI();
+		$.postGo("modules/stats/export.php","runScenario",eis.scenario);
+		$.unblockUI();
 	},
 	
 	simpleHtmlTable : function(data){
+		console.log(data);
 		out="";
 		out+="<table class='presentation_table' id='resultTable'>";
 		    out+= "<thead>";
-		    for (var item in data[0]) {
-		        out+= "<td><b>"+item+"<b></td>";
+		    for (var item1 in data[0]) {
+		        out+= "<td><b>"+item1+"<b></td>";
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
 		        out+= "<tr>";
-		        for (var item in row) {
-		            out+= "<td>"+item+"</td>";
+		        for (var item2 in data[row]) {
+		            out+= "<td>"+data[row][item2]+"</td>";
 		        }
 		        out+= "</tr>";
 		    }
