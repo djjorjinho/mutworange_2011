@@ -28,15 +28,17 @@
     width:250px;
     font-size:12px;
     border:solid 1px #aacfe4;
-
-
+}
+.TRdiv select{
+    width:250px;
+    font-size:12px;
+    border:solid 1px #aacfe4;
 }
 .lol {
     background-color: #fdd7d7;
 
 
 }
-
 
 /******* Transip Records *******/
 div.curFocus {
