@@ -8,6 +8,7 @@ class InfoxController extends PlonkController {
     protected $actions = array('transfer');
     protected $debug = false;
     protected $debugMsg = "";
+	protected $path = "C:/Program Files/GIT/mutworange/erasmusline/WEBSITE/";
 
     public function showInfox() {
 	    if (PlonkFilter::getGetValue('debug') == 1) {
@@ -30,9 +31,13 @@ class InfoxController extends PlonkController {
 				PlonkSession::set('infoxJSON', $json);
 				PlonkWebsite::redirect('index.php?module=infox&view=transfer&transfer=1&idUni='.PlonkFilter::getPostValue('idUni'));
 			}
-		} else if (PlonkSession::exists('infoxJSON'))
-			$json = PlonkSession::get('infoxJSON');
-		else
+		} else if (PlonkFilter::getPostValue('file')) {
+			if (file_exists($this->path.PlonkFilter::getPostValue('file'))) {
+				PlonkWebsite::redirect('index.php?module=infox&view=transfer&transfer=2&idUni='.PlonkFilter::getGetValue('idUni')."&file=".PlonkFilter::getPostValue('file'));
+			}
+		} else if (PlonkSession::exists('infoxJSON')) {
+			$json = PlonkSession::get('infoxJSON');		
+		} else
 			PlonkWebsite::redirect('index.php');
 	
         $this->mainTpl->assign('pageTitle', 'ERASMUS line');
@@ -51,7 +56,7 @@ class InfoxController extends PlonkController {
             $this->pageTpl->parseIteration('iUniversity');
 
             $this->pageTpl->assign('json', $json);
-
+			
             if ($this->debug) {
                 $this->debugMsg['JSON'] = $json;
             }
@@ -71,11 +76,13 @@ class InfoxController extends PlonkController {
 		}
 		if (PlonkFilter::getGetValue('transfer') == 1) {
 		    $this->transfer();
+		} else if (PlonkFilter::getGetValue('transfer') == 2) {
+			$this->fileTransfer();
 		}
         if (curl::getHTTPCode() == 200) {
             $this->pageTpl->assign('success', curl::getResult());
         } else {
-            $this->pageTpl->assign('success', "FEHLER");
+            $this->pageTpl->assign('success', "Error");
         }
         if ($this->debug) {
             $msg = "# # # # # # DEBUG # # # # # #<br />" . $this->getDebug($this->debugMsg);
@@ -84,7 +91,7 @@ class InfoxController extends PlonkController {
             $this->pageTpl->assign("debug", "");
         }
     }
-
+	
     public function showAdmin() {
         $this->mainTpl->assign('breadcrumb', 'Home ==> Infox ==> Admin');
         $tables = InfoxDB::getAllTables();
@@ -187,6 +194,22 @@ class InfoxController extends PlonkController {
             }
         }
     }
+
+	public function fileTransfer() {
+		if (file_exists($this->path.PlonkFilter::getGETValue('file'))) {
+			$array = array('file' => "@".$this->path.PlonkFilter::getGETValue('file'));
+//			$array = array('name' => 'foo', 'file' => "@C:/Program Files/GIT/mutworange/erasmusline/WEBSITE/test.txt");
+		    $idUni = PlonkFilter::getGetValue('idUni');
+			curl::start();
+			curl::setOption(CURLOPT_URL, InfoxDB::getURL($idUni) . "/modules/infox/airport/airport.php");
+			curl::setOption(CURLOPT_POST, 1);
+			curl::setOption(CURLOPT_RETURNTRANSFER, true);
+			curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
+			curl::setOption(CURLOPT_POSTFIELDS, $array);
+			curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+			curl::execute();
+		}
+	}
 
     public function getDebug($a) {
         $dbg = "";
