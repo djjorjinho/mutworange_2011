@@ -52,11 +52,11 @@
 					<option value="le">Less/Equal</option>
 					<option value="lt">Less</option>
 					<option value="gt">Greater</option>
-					<option value="qe">Equal</option>
+					<option value="eq">Equal</option>
 				</select>
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
-				<button onclick="eis.addFilter(this);">Add</button>
+				<button onclick="eis.addHlight(this);">Add</button>
 			</div>
 		</div>
 		

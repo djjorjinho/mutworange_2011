@@ -153,17 +153,19 @@ var eis = {
 		
 	},
 	
-	fillDimensionsAndMeasures : function(){
+	fillDimensionsAndMeasures : function(reset){
+		if(reset==undefined) reset=true;
 		$.blockUI();
 		var table = jQuery('#eis_cube_container select option:selected').val();
 		
 		// resetting values
-		eis.scenario.cube = table;
-		eis.scenario.columns = [];
-		eis.scenario.rows = [];
-		eis.scenario.filters = {};
-		eis.scenario.highlight = [];
-		
+		if(reset){
+			eis.scenario.cube = table;
+			eis.scenario.columns = [];
+			eis.scenario.rows = [];
+			eis.scenario.filters = {};
+			eis.scenario.highlight = [];
+		}
 		var cube = jsonPath(eis.rules, "$.cubes[?(@.table=='"+table+"')]")[0];
 		
 		eis.fillDimensions(table,cube);
@@ -264,8 +266,69 @@ var eis = {
 		eis.selectedItem = "";
 	},
 	
+	RGBtoHEX : function(parts) {
+		
+		for (var i = 1; i <= 3; ++i) {
+		    parts[i] = parseInt(parts[i]).toString(16);
+		    if (parts[i].length == 1) parts[i] = '0' + parts[i];
+		}
+		var hexString = parts.join('');
+		return '#'+hexString;
+	},
+	
+	rgbToHsv : function (r, g, b) {
+	    var r = (r / 255),  
+	         g = (g / 255),  
+	     b = (b / 255);   
+	  
+	    var min = Math.min(Math.min(r, g), b),  
+	        max = Math.max(Math.max(r, g), b),  
+	        delta = max - min;  
+	  
+	    var value = max,  
+	        saturation,  
+	        hue;  
+	  
+	    // Hue  
+	    if (max == min) {  
+	        hue = 0;  
+	    } else if (max == r) {  
+	        hue = (60 * ((g-b) / (max-min))) % 360;  
+	    } else if (max == g) {  
+	        hue = 60 * ((b-r) / (max-min)) + 120;  
+	    } else if (max == b) {  
+	        hue = 60 * ((r-g) / (max-min)) + 240;  
+	    }  
+	  
+	    if (hue < 0) {  
+	        hue += 360;  
+	    }  
+	  
+	    // Saturation  
+	    if (max == 0) {  
+	        saturation = 0;  
+	    } else {  
+	        saturation = 1 - (min/max);  
+	    }  
+	  
+	    return [Math.round(hue), Math.round(saturation * 100), 
+	            Math.round(value * 100)];  
+	},
+	
 	getHighlightColor : function(){
-		return $('#colorSelector div').css('backgroundColor');
+		var rgbString = $('#colorSelector div').css('background-color');
+		var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/); 
+		delete (parts[0]);
+		
+		
+		// determine contrast text color
+		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
+		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
+				'#ffffff' : '#000000';
+		console.log(hsv);
+		console.log(contrast);
+		
+		return [eis.RGBtoHEX(parts),contrast]; 
 	},
 	
 	paintScenario : function(){
@@ -300,8 +363,10 @@ var eis = {
 		jQuery('#eis_cube_container option').attr('selected','');
 		jQuery('#eis_cube_container option[value="'+_result.cube+'"]')
 							.attr('selected','selected');
+		eis.fillDimensionsAndMeasures(false);
 		eis.paintScenario();
 		eis.runScenario();
+		eis.paintHlights(_result.highlight);
 		$.unblockUI();
 	},
 	
@@ -351,7 +416,7 @@ var eis = {
 		function(error){
 			console.log(error);
 			$.unblockUI();
-		},true);
+		},false);
 	},
 	
 	newScenario : function(){
@@ -388,24 +453,89 @@ var eis = {
 	},
 	
 	simpleHtmlTable : function(data){
-		console.log(data);
+
 		out="";
 		out+="<table class='presentation_table' id='resultTable'>";
 		    out+= "<thead>";
 		    for (var item1 in data[0]) {
-		        out+= "<td><b>"+item1+"<b></td>";
+		        out+= "<td class='res_column'><b>"+item1+"<b></td>";
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
+		    	var cnt = eis.scenario.rows.length; cnt++;
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
-		            out+= "<td>"+data[row][item2]+"</td>";
+		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
+		            out+= "<td class='"+cls+"'>"+data[row][item2]+"</td>";
+		            cnt--;
 		        }
 		        out+= "</tr>";
 		    }
 		    out+= "</table>";
 		    jQuery("#resultTableDiv").html(out);
 
+	},
+	
+	
+	
+	addHlight : function(elm){
+		$.blockUI();
+		var colors = eis.getHighlightColor();
+
+		var parent =jQuery(elm).parent();
+		var _op = parent.find('select option:selected').val();
+		var _value = parseInt(parent.find('input[type=text]').val());
+		var item;
+		
+		if(_value != NaN){
+			item = {op:_op,value:_value,color:colors[0],contrast:colors[1]};
+			eis.scenario.highlight.push(item);
+		}
+
+		if($('#resultTable').length>0){
+			eis.paintHlights([item]);
+		}
+		$.unblockUI();
+	},
+	
+	paintHlights : function(items){
+		
+		for(var idx in items){
+			var item = items[idx];
+			var op = item.op;
+			var value = item.value;
+			var color = item.color;
+			var contrast = item.contrast;
+			
+			$('#resultTable td.res_value').each(function(){
+					var	val = parseInt($(this).text());
+					
+				   switch(op){
+				   	case 'ge' : if(val >= value) 
+				   				eis.paintElm(this,color,contrast);
+				   		break;
+				   	case 'gt' : if(val > value) 
+		   							eis.paintElm(this,color,contrast);
+			   			break;
+				   	case 'eq' : if(val == value) 
+							eis.paintElm(this,color,contrast);
+				   		break;
+				   	case 'lt' : if(val < value) 
+						eis.paintElm(this,color,contrast);
+			   			break;
+				   	case 'le' : if(val <= value) 
+						eis.paintElm(this,color,contrast);
+			   			break;
+				   }
+				   
+			});
+			
+		}
+
+	},
+	
+	paintElm : function(elm,color,contrast){
+		jQuery(elm).css('background-color',color).css('color',contrast);
 	}
 	
 };

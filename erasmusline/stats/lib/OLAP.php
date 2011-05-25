@@ -95,6 +95,7 @@ class OLAP{
 		if(!empty($groupby)) $sql .= " GROUP BY ".implode(',',$groupby);
 		
 		#print $sql."\n";
+		System_Daemon::debug("QUERY: ".$sql);
 		
 		$result = $this->db->getMany($sql);
 		
@@ -125,7 +126,7 @@ class OLAP{
 	
 	private function processFields(&$params,&$fields,&$tables,&$where,
 		&$groupby,&$having,&$limit){
-			
+		$hasMeasure=false;
 		$cube = $params['cube'];
 		$columns = array_merge($params['columns'],$params['rows']);
 		
@@ -133,6 +134,7 @@ class OLAP{
 			$field_array = self::splitField($field);
 			
 			if($field_array[0] == 'measure'){
+				$hasMeasure=true;
 				$this->processMeasure($cube,$field_array[1],$fields,
 						$tables,$where,$limit);				
 			}else{
@@ -201,19 +203,19 @@ class OLAP{
 		$aggregator = $measure['aggregator'];
 		$column = $measure['column'];
 		
-		array_push($fields,"'$measure[name]' as `measure.${measure_id}`");
+		//array_push($fields,"'measure.${measure_id}' as `$measure[name]`");
 		
 		$this->processAggregatorOp($aggregator,"${cube}.${column}",$column,
-																	$fields);
+													$fields,$measure[name]);
 	}
 	
-	private function processAggregatorOp($op,$field,$column,&$fields){
+	private function processAggregatorOp($op,$field,$column,&$fields,$measure_name){
 		$aggregator = $op;
 		if($op=='sum-dis'){
 			$aux='distinct';
 			$aggregator='sum';
 		}
-		array_push($fields,"${aggregator}(${aux} ${field}) as ${column}");
+		array_push($fields,"${aggregator}(${aux} ${field}) as `${measure_name}`");
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,
@@ -342,7 +344,7 @@ class OLAP{
 
 
 		
-		return $measure['column'];
+		return $measure['name'];
 	}
 	
 }
