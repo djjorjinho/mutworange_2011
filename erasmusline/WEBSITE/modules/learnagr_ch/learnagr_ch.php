@@ -19,7 +19,22 @@ class learnagr_chController extends PlonkController {
 
     /* For Using this PlonkSession::get('id'); must be an id of the student */
 
+    public function checkLogged() {
+        if (!PlonkSession::exists('id')) {
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        } else {
+            if (PlonkSession::get('id') === 0) {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                $this->pageTpl->assignOption('oStudent');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+                }
+        }
+    }
+
     public function showlearnagrch() {
+        $this->checkLogged();
         $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
         <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
@@ -31,7 +46,7 @@ class learnagr_chController extends PlonkController {
         $this->fillData('main');
     }
 
-    public function fillData($pos) {
+    private function fillData($pos) {
 
         if ($pos == 'mail') {
             $this->pageTpl = $this->mail;
@@ -102,7 +117,7 @@ class learnagr_chController extends PlonkController {
         $this->pageTpl->parseIteration('iStudentCourses');
     }
 
-    public function formSend($post) {
+    private function formSend($post) {
         $name = PlonkSession::get('id');
         $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/confirm.tpl');
         $this->fillData('mail');
@@ -153,7 +168,7 @@ class learnagr_chController extends PlonkController {
         }
     }
 
-    public function checkSelection($courseList, $course) {
+    private function checkSelection($courseList, $course) {
         $i = 0;
         while (isset($courseList[$i]['courseId'])) {
             if (($course == $courseList[$i]['courseId']))
