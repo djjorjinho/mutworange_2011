@@ -241,9 +241,13 @@ var eis = {
 		jQuery(elm).parent().find('ul').toggle();
 	},
 	
-	selectListItem : function(itm){
+	selectListItem : function(itm,elm){
 		eis.selectedItem = itm;
-		console.log("selected: "+itm);
+		var div = jQuery(elm).parents('div:first');
+		var li = jQuery(elm).parent('li');
+		div.find('li').removeClass('selected');
+		jQuery(li).addClass('selected');
+		
 	},
 	
 	addToColumns : function(){
@@ -254,6 +258,7 @@ var eis = {
 		eis.scenario.columns.push(eis.selectedItem);
 		
 		eis.selectedItem = "";
+		eis.paintScenario();
 	},
 	
 	addToRows : function(){
@@ -264,6 +269,7 @@ var eis = {
 		eis.scenario.rows.push(eis.selectedItem);
 		
 		eis.selectedItem = "";
+		eis.paintScenario();
 	},
 	
 	RGBtoHEX : function(parts) {
@@ -325,14 +331,47 @@ var eis = {
 		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
 		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
 				'#ffffff' : '#000000';
-		console.log(hsv);
-		console.log(contrast);
+		//console.log(hsv);
+		//console.log(contrast);
 		
 		return [eis.RGBtoHEX(parts),contrast]; 
 	},
 	
 	paintScenario : function(){
+		eis.paintScenarioAux('columns');
+		eis.paintScenarioAux('rows');
+		eis.paintScenarioAux('filters');
+	},
+	
+	paintScenarioAux : function(tb){
+		var regex1 = /^measure/;
 
+		// columns
+		var list = eis.scenario[tb];
+		jQuery('#'+tb+'_list').html('');
+		for(var i in list){
+			var col = list[i];
+			var parts = col.split('.');
+			if(regex1.test(col)){
+				var cube = eis.scenario.cube;
+				var expr="$.cubes[?(@['table']=='"+cube+"')]"+
+				".measures[?(@['id']=='"+parts[1]+"')]";
+				var obj = jsonPath(eis.rules, expr)[0];
+				jQuery('#eis_tbmes_tmpl').tmpl(
+						{text:obj.name,mes:col,type:tb}
+						).appendTo('#'+tb+'_list');
+			}else{
+				
+				var expr= parts[1]=='all' ? 
+						"$.dimensions[?(@['table']=='"+parts[0]+"')]"
+						: "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
+							".levels[?(@['column']=='"+parts[1]+"')]";
+				var obj = jsonPath(eis.rules, expr)[0];
+				jQuery('#eis_tbdim_tmpl').tmpl(
+						{text:obj.name,dim:col,type:tb}
+						).appendTo('#'+tb+'_list');
+			}
+		}
 	},
 	
 	getScenarios : function(){
@@ -443,6 +482,7 @@ var eis = {
 		
 		eis.paintScenario();
 		eis.runScenario();
+		eis.paintHlights(eis.scenario.highlight);
 		$.unblockUI();
 	},
 	
@@ -536,6 +576,28 @@ var eis = {
 	
 	paintElm : function(elm,color,contrast){
 		jQuery(elm).css('background-color',color).css('color',contrast);
+	},
+	
+	resetHlight : function(){
+		eis.scenario.highlight=[];
+		var table = $('#resultTable');
+		if(table.length>0){
+			$(table).find('td.res_value').each(function(){
+				eis.paintElm(this,'#ffffff','#000000');
+			});
+		}
+	},
+	
+	showGraph : function(){
+		
+	},
+	
+	removeTBItem : function(elm,id,type){
+		var list = eis.scenario[type];
+		eis.scenario[type] = jQuery.grep(list,function(elm){
+			return elm != id;
+		});
+		jQuery(elm).parent('span').remove();
 	}
 	
 };

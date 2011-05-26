@@ -126,8 +126,27 @@
 	padding:5px 5px 5px 5px;
 	border-collapse:separate;
 }
-	
 
+#eis_dimensions_container {
+	overflow:auto;
+}
+
+#eis_measures_container{
+	overflow:auto;
+}
+
+#resultTableDiv {
+	overflow:auto;
+}
+#eis_filters_container{
+	overflow:auto;
+}
+#eis_highlight_container{
+	overflow:auto;
+}
+li.selected{
+	background-color : #bbbbc7;
+}
 
 
 

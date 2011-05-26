@@ -57,6 +57,7 @@
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
 				<button onclick="eis.addHlight(this);">Add</button>
+				<button onclick="eis.resetHlight(this);">Reset</button>
 			</div>
 		</div>
 		
@@ -66,7 +67,7 @@
 		
 		
 			<div class="presentation_div_menu border_eis" title="Toolbar" id="eis_toolbar">
-				<label>Tasks</label>
+				<span>Tasks</span>
 				<select name="Scenarios" title="Scenario Select">
 					<option selected="selected" value="">Select</option>
 				</select>
@@ -76,6 +77,7 @@
 				<button onclick="eis.runScenario();">Run</button>
 				<button onclick="eis.swapColumnsRows();">Swap</button>
 				<button onclick="eis.exportScenario();">Export</button>
+				<button onclick="eis.showGraph();">Graph</button>
 				
 			</div>
 			<div class="presentation_div_options border_eis" title="COLUMNS">
@@ -83,8 +85,8 @@
 				Columns 
 					<button onclick="eis.addToColumns();">+</button>
 				</div>
-				<div class="fields_list_body columns">
-					<ul class=""></ul>
+				<div id="columns_list" class="fields_list_body columns">
+					
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -93,17 +95,14 @@
 				Rows 
 					<button onclick="eis.addToRows();">+</button>
 				</div>
-				<div class="fields_list_body rows">
-					<ul class="">
-					</ul>
+				<div id="rows_list" class="fields_list_body rows">
+
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="presentation_div_options border_eis" title="FILTER">
 				<div class="fields_list_header i18n">Filter</div>
-				<div class="">
-					<ul class="">
-					</ul>
+				<div id="filters_list" class="fields_list_body filters">
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -111,9 +110,7 @@
 		
 		<div class="presentation_div border_eis" id="resultTableDiv">
 		</div>
-		
-		
-		
+
 	</div>
 </div>
 
@@ -141,8 +138,21 @@ var _userlevel = '{$userlevel}';
 <script id="eis_listitem_tmpl" type="text/x-jquery-tmpl"> 
     <li>
 		<a class="eis_dim_item" 
-			onclick="eis.selectListItem('${item}');return false;">
+			onclick="eis.selectListItem('${item}',this);return false;">
 		${text}
 		</a>
 	</li>
+</script>
+
+<script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl"> 
+    <span><button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
+	<button onclick="eis.showFilterOption('${dim}')">F</span>
+	&nbsp;&nbsp;
+</script>
+
+<script id="eis_tbmes_tmpl" type="text/x-jquery-tmpl"> 
+    <span>
+	<button onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
+	</span>
+&nbsp;&nbsp;
 </script>
