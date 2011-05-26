@@ -74,7 +74,7 @@
 				
 				<button onclick="eis.saveScenario();">Save</button>
 				<button onclick="eis.newScenario();">New</button>
-				<button onclick="eis.runScenario();">Run</button>
+				<button onclick="eis.runScenarioButton();">Run</button>
 				<button onclick="eis.swapColumnsRows();">Swap</button>
 				<button onclick="eis.exportScenario();">Export</button>
 				<button onclick="eis.showGraph();">Graph</button>

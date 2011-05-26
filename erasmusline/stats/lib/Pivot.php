@@ -146,7 +146,7 @@ class Pivot
     const TYPE_PIVOT_TOTAL_LEVEL2 = 2;
     const TYPE_FULL_TOTAL = 3;
 
-    const _ID = '_id';
+    const _ID = 'no.';
     private function _buildOutput($tmp, $fetchType, $tmpCount)
     {
         $out = array();
@@ -180,7 +180,7 @@ class Pivot
                                     $value = $colValues[$k];
                                 }
                                 
-                                $_out["{$split}_{$col}_{$k}"] = $value;
+                                $_out["{$split}|{$col}|{$k}"] = $value;
                                 if ($this->_lineTotal) {
                                     $_lineTotal[$k] += $value;
                                 }

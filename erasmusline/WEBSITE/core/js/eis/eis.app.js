@@ -170,6 +170,7 @@ var eis = {
 		
 		eis.fillDimensions(table,cube);
 		eis.fillMeasures(table,cube);
+		eis.paintScenario();
 		$.unblockUI();
 	},
 	
@@ -443,6 +444,11 @@ var eis = {
 			console.log(error);
 			$.unblockUI();
 		},true);
+	},
+	
+	runScenarioButton : function(){
+		eis.runScenario();
+		eis.paintHlights(eis.scenario.highlight);
 	},
 	
 	runScenario : function(){

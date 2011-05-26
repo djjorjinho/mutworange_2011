@@ -146,13 +146,19 @@ class OLAP{
 				
 				if($field_array[1]!='all'){
 					array_push($groupby,$field);
-					array_push($fields,$field." as `${field}`");
+					
+					$dim = array_shift(jsonPath($this->rules,
+					"$.dimensions[?(@['table']=='${table}')]".
+					".levels[?(@['column']=='${field_array[1]}')]"
+					,array("resultType" => "VALUE")));
+					
+					array_push($fields,$field." as `$dim[name]`");
 					
 				}else{
 					$dim = array_shift(jsonPath($this->rules,
 					"$.dimensions[?(@['table']=='${table}')]"
 					,array("resultType" => "VALUE")));
-					array_push($fields,"'All $dim[name]' as `${field}`");
+					array_push($fields,"'All $dim[name]'");
 				}
 					
 			}
@@ -311,14 +317,24 @@ class OLAP{
 		$records = array_merge($columns,$rows);
 		$measures = array_values(preg_grep("/^measure/",$records));
 		
-		$columns = array_values(preg_grep("/^measure/",$columns,PREG_GREP_INVERT));
-		$rows = array_values(preg_grep("/^measure/",$rows,PREG_GREP_INVERT));
+		$columns = array_values(preg_grep("/^measure/",$columns,
+				PREG_GREP_INVERT));
+		$rows = array_values(preg_grep("/^measure/",$rows,
+				PREG_GREP_INVERT));
 		
 		//$columns = array_values(preg_grep("/\.all$/",$columns,PREG_GREP_INVERT));
 		//$rows = array_values(preg_grep("/\.all$/",$rows,PREG_GREP_INVERT));
 		
 		foreach(range(0,count($measures)-1) as $i){
 			$measures[$i] = $this->translateMeasure($measures[$i],$cube);
+		}
+		
+		foreach(range(0,count($rows)-1) as $i){
+			$rows[$i] = $this->translateDimension($rows[$i],$cube);
+		}
+		
+		foreach(range(0,count($columns)-1) as $i){
+			$columns[$i] = $this->translateDimension($columns[$i],$cube);
 		}
 		
 		
@@ -345,6 +361,21 @@ class OLAP{
 
 		
 		return $measure['name'];
+	}
+	
+	private function translateDimension(&$field,$cube){
+		$arr = self::splitField($field);
+		
+		$expr = ($arr[1] == 'all') ? 
+			"$.dimensions[?(@['table']=='$arr[0]')]" :
+			"$.dimensions[?(@['table']=='$arr[0]')]".
+			".levels[?(@['column']=='$arr[1]')]";
+		
+		$dim = array_shift(jsonPath($this->rules,$expr,
+				array("resultType" => "VALUE")));
+	
+		
+		return $dim['name'];
 	}
 	
 }
