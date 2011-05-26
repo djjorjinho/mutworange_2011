@@ -52,11 +52,11 @@
 					<option value="le">Less/Equal</option>
 					<option value="lt">Less</option>
 					<option value="gt">Greater</option>
-					<option value="qe">Equal</option>
+					<option value="eq">Equal</option>
 				</select>
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
-				<button onclick="eis.addFilter(this);">Add</button>
+				<button onclick="eis.addHlight(this);">Add</button>
 			</div>
 		</div>
 		
@@ -74,8 +74,8 @@
 				<button onclick="eis.saveScenario();">Save</button>
 				<button onclick="eis.newScenario();">New</button>
 				<button onclick="eis.runScenario();">Run</button>
-				<button>Swap</button>
-				<button>Export</button>
+				<button onclick="eis.swapColumnsRows();">Swap</button>
+				<button onclick="eis.exportScenario();">Export</button>
 				
 			</div>
 			<div class="presentation_div_options border_eis" title="COLUMNS">
@@ -110,8 +110,6 @@
 			
 		
 		<div class="presentation_div border_eis" id="resultTableDiv">
-			<table class="presentation_table" id="resultTable">
-			</table>
 		</div>
 		
 		

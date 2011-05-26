@@ -15,10 +15,10 @@ var eis = {
 	init : function(){
 		$.blockUI();
 		
-		eis.loadDependencies();
+		this.loadDependencies();
 		$.ajaxSetup({async: true});
 		
-		eis.loadLayout();
+		this.loadLayout();
 	},
 	
 	loadLayout : function(){
@@ -27,7 +27,6 @@ var eis = {
 			
 			eis.loadRules();
 			eis.fillCubes();
-			// color picker
 			$('#colorSelector').ColorPicker({
 				color: '#0000ff',
 				onShow: function (colpkr) {
@@ -43,14 +42,12 @@ var eis = {
 				}
 			});
 			
-			// editable select box
-			eis.scenarioSelect = 
-				jQuery('#eis_toolbar select:first').editableSelect({
+			eis.scenarioSelect = $('#eis_toolbar select:first').editableSelect({
+				onSelect: function(list_item) {
+					eis.getScenario(list_item.text());
+				},
 				case_sensitive: false,
-				items_then_scroll: 10,
-				onSelect : function(item){
-					eis.getScenario(item.text());
-				}
+				items_then_scroll: 10
 			});
 			
 			eis.getScenarios();
@@ -62,11 +59,11 @@ var eis = {
 	loadDependencies : function(){
 		
 		$.ajaxSetup({async: false});
-		
+
 		jQuery.getScript('core/js/eis/jquery.json-2.2.min.js');
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
-		
+		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
@@ -110,19 +107,20 @@ var eis = {
 		jQuery("#qunit-testresult").show();
 		jQuery.getScript('core/js/eis/test/test.js');
 	},
-	rpcCall : function(func,args,callSuccess,callError,async){
+	rpcCall : function(func,args,callSuccess,callError,async,url){
+		if(url==undefined) url="modules/stats/rpc.php";
 		jQuery.ajax({
-			url: "modules/stats/rpc.php",
+			url: url,
 			type : "POST",
 			data : {method : func, 
 					params : jQuery.toJSON(args)},
 			dataType : 'json',
 			async : async,
-			success: function(obj){
-				if(obj.hasOwnProperty('error')){
-					callError(obj['error']);
+			success: function(_obj){
+				if(_obj.hasOwnProperty('error')){
+					callError(_obj.error);
 				}else{
-					callSuccess(obj['result']);
+					callSuccess(_obj.result);
 				}
 			},
 			error : function (xhr, ajaxOptions, thrownError){
@@ -130,12 +128,11 @@ var eis = {
             }    
 		});
 	},
-	
 	loadRules : function(){
 
 		eis.rpcCall("getRules",{},
-				function(result){
-					eis.rules = result;
+				function(rpcrules){
+					eis.rules = rpcrules;
 	  			}, 
 				function(error){
 					console.log(error);
@@ -156,17 +153,19 @@ var eis = {
 		
 	},
 	
-	fillDimensionsAndMeasures : function(){
+	fillDimensionsAndMeasures : function(reset){
+		if(reset==undefined) reset=true;
 		$.blockUI();
 		var table = jQuery('#eis_cube_container select option:selected').val();
 		
 		// resetting values
-		eis.scenario.cube = table;
-		eis.scenario.columns = [];
-		eis.scenario.rows = [];
-		eis.scenario.filters = {};
-		eis.scenario.highlight = [];
-		
+		if(reset){
+			eis.scenario.cube = table;
+			eis.scenario.columns = [];
+			eis.scenario.rows = [];
+			eis.scenario.filters = {};
+			eis.scenario.highlight = [];
+		}
 		var cube = jsonPath(eis.rules, "$.cubes[?(@.table=='"+table+"')]")[0];
 		
 		eis.fillDimensions(table,cube);
@@ -196,7 +195,7 @@ var eis = {
 			
 			if(dimension.hasAll){
 				levels.push(jQuery('#eis_listitem_tmpl').tmpl( 
-						{item : table+".all", text : "All"}
+						{item : table+"."+pk, text : "All"}
 						));
 			}
 			
@@ -267,12 +266,73 @@ var eis = {
 		eis.selectedItem = "";
 	},
 	
+	RGBtoHEX : function(parts) {
+		
+		for (var i = 1; i <= 3; ++i) {
+		    parts[i] = parseInt(parts[i]).toString(16);
+		    if (parts[i].length == 1) parts[i] = '0' + parts[i];
+		}
+		var hexString = parts.join('');
+		return '#'+hexString;
+	},
+	
+	rgbToHsv : function (r, g, b) {
+	    var r = (r / 255),  
+	         g = (g / 255),  
+	     b = (b / 255);   
+	  
+	    var min = Math.min(Math.min(r, g), b),  
+	        max = Math.max(Math.max(r, g), b),  
+	        delta = max - min;  
+	  
+	    var value = max,  
+	        saturation,  
+	        hue;  
+	  
+	    // Hue  
+	    if (max == min) {  
+	        hue = 0;  
+	    } else if (max == r) {  
+	        hue = (60 * ((g-b) / (max-min))) % 360;  
+	    } else if (max == g) {  
+	        hue = 60 * ((b-r) / (max-min)) + 120;  
+	    } else if (max == b) {  
+	        hue = 60 * ((r-g) / (max-min)) + 240;  
+	    }  
+	  
+	    if (hue < 0) {  
+	        hue += 360;  
+	    }  
+	  
+	    // Saturation  
+	    if (max == 0) {  
+	        saturation = 0;  
+	    } else {  
+	        saturation = 1 - (min/max);  
+	    }  
+	  
+	    return [Math.round(hue), Math.round(saturation * 100), 
+	            Math.round(value * 100)];  
+	},
+	
 	getHighlightColor : function(){
-		return $('#colorSelector div').css('backgroundColor');
+		var rgbString = $('#colorSelector div').css('background-color');
+		var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/); 
+		delete (parts[0]);
+		
+		
+		// determine contrast text color
+		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
+		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
+				'#ffffff' : '#000000';
+		console.log(hsv);
+		console.log(contrast);
+		
+		return [eis.RGBtoHEX(parts),contrast]; 
 	},
 	
 	paintScenario : function(){
-		
+
 	},
 	
 	getScenarios : function(){
@@ -295,33 +355,48 @@ var eis = {
 				},true);
 	},
 	
+	setScenario : function(_result){
+		$.blockUI();
+		
+		eis.scenario = _result;
+
+		jQuery('#eis_cube_container option').attr('selected','');
+		jQuery('#eis_cube_container option[value="'+_result.cube+'"]')
+							.attr('selected','selected');
+		eis.fillDimensionsAndMeasures(false);
+		eis.paintScenario();
+		eis.runScenario();
+		eis.paintHlights(_result.highlight);
+		$.unblockUI();
+	},
+	
 	getScenario : function(name){
 		$.blockUI();
 		eis.rpcCall("getScenarioConfig",{
 			user_id : _userid,
 			scenario_name : name
 		},
-		function(result){
-				eis.scenario = result;
-				jQuery('#eis_cube_container select').val(result.cube);
-				eis.fillDimensionsAndMeasures();
-				eis.paintScenario();
-				eis.runScenario();
-				$.unblockUI();
-			}, 
+		eis.setScenario, 
 		function(error){
 			console.log(error);
 			$.unblockUI();
-		},true);
+		},false);
 	},
 	
 	saveScenario : function(){
 		$.blockUI();
-		eis.scenario.scenario_name = jQuery(eis.scenarioSelect)
-										.find(':selected').text();
+		var instance = eis.scenarioSelect.editableSelectInstances()[0];
+		eis.scenario.scenario_name = instance.current_value;
 		eis.scenario.user_id = _userid;
+		eis.scenario.string='';
 		eis.rpcCall("saveScenario",eis.scenario,
 		function(result){
+				
+				var exists = instance.select.find('option:contains('+
+						instance.current_value+')').text();
+				if(exists==""){
+					instance.addOption(instance.current_value);
+				}
 				
 				$.unblockUI();
 			}, 
@@ -335,14 +410,134 @@ var eis = {
 		$.blockUI();
 		eis.rpcCall("runScenario",eis.scenario,
 		function(result){
-				console.log(result);
+				eis.simpleHtmlTable(result);
 				$.unblockUI();
 			}, 
 		function(error){
 			console.log(error);
 			$.unblockUI();
-		},true);
+		},false);
+	},
+	
+	newScenario : function(){
+		$.blockUI();
+		// resetting values
+		eis.scenario.cube = "";
+		eis.scenario.columns = [];
+		eis.scenario.rows = [];
+		eis.scenario.filters = {};
+		eis.scenario.highlight = [];
+		
+		jQuery('#eis_cube_container option').attr('selected','');
+		jQuery('#eis_cube_container select').val("");
+		eis.fillDimensionsAndMeasures();
+		eis.paintScenario();
+		$.unblockUI();
+	},
+	
+	swapColumnsRows : function(){
+		$.blockUI();
+		var aux = eis.scenario.columns;
+		eis.scenario.columns = eis.scenario.rows;
+		eis.scenario.rows = aux;
+		
+		eis.paintScenario();
+		eis.runScenario();
+		$.unblockUI();
+	},
+	
+	exportScenario : function(){
+		$.blockUI();
+		$.postGo("modules/stats/export.php","runScenario",eis.scenario);
+		$.unblockUI();
+	},
+	
+	simpleHtmlTable : function(data){
+
+		out="";
+		out+="<table class='presentation_table' id='resultTable'>";
+		    out+= "<thead>";
+		    for (var item1 in data[0]) {
+		        out+= "<td class='res_column'><b>"+item1+"<b></td>";
+		    }
+		    out+= "</thead>";
+		    for (var row in data) {
+		    	var cnt = eis.scenario.rows.length; cnt++;
+		        out+= "<tr>";
+		        for (var item2 in data[row]) {
+		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
+		            out+= "<td class='"+cls+"'>"+data[row][item2]+"</td>";
+		            cnt--;
+		        }
+		        out+= "</tr>";
+		    }
+		    out+= "</table>";
+		    jQuery("#resultTableDiv").html(out);
+
+	},
+	
+	
+	
+	addHlight : function(elm){
+		$.blockUI();
+		var colors = eis.getHighlightColor();
+
+		var parent =jQuery(elm).parent();
+		var _op = parent.find('select option:selected').val();
+		var _value = parseInt(parent.find('input[type=text]').val());
+		var item;
+		
+		if(_value != NaN){
+			item = {op:_op,value:_value,color:colors[0],contrast:colors[1]};
+			eis.scenario.highlight.push(item);
+		}
+
+		if($('#resultTable').length>0){
+			eis.paintHlights([item]);
+		}
+		$.unblockUI();
+	},
+	
+	paintHlights : function(items){
+		
+		for(var idx in items){
+			var item = items[idx];
+			var op = item.op;
+			var value = item.value;
+			var color = item.color;
+			var contrast = item.contrast;
+			
+			$('#resultTable td.res_value').each(function(){
+					var	val = parseInt($(this).text());
+					
+				   switch(op){
+				   	case 'ge' : if(val >= value) 
+				   				eis.paintElm(this,color,contrast);
+				   		break;
+				   	case 'gt' : if(val > value) 
+		   							eis.paintElm(this,color,contrast);
+			   			break;
+				   	case 'eq' : if(val == value) 
+							eis.paintElm(this,color,contrast);
+				   		break;
+				   	case 'lt' : if(val < value) 
+						eis.paintElm(this,color,contrast);
+			   			break;
+				   	case 'le' : if(val <= value) 
+						eis.paintElm(this,color,contrast);
+			   			break;
+				   }
+				   
+			});
+			
+		}
+
+	},
+	
+	paintElm : function(elm,color,contrast){
+		jQuery(elm).css('background-color',color).css('color',contrast);
 	}
+	
 };
 
 

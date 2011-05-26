@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/>
                     <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
                     <script type="text/javascript" src="./core/js/datepicker/js/jquery-ui-1.8.9.custom.min.js"></script>
+                    <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
                     <script>
 	$(function() {
 		$( "#signDate" ).datepicker();

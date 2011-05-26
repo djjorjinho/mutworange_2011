@@ -3,6 +3,7 @@ require_once("lib/DB.php");
 require_once("lib/System/Daemon.php");
 require_once("lib/Cache.php");
 require_once("lib/jsonpath.php");
+require_once("lib/Pivot.php");
 /**
  * 
  * OLAP class to interpret the EIS scenarios into a query for processing and 
@@ -76,11 +77,7 @@ class OLAP{
 		#print("fields\n");
 		#print_r($fields);
 		
-		if($fields[0]=='distinct'){
-			$op = array_shift($fields);
-		}
-				
-		$sql .= "SELECT $op ".implode(',',$fields);
+		$sql .= "SELECT ".implode(',',$fields);
 		
 		#print("tables\n");
 		#print_r($tables);
@@ -98,13 +95,16 @@ class OLAP{
 		if(!empty($groupby)) $sql .= " GROUP BY ".implode(',',$groupby);
 		
 		#print $sql."\n";
+		System_Daemon::debug("QUERY: ".$sql);
 		
 		$result = $this->db->getMany($sql);
 		
+		$table = $this->tablefyResult($result,$params['columns'],
+								$params['rows'],$cube);
 		
 		//store result in cache and resturn
-		$this->cache->store($cache_key, $result,120);
-		return $result;
+		$this->cache->store($cache_key, $table,120);
+		return $table;
 	}
 	
 	/**
@@ -126,7 +126,6 @@ class OLAP{
 	
 	private function processFields(&$params,&$fields,&$tables,&$where,
 		&$groupby,&$having,&$limit){
-		
 		$hasMeasure=false;
 		$cube = $params['cube'];
 		$columns = array_merge($params['columns'],$params['rows']);
@@ -147,7 +146,13 @@ class OLAP{
 				
 				if($field_array[1]!='all'){
 					array_push($groupby,$field);
-					array_push($fields,$field);
+					array_push($fields,$field." as `${field}`");
+					
+				}else{
+					$dim = array_shift(jsonPath($this->rules,
+					"$.dimensions[?(@['table']=='${table}')]"
+					,array("resultType" => "VALUE")));
+					array_push($fields,"'All $dim[name]' as `${field}`");
 				}
 					
 			}
@@ -158,6 +163,7 @@ class OLAP{
 			$field = 'M1';
 			$this->processMeasure($cube,$field,$fields,
 						$tables,$where,$limit);
+			array_push($params['columns'],"measure.M1");
 		}
 		
 	}
@@ -197,22 +203,19 @@ class OLAP{
 		$aggregator = $measure['aggregator'];
 		$column = $measure['column'];
 		
+		//array_push($fields,"'measure.${measure_id}' as `$measure[name]`");
+		
 		$this->processAggregatorOp($aggregator,"${cube}.${column}",$column,
-																	$fields);
+													$fields,$measure[name]);
 	}
 	
-	private function processAggregatorOp($op,$field,$column,&$fields){
+	private function processAggregatorOp($op,$field,$column,&$fields,$measure_name){
 		$aggregator = $op;
-		
-		if($op=='distinct'){
-			if($fields[0]!='distinct') array_unshift($fields, $op);
-			$aggregator='';
-		}elseif($op == 'sum-dis'){
-			$aggregator = 'sum';
-			$auxop = 'distinct';
+		if($op=='sum-dis'){
+			$aux='distinct';
+			$aggregator='sum';
 		}
-		
-		array_push($fields,"${aggregator}(${auxop} ${field}) as ${column}");
+		array_push($fields,"${aggregator}(${aux} ${field}) as `${measure_name}`");
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,
@@ -303,6 +306,46 @@ class OLAP{
 		
 	}
 	
+	private function tablefyResult(&$result,$columns,$rows,$cube){
+		
+		$records = array_merge($columns,$rows);
+		$measures = array_values(preg_grep("/^measure/",$records));
+		
+		$columns = array_values(preg_grep("/^measure/",$columns,PREG_GREP_INVERT));
+		$rows = array_values(preg_grep("/^measure/",$rows,PREG_GREP_INVERT));
+		
+		//$columns = array_values(preg_grep("/\.all$/",$columns,PREG_GREP_INVERT));
+		//$rows = array_values(preg_grep("/\.all$/",$rows,PREG_GREP_INVERT));
+		
+		foreach(range(0,count($measures)-1) as $i){
+			$measures[$i] = $this->translateMeasure($measures[$i],$cube);
+		}
+		
+		
+		$data = Pivot::factory($result)
+			->pivotOn($rows)
+			->addColumn($columns,$measures)
+			->fetch();
+			System_Daemon::debug(print_r(
+				array($data,$result,$columns,$rows,$measures),true));
+				
+		return $data;
+	}
+	
+	
+	private function translateMeasure(&$field,$cube){
+		$arr = self::splitField($field);
+		$measure_id = $arr[1];
+		
+		$measure = array_shift(jsonPath($this->rules, 
+			"$.cubes[?(@['table']=='${cube}')]".
+			".measures[?(@[id]=='${measure_id}')]",
+			array("resultType" => "VALUE")));
+
+
+		
+		return $measure['name'];
+	}
 	
 }
 ?>
