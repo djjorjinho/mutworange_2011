@@ -2,17 +2,17 @@
 	<div class="leftcol">
 
 
-		<div id="eis_cube_container">
+		<div class="presentation_div_cubes border_eis" id="eis_cube_container">
 			<div>
 				Key Performance Indicators
 			</div>
 			<select name="Cubes" title="OLAP Cubes / KPI"
 				onchange="eis.fillDimensionsAndMeasures();">
-				<option selected="selected" value="">Select</option>
+				<option selected="selected" value="">Custom</option>
 			</select>
 		</div>
 
-		<div id="eis_dimensions_container">
+		<div class="presentation_div_dimensions border_eis" id="eis_dimensions_container">
 			<div>
 				Dimensions
 			</div>
@@ -23,7 +23,7 @@
 			</div>			
 		</div>
 		
-		<div id="eis_measures_container">
+		<div class="presentation_div_measures border_eis" id="eis_measures_container">
 			<div>
 				Measures
 			</div>
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		
-		<div id="eis_filters_container">
+		<div class="presentation_div_filter border_eis" id="eis_filters_container">
 			<div>
 				Filters
 			</div>
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		
-		<div id="eis_highlight_container">
+		<div class="presentation_div_HV border_eis" id="eis_highlight_container">
 			<div>
 				Highlight Values
 			</div>
@@ -64,11 +64,9 @@
 	</div>
 	<div class="rightcol">
 		
-		<div class="workspace_fields">
-			<div class="fields_list" title="Toolbar" id="eis_toolbar">
-				<div class="fields_list_header i18n">
-				Scenario
-				</div>
+		
+			<div class="presentation_div_menu border_eis" title="Toolbar" id="eis_toolbar">
+				<label>Tasks</label>
 				<select name="Scenarios" title="Scenario Select">
 					<option selected="selected" value="">Select</option>
 				</select>
@@ -80,7 +78,7 @@
 				<button>Export</button>
 				
 			</div>
-			<div class="fields_list" title="COLUMNS">
+			<div class="presentation_div_options border_eis" title="COLUMNS">
 				<div class="fields_list_header i18n">
 				Columns 
 					<button onclick="eis.addToColumns();">+</button>
@@ -90,7 +88,7 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="fields_list" title="ROWS">
+			<div class="presentation_div_options border_eis" title="ROWS">
 				<div class="fields_list_header i18n">
 				Rows 
 					<button onclick="eis.addToRows();">+</button>
@@ -101,7 +99,7 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="fields_list" title="FILTER">
+			<div class="presentation_div_options border_eis" title="FILTER">
 				<div class="fields_list_header i18n">Filter</div>
 				<div class="">
 					<ul class="">
@@ -110,7 +108,7 @@
 				<div class="clear"></div>
 			</div>
 			
-		</div>
+		
 		<div class="presentation_div border_eis" id="resultTableDiv">
 			<table class="presentation_table" id="resultTable">
 			</table>
