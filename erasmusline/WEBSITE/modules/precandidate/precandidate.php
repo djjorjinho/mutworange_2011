@@ -396,7 +396,6 @@ class PrecandidateController extends PlonkController {
         $this->pageTpl->setIteration('iDemand');
         foreach ($this->extra as $value) {
             if (!empty($this->fields)) {
-                Plonk::dump($value);
                 if ($value['traineeOrStudy'] === $this->fields['traineeOrStudy']) {
                     $this->pageTpl->assignIteration('demand', '<option selected=\"true\" value="' . $value . '">' . $value . '</option>');
                 } else {

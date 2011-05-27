@@ -111,7 +111,7 @@ class LagreeformDB {
     public static function getIdInst($name) {
         $db = PlonkWebsite::getDB();
 
-        $id = $db->retrieveOne('select instEmail from institutions where instName = "' . $db->escape($name) . '"');
+        $id = $db->retrieveOne('select instEmail, instId from institutions where instName = "' . $db->escape($name) . '"');
 
         return $id;
     }
@@ -231,6 +231,23 @@ class LagreeformDB {
         $student = $db->retrieveOne("select studentId from forms where formId = '".$id."'");
         
         return $student['studentId'];
+    }
+    
+    public static function getInfoUser($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select * from users where email = '".$id."'");
+        
+        return $student;
+    }
+    
+    public static function getErasmusInfo($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select studentId, users_email, startDate, endDate, educationPerInstId, statusOfErasmus, traineeOrStudy, uploadedWhat, ectsCredits, mothertongue,
+                                            action,beenAbroad from erasmusStudent where users_email = '".$id."'");
+        
+        return $student;
     }
 
 }

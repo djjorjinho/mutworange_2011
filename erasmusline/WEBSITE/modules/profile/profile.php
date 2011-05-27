@@ -101,6 +101,8 @@ class ProfileController extends PlonkController {
         else {
             $this->pageTpl->assign('study', '');
         }
+        
+        $this->pageTpl->assign('profile', './files/'.$this->id.'/profile.jpg');
 
         $courses = ProfileDB::getCourses($this->id);
 

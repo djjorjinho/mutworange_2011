@@ -24,7 +24,7 @@
     </ul>
 
 <h3>Erasmus info</h3>
-<img src="../www/core/img/googlemaps.jpeg" alt="google" height="200" width="200" />
+<img src="{$profile}" alt="profile" height="200" width="200" />
 <h4>Your current Erasmus progress<h4>
 <table>
     <tr>
