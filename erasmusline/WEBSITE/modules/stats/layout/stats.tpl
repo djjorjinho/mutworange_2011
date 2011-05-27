@@ -2,17 +2,17 @@
 	<div class="leftcol">
 
 
-		<div id="eis_cube_container">
+		<div class="presentation_div_cubes border_eis" id="eis_cube_container">
 			<div>
 				Key Performance Indicators
 			</div>
 			<select name="Cubes" title="OLAP Cubes / KPI"
 				onchange="eis.fillDimensionsAndMeasures();">
-				<option selected="selected" value="">Select</option>
+				<option selected="selected" value="">Custom</option>
 			</select>
 		</div>
 
-		<div id="eis_dimensions_container">
+		<div class="presentation_div_dimensions border_eis" id="eis_dimensions_container">
 			<div>
 				Dimensions
 			</div>
@@ -23,7 +23,7 @@
 			</div>			
 		</div>
 		
-		<div id="eis_measures_container">
+		<div class="presentation_div_measures border_eis" id="eis_measures_container">
 			<div>
 				Measures
 			</div>
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		
-		<div id="eis_filters_container">
+		<div class="presentation_div_filter border_eis" id="eis_filters_container">
 			<div>
 				Filters
 			</div>
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		
-		<div id="eis_highlight_container">
+		<div class="presentation_div_HV border_eis" id="eis_highlight_container">
 			<div>
 				Highlight Values
 			</div>
@@ -52,11 +52,12 @@
 					<option value="le">Less/Equal</option>
 					<option value="lt">Less</option>
 					<option value="gt">Greater</option>
-					<option value="qe">Equal</option>
+					<option value="eq">Equal</option>
 				</select>
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
-				<button onclick="eis.addFilter(this);">Add</button>
+				<button onclick="eis.addHlight(this);">Add</button>
+				<button onclick="eis.resetHlight(this);">Reset</button>
 			</div>
 		</div>
 		
@@ -64,60 +65,52 @@
 	</div>
 	<div class="rightcol">
 		
-		<div class="workspace_fields">
-			<div class="fields_list" title="Toolbar" id="eis_toolbar">
-				<div class="fields_list_header i18n">
-				Scenario
-				</div>
+		
+			<div class="presentation_div_menu border_eis" title="Toolbar" id="eis_toolbar">
+				<span>Tasks</span>
 				<select name="Scenarios" title="Scenario Select">
 					<option selected="selected" value="">Select</option>
 				</select>
 				
 				<button onclick="eis.saveScenario();">Save</button>
 				<button onclick="eis.newScenario();">New</button>
-				<button onclick="eis.runScenario();">Run</button>
-				<button>Swap</button>
-				<button>Export</button>
+				<button onclick="eis.runScenarioButton();">Run</button>
+				<button onclick="eis.swapColumnsRows();">Swap</button>
+				<button onclick="eis.exportScenario();">Export</button>
+				<button onclick="eis.showGraph();">Graph</button>
 				
 			</div>
-			<div class="fields_list" title="COLUMNS">
+			<div class="presentation_div_options border_eis" title="COLUMNS">
 				<div class="fields_list_header i18n">
 				Columns 
 					<button onclick="eis.addToColumns();">+</button>
 				</div>
-				<div class="fields_list_body columns">
-					<ul class=""></ul>
+				<div id="columns_list" class="fields_list_body columns">
+					
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="fields_list" title="ROWS">
+			<div class="presentation_div_options border_eis" title="ROWS">
 				<div class="fields_list_header i18n">
 				Rows 
 					<button onclick="eis.addToRows();">+</button>
 				</div>
-				<div class="fields_list_body rows">
-					<ul class="">
-					</ul>
+				<div id="rows_list" class="fields_list_body rows">
+
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="fields_list" title="FILTER">
+			<div class="presentation_div_options border_eis" title="FILTER">
 				<div class="fields_list_header i18n">Filter</div>
-				<div class="">
-					<ul class="">
-					</ul>
+				<div id="filters_list" class="fields_list_body filters">
 				</div>
 				<div class="clear"></div>
 			</div>
 			
-		</div>
+		
 		<div class="presentation_div border_eis" id="resultTableDiv">
-			<table class="presentation_table" id="resultTable">
-			</table>
 		</div>
-		
-		
-		
+
 	</div>
 </div>
 
@@ -145,8 +138,21 @@ var _userlevel = '{$userlevel}';
 <script id="eis_listitem_tmpl" type="text/x-jquery-tmpl"> 
     <li>
 		<a class="eis_dim_item" 
-			onclick="eis.selectListItem('${item}');return false;">
+			onclick="eis.selectListItem('${item}',this);return false;">
 		${text}
 		</a>
 	</li>
+</script>
+
+<script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl"> 
+    <span><button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
+	<button onclick="eis.showFilterOption('${dim}')">F</span>
+	&nbsp;&nbsp;
+</script>
+
+<script id="eis_tbmes_tmpl" type="text/x-jquery-tmpl"> 
+    <span>
+	<button onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
+	</span>
+&nbsp;&nbsp;
 </script>

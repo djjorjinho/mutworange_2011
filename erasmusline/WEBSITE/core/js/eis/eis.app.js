@@ -63,7 +63,7 @@ var eis = {
 		jQuery.getScript('core/js/eis/jquery.json-2.2.min.js');
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
-		
+		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
@@ -107,9 +107,10 @@ var eis = {
 		jQuery("#qunit-testresult").show();
 		jQuery.getScript('core/js/eis/test/test.js');
 	},
-	rpcCall : function(func,args,callSuccess,callError,async){
+	rpcCall : function(func,args,callSuccess,callError,async,url){
+		if(url==undefined) url="modules/stats/rpc.php";
 		jQuery.ajax({
-			url: "modules/stats/rpc.php",
+			url: url,
 			type : "POST",
 			data : {method : func, 
 					params : jQuery.toJSON(args)},
@@ -152,21 +153,24 @@ var eis = {
 		
 	},
 	
-	fillDimensionsAndMeasures : function(){
+	fillDimensionsAndMeasures : function(reset){
+		if(reset==undefined) reset=true;
 		$.blockUI();
 		var table = jQuery('#eis_cube_container select option:selected').val();
 		
 		// resetting values
-		eis.scenario.cube = table;
-		eis.scenario.columns = [];
-		eis.scenario.rows = [];
-		eis.scenario.filters = {};
-		eis.scenario.highlight = [];
-		
+		if(reset){
+			eis.scenario.cube = table;
+			eis.scenario.columns = [];
+			eis.scenario.rows = [];
+			eis.scenario.filters = {};
+			eis.scenario.highlight = [];
+		}
 		var cube = jsonPath(eis.rules, "$.cubes[?(@.table=='"+table+"')]")[0];
 		
 		eis.fillDimensions(table,cube);
 		eis.fillMeasures(table,cube);
+		eis.paintScenario();
 		$.unblockUI();
 	},
 	
@@ -238,9 +242,13 @@ var eis = {
 		jQuery(elm).parent().find('ul').toggle();
 	},
 	
-	selectListItem : function(itm){
+	selectListItem : function(itm,elm){
 		eis.selectedItem = itm;
-		console.log("selected: "+itm);
+		var div = jQuery(elm).parents('div:first');
+		var li = jQuery(elm).parent('li');
+		div.find('li').removeClass('selected');
+		jQuery(li).addClass('selected');
+		
 	},
 	
 	addToColumns : function(){
@@ -251,6 +259,7 @@ var eis = {
 		eis.scenario.columns.push(eis.selectedItem);
 		
 		eis.selectedItem = "";
+		eis.paintScenario();
 	},
 	
 	addToRows : function(){
@@ -261,14 +270,109 @@ var eis = {
 		eis.scenario.rows.push(eis.selectedItem);
 		
 		eis.selectedItem = "";
+		eis.paintScenario();
+	},
+	
+	RGBtoHEX : function(parts) {
+		
+		for (var i = 1; i <= 3; ++i) {
+		    parts[i] = parseInt(parts[i]).toString(16);
+		    if (parts[i].length == 1) parts[i] = '0' + parts[i];
+		}
+		var hexString = parts.join('');
+		return '#'+hexString;
+	},
+	
+	rgbToHsv : function (r, g, b) {
+	    var r = (r / 255),  
+	         g = (g / 255),  
+	     b = (b / 255);   
+	  
+	    var min = Math.min(Math.min(r, g), b),  
+	        max = Math.max(Math.max(r, g), b),  
+	        delta = max - min;  
+	  
+	    var value = max,  
+	        saturation,  
+	        hue;  
+	  
+	    // Hue  
+	    if (max == min) {  
+	        hue = 0;  
+	    } else if (max == r) {  
+	        hue = (60 * ((g-b) / (max-min))) % 360;  
+	    } else if (max == g) {  
+	        hue = 60 * ((b-r) / (max-min)) + 120;  
+	    } else if (max == b) {  
+	        hue = 60 * ((r-g) / (max-min)) + 240;  
+	    }  
+	  
+	    if (hue < 0) {  
+	        hue += 360;  
+	    }  
+	  
+	    // Saturation  
+	    if (max == 0) {  
+	        saturation = 0;  
+	    } else {  
+	        saturation = 1 - (min/max);  
+	    }  
+	  
+	    return [Math.round(hue), Math.round(saturation * 100), 
+	            Math.round(value * 100)];  
 	},
 	
 	getHighlightColor : function(){
-		return $('#colorSelector div').css('backgroundColor');
+		var rgbString = $('#colorSelector div').css('background-color');
+		var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/); 
+		delete (parts[0]);
+		
+		
+		// determine contrast text color
+		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
+		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
+				'#ffffff' : '#000000';
+		//console.log(hsv);
+		//console.log(contrast);
+		
+		return [eis.RGBtoHEX(parts),contrast]; 
 	},
 	
 	paintScenario : function(){
+		eis.paintScenarioAux('columns');
+		eis.paintScenarioAux('rows');
+		eis.paintScenarioAux('filters');
+	},
+	
+	paintScenarioAux : function(tb){
+		var regex1 = /^measure/;
 
+		// columns
+		var list = eis.scenario[tb];
+		jQuery('#'+tb+'_list').html('');
+		for(var i in list){
+			var col = list[i];
+			var parts = col.split('.');
+			if(regex1.test(col)){
+				var cube = eis.scenario.cube;
+				var expr="$.cubes[?(@['table']=='"+cube+"')]"+
+				".measures[?(@['id']=='"+parts[1]+"')]";
+				var obj = jsonPath(eis.rules, expr)[0];
+				jQuery('#eis_tbmes_tmpl').tmpl(
+						{text:obj.name,mes:col,type:tb}
+						).appendTo('#'+tb+'_list');
+			}else{
+				
+				var expr= parts[1]=='all' ? 
+						"$.dimensions[?(@['table']=='"+parts[0]+"')]"
+						: "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
+							".levels[?(@['column']=='"+parts[1]+"')]";
+				var obj = jsonPath(eis.rules, expr)[0];
+				jQuery('#eis_tbdim_tmpl').tmpl(
+						{text:obj.name,dim:col,type:tb}
+						).appendTo('#'+tb+'_list');
+			}
+		}
 	},
 	
 	getScenarios : function(){
@@ -299,8 +403,10 @@ var eis = {
 		jQuery('#eis_cube_container option').attr('selected','');
 		jQuery('#eis_cube_container option[value="'+_result.cube+'"]')
 							.attr('selected','selected');
+		eis.fillDimensionsAndMeasures(false);
 		eis.paintScenario();
 		eis.runScenario();
+		eis.paintHlights(_result.highlight);
 		$.unblockUI();
 	},
 	
@@ -340,6 +446,11 @@ var eis = {
 		},true);
 	},
 	
+	runScenarioButton : function(){
+		eis.runScenario();
+		eis.paintHlights(eis.scenario.highlight);
+	},
+	
 	runScenario : function(){
 		$.blockUI();
 		eis.rpcCall("runScenario",eis.scenario,
@@ -350,7 +461,7 @@ var eis = {
 		function(error){
 			console.log(error);
 			$.unblockUI();
-		},true);
+		},false);
 	},
 	
 	newScenario : function(){
@@ -377,31 +488,122 @@ var eis = {
 		
 		eis.paintScenario();
 		eis.runScenario();
+		eis.paintHlights(eis.scenario.highlight);
 		$.unblockUI();
 	},
 	
 	exportScenario : function(){
-		
+		$.blockUI();
+		$.postGo("modules/stats/export.php","runScenario",eis.scenario);
+		$.unblockUI();
 	},
 	
 	simpleHtmlTable : function(data){
+
 		out="";
 		out+="<table class='presentation_table' id='resultTable'>";
 		    out+= "<thead>";
-		    for (var item in data[0]) {
-		        out+= "<td><b>"+item+"<b></td>";
+		    for (var item1 in data[0]) {
+		        out+= "<td class='res_column'><b>"+item1+"<b></td>";
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
+		    	var cnt = eis.scenario.rows.length; cnt++;
 		        out+= "<tr>";
-		        for (var item in row) {
-		            out+= "<td>"+item+"</td>";
+		        for (var item2 in data[row]) {
+		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
+		            out+= "<td class='"+cls+"'>"+data[row][item2]+"</td>";
+		            cnt--;
 		        }
 		        out+= "</tr>";
 		    }
 		    out+= "</table>";
 		    jQuery("#resultTableDiv").html(out);
 
+	},
+	
+	
+	
+	addHlight : function(elm){
+		$.blockUI();
+		var colors = eis.getHighlightColor();
+
+		var parent =jQuery(elm).parent();
+		var _op = parent.find('select option:selected').val();
+		var _value = parseInt(parent.find('input[type=text]').val());
+		var item;
+		
+		if(_value != NaN){
+			item = {op:_op,value:_value,color:colors[0],contrast:colors[1]};
+			eis.scenario.highlight.push(item);
+		}
+
+		if($('#resultTable').length>0){
+			eis.paintHlights([item]);
+		}
+		$.unblockUI();
+	},
+	
+	paintHlights : function(items){
+		
+		for(var idx in items){
+			var item = items[idx];
+			var op = item.op;
+			var value = item.value;
+			var color = item.color;
+			var contrast = item.contrast;
+			
+			$('#resultTable td.res_value').each(function(){
+					var	val = parseInt($(this).text());
+					
+				   switch(op){
+				   	case 'ge' : if(val >= value) 
+				   				eis.paintElm(this,color,contrast);
+				   		break;
+				   	case 'gt' : if(val > value) 
+		   							eis.paintElm(this,color,contrast);
+			   			break;
+				   	case 'eq' : if(val == value) 
+							eis.paintElm(this,color,contrast);
+				   		break;
+				   	case 'lt' : if(val < value) 
+						eis.paintElm(this,color,contrast);
+			   			break;
+				   	case 'le' : if(val <= value) 
+						eis.paintElm(this,color,contrast);
+			   			break;
+				   }
+				   
+			});
+			
+		}
+
+	},
+	
+	paintElm : function(elm,color,contrast){
+		jQuery(elm).css('background-color',color).css('color',contrast);
+	},
+	
+	resetHlight : function(){
+		eis.scenario.highlight=[];
+		var table = $('#resultTable');
+		if(table.length>0){
+			$(table).find('td.res_value').each(function(){
+				eis.paintElm(this,'#ffffff','#000000');
+			});
+		}
+	},
+	
+	showGraph : function(){
+		
+	},
+	
+	removeTBItem : function(elm,id,type){
+		var list = eis.scenario[type];
+		eis.scenario[type] = jQuery.grep(list,function(elm){
+			return elm != id;
+		});
+		jQuery(elm).parent('span').remove();
 	}
 	
 };

@@ -201,8 +201,8 @@ class DB{
 		$tinfo = $this->tableInfo($table);
 		
 		$nobj=array();
-		$fields;
-		$values;
+		$fields="";
+		$values="";
 		$comma=false;
 		
 		foreach(array_keys($obj) as $key){

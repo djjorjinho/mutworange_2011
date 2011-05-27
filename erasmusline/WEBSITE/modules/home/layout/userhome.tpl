@@ -18,6 +18,9 @@
 {/iteration:iForms}
     </ul>
 
+<h3>Take exams in your home University</h3>
+{$exams}
+	
 <h3>Latest events</h3>
 <ul>
 {iteration:iEvents}

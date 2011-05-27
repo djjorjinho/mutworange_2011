@@ -193,13 +193,14 @@ class PopulateDB {
         $mrg_tables = $db->getMergedTables($ftb[0]);
         $db->execute("alter table $ftb[0] UNION=(".
         									implode(",",$mrg_tables).")");
-        
+        try{
         // load indices to cache
         $db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
         $db->execute("LOAD INDEX INTO CACHE ".
         				implode(",",$dtb)." IGNORE LEAVES");
         $db->execute("LOAD INDEX INTO CACHE ".
         				implode(",",$mrg_tables)." IGNORE LEAVES");
+        }catch(Exception $e){}
     }
     
     function populate_efficiency_ods(){
@@ -215,16 +216,16 @@ class PopulateDB {
     	
         // one approved student
         $obj = array(
-        	student_id => "PT-ISEP-1",
-        	institution_code => 'isep',
-        	institution_host_code => 'fkl',
-        	country_code => 'pt',
-        	country_host_code => 'de',
-        	year => 2011,
-        	semester => 2,
-        	dim_mobility_id => 'study',
-        	dim_gender_id => 'M',
-        	lodging_available => 1
+        	'student_id' => "PT-ISEP-1",
+        	'institution_code' => 'isep',
+        	'institution_host_code' => 'fkl',
+        	'country_code' => 'pt',
+        	'country_host_code' => 'de',
+        	'year' => 2011,
+        	'semester' => 2,
+        	'dim_mobility_id' => 'study',
+        	'dim_gender_id' => 'M',
+        	'lodging_available' => 1
         );
         
     	foreach ($csv as $R){
@@ -245,16 +246,16 @@ class PopulateDB {
     	
         // another approved student
         $obj = array(
-        	student_id => "PT-ISEP-2",
-        	institution_code => 'isep',
-        	institution_host_code => 'gent',
-        	country_code => 'pt',
-        	country_host_code => 'be',
-        	year => 2011,
-        	semester => 2,
-        	dim_mobility_id => 'study',
-        	dim_gender_id => 'M',
-        	lodging_available => 1
+        	'student_id' => "PT-ISEP-2",
+        	'institution_code' => 'isep',
+        	'institution_host_code' => 'gent',
+        	'country_code' => 'pt',
+        	'country_host_code' => 'be',
+        	'year' => 2011,
+        	'semester' => 2,
+        	'dim_mobility_id' => 'study',
+        	'dim_gender_id' => 'M',
+        	'lodging_available' => 1
         );
         
     	foreach ($csv as $R){
@@ -277,16 +278,16 @@ class PopulateDB {
     	
 
         $obj = array(
-        	student_id => "PT-ISEP-3",
-        	institution_code => 'isep',
-        	institution_host_code => 'gun',
-        	country_code => 'pt',
-        	country_host_code => 'en',
-        	year => 2011,
-        	semester => 2,
-        	dim_mobility_id => 'both',
-        	dim_gender_id => 'F',
-        	lodging_available => 1
+        	'student_id' => "PT-ISEP-3",
+        	'institution_code' => 'isep',
+        	'institution_host_code' => 'gun',
+        	'country_code' => 'pt',
+        	'country_host_code' => 'en',
+        	'year' => 2011,
+        	'semester' => 2,
+        	'dim_mobility_id' => 'both',
+        	'dim_gender_id' => 'F',
+        	'lodging_available' => 1
         );
         
         $cnt=0;
@@ -319,16 +320,16 @@ class PopulateDB {
     	
         // another approved student
         $obj = array(
-        	student_id => "PT-ISEP-4",
-        	institution_code => 'isep',
-        	institution_host_code => 'gent',
-        	country_code => 'pt',
-        	country_host_code => 'be',
-        	year => 2011,
-        	semester => 2,
-        	dim_mobility_id => 'study',
-        	dim_gender_id => 'F',
-        	lodging_available => 1
+        	'student_id' => "PT-ISEP-4",
+        	'institution_code' => 'isep',
+        	'institution_host_code' => 'gent',
+        	'country_code' => 'pt',
+        	'country_host_code' => 'be',
+        	'year' => 2011,
+        	'semester' => 2,
+        	'dim_mobility_id' => 'study',
+        	'dim_gender_id' => 'F',
+        	'lodging_available' => 1
         );
         
     	foreach ($csv as $R){
@@ -351,16 +352,16 @@ class PopulateDB {
     	
 
         $obj = array(
-        	student_id => "PT-ISEP-5",
-        	institution_code => 'isep',
-        	institution_host_code => 'gun',
-        	country_code => 'pt',
-        	country_host_code => 'en',
-        	year => 2011,
-        	semester => 2,
-        	dim_mobility_id => 'both',
-        	dim_gender_id => 'F',
-        	lodging_available => 1
+        	'student_id' => "PT-ISEP-5",
+        	'institution_code' => 'isep',
+        	'institution_host_code' => 'gun',
+        	'country_code' => 'pt',
+        	'country_host_code' => 'en',
+        	'year' => 2011,
+        	'semester' => 2,
+        	'dim_mobility_id' => 'both',
+        	'dim_gender_id' => 'F',
+        	'lodging_available' => 1
         );
         
         $cnt=0;
@@ -389,6 +390,7 @@ class PopulateDB {
     }
     
     function checkHotCache(){
+    	try{
 		$db = $this->db;
 		
 		$C = $db->getOne("SELECT @@global.hot_cache.key_buffer_size".
@@ -397,7 +399,7 @@ class PopulateDB {
 		if($C['hot_cache']==0){
 			$db->execute("SET GLOBAL hot_cache.key_buffer_size=402653184;");
 		}
-		
+		}catch(Exception $e){}
 	}
     
     function run(){

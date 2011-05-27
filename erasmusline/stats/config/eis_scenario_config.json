@@ -13,7 +13,7 @@
 				{ "dim_institution.country_code.eq" : ["pt","be","en"],
 			 		"dim_date.semester.eq" : "2"},
 		"highlight" : [
-				{ "measure.M1.gt" : "12"}
+				{ "op" : "gt", "value" : 12, "color" : "#000fff"}
 			]
 	}
 }

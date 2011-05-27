@@ -185,7 +185,10 @@ class HomeController extends PlonkController {
         } else {
             $this->pageTpl->assignOption('noForms');
         }
-
+		
+		//Add Exams modul
+		require_once './modules/exams/exams.php';
+		
         $events = HomeDB::getEvents($this->id);
 
         if (!empty($events)) {

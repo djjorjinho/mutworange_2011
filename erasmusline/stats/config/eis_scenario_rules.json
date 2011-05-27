@@ -31,7 +31,7 @@
 			"measures" : [
 				{"id" : "M1", "name" : "Student Participation", 
 					"column" : "val_participants", "aggregator" : "sum-dis"},
-				{"id" : "M4", "name" : "Student Participation", 
+				{"id" : "M4", "name" : "Student Participation (%)", 
 					"column" : "perc_students", "aggregator" : "sum-dis"},
 				{"id" : "M5", "name" : "Avg. Response Days", 
 					"column" : "avg_response_days", "aggregator" : "avg"},

@@ -78,7 +78,7 @@ class Console {
 	     SET DEFAULTS & RETURN LOGS
 	------------------------------------*/
 	
-	public function getLogs() {
+	public static function getLogs() {
 		if(!$GLOBALS['debugger_logs']['memoryCount']) $GLOBALS['debugger_logs']['memoryCount'] = 0;
 		if(!$GLOBALS['debugger_logs']['logCount']) $GLOBALS['debugger_logs']['logCount'] = 0;
 		if(!$GLOBALS['debugger_logs']['speedCount']) $GLOBALS['debugger_logs']['speedCount'] = 0;
