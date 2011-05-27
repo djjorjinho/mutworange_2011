@@ -88,15 +88,15 @@ class StatsdSlave extends Server implements JsonRpcI{
     	$dt = new DateTime('@'.time());
     	$tasks = array(
 			new ScheduledTask(array(
-				timeout => 0,
-				every_seconds => 0,
-				every_minute => 0,
-				every_hour => 0,
-				every_day => 1,
-				method => 'pingMaster',
+				'timeout' => 0,
+				'every_seconds' => 0,
+				'every_minute' => 0,
+				'every_hour' => 0,
+				'every_day' => 1,
+				'method' => 'pingMaster',
 				'class' => get_class($this),
-				startup => 1,
-				runs => 0
+				'startup' => 1,
+				'runs' => 0
 			))
     	);
     	
