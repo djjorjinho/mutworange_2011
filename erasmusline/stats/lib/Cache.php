@@ -47,7 +47,7 @@ class ObjectCache{
 	function store($key,$obj,$ttl=0){
 		$ttl = ($ttl==0 ? $this->ttl : $ttl);
 		$ttl += $this->rnd->range(-10,10);
-		$timeout = $ttl + mktime();
+		$timeout = $ttl + time();
 		
 		$this->cache[$key] = array($timeout,$obj);
 	}
@@ -57,7 +57,7 @@ class ObjectCache{
 	 * Deletes expired Objects
 	 */
 	function flushExpired(){
-		$time = mktime();
+		$time = time();
 		foreach($this->cache as $key => $arr){
 			if($this->cache[$key][0] <= $time){
 				unset($this->cache[$key]);
