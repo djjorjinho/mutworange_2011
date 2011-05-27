@@ -407,6 +407,7 @@ class ETL{
 	}
 	
 	function checkHotCache(){
+		try{
 		$db = $this->db;
 		
 		$C = $db->getOne("SELECT @@global.hot_cache.key_buffer_size".
@@ -415,15 +416,18 @@ class ETL{
 		if($C['hot_cache']==0){
 			$db->execute("SET GLOBAL hot_cache.key_buffer_size=402653184;");
 		}
+		}catch(Exception $e){}
 		
 	}
 	
 	function loadHotCache(){
+		try{
 		$db = $this->db;
 		$dtb = $this->dim_tables;
 		$db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
         $db->execute("LOAD INDEX INTO CACHE ".
         				implode(",",$dtb)." IGNORE LEAVES");
+        }catch(Exception $e){}
 	}
 	
 }
