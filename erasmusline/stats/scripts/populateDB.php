@@ -193,13 +193,14 @@ class PopulateDB {
         $mrg_tables = $db->getMergedTables($ftb[0]);
         $db->execute("alter table $ftb[0] UNION=(".
         									implode(",",$mrg_tables).")");
-        
+        try{
         // load indices to cache
         $db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
         $db->execute("LOAD INDEX INTO CACHE ".
         				implode(",",$dtb)." IGNORE LEAVES");
         $db->execute("LOAD INDEX INTO CACHE ".
         				implode(",",$mrg_tables)." IGNORE LEAVES");
+        }catch(Exception $e){}
     }
     
     function populate_efficiency_ods(){
@@ -389,6 +390,7 @@ class PopulateDB {
     }
     
     function checkHotCache(){
+    	try{
 		$db = $this->db;
 		
 		$C = $db->getOne("SELECT @@global.hot_cache.key_buffer_size".
@@ -397,7 +399,7 @@ class PopulateDB {
 		if($C['hot_cache']==0){
 			$db->execute("SET GLOBAL hot_cache.key_buffer_size=402653184;");
 		}
-		
+		}catch(Exception $e){}
 	}
     
     function run(){
