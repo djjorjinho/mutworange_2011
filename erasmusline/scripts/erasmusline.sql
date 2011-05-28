@@ -478,7 +478,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `verificationCode` varchar(32) DEFAULT NULL,
   `institutionId` varchar(100) NOT NULL,
   `origin` int(11) NOT NULL DEFAULT '0',
-  `studentId` int(11) NOT NULL DEFAULT '0',
+  `userId` int(11) NOT NULL DEFAULT '0',
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Users_Country1` (`country`),
   KEY `fk_users_institutions1` (`institutionId`)
