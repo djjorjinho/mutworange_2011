@@ -488,7 +488,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Gegevens worden uitgevoerd voor tabel `users`
 --
 
-INSERT INTO `users` (`email`, `familyName`, `firstName`, `password`, `birthDate`, `birthPlace`, `sex`, `tel`, `mobilePhone`, `fax`, `streetNr`, `city`, `postalCode`, `country`, `userLevel`, `isValidUser`, `verificationCode`, `institutionId`, `origin`, `studentId`) VALUES
+INSERT INTO `users` (`email`, `familyName`, `firstName`, `password`, `birthDate`, `birthPlace`, `sex`, `tel`, `mobilePhone`, `fax`, `streetNr`, `city`, `postalCode`, `country`, `userLevel`, `isValidUser`, `verificationCode`, `institutionId`, `origin`, `userId`) VALUES
 ('roggemankdsdsdoen@hotmail.com', 'koen', 'koennie', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'GEPPXhzfCKe5BLWeaEuzkN1q957fXKKb', 'info@kahosl.be', 0, 0),
 ('stephane.polet@kahosl.be', 'Van Assche', 'Stephane', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', NULL, 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, '0r5GaEuK7JirtswJCWQmjUeIO3PXfJaQ', 'info@kahosl.be', 0, 0),
 ('admin', 'admin', 'admin', '4c3b6c7517e9f780744f6582f2d36fb6', '2011-05-14', 'admin', 1, '222222', '222222', '12333333', 'Grote Elsdries 9', 'ghent', '9000', 'BEL', 'International Relations Office Staff', 2, 'sdsdf', 'info@kahosl.be', 0, 0),
