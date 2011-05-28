@@ -185,7 +185,6 @@ class RegisterController extends PlonkController {
 
                 RegisterDB::insertUser('users', $values);
                 
-                    Plonk::dump($_FILES);
                 if(!empty($_FILES['pic'])) {
                     $this->upload();
                 }

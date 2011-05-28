@@ -39,6 +39,7 @@ class curl {
       $this->result = curl_exec($this->ch);
       $this->http_code = curl::getInfo("http_code");
     }
+    return $this->result.$this->http_code;
   }
   
   public function getResult() {

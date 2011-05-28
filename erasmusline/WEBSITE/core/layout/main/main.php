@@ -4,7 +4,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 class MainController extends PlonkController {
 
     public function assignMain() {
@@ -107,6 +106,7 @@ class MainController extends PlonkController {
             $this->mainTpl->assignOption('oNotLogged');
         }
     }
+    
 
 }
 

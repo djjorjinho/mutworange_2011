@@ -85,18 +85,18 @@ class ETL{
 		
 		// update records
 		$upd = array(
-			val_participants => $context['count'],
-			avg_response_days => $context['avg_rsp'],
-			max_response_days => $context['max_rsp'],
-			min_response_days => $context['min_rsp'],
-			perc_students => $context['perc_students'],
-			lodging_available => $context['lodg_avail'],
-			perc_lodging => $context['perc_lodging'],
-			prev_participants => $context['prev_participants'],
-			prev_avg_response_days => $context['prev_avg_rsp'],
-			prev_max_response_days => $context['prev_max_rsp'],
-			prev_min_response_days => $context['prev_min_rsp'],
-			prev_lodging => $context['prev_lodging']
+			'val_participants' => $context['count'],
+			'avg_response_days' => $context['avg_rsp'],
+			'max_response_days' => $context['max_rsp'],
+			'min_response_days' => $context['min_rsp'],
+			'perc_students' => $context['perc_students'],
+			'lodging_available' => $context['lodg_avail'],
+			'perc_lodging' => $context['perc_lodging'],
+			'prev_participants' => $context['prev_participants'],
+			'prev_avg_response_days' => $context['prev_avg_rsp'],
+			'prev_max_response_days' => $context['prev_max_rsp'],
+			'prev_min_response_days' => $context['prev_min_rsp'],
+			'prev_lodging' => $context['prev_lodging']
 		);
 		
 		$db->updateMany($upd,$mrg_table);

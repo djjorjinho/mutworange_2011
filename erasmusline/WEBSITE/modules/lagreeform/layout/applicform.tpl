@@ -299,24 +299,13 @@
 <p>Must be a PDF</p>
 {option:oNotFilled}
 <div class="TRdiv">
-        <label for="cv"><span>Upload your profile picture here</span></label>
+        <label for="cv"><span>Upload your Transcript Of Records here</span></label>
         <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
     </div>
 {/option:oNotFilled}
 {option:oFilled}
 <p><a href="{$source}" title="Transcrip of Record">Transcript of Record</a></p>
 {/option:oFilled}
-
-<h3>Receiving institution</h3>
-<fieldset>
-<p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
-</p>
-
-<div class="TRdiv">
-<label for="accepted">The above mentioned student is: </label>
-            <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
-            <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
-</div>
 
 <div class="TRdiv">
 <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
@@ -356,7 +345,7 @@
 {option:oOffice}
 <div class="TRdiv">
         <label for="printed"><span>Attach signed Application Form</span></label>
-        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
+        <input type="file" id="signImg" name="file" />
     </div>
 <div class="TRdiv">
 		<input type="hidden" name="formAction" id="formRegister" value="doTohost" />
@@ -365,6 +354,16 @@
 {/option:oOffice}
 
 {option:oHost}
+<h3>Receiving institution</h3>
+<fieldset>
+<p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
+</p>
+
+<div class="TRdiv">
+<label for="accepted">The above mentioned student is: </label>
+            <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
+            <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
+</div>
 <p><a href="{$source}" title="Attached signed Application Form">Signed Application Form</a></p>
 
 <div class="TRdiv">

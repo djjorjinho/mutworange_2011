@@ -22,7 +22,7 @@ class HomeController extends PlonkController {
      */
     protected $actions = array(
         'login',
-        'logout'
+        'logout',
     );
     private $id;
 
@@ -55,7 +55,7 @@ class HomeController extends PlonkController {
     }
 
     public function showUserhome() {
-        
+
         // Main Layout
         // Logged or not logged, that is the question...
 
@@ -173,11 +173,11 @@ class HomeController extends PlonkController {
 
             foreach ($forms as $form) {
                 if ($form['type'] == "Student Application Form") {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=applicform&form='.$form['formId'].'" title="' . $form['type'] .'">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=applicform&form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 } else if ($form['type'] == "Learning Agreement") {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=lagreement&form='.$form['formId'].'" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=lagreement&form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 } else {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=' . $form['view'] . '&form='.$form['formId'].'" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . '<a href="index.php?module=' . $form['module'] . '&view=' . $form['view'] . '&form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 }$this->pageTpl->refillIteration('iForms');
             }
 
