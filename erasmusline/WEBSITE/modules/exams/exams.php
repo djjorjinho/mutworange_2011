@@ -1,13 +1,16 @@
 <?php 
 	$edb = PlonkWebsite::getDB();
-	$eid = 23;
+	$items = $edb->retrieveOne("SELECT `userId` FROM  `users` WHERE `email` = \"".$_SESSION['id']."\" ");
+	$eid = $items['userId'];
 	$today = date("Y-m-d");  
 	
 	$items = $edb->retrieveOne("SELECT `erasmusstudent`.`startDate`, `erasmusstudent`.`endDate`  
 		FROM `users`, `erasmusstudent`
 		WHERE `users`.`userID` = " . $eid .  
-		" AND `users`.`email` = `erasmusstudent`.`users_email`"); 
-	if ($today < $items['startDate']) {
+		" AND `users`.`email` = `erasmusstudent`.`users_email`");
+	if(!$items) {
+		$this->pageTpl->assign('exams', 'You are not Erasmus student.');
+	} else if ($today < $items['startDate']) {
 		$this->pageTpl->assign('exams', "You should go to your erasmus to be able to get your home exams!");
 	} else if($today > $items['endDate']) {
 		$this->pageTpl->assign('exams', "It's too late to get your home exams!");
