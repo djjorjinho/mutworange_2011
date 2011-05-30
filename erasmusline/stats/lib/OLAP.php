@@ -158,7 +158,12 @@ class OLAP{
 					$dim = array_shift(jsonPath($this->rules,
 					"$.dimensions[?(@['table']=='${table}')]"
 					,array("resultType" => "VALUE")));
-					array_push($fields,"'All $dim[name]'");
+					
+					$aux = preg_match("/concat/", $dim['desc']) ? 
+						$dim['desc'] : 
+						"$dim[table].$dim[desc]";
+					
+					array_push($fields,"$aux as `$dim[name]`");
 				}
 					
 			}

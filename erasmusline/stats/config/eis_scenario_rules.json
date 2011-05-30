@@ -46,41 +46,41 @@
 	
 	"dimensions" : [
 		{"id" : "D1", "name" : "Gender", "table" : "dim_gender", 
-			"pk" : "dim_gender_id", "hasAll" : true, "measure" : "M1",
+			"pk" : "dim_gender_id","desc":"dim_gender_id" ,"hasAll" : true, "measure" : "M1",
 			"levels" : [
 				{"name" : "Gender", "column" : "dim_gender_id"}]
 		},
 		{"id" : "D2", "name" : "Lodging", "table" : "dim_lodging", 
-			"pk" : "dim_lodging_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_lodging_id","desc":"description", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Residence Type", "column" : "dim_lodging_id"}]
 		},
 		{"id" : "D3", "name" : "Mobility", "table" : "dim_mobility", 
-			"pk" : "dim_mobility_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_mobility_id","desc":"description", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Mobility Type", "column" : "dim_mobility_id"}]
 		},
 		{"id" : "D4", "name" : "Academic Date", "table" : "dim_date", 
-			"pk" : "dim_date_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_date_id","desc":"concat(year,',',semester)", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Year", "column" : "year"},
 				{"name" : "Semester", "column" : "semester"}]
 		},
 		{"id" : "D5", "name" : "Institution", "table" : "dim_institution", 
-			"pk" : "dim_institution_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_institution_id","desc":"institution_code", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Country", "column" : "country_code"},
 				{"name" : "Institution", "column" : "institution_code"}]
 		},
 		{"id" : "D6", "name" : "Study", "table" : "dim_study", 
-			"pk" : "dim_study_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_study_id","desc":"course_code", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Area", "column" : "area_code"},
 				{"name" : "Degree", "column" : "degree_code"},
 				{"name" : "Course", "column" : "course_code"}]
 		},
 		{"id" : "D7", "name" : "Process", "table" : "dim_phase", 
-			"pk" : "dim_phase_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_phase_id","desc":"description", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Phase", "column" : "dim_phase_id"}]
 		}

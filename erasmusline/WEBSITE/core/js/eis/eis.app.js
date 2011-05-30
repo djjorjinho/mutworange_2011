@@ -370,7 +370,11 @@ var eis = {
 							".levels[?(@['column']=='"+parts[1]+"')]";
 				var obj = jsonPath(eis.rules, expr)[0];
 				//console.log(obj);
-				jQuery('#eis_tbdim_tmpl').tmpl(
+				(parts[1]=='all') ?  
+				 jQuery('#eis_tbmes_tmpl').tmpl(
+								{text:obj.name,mes:col,type:tb}
+								).appendTo('#'+tb+'_list')
+				: jQuery('#eis_tbdim_tmpl').tmpl(
 						{text:obj.name,dim:col,type:tb}
 						).appendTo('#'+tb+'_list');
 			}
@@ -514,7 +518,10 @@ var eis = {
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
-		            out+= "<td class='"+cls+"'>"+data[row][item2]+"</td>";
+		        	var val = data[row][item2]
+		        	val= (val==undefined) ? '': val;
+		        	console.log(val);
+		            out+= "<td class='"+cls+"'>"+val+"</td>";
 		            cnt--;
 		        }
 		        out+= "</tr>";
