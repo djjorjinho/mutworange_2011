@@ -122,7 +122,6 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   `dim_date_id` BIGINT UNSIGNED NOT NULL ,
   `dim_institution_id` INT NOT NULL ,
   `dim_institution_host_id` INT NOT NULL ,
-  `dim_lodging_id` VARCHAR(20) NOT NULL ,
   `dim_phase_id` VARCHAR(20) NOT NULL ,
   `dim_mobility_id` CHAR(6) NOT NULL ,
   `dim_gender_id` ENUM('M','F','O') NOT NULL ,
@@ -139,12 +138,11 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   INDEX `fk_fact_efficiency_dim_enddate` (`dim_date_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_host_institution` (`dim_institution_host_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_home_institution` (`dim_institution_id` ASC) ,
-  INDEX `idx_efficiency_home` USING BTREE (`dim_date_id` DESC, `dim_institution_id` DESC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC, `dim_lodging_id` ASC) ,
-  INDEX `idx_efficiency_host` (`dim_date_id` ASC, `dim_institution_host_id` ASC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC, `dim_lodging_id` ASC) ,
+  INDEX `idx_efficiency_home` USING BTREE (`dim_date_id` DESC, `dim_institution_id` DESC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC) ,
+  INDEX `idx_efficiency_host` (`dim_date_id` ASC, `dim_institution_host_id` ASC, `dim_phase_id` ASC, `dim_mobility_id` ASC, `dim_gender_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_mobility1` (`dim_mobility_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_phase1` (`dim_phase_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_gender1` (`dim_gender_id` ASC) ,
-  INDEX `fk_fact_efficiency_dim_lodging1` (`dim_lodging_id` ASC) ,
   CONSTRAINT `fk_fact_efficiency_dim_date`
     FOREIGN KEY (`dim_date_id` )
     REFERENCES `p8statsdw`.`dim_date` (`dim_date_id` )
@@ -173,11 +171,6 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   CONSTRAINT `fk_fact_efficiency_dim_gender1`
     FOREIGN KEY (`dim_gender_id` )
     REFERENCES `p8statsdw`.`dim_gender` (`dim_gender_id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_fact_efficiency_dim_lodging1`
-    FOREIGN KEY (`dim_lodging_id` )
-    REFERENCES `p8statsdw`.`dim_lodging` (`dim_lodging_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MRG_MyISAM

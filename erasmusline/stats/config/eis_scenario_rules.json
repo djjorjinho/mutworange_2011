@@ -40,7 +40,7 @@
 				{"id" : "M7", "name" : "Min. Response Days", 
 					"column" : "min_response_days", "aggregator" : "min"}
 				],
-			"dimensions" : ["D1","D2","D3","D4","D5","D6","D7"]
+			"dimensions" : ["D1","D3","D4","D5","D6","D7"]
 		}
 	],
 	
@@ -87,6 +87,7 @@
 	],
 	
 	"filters" : {
-		"dim_gender.dim_gender_id" : { "op" : {"eq":true}, "values" : {"M":"Male","F":"Female"} }
+		"dim_gender.dim_gender_id" : { "op" : {"eq":true}, "values" : {"M":"Male","F":"Female"} },
+		"dim_mobility.dim_mobility_id" : { "op" : {"eq":true}, "values" : {"study":"Study","intern":"Internship","both":"Both"} }
 	}
 }

@@ -613,6 +613,54 @@ var eis = {
 			return elm != id;
 		});
 		jQuery(elm).parent('span').remove();
+	},
+	
+	showFilterOption : function(field,name){
+		var filterPanel = jQuery('#eis_filters');
+		filterPanel.html('');
+		var filterCfg = eis.rules.filters[field];
+		
+		if(filterCfg==undefined) jQuery('#eis_nofilter').tmpl({name:name})
+			.appendTo(filterPanel);
+		var availOps = {eq:"Equals",gt:"Greater",lt:"Less",ge:"Greater/Equal",le:"Less/Equal"};
+		var ops = jQuery([]);
+		var values = jQuery([]);
+		
+		// ops
+		for(var idx in filterCfg.op){
+			ops.push(jQuery('#eis_option_tmpl')
+					.tmpl({text:availOps[idx],value:idx}));
+		}
+
+		
+		// values
+		if(filterCfg.hasOwnProperty('values')){
+			
+			for(var idx in filterCfg.values){
+				values.push(jQuery('#eis_option_tmpl')
+						.tmpl({text:filterCfg.values[idx],value:idx}));
+			}
+			
+		}else if(filterCfg.hasOwnProperty('table')){
+			
+		}else{
+			jQuery('#eis_nofilter').tmpl({name:name})
+			.appendTo(filterPanel);
+			return;
+		}
+		
+		jQuery('#eis_filtermain').tmpl({title:name}).appendTo(filterPanel);
+		
+		var valselect = jQuery('#eis_multiselect').tmpl({});
+		valselect.insertAfter(filterPanel.find('strong'));
+		
+		var opselect = jQuery('#eis_select').tmpl({});
+			opselect.insertAfter(filterPanel.find('strong'));
+	},
+	
+	cancelFilter : function(){
+		var filterPanel = jQuery('#eis_filters');
+		filterPanel.html('');
 	}
 	
 };

@@ -146,7 +146,7 @@ var _userlevel = '{$userlevel}';
 
 <script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl"> 
     <span><button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
-	<button onclick="eis.showFilterOption('${dim}')">F</span>
+	<button onclick="eis.showFilterOption('${dim}','${text}')">F</span>
 	&nbsp;&nbsp;
 </script>
 
@@ -155,4 +155,26 @@ var _userlevel = '{$userlevel}';
 	<button onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
 	</span>
 &nbsp;&nbsp;
+</script>
+
+
+<script id="eis_nofilter" type="text/x-jquery-tmpl"> 
+    No filter available for <strong>${name}</strong>
+</script>
+
+<script id="eis_multiselect" type="text/x-jquery-tmpl"> 
+    <select multiple="multiple" size="5">
+	</select>
+</script>
+
+<script id="eis_select" type="text/x-jquery-tmpl"> 
+    <select>
+	</select>
+</script>
+
+<script id="eis_filtermain" type="text/x-jquery-tmpl"> 
+    <strong>${title}</strong>
+
+	<button onclick="eis.addFilter()">Add</button>
+	<button onclick="eis.cancelFilter()">Cancel</button>
 </script>

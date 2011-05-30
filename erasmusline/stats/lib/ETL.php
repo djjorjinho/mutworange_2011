@@ -46,7 +46,7 @@ class ETL{
 		// get academic date
 		$dt = new DateTime();
 		list($year,$month) = $this->getDate($dt);
-		list($year,$semester) = self::getAcademicDate($year,$month);
+		list($year,$semester) = $this->getAcademicDate($year,$month);
 		
 		// create efficiency merge table
 		list($mrg_table,$prev_table) = 
@@ -54,7 +54,7 @@ class ETL{
 		$db->disableKeys($mrg_table);
 		
 		// gather info into fact table
-		$last_id = self::getLastOSDId($efficiency_ods);
+		$last_id = $this->getLastOSDId($efficiency_ods);
 		
 		$query = "select * from $efficiency_ods".
 				" where ${efficiency_ods}_id > ${last_id}";
@@ -62,14 +62,14 @@ class ETL{
 		$res = $db->getMany($query);
 		
 		// trasnformation rules
-		$rules = self::getEfficiencyTransformationRules();
+		$rules = $this->getEfficiencyTransformationRules();
 		
 		// transform,load and calculate statistical values by context
 		$context = array(count=>0,max_rsp=>0,min_rsp=>0,
 						total_rsp=>0,lodg_avail=>0);
 		foreach($res as $row){
 			$context['count']++;
-			$NRow = self::transformODSRow($rules,$row,$context);
+			$NRow = $this->transformODSRow($rules,$row,$context);
 			$db->insert($NRow,$mrg_table);
 			$last_id = $row["${efficiency_ods}_id"];
 		}
@@ -103,9 +103,9 @@ class ETL{
 		
 		// finished -  merge tables
 		$db->enableKeys($mrg_table);
-		self::mergeTables($efficiency_table);
-		self::setLastODSId($efficiency_ods,$last_id);
-		self::loadHotCache();
+		$this->mergeTables($efficiency_table);
+		$this->setLastODSId($efficiency_ods,$last_id);
+		$this->loadHotCache();
 	}
 	
 	/**
