@@ -352,7 +352,7 @@ var eis = {
 		jQuery('#'+tb+'_list').html('');
 		for(var i in list){
 			var col = list[i];
-			console.log(col);
+			//console.log(col);
 			var parts = col.split('.');
 			if(regex1.test(col)){
 				var cube = eis.scenario.cube;
@@ -363,13 +363,13 @@ var eis = {
 						{text:obj.name,mes:col,type:tb}
 						).appendTo('#'+tb+'_list');
 			}else{
-				console.log(parts);
+				//console.log(parts);
 				var expr= (parts[1]=='all') ? 
 						"$.dimensions[?(@['table']=='"+parts[0]+"')]"
 						: "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
 							".levels[?(@['column']=='"+parts[1]+"')]";
 				var obj = jsonPath(eis.rules, expr)[0];
-				console.log(obj);
+				//console.log(obj);
 				jQuery('#eis_tbdim_tmpl').tmpl(
 						{text:obj.name,dim:col,type:tb}
 						).appendTo('#'+tb+'_list');
