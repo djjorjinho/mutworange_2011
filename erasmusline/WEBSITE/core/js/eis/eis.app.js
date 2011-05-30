@@ -520,7 +520,7 @@ var eis = {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
 		        	var val = data[row][item2]
 		        	val= (val==undefined) ? '': val;
-		        	console.log(val);
+		        	//console.log(val);
 		            out+= "<td class='"+cls+"'>"+val+"</td>";
 		            cnt--;
 		        }

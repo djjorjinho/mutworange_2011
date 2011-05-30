@@ -84,5 +84,9 @@
 			"levels" : [
 				{"name" : "Phase", "column" : "dim_phase_id"}]
 		}
-	]
+	],
+	
+	"filters" : {
+		"dim_gender.dim_gender_id" : { "op" : {"eq":true}, "values" : {"M":"Male","F":"Female"} }
+	}
 }
