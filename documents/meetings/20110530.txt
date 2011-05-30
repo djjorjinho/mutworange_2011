@@ -1,0 +1,62 @@
+= Meeting Report  =
+
+Subject: 
+Date: 23/05/2011
+Start Hour: 18:05 GMT
+End Hour: 19:00 GMT
+
+== Personnel ==
+Coordinator: Daniel Lopes
+Transcriber: Pedro Ferreira
+
+Attending: Pedro Ferreira, Daniel Lopes,
+	Arne Reimer, Arne Lipfert, 
+	Nathan Assche, Stéphane Polet, 
+	Stefanos Mountrakis, 
+	Gudmundur Hallgrimsson, Zvezdomir Tsvyatkov,
+	Aggeliki Katsiampouri, Ina Ivanova
+
+Excused: 
+
+Absent: Thordur Bjornsson
+
+== Report ==
+
+Discussion:
+
+- What did the team do this past week
+- What is necessary to do this week:
+     1. Finish code development
+     2. Tie up loose ends
+     3. Gather team members and do a live demo of the running application and fix whatever is left     
+
+		
+
+=== Discussion ===
+
+Iceland:
+		Commited release code, added documentation.
+		Will the code integrate?
+		A working demo maybe?
+
+Bulgaria:
+		Will commit release code.
+		Reluctant to integrate with Plonk.
+
+Greece:
+		Doubts with the db, needs discussion.
+		Integration with Plonk not so good on some forms, needs discussion.
+
+Germany:
+		Tested infox with another server and it worked well.
+
+Belgium:
+		Changed Infox code.
+		Still having problems with Infox.
+
+Portugal:
+		Finishing EIS interface.
+		Created public integration server: https://dl-lopes.mine.nu/erasmusline
+		can be used for live demo.
+
+Everyone will send an email TODAY with their availability to make a live demo meeting this week.
