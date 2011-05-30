@@ -175,6 +175,13 @@ var _userlevel = '{$userlevel}';
 <script id="eis_filtermain" type="text/x-jquery-tmpl"> 
     <div> ${title} </div>
 
-	<button onclick="eis.addFilter()">Add</button>
+	<button onclick="eis.addFilter('${field}')">Add</button>
 	<button onclick="eis.cancelFilter()">Cancel</button>
+</script>
+
+<script id="eis_tbfil_tmpl" type="text/x-jquery-tmpl">
+ 	<span>
+	<button onclick="eis.removeFilter(this,'${field}')">${text}</button>
+	</span>
+&nbsp;&nbsp;
 </script>

@@ -88,6 +88,15 @@
 	
 	"filters" : {
 		"dim_gender.dim_gender_id" : { "op" : {"eq":true}, "values" : {"M":"Male","F":"Female"} },
-		"dim_mobility.dim_mobility_id" : { "op" : {"eq":true}, "values" : {"study":"Study","intern":"Internship","both":"Both"} }
+		"dim_mobility.dim_mobility_id" : { "op" : {"eq":true}, "values" : {"study":"Study","intern":"Internship","both":"Both"} },
+		"dim_phase.dim_phase_id" : { "op" :{"eq":true},
+			"values" : { "precandidate" : "Precandidate",
+				"applicform" : "Application Form",
+				"lagreement" : "Learning Agreement",
+				"contract" : "Erasmus Contract",
+				"accomodation" : "Accomodation Form",
+				"certarrival" : "Certificate of Arrival"
+			}
+		}
 	}
 }

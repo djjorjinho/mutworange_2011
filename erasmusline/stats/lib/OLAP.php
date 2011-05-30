@@ -234,10 +234,13 @@ class OLAP{
 		
 		$filters = $params['filters'];
 		foreach($filters as $filter => $value){
-			$field_array = self::splitField($filter);
+			if(preg_match("/\_hash/",$filter)) 
+				continue;
+				
+			$field_array = $this->splitField($filter);
 			$op = $field_array[2];
 			
-			if(!self::valueInArray($tables,$field_array[0])){
+			if(!$this->valueInArray($tables,$field_array[0])){
 				$table = $field_array[0];
 				$id = $table."_id";
 				array_push($tables,"${table} using (${id})");

@@ -1,3 +1,5 @@
+// log wrapper
+window.log=function(){log.history=log.history||[];log.history.push(arguments);if(this.console){console.log(Array.prototype.slice.call(arguments))}};
 /**
  * EIS Application class
  * 
@@ -135,7 +137,7 @@ var eis = {
 					eis.rules = rpcrules;
 	  			}, 
 				function(error){
-					console.log(error);
+					log(error);
 				},false);
 	},
 	
@@ -259,6 +261,9 @@ var eis = {
 		eis.scenario.columns.push(eis.selectedItem);
 		
 		eis.selectedItem = "";
+		jQuery('#eis_dimensions li').removeClass('selected');
+		jQuery('#eis_measures li').removeClass('selected');
+		
 		eis.paintScenario();
 	},
 	
@@ -270,6 +275,9 @@ var eis = {
 		eis.scenario.rows.push(eis.selectedItem);
 		
 		eis.selectedItem = "";
+		jQuery('#eis_dimensions li').removeClass('selected');
+		jQuery('#eis_measures li').removeClass('selected');
+		
 		eis.paintScenario();
 	},
 	
@@ -332,8 +340,8 @@ var eis = {
 		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
 		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
 				'#ffffff' : '#000000';
-		//console.log(hsv);
-		//console.log(contrast);
+		//log(hsv);
+		//log(contrast);
 		
 		return [eis.RGBtoHEX(parts),contrast]; 
 	},
@@ -341,7 +349,7 @@ var eis = {
 	paintScenario : function(){
 		eis.paintScenarioAux('columns');
 		eis.paintScenarioAux('rows');
-		eis.paintScenarioAux('filters');
+		eis.paintFilters();
 	},
 	
 	paintScenarioAux : function(tb){
@@ -352,7 +360,7 @@ var eis = {
 		jQuery('#'+tb+'_list').html('');
 		for(var i in list){
 			var col = list[i];
-			//console.log(col);
+			//log(col);
 			var parts = col.split('.');
 			if(regex1.test(col)){
 				var cube = eis.scenario.cube;
@@ -363,13 +371,13 @@ var eis = {
 						{text:obj.name,mes:col,type:tb}
 						).appendTo('#'+tb+'_list');
 			}else{
-				//console.log(parts);
+				//log(parts);
 				var expr= (parts[1]=='all') ? 
 						"$.dimensions[?(@['table']=='"+parts[0]+"')]"
 						: "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
 							".levels[?(@['column']=='"+parts[1]+"')]";
 				var obj = jsonPath(eis.rules, expr)[0];
-				//console.log(obj);
+				//log(obj);
 				(parts[1]=='all') ?  
 				 jQuery('#eis_tbmes_tmpl').tmpl(
 								{text:obj.name,mes:col,type:tb}
@@ -379,6 +387,27 @@ var eis = {
 						).appendTo('#'+tb+'_list');
 			}
 		}
+	},
+	
+	paintFilters : function(){
+		delete eis.scenario.filters['_hash'];
+		
+		var filterList = jQuery('#filters_list');
+		filterList.html('');
+		var filters = eis.scenario.filters;
+		for(var i in filters){
+			var field = filters[i];
+			var parts = i.split('.');
+			var expr = "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
+			".levels[?(@['column']=='"+parts[1]+"')]";
+			var obj = jsonPath(eis.rules, expr)[0];
+			
+			jQuery('#eis_tbfil_tmpl').tmpl({text:obj.name,field:i})
+				.appendTo(filterList);
+			
+		}
+		
+		eis.scenario.filters['_hash']=true;
 	},
 	
 	getScenarios : function(){
@@ -397,7 +426,7 @@ var eis = {
 					
 	  			}, 
 				function(error){
-					console.log(error);
+					log(error);
 				},true);
 	},
 	
@@ -424,7 +453,7 @@ var eis = {
 		},
 		eis.setScenario, 
 		function(error){
-			console.log(error);
+			log(error);
 			$.unblockUI();
 		},false);
 	},
@@ -435,6 +464,7 @@ var eis = {
 		eis.scenario.scenario_name = instance.current_value;
 		eis.scenario.user_id = _userid;
 		eis.scenario.string='';
+		eis.scenario.filters['_hash']=true;
 		eis.rpcCall("saveScenario",eis.scenario,
 		function(result){
 				
@@ -447,9 +477,10 @@ var eis = {
 				$.unblockUI();
 			}, 
 		function(error){
-			console.log(error);
+			log(error);
 			$.unblockUI();
 		},true);
+		delete eis.scenario.filters['_hash'];
 	},
 	
 	runScenarioButton : function(){
@@ -459,15 +490,18 @@ var eis = {
 	
 	runScenario : function(){
 		$.blockUI();
+		delete eis.scenario.filters['_hash'];
 		eis.rpcCall("runScenario",eis.scenario,
 		function(result){
 				eis.simpleHtmlTable(result);
 				$.unblockUI();
 			}, 
 		function(error){
-			console.log(error);
+			log(error);
 			$.unblockUI();
 		},false);
+		
+		eis.scenario.filters['_hash']=true;
 	},
 	
 	newScenario : function(){
@@ -520,7 +554,7 @@ var eis = {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
 		        	var val = data[row][item2]
 		        	val= (val==undefined) ? '': val;
-		        	//console.log(val);
+		        	//log(val);
 		            out+= "<td class='"+cls+"'>"+val+"</td>";
 		            cnt--;
 		        }
@@ -620,8 +654,11 @@ var eis = {
 		filterPanel.html('');
 		var filterCfg = eis.rules.filters[field];
 		
-		if(filterCfg==undefined) jQuery('#eis_nofilter').tmpl({name:name})
+		if(filterCfg==undefined){ 
+			jQuery('#eis_nofilter').tmpl({name:name})
 			.appendTo(filterPanel);
+			return;
+		}
 		var availOps = {eq:"Equals",gt:"Greater",lt:"Less",ge:"Greater/Equal",le:"Less/Equal"};
 		var ops = jQuery([]);
 		var values = jQuery([]);
@@ -649,7 +686,7 @@ var eis = {
 			return;
 		}
 		
-		jQuery('#eis_filtermain').tmpl({title:name}).appendTo(filterPanel);
+		jQuery('#eis_filtermain').tmpl({title:name,field:field}).appendTo(filterPanel);
 		
 		var valselect = jQuery('#eis_multiselect').tmpl({});
 		valselect.insertAfter(filterPanel.find('div'));
@@ -667,15 +704,24 @@ var eis = {
 		filterPanel.html('');
 	},
 	
-	addFilter : function(){
+	addFilter : function(field){
 		var filterPanel = jQuery('#eis_filters');
-		var selects = filterPanel.find('select');
+		var op = filterPanel.find('select:eq(0) :selected').val();
+		var values = filterPanel.find('select:eq(1) :selected')
+			.map(function(i,obj){return $(obj).val();});
+		var filter = field+'.'+op;
 		
+		eis.scenario.filters[filter] = values.get();
+		eis.paintScenario();
+		eis.cancelFilter();
+		
+		log(eis.scenario.filters);
 	},
 	
-	removeFilter : function(){
-		var filterPanel = jQuery('#eis_filters');
-		
+	removeFilter : function(elm,id){
+		jQuery(elm).parent('span').remove();
+		var list = eis.scenario.filters;
+		delete eis.scenario.filters[id];
 	}
 	
 };
