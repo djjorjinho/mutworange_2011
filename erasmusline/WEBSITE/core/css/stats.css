@@ -558,7 +558,7 @@ li.selected{
     padding: 2px 5px 3px 5px;
     line-height: 23px;
     text-shadow: 1px 1px 0 #FFFFFF;
-    width: 70px;
+    width: 13%;
 }
 .fields_list .fields_list_body {
     float: left;

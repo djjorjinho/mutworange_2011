@@ -652,15 +652,30 @@ var eis = {
 		jQuery('#eis_filtermain').tmpl({title:name}).appendTo(filterPanel);
 		
 		var valselect = jQuery('#eis_multiselect').tmpl({});
-		valselect.insertAfter(filterPanel.find('strong'));
+		valselect.insertAfter(filterPanel.find('div'));
 		
 		var opselect = jQuery('#eis_select').tmpl({});
-			opselect.insertAfter(filterPanel.find('strong'));
+			opselect.insertAfter(filterPanel.find('div'));
+			
+		ops.appendTo(opselect);
+		values.appendTo(valselect);
+			
 	},
 	
 	cancelFilter : function(){
 		var filterPanel = jQuery('#eis_filters');
 		filterPanel.html('');
+	},
+	
+	addFilter : function(){
+		var filterPanel = jQuery('#eis_filters');
+		var selects = filterPanel.find('select');
+		
+	},
+	
+	removeFilter : function(){
+		var filterPanel = jQuery('#eis_filters');
+		
 	}
 	
 };

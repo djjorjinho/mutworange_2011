@@ -173,7 +173,7 @@ var _userlevel = '{$userlevel}';
 </script>
 
 <script id="eis_filtermain" type="text/x-jquery-tmpl"> 
-    <strong>${title}</strong>
+    <div> ${title} </div>
 
 	<button onclick="eis.addFilter()">Add</button>
 	<button onclick="eis.cancelFilter()">Cancel</button>
