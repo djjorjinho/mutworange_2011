@@ -1,1 +1,0 @@
-You should execute db.sql file to add an additional table in the Database. Otherwise the site will not work properly!
