@@ -80,13 +80,11 @@
 
 		// Find which rendered template item the first wrapped DOM element belongs to
 		tmplItem: function() {
-			this.html(function(i,v){return v.replace("<\![CDATA[","").replace("]]>","");});
 			return jQuery.tmplItem( this[0] );
 		},
 
 		// Consider the first wrapped element as a template declaration, and get the compiled template or store it as a named template.
 		template: function( name ) {
-			this.html(function(i,v){return v.replace("<\![CDATA[","").replace("]]>","");});
 			return jQuery.template( name, this[0] );
 		},
 
