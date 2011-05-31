@@ -1,7 +1,7 @@
 = Meeting Report  =
 
 Subject: 
-Date: 23/05/2011
+Date: 30/05/2011
 Start Hour: 18:05 GMT
 End Hour: 19:00 GMT
 
@@ -11,7 +11,7 @@ Transcriber: Pedro Ferreira
 
 Attending: Pedro Ferreira, Daniel Lopes,
 	Arne Reimer, Arne Lipfert, 
-	Nathan Assche, St√©phane Polet, 
+	Nathan Assche, Stéphane Polet, 
 	Stefanos Mountrakis, 
 	Gudmundur Hallgrimsson, Zvezdomir Tsvyatkov,
 	Aggeliki Katsiampouri, Ina Ivanova
