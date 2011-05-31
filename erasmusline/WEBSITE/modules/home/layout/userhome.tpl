@@ -1,7 +1,7 @@
 <h2>Welcome {$user}</h2>
 
 <h3>Your status</h3>
-<p>Your latest action:{$action}</p>
+<p>Your latest phase:{$action}</p>
 <p>Status of action: {$status}</p>
 
 <h3>What's next?</h3>

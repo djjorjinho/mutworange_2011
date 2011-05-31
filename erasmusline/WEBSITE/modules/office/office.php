@@ -163,7 +163,6 @@ class OfficeController extends PlonkController {
     }
 
     public function checkLogged() {
-        //Plonk::dump(PlonkSession::get('id').'hgdjdh');
         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
@@ -174,6 +173,7 @@ class OfficeController extends PlonkController {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
             } else {
                 $this->id = PlonkSession::get('id');
+                
             }
         }
     }  

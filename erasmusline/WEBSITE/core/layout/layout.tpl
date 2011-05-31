@@ -65,6 +65,18 @@
 </div>
 {/option:oAdmin}
 
+{option:oOffice}
+<div id="subnav">
+<ul>
+    <li class="level2"><a href="index.php?module=office&amp;view=precandidates">Show Precandidate Forms</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=applics">Show Student Application Forms</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=agreements">Show Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=changes">Show Change of Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=applics">Students</a></li>
+</ul>
+</div>
+{/option:oOffice}
+      
 {option:oCoor}
 <div id="subnav">
 <ul>

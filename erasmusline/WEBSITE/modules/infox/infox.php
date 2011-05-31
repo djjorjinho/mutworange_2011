@@ -238,7 +238,7 @@ class InfoxController extends PlonkController {
         curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
         curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
         curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        Plonk::dump(curl::execute());
+        curl::execute();
         curl::close();
     }
 
