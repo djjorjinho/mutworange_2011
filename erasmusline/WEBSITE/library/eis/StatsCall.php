@@ -5,6 +5,7 @@
  * @author daniel
  *
  */
+require('JSONConfig.php');
 class StatsCall{
 	
 	private $socket;
@@ -13,10 +14,10 @@ class StatsCall{
 	private $config;
 	
 	function __construct(){
+		
 		$this->config =
-				json_decode(file_get_contents(
-								dirname(__FILE__).DIRECTORY_SEPARATOR.
-									'statscall_config.json'),true);
+			JSONConfig::load(dirname(__FILE__),'statscall_config');
+
 		$this->sock_path = $this->config[$this->config['sockType'].'Addr'];
 		$this->socket = stream_socket_client($this->sock_path);
 		self::$id = 0;
@@ -72,9 +73,11 @@ class StatsCall{
 		
 		$msg="";
 		// receive response message
-		while(($buff = stream_socket_recvfrom($this->socket,1500)) != ""){
+		#while((
+		$buff = stream_socket_recvfrom($this->socket,4096);
+		#) != ""){
 			$msg .= $buff;
-		}
+		#}
 
 	}
 	

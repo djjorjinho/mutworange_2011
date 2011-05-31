@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
 set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}"));
@@ -67,6 +68,7 @@ JSON;
 }
  
 $suite = new PHPUnit_TestSuite('JsonRpcDispatcherTest');
-$result = PHPUnit::run($suite);
+$phpu = new PHPUnit();
+$result = $phpu->run($suite);
 print $result->toString();
 ?>

@@ -4,6 +4,7 @@ require_once("lib/System/Daemon.php");
 require_once("lib/Cache.php");
 require_once("lib/jsonpath.php");
 require_once("lib/Pivot.php");
+require_once('lib/JSONConfig.php');
 /**
  * 
  * OLAP class to interpret the EIS scenarios into a query for processing and 
@@ -30,14 +31,9 @@ class OLAP{
 	 * @return array $json - associative array, product o json parsing
 	 */
 	function loadRules(){
-    	$file = dirname(__FILE__).'/../config/'.$this->config['rulefile'];
-    	if(!file_exists($file)){
-    		throw new Exception("Not Found: ${file}");
-    	}
-		$json = json_decode(file_get_contents($file),true);
-		if(!isset($json)){
-			throw new Exception("Invalid JSON: ${file}");
-		}
+		$json = JSONConfig::load(dirname(__FILE__).'/../config/',
+					$this->config['rulefile']);
+
 		return $json;
     }
 	
@@ -158,7 +154,12 @@ class OLAP{
 					$dim = array_shift(jsonPath($this->rules,
 					"$.dimensions[?(@['table']=='${table}')]"
 					,array("resultType" => "VALUE")));
-					array_push($fields,"'All $dim[name]'");
+					
+					$aux = preg_match("/concat/", $dim['desc']) ? 
+						$dim['desc'] : 
+						"$dim[table].$dim[desc]";
+					
+					array_push($fields,"$aux as `$dim[name]`");
 				}
 					
 			}
@@ -229,10 +230,13 @@ class OLAP{
 		
 		$filters = $params['filters'];
 		foreach($filters as $filter => $value){
-			$field_array = self::splitField($filter);
+			if(preg_match("/\_hash/",$filter)) 
+				continue;
+				
+			$field_array = $this->splitField($filter);
 			$op = $field_array[2];
 			
-			if(!self::valueInArray($tables,$field_array[0])){
+			if(!$this->valueInArray($tables,$field_array[0])){
 				$table = $field_array[0];
 				$id = $table."_id";
 				array_push($tables,"${table} using (${id})");

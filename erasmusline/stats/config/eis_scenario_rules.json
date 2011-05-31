@@ -40,49 +40,65 @@
 				{"id" : "M7", "name" : "Min. Response Days", 
 					"column" : "min_response_days", "aggregator" : "min"}
 				],
-			"dimensions" : ["D1","D2","D3","D4","D5","D6","D7"]
+			"dimensions" : ["D1","D3","D4","D5","D6","D7"]
 		}
 	],
 	
 	"dimensions" : [
 		{"id" : "D1", "name" : "Gender", "table" : "dim_gender", 
-			"pk" : "dim_gender_id", "hasAll" : true, "measure" : "M1",
+			"pk" : "dim_gender_id","desc":"dim_gender_id" ,"hasAll" : true, "measure" : "M1",
 			"levels" : [
 				{"name" : "Gender", "column" : "dim_gender_id"}]
 		},
 		{"id" : "D2", "name" : "Lodging", "table" : "dim_lodging", 
-			"pk" : "dim_lodging_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_lodging_id","desc":"description", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Residence Type", "column" : "dim_lodging_id"}]
 		},
 		{"id" : "D3", "name" : "Mobility", "table" : "dim_mobility", 
-			"pk" : "dim_mobility_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_mobility_id","desc":"description", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Mobility Type", "column" : "dim_mobility_id"}]
 		},
 		{"id" : "D4", "name" : "Academic Date", "table" : "dim_date", 
-			"pk" : "dim_date_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_date_id","desc":"concat(year,',',semester)", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Year", "column" : "year"},
 				{"name" : "Semester", "column" : "semester"}]
 		},
 		{"id" : "D5", "name" : "Institution", "table" : "dim_institution", 
-			"pk" : "dim_institution_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_institution_id","desc":"institution_code", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Country", "column" : "country_code"},
 				{"name" : "Institution", "column" : "institution_code"}]
 		},
 		{"id" : "D6", "name" : "Study", "table" : "dim_study", 
-			"pk" : "dim_study_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_study_id","desc":"course_code", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Area", "column" : "area_code"},
 				{"name" : "Degree", "column" : "degree_code"},
 				{"name" : "Course", "column" : "course_code"}]
 		},
 		{"id" : "D7", "name" : "Process", "table" : "dim_phase", 
-			"pk" : "dim_phase_id", "hasAll" : true, "measure" : "M1", 
+			"pk" : "dim_phase_id","desc":"description", "hasAll" : true, "measure" : "M1", 
 			"levels" : [
 				{"name" : "Phase", "column" : "dim_phase_id"}]
 		}
-	]
+	],
+	
+	"filters" : {
+		"dim_gender.dim_gender_id" : { "op" : {"eq":true}, "values" : {"M":"Male","F":"Female"} },
+		"dim_mobility.dim_mobility_id" : { "op" : {"eq":true}, "values" : {"study":"Study","intern":"Internship","both":"Both"} },
+		"dim_phase.dim_phase_id" : { "op" :{"eq":true},
+			"values" : { "precandidate" : "Precandidate",
+				"applicform" : "Application Form",
+				"lagreement" : "Learning Agreement",
+				"contract" : "Erasmus Contract",
+				"accomodation" : "Accomodation Form",
+				"certarrival" : "Certificate of Arrival"
+			}
+		},
+		"dim_date.year" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"2010":"2010","2011":"2011"} },
+		"dim_date.semester" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"1":"First","2":"Second"} }
+	}
 }

@@ -81,28 +81,26 @@
 				
 			</div>
 			<div class="presentation_div_options border_eis" title="COLUMNS">
-				<div class="fields_list_header i18n">
-				Columns 
-					<button onclick="eis.addToColumns();">+</button>
+				<div class="fields_list_header">
+					Columns <button onclick="eis.addToColumns();">+</button>
 				</div>
-				<div id="columns_list" class="fields_list_body columns">
-					
+				<div id="columns_list" class="fields_list_body">
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="presentation_div_options border_eis" title="ROWS">
-				<div class="fields_list_header i18n">
+				<div class="fields_list_header">
 				Rows 
 					<button onclick="eis.addToRows();">+</button>
 				</div>
-				<div id="rows_list" class="fields_list_body rows">
+				<div id="rows_list" class="fields_list_body">
 
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="presentation_div_options border_eis" title="FILTER">
-				<div class="fields_list_header i18n">Filter</div>
-				<div id="filters_list" class="fields_list_body filters">
+				<div class="fields_list_header">Filter</div>
+				<div id="filters_list" class="fields_list_body">
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -146,13 +144,42 @@ var _userlevel = '{$userlevel}';
 
 <script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl"> 
     <span><button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
-	<button onclick="eis.showFilterOption('${dim}')">F</span>
+	<button onclick="eis.showFilterOption('${dim}','${text}')">F</span>
 	&nbsp;&nbsp;
 </script>
 
 <script id="eis_tbmes_tmpl" type="text/x-jquery-tmpl"> 
     <span>
 	<button onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
+	</span>
+&nbsp;&nbsp;
+</script>
+
+
+<script id="eis_nofilter" type="text/x-jquery-tmpl"> 
+    No filter available for <strong>${name}</strong>
+</script>
+
+<script id="eis_multiselect" type="text/x-jquery-tmpl"> 
+    <select multiple="multiple" size="5">
+	</select>
+</script>
+
+<script id="eis_select" type="text/x-jquery-tmpl"> 
+    <select>
+	</select>
+</script>
+
+<script id="eis_filtermain" type="text/x-jquery-tmpl"> 
+    <div> ${title} </div>
+
+	<button onclick="eis.addFilter('${field}')">Add</button>
+	<button onclick="eis.cancelFilter()">Cancel</button>
+</script>
+
+<script id="eis_tbfil_tmpl" type="text/x-jquery-tmpl">
+ 	<span>
+	<button onclick="eis.removeFilter(this,'${field}')">${text}</button>
 	</span>
 &nbsp;&nbsp;
 </script>

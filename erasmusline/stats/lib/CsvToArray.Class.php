@@ -33,7 +33,7 @@
  		return self::ordenaMultiArray(self::csvArray($file, $delimiter), 0);
  	}
 
- 	private function csvArray($file, $delimiter)
+ 	private static function csvArray($file, $delimiter)
  	{
  		$result = Array();
  		$size = filesize($file) + 1;
@@ -55,7 +55,7 @@
 
  		return $result;
  	}
- 	private function ordenaMultiArray($multiArray, $secondIndex)
+ 	private static function ordenaMultiArray($multiArray, $secondIndex)
  	{
  		while (list($firstIndex, ) = each($multiArray))
  		$indexMap[$firstIndex] = $multiArray[$firstIndex][$secondIndex];

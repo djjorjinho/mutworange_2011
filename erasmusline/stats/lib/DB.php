@@ -1,5 +1,6 @@
 <?php
 require_once "pqp/classes/PhpQuickProfiler.php";
+require_once('JSONConfig.php');
 /**
  * 
  * DB abstraction class 
@@ -31,15 +32,9 @@ class DB{
 			$this->config = $options;
 		}else{
 			$this->config =
-				json_decode(file_get_contents(
-								dirname(__FILE__).DIRECTORY_SEPARATOR.
-									'dbconfig.json'),true);
+				JSONConfig::load(dirname(__FILE__),'dbconfig');
 		}
-		
-		if(!isset($this->config)){
-			throw new Exception("Invalid DB config.");
-		}
-		
+
 		if($this->config['debug']){
 			$this->profiler = new PhpQuickProfiler(
 					PhpQuickProfiler::getMicroTime());

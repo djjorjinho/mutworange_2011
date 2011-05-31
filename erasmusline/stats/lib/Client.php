@@ -20,9 +20,11 @@ class Client{
 		stream_socket_sendto($this->socket,$message);
 		
 		// receive response message
-		while(($buff = stream_socket_recvfrom($this->socket,1500)) != ""){
+		#while((
+		$buff = stream_socket_recvfrom($this->socket,4096);
+		#) != ""){
 			$response .= $buff;
-		}
+		#}
 	}
 	
 }

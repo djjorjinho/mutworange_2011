@@ -33,5 +33,5 @@ If it should be another folder, the path has to be changed in /airport/airport.p
 <form method="post" action="index.php?module=infox">
 <input type="hidden" name="file" value="test.txt" />
 <input type="hidden" name="idUni" value="7" />
-<input type="submit" value="sending File" />
+<input type="image" src="core/css/images/button_push.png" width="100px" />
 </form>

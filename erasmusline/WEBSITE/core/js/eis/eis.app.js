@@ -1,3 +1,5 @@
+// log wrapper
+window.log=function(){log.history=log.history||[];log.history.push(arguments);if(this.console){console.log(Array.prototype.slice.call(arguments))}};
 /**
  * EIS Application class
  * 
@@ -135,7 +137,7 @@ var eis = {
 					eis.rules = rpcrules;
 	  			}, 
 				function(error){
-					console.log(error);
+					log(error);
 				},false);
 	},
 	
@@ -189,14 +191,14 @@ var eis = {
 		for(var i=0;i<len;i++){
 			var dimension = dimensions[i];
 			var table = dimension.table;
-			var pk = dimension.pk;
+			//var pk = dimension.pk;
 			var name = dimension.name;
 			var levels = jQuery([]);
 			
 			
 			if(dimension.hasAll){
 				levels.push(jQuery('#eis_listitem_tmpl').tmpl( 
-						{item : table+"."+pk, text : "All"}
+						{item : table+".all", text : "All"}
 						));
 			}
 			
@@ -251,25 +253,50 @@ var eis = {
 		
 	},
 	
+	itemExists : function(){
+		if(eis.selectedItem == "") return true;
+		
+		if(jQuery.inArray(eis.selectedItem,eis.scenario.columns)!=-1 || 
+			jQuery.inArray(eis.selectedItem,eis.scenario.rows)!=-1
+		){
+			return true;
+		}
+		return false;
+	},
+	
+	clearSelection : function(){
+		eis.selectedItem = "";
+		jQuery('#eis_dimensions li').removeClass('selected');
+		jQuery('#eis_measures li').removeClass('selected');
+	},
+	
 	addToColumns : function(){
 		if(eis.selectedItem == "") return;
 		
-		// TODO validation
+		if(eis.itemExists()){
+			eis.clearSelection();
+			return;
+		} 
 		
 		eis.scenario.columns.push(eis.selectedItem);
 		
-		eis.selectedItem = "";
+		eis.clearSelection();
+		
 		eis.paintScenario();
 	},
 	
 	addToRows : function(){
 		if(eis.selectedItem == "") return;
 		
-		// TODO validation
+		if(eis.itemExists()){
+			eis.clearSelection();
+			return;
+		} 
 		
 		eis.scenario.rows.push(eis.selectedItem);
 		
-		eis.selectedItem = "";
+		eis.clearSelection();
+		
 		eis.paintScenario();
 	},
 	
@@ -332,8 +359,8 @@ var eis = {
 		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
 		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
 				'#ffffff' : '#000000';
-		//console.log(hsv);
-		//console.log(contrast);
+		//log(hsv);
+		//log(contrast);
 		
 		return [eis.RGBtoHEX(parts),contrast]; 
 	},
@@ -341,7 +368,7 @@ var eis = {
 	paintScenario : function(){
 		eis.paintScenarioAux('columns');
 		eis.paintScenarioAux('rows');
-		eis.paintScenarioAux('filters');
+		eis.paintFilters();
 	},
 	
 	paintScenarioAux : function(tb){
@@ -352,6 +379,7 @@ var eis = {
 		jQuery('#'+tb+'_list').html('');
 		for(var i in list){
 			var col = list[i];
+			//log(col);
 			var parts = col.split('.');
 			if(regex1.test(col)){
 				var cube = eis.scenario.cube;
@@ -362,17 +390,43 @@ var eis = {
 						{text:obj.name,mes:col,type:tb}
 						).appendTo('#'+tb+'_list');
 			}else{
-				
-				var expr= parts[1]=='all' ? 
+				//log(parts);
+				var expr= (parts[1]=='all') ? 
 						"$.dimensions[?(@['table']=='"+parts[0]+"')]"
 						: "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
 							".levels[?(@['column']=='"+parts[1]+"')]";
 				var obj = jsonPath(eis.rules, expr)[0];
-				jQuery('#eis_tbdim_tmpl').tmpl(
+				//log(obj);
+				(parts[1]=='all') ?  
+				 jQuery('#eis_tbmes_tmpl').tmpl(
+								{text:obj.name,mes:col,type:tb}
+								).appendTo('#'+tb+'_list')
+				: jQuery('#eis_tbdim_tmpl').tmpl(
 						{text:obj.name,dim:col,type:tb}
 						).appendTo('#'+tb+'_list');
 			}
 		}
+	},
+	
+	paintFilters : function(){
+		delete eis.scenario.filters['_hash'];
+		
+		var filterList = jQuery('#filters_list');
+		filterList.html('');
+		var filters = eis.scenario.filters;
+		for(var i in filters){
+			var field = filters[i];
+			var parts = i.split('.');
+			var expr = "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
+			".levels[?(@['column']=='"+parts[1]+"')]";
+			var obj = jsonPath(eis.rules, expr)[0];
+			
+			jQuery('#eis_tbfil_tmpl').tmpl({text:obj.name,field:i})
+				.appendTo(filterList);
+			
+		}
+		
+		eis.scenario.filters['_hash']=true;
 	},
 	
 	getScenarios : function(){
@@ -391,7 +445,7 @@ var eis = {
 					
 	  			}, 
 				function(error){
-					console.log(error);
+					log(error);
 				},true);
 	},
 	
@@ -418,7 +472,7 @@ var eis = {
 		},
 		eis.setScenario, 
 		function(error){
-			console.log(error);
+			log(error);
 			$.unblockUI();
 		},false);
 	},
@@ -429,6 +483,7 @@ var eis = {
 		eis.scenario.scenario_name = instance.current_value;
 		eis.scenario.user_id = _userid;
 		eis.scenario.string='';
+		eis.scenario.filters['_hash']=true;
 		eis.rpcCall("saveScenario",eis.scenario,
 		function(result){
 				
@@ -441,9 +496,10 @@ var eis = {
 				$.unblockUI();
 			}, 
 		function(error){
-			console.log(error);
+			log(error);
 			$.unblockUI();
 		},true);
+		delete eis.scenario.filters['_hash'];
 	},
 	
 	runScenarioButton : function(){
@@ -453,15 +509,18 @@ var eis = {
 	
 	runScenario : function(){
 		$.blockUI();
+		delete eis.scenario.filters['_hash'];
 		eis.rpcCall("runScenario",eis.scenario,
 		function(result){
 				eis.simpleHtmlTable(result);
 				$.unblockUI();
 			}, 
 		function(error){
-			console.log(error);
+			log(error);
 			$.unblockUI();
 		},false);
+		
+		eis.scenario.filters['_hash']=true;
 	},
 	
 	newScenario : function(){
@@ -512,7 +571,10 @@ var eis = {
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
-		            out+= "<td class='"+cls+"'>"+data[row][item2]+"</td>";
+		        	var val = data[row][item2]
+		        	val= (val==undefined) ? '': val;
+		        	//log(val);
+		            out+= "<td class='"+cls+"'>"+val+"</td>";
 		            cnt--;
 		        }
 		        out+= "</tr>";
@@ -604,6 +666,81 @@ var eis = {
 			return elm != id;
 		});
 		jQuery(elm).parent('span').remove();
+	},
+	
+	showFilterOption : function(field,name){
+		var filterPanel = jQuery('#eis_filters');
+		filterPanel.html('');
+		var filterCfg = eis.rules.filters[field];
+		
+		if(filterCfg==undefined){ 
+			jQuery('#eis_nofilter').tmpl({name:name})
+			.appendTo(filterPanel);
+			return;
+		}
+		var availOps = {eq:"Equals",gt:"Greater",lt:"Less",ge:"Greater/Equal",le:"Less/Equal"};
+		var ops = jQuery([]);
+		var values = jQuery([]);
+		
+		// ops
+		for(var idx in filterCfg.op){
+			ops.push(jQuery('#eis_option_tmpl')
+					.tmpl({text:availOps[idx],value:idx}));
+		}
+
+		
+		// values
+		if(filterCfg.hasOwnProperty('values')){
+			
+			for(var idx in filterCfg.values){
+				values.push(jQuery('#eis_option_tmpl')
+						.tmpl({text:filterCfg.values[idx],value:idx}));
+			}
+			
+		}else if(filterCfg.hasOwnProperty('table')){
+			
+		}else{
+			jQuery('#eis_nofilter').tmpl({name:name})
+			.appendTo(filterPanel);
+			return;
+		}
+		
+		jQuery('#eis_filtermain').tmpl({title:name,field:field}).appendTo(filterPanel);
+		
+		var valselect = jQuery('#eis_multiselect').tmpl({});
+		valselect.insertAfter(filterPanel.find('div'));
+		
+		var opselect = jQuery('#eis_select').tmpl({});
+			opselect.insertAfter(filterPanel.find('div'));
+			
+		ops.appendTo(opselect);
+		values.appendTo(valselect);
+			
+	},
+	
+	cancelFilter : function(){
+		var filterPanel = jQuery('#eis_filters');
+		filterPanel.html('');
+	},
+	
+	addFilter : function(field){
+		var filterPanel = jQuery('#eis_filters');
+		var op = filterPanel.find('select:eq(0) :selected').val();
+		var values = filterPanel.find('select:eq(1) :selected')
+			.map(function(i,obj){return $(obj).val();});
+		var filter = field+'.'+op;
+		
+		eis.scenario.filters[filter] = values.get();
+		eis.paintScenario();
+		eis.cancelFilter();
+		
+		log(eis.scenario.filters);
+	},
+	
+	removeFilter : function(elm,id){
+		jQuery(elm).parent('span').remove();
+		var list = eis.scenario.filters;
+		delete eis.scenario.filters[id];
 	}
 	
 };

@@ -18,10 +18,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `erasmusline`
 --
-DROP DATABASE `erasmusline`;
+DROP DATABASE IF EXISTS `erasmusline`;
 CREATE DATABASE `erasmusline` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `erasmusline`;
-GRANT ALL PRIVILEGES  ON erasmusline.* TO 'erasmusline'@'%' IDENTIFIED BY 'orange' WITH GRANT OPTION;
+/* use create_user.sql with root user please. only needs to be run once every new mysql installation*/
+/* GRANT ALL PRIVILEGES  ON erasmusline.* TO 'erasmusline'@'%' IDENTIFIED BY 'orange' WITH GRANT OPTION;*/
 -- --------------------------------------------------------
 
 --
@@ -208,8 +209,9 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
   `homeCoordinatorId` varchar(100) DEFAULT NULL,
   `homeInstitutionId` varchar(100) DEFAULT NULL,
   `hostInstitutionId` varchar(100) DEFAULT NULL,
-  `studentId` int(11) NOT NULL DEFAULT '0',
+  `studentId` int(11) NOT NULL AUTO_INCREMENT,
   UNIQUE KEY `users_email_UNIQUE` (`users_email`),
+  PRIMARY KEY (`studentId`),
   KEY `fk_ErasmusInfoPerStudent_Institutions_has_Study1` (`educationPerInstId`),
   KEY `fk_erasmusstudent_users1` (`users_email`),
   KEY `fk_erasmusstudent_users2` (`hostCoordinatorId`),
@@ -222,15 +224,15 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
 -- Gegevens worden uitgevoerd voor tabel `erasmusstudent`
 --
 
-INSERT INTO `erasmusstudent` (`users_email`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`, `action`, `hostCoordinatorId`, `homeCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`, `studentId`) VALUES
-(NULL, NULL, NULL, 8, 'Precandidate', NULL, ',,', NULL, NULL, NULL, 2, NULL, NULL, 'info@kahosl.be', NULL, 0),
-(NULL, NULL, NULL, 8, 'Precandidate', NULL, ',,', NULL, NULL, NULL, 2, NULL, NULL, 'info@kahosl.be', NULL, 0),
-('stephane.polet@kahosl.be', '2011-05-14', '2011-05-15', 8, 'Student Application and Learning Agreement', '1', ',,', 5, 'sdfsdf', 'No', 0, 'nathan.vanassche@kahosl.be', 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kahosl.be', 0),
-('nathanva89@gmail.com', '2011-05-26', '2011-05-30', 8, 'Student Application and Learning Agreement', '1', 'CeBIT2011.pdf,,', 2, 'sdfsdf', 'No', 30, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 0),
-(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-('test@test.be', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-('test@kahosl.be', NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-('roggemankoen@hotmail.com', '2011-05-29', '2011-05-30', 8, 'Student Application and Learning Agreement', '1', '(3) ipimt_ov.pdf,,', 2, 'sdfsdf', 'Yes', 30, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kahosl.be', 0);
+INSERT INTO `erasmusstudent` (`users_email`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`, `action`, `hostCoordinatorId`, `homeCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`) VALUES
+(NULL, NULL, NULL, 8, 'Precandidate', NULL, ',,', NULL, NULL, NULL, 2, NULL, NULL, 'info@kahosl.be', NULL),
+(NULL, NULL, NULL, 8, 'Precandidate', NULL, ',,', NULL, NULL, NULL, 2, NULL, NULL, 'info@kahosl.be', NULL),
+('stephane.polet@kahosl.be', '2011-05-14', '2011-05-15', 8, 'Student Application and Learning Agreement', '1', ',,', 5, 'sdfsdf', 'No', 0, 'nathan.vanassche@kahosl.be', 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kahosl.be'),
+('nathanva89@gmail.com', '2011-05-26', '2011-05-30', 8, 'Student Application and Learning Agreement', '1', 'CeBIT2011.pdf,,', 2, 'sdfsdf', 'No', 30, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be'),
+(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('test@test.be', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('test@kahosl.be', NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('roggemankoen@hotmail.com', '2011-05-29', '2011-05-30', 8, 'Student Application and Learning Agreement', '1', '(3) ipimt_ov.pdf,,', 2, 'sdfsdf', 'Yes', 30, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kahosl.be');
 
 -- --------------------------------------------------------
 
@@ -452,6 +454,19 @@ INSERT INTO `studentsevents` (`eventId`, `reader`, `timestamp`, `motivation`, `r
 (81, 'Student', '2011-05-25', '', 1, 30, 8, 'Filled in Student Application Form', 'nathanva89@gmail.com');
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `homecoursestoerasmus`
+--
+
+CREATE TABLE IF NOT EXISTS `homecoursestoerasmus` (
+  `erasmusId` int(11) NOT NULL,
+  `courseId` int(11) NOT NULL,
+  `isRequested` tinyint(1) DEFAULT NULL,
+  `homeanswer` tinyint(1) DEFAULT NULL,
+  `hostanswer` tinyint(1) DEFAULT NULL,
+  KEY `erasmusId` (`erasmusId`),
+  KEY `courseId` (`courseId`)
+) ;
 
 --
 -- Tabelstructuur voor tabel `users`
@@ -478,7 +493,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `verificationCode` varchar(32) DEFAULT NULL,
   `institutionId` varchar(100) NOT NULL,
   `origin` int(11) NOT NULL DEFAULT '0',
-  `userId` int(11) NOT NULL DEFAULT '0',
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`userId`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Users_Country1` (`country`),
   KEY `fk_users_institutions1` (`institutionId`)
@@ -488,18 +504,18 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Gegevens worden uitgevoerd voor tabel `users`
 --
 
-INSERT INTO `users` (`email`, `familyName`, `firstName`, `password`, `birthDate`, `birthPlace`, `sex`, `tel`, `mobilePhone`, `fax`, `streetNr`, `city`, `postalCode`, `country`, `userLevel`, `isValidUser`, `verificationCode`, `institutionId`, `origin`, `studentId`) VALUES
-('roggemankdsdsdoen@hotmail.com', 'koen', 'koennie', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'GEPPXhzfCKe5BLWeaEuzkN1q957fXKKb', 'info@kahosl.be', 0, 0),
-('stephane.polet@kahosl.be', 'Van Assche', 'Stephane', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', NULL, 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, '0r5GaEuK7JirtswJCWQmjUeIO3PXfJaQ', 'info@kahosl.be', 0, 0),
-('admin', 'admin', 'admin', '4c3b6c7517e9f780744f6582f2d36fb6', '2011-05-14', 'admin', 1, '222222', '222222', '12333333', 'Grote Elsdries 9', 'ghent', '9000', 'BEL', 'International Relations Office Staff', 2, 'sdsdf', 'info@kahosl.be', 0, 0),
-('nathan.vanassche@kahosl.be', 'Ann', 'Mary', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 0, '222222', '222222', NULL, 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Erasmus Coordinator', 2, 'r7JhdeHb04jzvry5dayPS6QcTOaAExsi', 'info@kahosl.be', 0, 0),
-('jojnas.moens@kahosl.be', 'Moens', 'Jonas', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'NywNUvkczWzMvRHQ6a0TPjmHHDVUBtwv', 'info@kahosl.be', 0, 0),
-('sportlife52@hotmail.com', 'frankkkkkkkk', 'haelmannnnnnn', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'opxy7ITagRvbKFO9q9gFovIPaqNT237m', 'info@kahosl.be', 0, 0),
-('test@test.be', 'lsqkdjf', 'lsqkdjf', '098f6bcd4621d373cade4e832627b4f6', '2011-05-02', 'sdf', 1, '45665', '65465', '65465', 'qsdf', 'sdfsd', '5646', 'IRL', 'Student', 2, 'sqdfjkqslhdfkjshdfk', 'info@kaalst.be', 0, 0),
-('testing@kahosl.be', 'sdf', 'sqdlf', 'test', '2011-05-27', 'sdf', 1, '1', '1', '1', 'fqsdf', '515', '5456', 'IRL', 'Student', 1, 'sdfsdf', 'info@kahosl.be', 1, 0),
-('nathanva89@gmail.com', 'Van Assche', 'Nathan', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'DFGHJ', 1, '345678', '3456789', NULL, 'ksjdlf', 'DFGHJK', '7890', 'BEL', 'Student', 2, 'R0WVNScC4HLEUIeON8cwWe0WoEq3DRd1', 'info@kahosl.be', 0, 0),
-('test@kahosl.be', 'Van Assche', 'Jonas', 'Azerty123', '1989-01-24', 'Ghent', 1, '222222', '222222', '12333333', 'Grote Elsdries 9', 'Ronse', '9000', 'Bla', 'Student', 1, 'd1TMtPNuwaRXtI77V8Je8gJUjrRABSmc', 'info@kahosl.be', 0, 0),
-('roggemankoen@hotmail.com', 'koennnnnnnnnnnn', 'koennieskjldkjqsdjimfjqsm', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'GEPPXhzfCKe5BLWeaEuzkN1q957fXKKb', 'info@kahosl.be', 0, 0);
+INSERT INTO `users` (`email`, `familyName`, `firstName`, `password`, `birthDate`, `birthPlace`, `sex`, `tel`, `mobilePhone`, `fax`, `streetNr`, `city`, `postalCode`, `country`, `userLevel`, `isValidUser`, `verificationCode`, `institutionId`, `origin`) VALUES
+('roggemankdsdsdoen@hotmail.com', 'koen', 'koennie', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'GEPPXhzfCKe5BLWeaEuzkN1q957fXKKb', 'info@kahosl.be', 0),
+('stephane.polet@kahosl.be', 'Van Assche', 'Stephane', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', NULL, 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, '0r5GaEuK7JirtswJCWQmjUeIO3PXfJaQ', 'info@kahosl.be', 0),
+('admin', 'admin', 'admin', '4c3b6c7517e9f780744f6582f2d36fb6', '2011-05-14', 'admin', 1, '222222', '222222', '12333333', 'Grote Elsdries 9', 'ghent', '9000', 'BEL', 'International Relations Office Staff', 2, 'sdsdf', 'info@kahosl.be', 0),
+('nathan.vanassche@kahosl.be', 'Ann', 'Mary', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 0, '222222', '222222', NULL, 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Erasmus Coordinator', 2, 'r7JhdeHb04jzvry5dayPS6QcTOaAExsi', 'info@kahosl.be', 0),
+('jojnas.moens@kahosl.be', 'Moens', 'Jonas', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'NywNUvkczWzMvRHQ6a0TPjmHHDVUBtwv', 'info@kahosl.be', 0),
+('sportlife52@hotmail.com', 'frankkkkkkkk', 'haelmannnnnnn', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'opxy7ITagRvbKFO9q9gFovIPaqNT237m', 'info@kahosl.be', 0),
+('test@test.be', 'lsqkdjf', 'lsqkdjf', '098f6bcd4621d373cade4e832627b4f6', '2011-05-02', 'sdf', 1, '45665', '65465', '65465', 'qsdf', 'sdfsd', '5646', 'IRL', 'Student', 2, 'sqdfjkqslhdfkjshdfk', 'info@kaalst.be', 0),
+('testing@kahosl.be', 'sdf', 'sqdlf', 'test', '2011-05-27', 'sdf', 1, '1', '1', '1', 'fqsdf', '515', '5456', 'IRL', 'Student', 1, 'sdfsdf', 'info@kahosl.be', 1),
+('nathanva89@gmail.com', 'Van Assche', 'Nathan', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'DFGHJ', 1, '345678', '3456789', NULL, 'ksjdlf', 'DFGHJK', '7890', 'BEL', 'Student', 2, 'R0WVNScC4HLEUIeON8cwWe0WoEq3DRd1', 'info@kahosl.be', 0),
+('test@kahosl.be', 'Van Assche', 'Jonas', 'Azerty123', '1989-01-24', 'Ghent', 1, '222222', '222222', '12333333', 'Grote Elsdries 9', 'Ronse', '9000', 'Bla', 'Student', 1, 'd1TMtPNuwaRXtI77V8Je8gJUjrRABSmc', 'info@kahosl.be', 0),
+('roggemankoen@hotmail.com', 'koennnnnnnnnnnn', 'koennieskjldkjqsdjimfjqsm', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '222222', '222222', '', 'Grote Elsdries 9', 'Ronse', '9000', 'BEL', 'Student', 2, 'GEPPXhzfCKe5BLWeaEuzkN1q957fXKKb', 'info@kahosl.be', 0);
 
 --
 -- Beperkingen voor gedumpte tabellen
