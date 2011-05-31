@@ -11,12 +11,9 @@ require_once("lib/System/Daemon.php");                 // Include the Class
 require_once("lib/LooPHP/Autoload.php");
 LooPHP_Autoloader::register();
 
-$configfile = dirname(__FILE__).$sep.'config.json';
-$options = json_decode(file_get_contents($configfile),true);
-if(!isset($options)){
-	throw new Exception("Invalid JSON: ${configfile}");
-}
-
+require_once('lib/JSONConfig.php');
+$options = JSONConfig::load(dirname(__FILE__),
+					'config');
 
 // Setup
 $dconfig = array_merge($options['daemonconfig'],array(
