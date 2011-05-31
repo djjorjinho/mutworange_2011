@@ -253,16 +253,34 @@ var eis = {
 		
 	},
 	
-	addToColumns : function(){
-		if(eis.selectedItem == "") return;
+	itemExists : function(){
+		if(eis.selectedItem == "") return true;
 		
-		// TODO validation
-		
-		eis.scenario.columns.push(eis.selectedItem);
-		
+		if(jQuery.inArray(eis.selectedItem,eis.scenario.columns)!=-1 || 
+			jQuery.inArray(eis.selectedItem,eis.scenario.rows)!=-1
+		){
+			return true;
+		}
+		return false;
+	},
+	
+	clearSelection : function(){
 		eis.selectedItem = "";
 		jQuery('#eis_dimensions li').removeClass('selected');
 		jQuery('#eis_measures li').removeClass('selected');
+	},
+	
+	addToColumns : function(){
+		if(eis.selectedItem == "") return;
+		
+		if(eis.itemExists()){
+			eis.clearSelection();
+			return;
+		} 
+		
+		eis.scenario.columns.push(eis.selectedItem);
+		
+		eis.clearSelection();
 		
 		eis.paintScenario();
 	},
@@ -270,13 +288,14 @@ var eis = {
 	addToRows : function(){
 		if(eis.selectedItem == "") return;
 		
-		// TODO validation
+		if(eis.itemExists()){
+			eis.clearSelection();
+			return;
+		} 
 		
 		eis.scenario.rows.push(eis.selectedItem);
 		
-		eis.selectedItem = "";
-		jQuery('#eis_dimensions li').removeClass('selected');
-		jQuery('#eis_measures li').removeClass('selected');
+		eis.clearSelection();
 		
 		eis.paintScenario();
 	},

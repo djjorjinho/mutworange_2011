@@ -19,26 +19,26 @@
   <div id="wrapper">
     <div id="header">    
       <div id="headNavi">
-		  <a href="#">Contact</a>
-		  <a href="index.php?module=about&amp;view=about">About</a>
+		  <a href="#" title="Contact">Contact</a>
+		  <a href="index.php?module=about&amp;view=about" title="About">About</a>
 {option:oNotLogged}
 &nbsp;
 {/option:oNotLogged}
       </div>
       <div id="nav-main">
 {option:oAdmin}
-		<a href="index.php?module=stats" class="{$tabHome}">EIS</a>
-           <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}">Admin</a>
+		<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
+           <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}" title="Admin">Admin</a>
 {/option:oAdmin}
 {option:oLogged}
-      <a href="index.php?module=profile&amp;view=ownprofile">Profile</a>
-            <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}">Home</a>
-            <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}">Residences</a>
+      <a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
+            <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
+            <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}" title="Residences" >Residences</a>
 {/option:oLogged}
 {option:oNotLogged}
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>
 {/option:oNotLogged}
-      <a href="index.php?module=info&amp;view=erasmus" class="{$tabInfo}">Info</a>      
+      <a href="index.php?module=info&amp;view=erasmus" class="{$tabInfo}" title="Info">Info</a>      
 {option:oLogged}
       <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
 {/option:oLogged}
@@ -57,10 +57,10 @@
 {option:oAdmin}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=admin&amp;view=toconfirm">Users to be confirmed</a></li>
-    <li class="level2"><a href="index.php?module=admin&amp;view=students">Students</a></li>
-    <li class="level2"><a href="index.php?module=admin&amp;view=staff">Staff</a></li>
-    <li class="level2"><a href="index.php?module=register&amp;view=register">Add staff member</a></li>
+    <li class="level2"><a href="index.php?module=admin&amp;view=toconfirm" title="Users to be confirmed">Users to be confirmed</a></li>
+    <li class="level2"><a href="index.php?module=admin&amp;view=students" title="Students">Students</a></li>
+    <li class="level2"><a href="index.php?module=admin&amp;view=staff" title="Staff">Staff</a></li>
+    <li class="level2"><a href="index.php?module=register&amp;view=register" title="Add staff member">Add staff member</a></li>
 </ul>
 </div>
 {/option:oAdmin}
@@ -68,11 +68,11 @@
 {option:oCoor}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=staff&amp;view=precandidates">Show Precandidate Forms</a></li>
-    <li class="level2"><a href="index.php?module=staff&amp;view=applics">Show Student Application Forms</a></li>
-    <li class="level2"><a href="index.php?module=staff&amp;view=agreements">Show Learning Agreements</a></li>
-    <li class="level2"><a href="index.php?module=staff&amp;view=changes">Show Change of Learning Agreements</a></li>
-    <li class="level2"><a href="index.php?module=staff&amp;view=applics">Students</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=precandidates" title="Show Precandidate Forms">Show Precandidate Forms</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=applics" title="Show Student Application Forms">Show Student Application Forms</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=agreements" title="Show Learning Agreements">Show Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=changes" title="Show Change of Learning Agreements">Show Change of Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=staff&amp;view=applics" title="Students">Students</a></li>
 </ul>
 </div>
 {/option:oCoor}
@@ -80,8 +80,8 @@
 {option:oStudent}
 <div id="subnav">
 <ul>
-    <li class="lavel2"><a href="">Progess</a></li>
-    <li class="level2"><a href="">Edit profile</a></li>
+    <li class="lavel2"><a href="#" title="Progress">Progess</a></li>
+    <li class="level2"><a href="#" title="Edit profile">Edit profile</a></li>
 </ul>
 </div>
 {/option:oStudent}

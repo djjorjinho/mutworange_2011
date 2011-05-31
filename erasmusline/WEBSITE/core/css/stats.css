@@ -157,12 +157,12 @@ li.selected{
 
 .fields_list_header{
 	float : left;
-	width:15% !important;
+	width:17% !important;
 }
 
 .fields_list_body{
 	float : left;
-	width:85%;
+	width:83%;
 }
 
 .clear{
