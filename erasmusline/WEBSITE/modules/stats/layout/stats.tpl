@@ -112,7 +112,6 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="core/js/eis/modernizr-1.7.min.js"></script>
 <script type="text/javascript" src="core/js/jquery/jquery-1.5.js"></script>
 <script type="text/javascript" src="core/js/eis/jquery.blockUI.js"></script>
 <script type="text/javascript" src="core/js/eis/eis.app.js"></script>
