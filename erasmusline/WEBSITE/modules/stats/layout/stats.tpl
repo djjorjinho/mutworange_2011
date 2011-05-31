@@ -81,28 +81,26 @@
 				
 			</div>
 			<div class="presentation_div_options border_eis" title="COLUMNS">
-				<div class="fields_list_header i18n">
-				Columns 
-					<button onclick="eis.addToColumns();">+</button>
+				<div class="fields_list_header">
+					Columns <button onclick="eis.addToColumns();">+</button>
 				</div>
-				<div id="columns_list" class="fields_list_body columns">
-					
+				<div id="columns_list" class="fields_list_body">
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="presentation_div_options border_eis" title="ROWS">
-				<div class="fields_list_header i18n">
+				<div class="fields_list_header">
 				Rows 
 					<button onclick="eis.addToRows();">+</button>
 				</div>
-				<div id="rows_list" class="fields_list_body rows">
+				<div id="rows_list" class="fields_list_body">
 
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="presentation_div_options border_eis" title="FILTER">
-				<div class="fields_list_header i18n">Filter</div>
-				<div id="filters_list" class="fields_list_body filters">
+				<div class="fields_list_header">Filter</div>
+				<div id="filters_list" class="fields_list_body">
 				</div>
 				<div class="clear"></div>
 			</div>
