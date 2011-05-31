@@ -121,65 +121,67 @@ var _userlevel = '{$userlevel}';
 </script>
 <ol id="qunit-tests"><li></li></ol>
 
-<script id="eis_option_tmpl" type="text/x-jquery-tmpl"> 
+<script id="eis_option_tmpl" type="text/x-jquery-tmpl"><![CDATA[
     <option ${sel} value="${value}">${text}</option>
-</script>
+]]></script>
 
-<script id="eis_mainitem_tmpl" type="text/x-jquery-tmpl"> 
+<script id="eis_mainitem_tmpl" type="text/x-jquery-tmpl"><![CDATA[
     <li>
 		<a class="eis_dim_main" 
 			onclick="eis.toggleShow(this);return false;"><b>${text}</b></a>
 		<ul class="eis_dim_list" style="display:none"></ul>
 	</li>
-</script>
+]]></script>
 
-<script id="eis_listitem_tmpl" type="text/x-jquery-tmpl"> 
+<script id="eis_listitem_tmpl" type="text/x-jquery-tmpl"><![CDATA[
     <li>
 		<a class="eis_dim_item" 
 			onclick="eis.selectListItem('${item}',this);return false;">
 		${text}
 		</a>
 	</li>
-</script>
+]]></script>
 
-<script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl"> 
-    <span><button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
-	<button onclick="eis.showFilterOption('${dim}','${text}')">F</span>
+<script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl"><![CDATA[
+    <span>
+	<button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
+	<button onclick="eis.showFilterOption('${dim}','${text}')">F</button>
+	</span>
 	&nbsp;&nbsp;
-</script>
+]]></script>
 
-<script id="eis_tbmes_tmpl" type="text/x-jquery-tmpl"> 
+<script id="eis_tbmes_tmpl" type="text/x-jquery-tmpl"><![CDATA[
     <span>
 	<button onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
 	</span>
 &nbsp;&nbsp;
-</script>
+]]></script>
 
 
-<script id="eis_nofilter" type="text/x-jquery-tmpl"> 
-    No filter available for <strong>${name}</strong>
-</script>
+<script id="eis_nofilter" type="text/x-jquery-tmpl"><![CDATA[
+    No filter available for <b>${name}</b>
+]]></script>
 
-<script id="eis_multiselect" type="text/x-jquery-tmpl"> 
+<script id="eis_multiselect" type="text/x-jquery-tmpl"><![CDATA[
     <select multiple="multiple" size="5">
 	</select>
-</script>
+]]></script>
 
-<script id="eis_select" type="text/x-jquery-tmpl"> 
+<script id="eis_select" type="text/x-jquery-tmpl"><![CDATA[
     <select>
 	</select>
-</script>
+]]></script>
 
-<script id="eis_filtermain" type="text/x-jquery-tmpl"> 
+<script id="eis_filtermain" type="text/x-jquery-tmpl"><![CDATA[
     <div> ${title} </div>
 
 	<button onclick="eis.addFilter('${field}')">Add</button>
 	<button onclick="eis.cancelFilter()">Cancel</button>
-</script>
+]]></script>
 
-<script id="eis_tbfil_tmpl" type="text/x-jquery-tmpl">
+<script id="eis_tbfil_tmpl" type="text/x-jquery-tmpl"><![CDATA[
  	<span>
 	<button onclick="eis.removeFilter(this,'${field}')">${text}</button>
 	</span>
 &nbsp;&nbsp;
-</script>
+]]></script>

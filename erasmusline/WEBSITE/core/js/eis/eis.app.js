@@ -57,7 +57,15 @@ var eis = {
 			$.unblockUI();
 		});
 	},
-	
+	cleanTmpl : function(jqElm){
+		return jqElm;
+		//var elm = 
+		return	jqElm.html(function(i,v){
+			return v.replace("<\![CDATA[","").replace("]]>","");
+			});
+		//log(elm);
+		//return elm;
+	},
 	loadDependencies : function(){
 		
 		$.ajaxSetup({async: false});
@@ -212,7 +220,8 @@ var eis = {
 						));
 			}
 			
-			var mainItem = jQuery('#eis_mainitem_tmpl').tmpl({text : name});
+			var mainItem = jQuery('#eis_mainitem_tmpl')
+				.tmpl({text : name});
 			
 			levels.appendTo(mainItem.find('ul:first'));
 			
@@ -398,7 +407,7 @@ var eis = {
 				var obj = jsonPath(eis.rules, expr)[0];
 				//log(obj);
 				(parts[1]=='all') ?  
-				 jQuery('#eis_tbmes_tmpl').tmpl(
+						jQuery('#eis_tbmes_tmpl').tmpl(
 								{text:obj.name,mes:col,type:tb}
 								).appendTo('#'+tb+'_list')
 				: jQuery('#eis_tbdim_tmpl').tmpl(
