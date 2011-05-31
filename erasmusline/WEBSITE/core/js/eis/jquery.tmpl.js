@@ -74,7 +74,6 @@
 		// Use first wrapped element as template markup.
 		// Return wrapped set of template items, obtained by rendering template against data.
 		tmpl: function( data, options, parentItem ) {
-			this.html(function(i,v){return v.replace("<\![CDATA[","").replace("]]>","");});
 			return jQuery.tmpl( this[0], data, options, parentItem );
 		},
 
