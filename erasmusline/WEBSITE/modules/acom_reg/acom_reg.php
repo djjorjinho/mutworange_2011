@@ -16,16 +16,29 @@ class acom_regController extends PlonkController {
     private $error = '';
     private $position = '1';
     private $mail = '';
-
+    
+    public function checkLogged() {
+        if (!PlonkSession::exists('id')) {
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        } else {
+            if (PlonkSession::get('id') === 0) {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                $this->pageTpl->assignOption('oStudent');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+                }
+        }
+    }
     public function showacom_reg() {
-        // Assign main properties
-        $this->mainTpl->assign('pageTitle', 'Accomodation Registration');
-        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
-        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="core/js/sorttable.js" type="text/javascript"></script>');
-        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
-
+        $this->checkLogged();
+        $this->mainTpl->assign('siteTitle', 'Accomodation Registration');
+        $this->mainTpl->assign('pageMeta', '
+            <link type="text/css" rel="stylesheet" href="./core/css/validationEngine.jquery.css"/>
+            <link type="text/css" rel="stylesheet" href="./core/css/Style.css"/>');
+        $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/java.tpl');
+        $this->mainTpl->assign('pageJava', $java->getContent(true));
+        
         $this->pageTpl->assign('errorString', $this->error);
         $this->error = '';
 
@@ -73,11 +86,11 @@ class acom_regController extends PlonkController {
                 isset($_POST['res']) && isset($_POST['stAcName']) && isset($_POST['stAcIban']) && isset($_POST['stAcBic'])) {
 
             if ((is_valid_date($_POST['startDate'], FALSE)) && (is_valid_date($_POST['endDate'], FALSE))) {
-                if ($_POST['startDate']<$_POST['endDate']){
+                if ($_POST['startDate'] < $_POST['endDate']) {
                     $this->sendMail($_POST);
-                }else {
+                } else {
                     $this->error = '<div class="errorPHP">Date of Departure should be after Date of Arrival</div>';
-                $this->position = '2yes';
+                    $this->position = '2yes';
                 }
             } else {
                 $this->error = '<div class="errorPHP">Please enter a Valid Date</div>';

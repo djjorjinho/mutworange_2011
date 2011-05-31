@@ -1,4 +1,4 @@
-
+<div class="mainDiv">
 {$errorString}
 
 {option:showSelectAboardUser}
@@ -9,7 +9,7 @@
             <input class="buttonLook" name="postForm" id="postForm" type="submit" value="{$view}"/>
         </form></div>
 </div>
-<div class="selDiv">
+<div class="alCenterDiv">
     <h2>Welcome</h2>
     <p>Select Student from the list</p>
 
@@ -19,8 +19,8 @@
 
         </select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
 
-
-
+</div>
+    <div style="width:450px;padding-left: 20%;padding-top: 2%;">
     <table id="tblSearch"  class="sortable" width="450px" align="center">
         <tr>
             <th>MatrNum</th>
@@ -31,6 +31,7 @@
 
         {iteration:iStudentsList}{$studentsList}{/iteration:iStudentsList}
     </table>
+    </div>
     <p>&nbsp;</p>
     <div class="leftAlDiv" align="right">
         <form method="post">
@@ -55,8 +56,6 @@
     <p>&nbsp;</p>
 
 
-
-</div>
 
 {/option:showSelectAboardUser}
 
@@ -104,7 +103,7 @@
             <p class="minHead">&nbsp;</p>
             <div class="TRdiv"><span class="spleft">Place of Birth :</span><span class="spright">{$stPlBirh}</span></div>
             <div class="TRdiv"><span class="spleft">Matriculation Date :</span><span class="spright">{$stMatrDate}</span></div>
-            <div class="TRdiv"><span class="spleft">Matriculation Number :</span><span class="spright">{$stMatrNum}</span></div>
+            <div class="TRdiv"><span class="spleft">Matriculation Num :</span><span class="spright">{$stMatrNum}</span></div>
             <div class="TRdiv"><span class="spleft">E-mail :</span><span class="spright">{$stMail}</span></div>
 
             <div class="TRdiv"><p class="minHead">Receiving Institution Information</p></div>
@@ -120,7 +119,7 @@
 
             <div><p class="minHead">{$form}</p></div>
             {$field}       
-
+<br/>
 
             {option:showSubmit}<div><p><input type="hidden" name="User" id="Usera" value="{$seluser}" />
                     <input type="hidden" name="formAction" id="formValidate" value="doSubmit" />
@@ -139,4 +138,5 @@
 
 
     {/option:showCertificates}
+</div>
 </div>

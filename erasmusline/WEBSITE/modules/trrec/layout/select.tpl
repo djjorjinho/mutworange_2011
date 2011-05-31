@@ -1,3 +1,4 @@
+<div class="mainDiv">
 {$errorString}
 {option:showSelectTranscriptSelect}
 {$selectError}
@@ -8,7 +9,7 @@
         </form></div>
 
 </div>
-<div class="alCenterDiv">
+<div class="alCenterDiv2" align="center">
     <h2>Welcome</h2>
     <p>Select Student from the list</p>
 
@@ -19,7 +20,7 @@
         </select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
 
 
-    <table id="tblSearch"  class="sortable" width="450px" align="center">
+    <table id="tblSearch"  class="sortable" align="center" style="width:450px;">
         <tr>
             <th>MatrNum</th>
             <th>Name</th>
@@ -86,7 +87,7 @@
         <p class="minHead">&nbsp;</p>
         <div ><span class="spleft">Place of Birth :</span><span class="spright">{$stPlBirh}</span></div>
         <div ><span class="spleft">Matriculation Date :</span><span class="spright">{$stMatrDate}</span></div>
-        <div ><span class="spleft">Matriculation Number :</span><span class="spright">{$stMatrNum}</span></div>
+        <div ><span class="spleft">Matriculation Num :</span><span class="spright">{$stMatrNum}</span></div>
         <div ><span class="spleft">E-mail :</span><span class="spright">{$stMail}</span></div>
 
         <div ><p class="minHead">Receiving Institution Information</p></div>
@@ -100,49 +101,43 @@
 
     <div class="alCenterDiv">
         <p class="minHead">Grades</p>
-
-        <div class="tblx" >
-            <table  id="lol" align="center">
+        <div style="padding-left: 5%;padding-top: 3%;text-align: center;vertical-align: middle;">
+            <table id="lol">
                 <thead>
 
-                    <tr><td colspan="5">&nbsp;</td></tr>
-                    <tr>
-                        <th>Course<br/>Code</th>
-                        <th>Course<br/>Title</th>
-                        <th>ECTS<br/>Credits</th>
+                    <tr align="center">
+                        <th class="centerTableHeader">Course<br/>Code</th>
+                        <th class="centerTableHeader">Course<br/>Title</th>
+                        <th class="centerTableHeader">ECTS<br/>Credits</th>
 
-                        <th>Duration<br/>of the Course</th>
-                        <th>Local<br/>Grade</th>
-                        <th>ECTS<br/>Grade</th>
+                        <th class="centerTableHeader">Duration<br/>of the Course</th>
+                        <th class="centerTableHeader">Local<br/>Grade</th>
+                        <th class="centerTableHeader">ECTS<br/>Grade</th>
                     </tr>
                 </thead>
                 <tbody>
                     {option:showSendAtr}
-                    <tr>
+                    
                         {iteration:iCourses}{$courses}{/iteration:iCourses}
-                    </tr>
+                    
                     {/option:showSendAtr}
                     {option:showSendedTr}
                     {iteration:iStudentRec}{$studentRec}{/iteration:iStudentRec}
                     {/option:showSendedTr}
                 </tbody>
-
-
-
             </table>
-            <div id="output"></div>
         </div>
 
         <p class="minHead">Information</p>
         <div class="tblx" align="center">
-            <p>Duration of the course unit: Y = 1 full academic year, 1S = 1 semester, 1T = 1 term/trimester, 2S = 2 semesters, 2T = 2 terms/trimesters.</p>
+            <p>Duration of the course unit: Y = 1 full academic year, 1S = 1 semester, 1T = 1 term/trimester,<br/> 2S = 2 semesters, 2T = 2 terms/trimesters.</p>
             <p>Description of the institutional grading system: The result achieved in a subject, whether through continuous assessment or in an examination, is generally expressed in a 0 to 20 grading scheme. The lowest passing grade is 10. </p>
             <br/>
 
-            <table border="0">
-                <tr>
-                    <th>ECTS Grade </th>
-                    <th>Definition</th>
+            <table  border="0">
+                <tr >
+                    <th align="center">ECTS Grade </th>
+                    <th style="text-align: center;">Definition</th>
                 </tr>
                 <tr>
                     <td align="center">A</td>
@@ -177,7 +172,7 @@
 
             <table border="0">
                 <tr>
-                    <th colspan="2">ECTS Credits </th>
+                    <th style="width:250px;text-align:center;" colspan="2">ECTS Credits </th>
                 </tr>
                 <tr>
                     <td>1 full academic year</td>
@@ -204,3 +199,4 @@
 
 </form>
 {/option:showTranscript}
+</div>
