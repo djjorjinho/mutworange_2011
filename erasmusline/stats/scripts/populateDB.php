@@ -65,8 +65,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
                 
@@ -75,8 +75,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
     	
@@ -86,8 +86,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
                 
@@ -96,8 +96,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
     }
