@@ -919,8 +919,6 @@ class LagreeformController extends PlonkController {
     
         $user = LagreeformDB::getInfoUser($this->userid);
         $erasmus = LagreeformDB::getErasmusInfo($this->userid);
-        $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application and Learning Agreement');
-        $this->userid = LagreeformDB::getStudentByForm(PlonkFilter::getGetValue('form'));
 
         LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
 
