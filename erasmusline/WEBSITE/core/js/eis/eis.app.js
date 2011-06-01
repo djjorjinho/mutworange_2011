@@ -60,12 +60,12 @@ var eis = {
 	},
 	cleanTmpl : function(jqElm){
 		return jqElm;
-		//var elm = 
+		// var elm =
 		return	jqElm.html(function(i,v){
 			return v.replace("<\![CDATA[","").replace("]]>","");
 			});
-		//log(elm);
-		//return elm;
+		// log(elm);
+		// return elm;
 	},
 	loadDependencies : function(){
 		
@@ -76,11 +76,11 @@ var eis = {
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
 		jQuery.getScript('https://www.google.com/jsapi',function(){
-			//google.load('visualization', '1', {packages: ['corechart']});
+			// google.load('visualization', '1', {packages: ['corechart']});
 		});
 
 		jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
-		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
+		// jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
 		this.loadEditableSelect();
@@ -205,7 +205,7 @@ var eis = {
 		for(var i=0;i<len;i++){
 			var dimension = dimensions[i];
 			var table = dimension.table;
-			//var pk = dimension.pk;
+			// var pk = dimension.pk;
 			var name = dimension.name;
 			var levels = jQuery([]);
 			
@@ -338,7 +338,7 @@ var eis = {
 	        saturation,  
 	        hue;  
 	  
-	    // Hue  
+	    // Hue
 	    if (max == min) {  
 	        hue = 0;  
 	    } else if (max == r) {  
@@ -353,7 +353,7 @@ var eis = {
 	        hue += 360;  
 	    }  
 	  
-	    // Saturation  
+	    // Saturation
 	    if (max == 0) {  
 	        saturation = 0;  
 	    } else {  
@@ -374,8 +374,8 @@ var eis = {
 		var hsv = eis.rgbToHsv(parts[1],parts[2],parts[3]);
 		var contrast = ((hsv[0] > 150 && hsv[2]>85) || hsv[2] < 50) ? 
 				'#ffffff' : '#000000';
-		//log(hsv);
-		//log(contrast);
+		// log(hsv);
+		// log(contrast);
 		
 		return [eis.RGBtoHEX(parts),contrast]; 
 	},
@@ -394,7 +394,7 @@ var eis = {
 		jQuery('#'+tb+'_list').html('');
 		for(var i in list){
 			var col = list[i];
-			//log(col);
+			// log(col);
 			var parts = col.split('.');
 			if(regex1.test(col)){
 				var cube = eis.scenario.cube;
@@ -405,13 +405,13 @@ var eis = {
 						{text:obj.name,mes:col,type:tb}
 						).appendTo('#'+tb+'_list');
 			}else{
-				//log(parts);
+				// log(parts);
 				var expr= (parts[1]=='all') ? 
 						"$.dimensions[?(@['table']=='"+parts[0]+"')]"
 						: "$.dimensions[?(@['table']=='"+parts[0]+"')]"+
 							".levels[?(@['column']=='"+parts[1]+"')]";
 				var obj = jsonPath(eis.rules, expr)[0];
-				//log(obj);
+				// log(obj);
 				(parts[1]=='all') ?  
 						jQuery('#eis_tbmes_tmpl').tmpl(
 								{text:obj.name,mes:col,type:tb}
@@ -582,13 +582,13 @@ var eis = {
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
-		    	var cnt = eis.scenario.rows.length; //cnt++;
+		    	var cnt = eis.scenario.rows.length; // cnt++;
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
 		        	var val = data[row][item2]
 		        	val= (val==undefined) ? '': val;
-		        	//log(val);
+		        	// log(val);
 		            out+= "<td class='"+cls+"'>"+val+"</td>";
 		            cnt--;
 		        }
@@ -678,100 +678,141 @@ var eis = {
 		jQuery.blockUI();
 		delete eis.scenario.filters['_hash'];
 		
+		var type = document.getElementById('chart_select').value;		
 		
 			eis.rpcCall("runScenario",eis.scenario,
 					function(result){
-						eis.showGraph2(result);
+						eis.showGraph2(result, type);
 					},
 					function(error){},
 					true		
-				);
-			
-		/*eis.rpcCall("runScenario",eis.scenario,
-		function(result){
-				eis.showGraph2(result, graph_type);
-				jQuery.unblockUI();
-			}, 
-		function(error){
-			log(error);
-			jQuery.unblockUI();
-		},false);*/
+				);			
 		
 		eis.scenario.filters['_hash']=true;
 		
 		
-		
+		jQuery.unblockUI();	
 	},
 	
 	
 	
-	showGraph2 : function(data){
+	showGraph2 : function(data, type){
 
-		/*out="";
-		out+="<table class='presentation_table' id='resultTable'>";
-		    out+= "<thead>";
-		    for (var item1 in data[0]) {
-		        out+= "<td class='res_column'><b>"+item1+"<b></td>";
-		    }
-		    out+= "</thead>";*/
-			//log(data);
-			var count = 0;
 			var dt = [];
 			
-		    for (var row in data) {
-		    	var cnt = eis.scenario.rows.length;
-		        
-		    	
-		        if(count == 0 ){
-		        	temp_dt=[];
-		        	temp_dt.push('Column');
-			        for (var item2 in data[row]) {
-
-			        	var val = data[row][item2];
-				        temp_dt.push(item2);
-
-			            cnt--;
-			        }
-			        
-			        
-			        
-		        }
-		        else{
-		        	temp_dt=[];
-		        	
-		        	for (var item2 in data[row]) {
-		        		
-		        		if(cnt > 0 ){
-			        		var val = data[row][item2];
-				        	temp_dt.push(item2);
-			        	}
-			        	else{
-			        		var val = data[row][item2];
-				        	temp_dt.push(parseInt(item2));
-			        	}
+			
+			
+			if(type == 'bars' || type == 'line'){
+				
+				var temp_dt2=[];
+				var cnt = eis.scenario.rows.length;
+				
+				temp_dt2.push('Column');
+				for (var item2 in data[0]) {
+	  				
+					if(cnt < 1){
+				        	temp_dt2.push(item2);
+					}
+		            cnt--;
+		        } 
+				
+				dt.push(temp_dt2);
+				
+				
+			    for (var row in data) {
+			    	var cnt = eis.scenario.rows.length;		        
+			    	temp_dt=[];
+			    	
 			        	
-			            cnt--;
-			        }
-		        }
-		        
-		        dt.push(temp_dt);
-		        count++;
+			        	var condition = true;
+			        	var string = "";
+			        	for (var item2 in data[row]) {
+			        		
+			        		if(cnt < 1 ){
+			        			if(condition){
+			        				temp_dt.push(string);
+			        				condition=false;
+			        			}
+				        		if(data[row][item2] == undefined){
+				        			temp_dt.push(0);
+				        		}else{
+					        		temp_dt.push(parseInt(data[row][item2]));
+				        		}
+				        	}
+				        	else{
+					        	string += data[row][item2]+" | ";
+				        	}
+				        	
+				            cnt--;
+				        }
+			        
+			        
+			        dt.push(temp_dt);
+	
+			    }
+			   //log(dt); 
+			   // var rowData = dt;
+			    
+			    var data = google.visualization.arrayToDataTable(dt);
+			    
+			    var ac = new google.visualization.ComboChart(document.getElementById('chart_div'));
+		        ac.draw(data, {
+		          title : 'EIS Scenario Combo Chart',
+		          width: 600,
+		          height: 400,
+		          vAxis: {title: "Columns / Measures"},
+		          hAxis: {title: "Rows"},
+		          seriesType: type,
+		        });
+			}
+			
+			if(type == 'pie'){
+				for (var row in data) {
+			    	var cnt = eis.scenario.rows.length;		        
+			    	temp_dt=[];
+			    	
+			        	
+			        	var condition = true;
+			        	var string = "";
+			        	for (var item2 in data[row]) {
+			        		
+			        		if(cnt < 1 ){
+			        			if(condition){
+			        				string += ' | '+item2;
+			        				temp_dt.push(string);
+			        				condition=false;
+			        			}
+				        		if(data[row][item2] == undefined){
+				        			temp_dt.push(0);
+				        		}else{
+					        		temp_dt.push(parseInt(data[row][item2]));
+				        		}
+				        	}
+				        	else{
+					        	string += data[row][item2]+" | ";
+				        	}
+				        	
+				            cnt--;
+				        }
+			        
+			        
+			        dt.push(temp_dt);
+	
+			    }
+				
+				var data = new google.visualization.DataTable();
+				data.addColumn('string', 'Description');
+				data.addColumn('number', 'Value');
+				
+				var data = google.visualization.arrayToDataTable(dt);
+				  
+				  
 
-		    }
-		    
-		    var rowData = dt;
-		    
-		    var data = google.visualization.arrayToDataTable(rowData);
-		    
-		    var ac = new google.visualization.ComboChart(document.getElementById('chart_div'));
-	        ac.draw(data, {
-	          title : 'EIS Scenario Combo Chart',
-	          width: 700,
-	          height: 400,
-	          vAxis: {title: "Columns / Measures"},
-	          hAxis: {title: "Rows"},
-	          seriesType: "bars",
-	        });
+				// Create and draw the visualization.
+				new google.visualization.PieChart(document.getElementById('chart_div')).
+				draw(data, {title:"EIS Scenario Pie Chart"});
+				
+			}
 		    
 
 	},

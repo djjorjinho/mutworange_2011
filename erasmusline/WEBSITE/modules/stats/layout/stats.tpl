@@ -79,6 +79,12 @@
 				<button title="Export Scenario result to CSV" onclick="eis.exportScenario();">Export</button>
 				<button title="Display Scenario Graph if available" onclick="eis.showGraph();">Graph</button>
 				
+				<select id="chart_select" name="Charts" title="Chart Select">
+					<option selected="selected" value="bars">Bars</option>
+					<option value="line">Lines</option>
+					<option value="pie">Pie Plate</option>
+				</select>
+				
 			</div>
 			<div class="presentation_div_options border_eis" title="Column List">
 				<div class="fields_list_header">
@@ -106,9 +112,10 @@
 			</div>
 			
 		
-		<div class="presentation_div border_eis" id="resultTableDiv">
-			<div id="chart_div"></div>
+		<div class="presentation_div border_eis">
+			<div id="resultTableDiv"></div><div id="chart_div"></div>
 		</div>
+
 
 	</div>
 </div>
