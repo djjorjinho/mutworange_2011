@@ -80,7 +80,8 @@ class OLAP{
 		$join = array_values(preg_grep("/\ as\ /",$tables,PREG_GREP_INVERT));
 		$other = array_values(preg_grep("/\ as\ /",$tables));
 		
-		$sql .= " FROM ".implode(' JOIN ',$join).',';
+		$sql .= " FROM ".implode(' JOIN ',$join);
+		if(!empty($other)) $sql .= ',';
 		$sql .= implode(',',$other);
 		
 		
