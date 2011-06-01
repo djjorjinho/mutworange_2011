@@ -24,7 +24,7 @@
 					"column" : "max_ects", "aggregator" : "max"},
 				{"id" : "M7", "name" : "Min. ECTS", 
 					"column" : "min_ects", "aggregator" : "min"}],
-			"dimensions" : ["D1","D2","D3","D4","D5","D6"]
+			"dimensions" : ["D1","D2","D3","D4","D5","D8","D6"]
 		},
 		{ "id" : "O2",
 			"table" : "fact_efficiency","description" : "Efficiency",
@@ -40,7 +40,7 @@
 				{"id" : "M7", "name" : "Min. Response Days", 
 					"column" : "min_response_days", "aggregator" : "min"}
 				],
-			"dimensions" : ["D1","D3","D4","D5","D7"]
+			"dimensions" : ["D1","D3","D4","D5","D8","D7"]
 		}
 	],
 	
@@ -71,6 +71,13 @@
 			"levels" : [
 				{"name" : "Country", "column" : "country_code"},
 				{"name" : "Institution", "column" : "institution_code"}]
+		},
+		{"id" : "D8", "name" : "Host Institution", "table" : "dim_institution_host", 
+			"pk" : "dim_institution_id", "fk":"dim_institution_host_id",
+			"desc":"institution_code", "hasAll" : true, "measure" : "M1", 
+			"levels" : [
+				{"name" : "Host Country", "column" : "country_code"},
+				{"name" : "Host Institution", "column" : "institution_code"}]
 		},
 		{"id" : "D6", "name" : "Study", "table" : "dim_study", 
 			"pk" : "dim_study_id","desc":"course_code", "hasAll" : true, "measure" : "M1", 

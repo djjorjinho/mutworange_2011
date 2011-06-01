@@ -46,7 +46,7 @@ class Pivot
     	$num = func_num_args();
     	foreach(range(0,$num-1) as $idx){
     		$val = $arr[$idx];
-    		if(isset($val)){
+    		if(!empty($val)){
     			if($idx>0) $str.=" | ";
     			$str .= $val;
     		}

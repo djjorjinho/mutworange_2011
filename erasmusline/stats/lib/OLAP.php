@@ -77,8 +77,12 @@ class OLAP{
 		
 		#print("tables\n");
 		#print_r($tables);
+		$join = array_values(preg_grep("/\ as\ /",$tables,PREG_GREP_INVERT));
+		$other = array_values(preg_grep("/\ as\ /",$tables));
 		
-		$sql .= " FROM ".implode(' JOIN ',$tables);
+		$sql .= " FROM ".implode(' JOIN ',$join).',';
+		$sql .= implode(',',$other);
+		
 		
 		#print("where\n");
 		#print_r($where);
@@ -137,8 +141,17 @@ class OLAP{
 				$table = $field_array[0];
 				$id = $table."_id";
 				
-				if(!self::valueInArray($tables,$table)) 
-					array_push($tables,"${table} using (${id})");
+
+				if($table!='dim_institution_host'){
+					$val = "${table} using (${id})";
+					if(!in_array($val,$tables)) array_push($tables,$val);
+				}else{
+					$val = "dim_institution as ${table}";
+					$wh = "(${cube}.dim_institution_host_id = ".
+							"${table}.dim_institution_id)";
+					if(!in_array($val,$tables)) array_push($tables,$val);
+					if(!in_array($wh,$where)) array_push($where,$wh);
+				}	
 				
 				if($field_array[1]!='all'){
 					array_push($groupby,$field);
