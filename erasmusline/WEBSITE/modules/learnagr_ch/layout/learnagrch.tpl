@@ -1,3 +1,4 @@
+<div class="mainDiv">
 {$errorString}
 
 <form id="learnCH" name="learnCH" method="post" action="">
@@ -42,3 +43,4 @@
 
     </div>
 </form>
+</div>
