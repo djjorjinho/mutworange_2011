@@ -56,8 +56,8 @@
 				</select>
 				<input type="text" title="Highlight Value input"/>
 				<div id="colorSelector"><div style="background-color: #0000ff"></div></div> 
-				<button onclick="eis.addHlight(this);">Add</button>
-				<button onclick="eis.resetHlight(this);">Reset</button>
+				<button title="Add Highlight Color" onclick="eis.addHlight(this);">Add</button>
+				<button title="Reset Highlight Color" onclick="eis.resetHlight(this);">Reset</button>
 			</div>
 		</div>
 		
@@ -66,39 +66,39 @@
 	<div class="rightcol">
 		
 		
-			<div class="presentation_div_menu border_eis" title="Toolbar" id="eis_toolbar">
+			<div class="presentation_div_menu border_eis" title="Task Toolbar" id="eis_toolbar">
 				<span>Tasks</span>
 				<select name="Scenarios" title="Scenario Select">
 					<option selected="selected" value="">Select</option>
 				</select>
 				
-				<button onclick="eis.saveScenario();">Save</button>
-				<button onclick="eis.newScenario();">New</button>
-				<button onclick="eis.runScenarioButton();">Run</button>
-				<button onclick="eis.swapColumnsRows();">Swap</button>
-				<button onclick="eis.exportScenario();">Export</button>
-				<button onclick="eis.showGraph();">Graph</button>
+				<button title="Save scenario configuration" onclick="eis.saveScenario();">Save</button>
+				<button title="New Scenario" onclick="eis.newScenario();">New</button>
+				<button title="Run Scenario" onclick="eis.runScenarioButton();">Run</button>
+				<button title="Swap items between Column and Rows" onclick="eis.swapColumnsRows();">Swap</button>
+				<button title="Export Scenario result to CSV" onclick="eis.exportScenario();">Export</button>
+				<button title="Display Scenario Graph if available" onclick="eis.showGraph();">Graph</button>
 				
 			</div>
-			<div class="presentation_div_options border_eis" title="COLUMNS">
+			<div class="presentation_div_options border_eis" title="Column List">
 				<div class="fields_list_header">
-					Columns <button onclick="eis.addToColumns();">+</button>
+					Columns <button title="Add selected item to Columns" onclick="eis.addToColumns();">+</button>
 				</div>
 				<div id="columns_list" class="fields_list_body">
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="presentation_div_options border_eis" title="ROWS">
+			<div class="presentation_div_options border_eis" title="Row List">
 				<div class="fields_list_header">
 				Rows 
-					<button onclick="eis.addToRows();">+</button>
+					<button title="Add selected item to Rows" onclick="eis.addToRows();">+</button>
 				</div>
 				<div id="rows_list" class="fields_list_body">
 
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="presentation_div_options border_eis" title="FILTER">
+			<div class="presentation_div_options border_eis" title="Filter List">
 				<div class="fields_list_header">Filter</div>
 				<div id="filters_list" class="fields_list_body">
 				</div>
@@ -127,7 +127,7 @@ var _userlevel = '{$userlevel}';
 
 <script id="eis_mainitem_tmpl" type="text/x-jquery-tmpl">
     <li>
-		<a class="eis_dim_main" 
+		<a title="Show/Hide Dimensions from category '${text}'" class="eis_dim_main" 
 			onclick="eis.toggleShow(this);return false;"><b>${text}</b></a>
 		<ul class="eis_dim_list" style="display:none"></ul>
 	</li>
@@ -135,7 +135,7 @@ var _userlevel = '{$userlevel}';
 
 <script id="eis_listitem_tmpl" type="text/x-jquery-tmpl">
     <li>
-		<a class="eis_dim_item" 
+		<a title="Select '${text}' from list" class="eis_dim_item" 
 			onclick="eis.selectListItem('${item}',this);return false;">
 		${text}
 		</a>
@@ -144,15 +144,15 @@ var _userlevel = '{$userlevel}';
 
 <script id="eis_tbdim_tmpl" type="text/x-jquery-tmpl">
     <span>
-	<button onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
-	<button onclick="eis.showFilterOption('${dim}','${text}')">F</button>
+	<button title="Remove Dimension '${text}'" onclick="eis.removeTBItem(this,'${dim}','${type}')">${text}</button>
+	<button title="Create Filter for Dimension '${text}'" onclick="eis.showFilterOption('${dim}','${text}')">F</button>
 	</span>
 	&nbsp;&nbsp;
 </script>
 
 <script id="eis_tbmes_tmpl" type="text/x-jquery-tmpl">
     <span>
-	<button onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
+	<button title="Remove measure '${text}'" onclick="eis.removeTBItem(this,'${mes}','${type}')">${text}</button>
 	</span>
 &nbsp;&nbsp;
 </script>
@@ -175,13 +175,13 @@ var _userlevel = '{$userlevel}';
 <script id="eis_filtermain" type="text/x-jquery-tmpl">
     <div> ${title} </div>
 
-	<button onclick="eis.addFilter('${field}')">Add</button>
-	<button onclick="eis.cancelFilter()">Cancel</button>
+	<button title="Add Filter" onclick="eis.addFilter('${field}')">Add</button>
+	<button title="Cancel Filter Adding" onclick="eis.cancelFilter()">Cancel</button>
 </script>
 
 <script id="eis_tbfil_tmpl" type="text/x-jquery-tmpl">
  	<span>
-	<button onclick="eis.removeFilter(this,'${field}')">${text}</button>
+	<button title="Remove filter '${text}'" onclick="eis.removeFilter(this,'${field}')">${text}</button>
 	</span>
 &nbsp;&nbsp;
 </script>
