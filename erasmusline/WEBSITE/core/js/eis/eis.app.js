@@ -75,7 +75,7 @@ var eis = {
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
-		jQuery.getScript('http://www.google.com/jsapi');
+		jQuery.getScript('https://www.google.com/jsapi');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
