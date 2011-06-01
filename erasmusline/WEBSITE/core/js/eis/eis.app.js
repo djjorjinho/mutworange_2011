@@ -76,10 +76,10 @@ var eis = {
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
 		jQuery.getScript('https://www.google.com/jsapi',function(){
-			google.load('visualization', '1', {packages: ['corechart']});
+			//google.load('visualization', '1', {packages: ['corechart']});
 		});
 
-		//jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
+		jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
