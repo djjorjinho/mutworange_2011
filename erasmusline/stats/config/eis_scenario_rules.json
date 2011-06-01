@@ -97,6 +97,8 @@
 				"accomodation" : "Accomodation Form",
 				"certarrival" : "Certificate of Arrival"
 			}
-		}
+		},
+		"dim_date.year" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"2010":"2010","2011":"2011"} },
+		"dim_date.semester" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"1":"First","2":"Second"} }
 	}
 }

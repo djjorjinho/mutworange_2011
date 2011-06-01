@@ -61,7 +61,7 @@ class TSample
 	 */
 	function random($min = null, $max = null)
     {
-        return TSample::range($min, $max);
+        return $this->range($min, $max);
     }
 
 	/**
@@ -81,7 +81,7 @@ class TSample
 	function choice($choices, $min_choices = 1, $max_choices = null, $sep = ",")
 	{
 	    // make choices even more random...
-	    for ($i = 0; $i < TSample::random(1,10); $i++)
+	    for ($i = 0; $i < $this->random(1,10); $i++)
     	    shuffle($choices);
 
 	    $my_choices = array();
@@ -91,11 +91,11 @@ class TSample
 
         $range = $max_choices;
 	    if ($max_choices > $min_choices)
-            $range = TSample::range($min_choices, $max_choices);
+            $range = $this->range($min_choices, $max_choices);
 
 	    while (count($my_choices) < $range)
 	    {
-            $rand = TSample::range(0, count($choices) - 1);
+            $rand = $this->range(0, count($choices) - 1);
             $selected = $choices[$rand];
             // this ensures that choices are unique!
             $my_choices[$selected] = $selected;
@@ -120,7 +120,7 @@ class TSample
         else if ($d1 > 0 && $d2 === null)
             $dt = $d1;
         else if ($d1 > 0 && $d2 > 0)
-	        $dt = TSample::range($d1, $d2);
+	        $dt = $this->range($d1, $d2);
 	    else
 	        $dt = time();   // safety valve!
 
@@ -138,9 +138,9 @@ class TSample
 	 */
 	function dob($min = 18, $max = 100)
 	{
-        $dob_year = date('Y') - (TSample::range($min, $max));
+        $dob_year = date('Y') - ($this->range($min, $max));
 
-        $dob_month = TSample::range(1, 12);
+        $dob_month = $this->range(1, 12);
 
         if ($dob_month == 2)
         {
@@ -155,7 +155,7 @@ class TSample
         else
             $max_days = 31;
 
-        $dob_day = TSample::range(1, $max_days);
+        $dob_day = $this->range(1, $max_days);
 
         $dob = sprintf("%4d-%02d-%02d", $dob_year, $dob_month, $dob_day);
         return $dob;
@@ -174,9 +174,9 @@ class TSample
         for ($i=0; $i < $length; $i++)
         {
             if ($i==0)
-                $number .= TSample::range(1, 9);    // so we don't start with 0!
+                $number .= $this->range(1, 9);    // so we don't start with 0!
             else
-                $number .= TSample::range(0, 9);
+                $number .= $this->range(0, 9);
         }
 		return $number;
 	}
@@ -193,7 +193,7 @@ class TSample
         $str = "";
         for ($i=0; $i <= $length; $i++)
         {
-            $chr = TSample::range(1, 26); // from a-z of course!
+            $chr = $this->range(1, 26); // from a-z of course!
             $str .= chr($chr + 96);
     	}
     	return $str;
@@ -211,7 +211,7 @@ class TSample
         $str = "";
         for ($i=0; $i <= $length; $i++)
         {
-            $chr = TSample::range(33, 255); // printable ASCII range
+            $chr = $this->range(33, 255); // printable ASCII range
             $str .= chr($chr);
     	}
     	return $str;

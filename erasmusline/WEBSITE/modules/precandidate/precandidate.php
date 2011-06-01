@@ -272,7 +272,10 @@ class PrecandidateController extends PlonkController {
 
             PrecandidateDB::insertStudentEvent('studentsEvents', $valueEvent);
             PrecandidateDB::insertJson('forms', $values);
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+        }
+        else {
+            Plonk::dump($this->errors);
         }
     }
 

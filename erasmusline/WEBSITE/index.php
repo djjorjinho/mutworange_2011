@@ -20,6 +20,6 @@ $website = new PlonkWebsite(
 		'home','about','register','info','admin','profile', 'abroad_stay',
 		'lagreeform','pre_leave','precandidate','teardown_finish','login', 
 		'staff', 'infox', 'residence','stats','course_matching','extend','learnagr_ch',
-                    'trrec','acom_reg'));
+                    'trrec','acom_reg', 'office'));
 
 ?>

@@ -17,7 +17,7 @@ class PopulateDB {
     
     var $ods_tables = array('ods_efficiency');
     var $meta_tables = array('meta_semester');
-    
+
     var $dict_dir;
     
     var $rnd;
@@ -65,8 +65,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
                 
@@ -75,8 +75,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
     	
@@ -86,8 +86,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
                 
@@ -96,8 +96,8 @@ class PopulateDB {
         
 
         $obj = array(
-                    year=>$year,
-                    semester=>$semester
+                    'year'=>$year,
+                    'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
     }
@@ -134,7 +134,6 @@ class PopulateDB {
         $db = $this->db;
         $dtb = $this->dim_tables;
         $ftb = $this->fact_tables;
-        $ftpl = $this->fact_tpl;
         
         // create a merging table based on template
         $mrg_table = $ftb[0]."_2010_${semester}s";

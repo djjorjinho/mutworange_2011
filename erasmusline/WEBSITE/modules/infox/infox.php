@@ -5,13 +5,13 @@ include('infox.db.php');
 
 class InfoxController extends PlonkController {
 
-    protected $views = array('infox', 'transfer', 'admin');
+    protected $views = array('infox', 'transfer', 'admin', 'airport');
     protected $actions = array('transfer');
     protected $debug = false;
     protected $debugMsg = "";
     protected $path = "./files/nathan.vanassche@kahosl.be/";
 
-    public function showInfox() {
+/*    public function showInfox() {
         if (PlonkFilter::getGetValue('debug') == 1) {
             $this->debug = true;
         }
@@ -70,7 +70,46 @@ class InfoxController extends PlonkController {
             }
         }
     }
+*/    
+    public function showInfox() {
+    }
+    public function showAirport() {
+        if (PlonkFilter::getPostValue('json')) {
+            $obj = json_decode(PlonkFilter::getPostValue('json'));
+            for ($i = 0; $i < count($obj); $i++) {
+                $array = explode(":", $obj[$i]->method);
+                $tmp = $this->loadController($array[0]);
+            
+                $tmp->$array[1]($obj[$i]->params);
+            }
+        
+            PlonkWebsite::redirect('http://127.0.0.1/mutw/modules/infox/layout/airport.html');     
+        }
+    }
+    
+    private function loadController($module) {
+		// check if the controller file exists
+  		  if (!file_exists(PATH_MODULES . '/' . $module . '/'.strtolower($module).'.php'))
+            throw new Exception('Cannot initialize website: module "' . $module . '" does not exist');
+  	// include the controller
+  	  	require_once(PATH_MODULES . '/' . $module . '/'.strtolower($module).'.php');
+  	// include the DB
+  	  	require_once(PATH_MODULES . '/' . $module . '/'.strtolower($module).'.db.php');		
+  	// build name of the class 
+  	  	$controller = ucfirst($module).'Controller';
+  	// return new instance of the controller
+  	
+      	return new $controller();
+    }
+    
+    public function test1($params) {
+    echo $params;
+    }
+    public function test2($params) {
+    echo $params;
+    }
 
+/*
     public function showTransfer() {
         if (PlonkFilter::getGetValue('debug') == 1) {
             $this->debug = true;
@@ -163,6 +202,10 @@ class InfoxController extends PlonkController {
     }
 
     public function transfer() {
+    $method = array('meth1', 'meth2');
+    $table = array('tab1', 'tab2');
+    $data = array(array('data11','data12','data13'),array('data21','data22','data23'));
+    $this->dataTransfer($method, $table, $data, 4);
         if (PlonkSession::exists('id')) {
             if (PlonkFilter::getGetValue('idUni') == 0) {
                 PlonkSession::set('infoxJSON', PlonkFilter::getPostValue('json'));
@@ -181,7 +224,7 @@ class InfoxController extends PlonkController {
                         $idUni = PlonkFilter::getGetValue('idUni');
                 }
                 curl::start();
-                curl::setOption(CURLOPT_URL, InfoxDB::getURL($idUni) . "/modules/infox/airport/airport.php");
+                curl::setOption(CURLOPT_URL, InfoxDB::getURL($idUni) . "/index.php?module=infox&view=airport");
                 curl::setOption(CURLOPT_POST, 1);
                 curl::setOption(CURLOPT_RETURNTRANSFER, true);
                 curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
@@ -192,6 +235,8 @@ class InfoxController extends PlonkController {
                 if ($this->debug) {
                     $this->debugMsg['curl'] = curl::getInfo();
                 }
+                
+                return curl::getInfo();
             }
         }
     }
@@ -238,7 +283,7 @@ class InfoxController extends PlonkController {
         curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
         curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
         curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        Plonk::dump(curl::execute());
+        curl::execute();
         curl::close();
     }
 
@@ -257,7 +302,41 @@ class InfoxController extends PlonkController {
         $result = curl_exec($ch);
         curl_close($ch);
     }
-
+*/    
+    public function dataTransfer($method, $table, $data, $idInst) {
+        $c1 = count($method);
+        $c2 = count($table);
+        $c3 = count($data);
+        if ($c1 == $c2 && $c2 == $c3) {
+            $array = array();
+            for ($i = 0; $i < $c1; $i++) {
+                $a1 = array('table' => $table[$i],
+                            'data' => $data[$i]);
+                $json = json_encode($a1);
+                $a2 = array('method' => $method[$i],
+                            'params' => $json);
+                array_push($array, $a2);
+            }
+            $json = json_encode($array);
+            
+            if (PlonkSession::exists('id')) {
+                if ($idInst != 0) {
+                    curl::start();
+                    curl::setOption(CURLOPT_URL, InfoxDB::getURL($idInst) . "/index.php?module=infox&view=airport");
+                    curl::setOption(CURLOPT_POST, 1);
+                    curl::setOption(CURLOPT_RETURNTRANSFER, true);
+                    curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
+                    curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
+                    curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                    curl::execute();
+                }
+            }
+            
+            print_r(curl::getResult());
+        } else {
+            Plonk::dump('Arrays not same length');
+        }
+    }
 }
 
 ?>

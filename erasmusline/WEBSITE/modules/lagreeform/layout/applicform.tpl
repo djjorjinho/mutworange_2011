@@ -24,7 +24,7 @@
 {option:oFilled}
 <div class="TRdiv">
 <label for="study"><span>Study: </span></label>
-<input type="text" id="studye" name="study" value="{$study|htmlentities}" />
+<input type="text" id="study" name="study" value="{$study|htmlentities}" />
 </div>
 {/option:oFilled}
 
@@ -115,7 +115,7 @@
 
 <div class="TRdiv">
 <label for="cAddress"><span>Current address: </span></label>
-<input class="validate[required] text-input" type="text" id="cAddress" name="cAddress" value="{$cAddress|htmlentities}" />
+<input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" id="cAddress" name="cAddress" value="{$cAddress|htmlentities}" />
 <span class="req" id="msgCAddress">{$msgCAddress|htmlentities}</span>
 </div>
 <div class="TRdiv">
@@ -125,21 +125,21 @@
 </div>
 <div class="TRdiv">
 <label for="cTel"><span>Tel: </span></label>
-<input class="validate[required] text-input" type="text" id="cTel" name="cTel" value="{$cTel|htmlentities}" />
+<input class="validate[required,custom[onlyNumberSp]] text-input" type="text" id="cTel" name="cTel" value="{$cTel|htmlentities}" />
 <span class="req" id="msgCTel">{$msgCTel|htmlentities}</span>
 </div>
 
 <div class="TRdiv">
 <label for="pAddress"><span>Permanent address (if different): </span></label>
-<input class="validate[required] text-input" type="text" id="pAddress" name="pAddress" value="{$pAddress|htmlentities}" />
+<input class="validate[custom[onlyLetterNumber]] text-input" type="text" id="pAddress" name="pAddress" value="{$pAddress|htmlentities}" />
 </div>
 <div class="TRdiv">
 <label for="pTel"><span>Tel: </span></label>
-<input class="validate[required] text-input" type="text" id="pTel" name="pTel" value="{$pTel|htmlentities}" />
+<input class="validate[custom[onlyNumberSp]] text-input" type="text" id="pTel" name="pTel" value="{$pTel|htmlentities}" />
 </div>
 <div class="TRdiv">
 <label for="mail"><span>Email: </span></label>
-<input class="validate[required] text-input" type="text" id="mail" name="mail" value="{$mail|htmlentities}" />
+<input class="validate[custom[email]] text-input" type="text" id="mail" name="mail" value="{$mail|htmlentities}" />
 </div>
 </fieldset>
 
@@ -148,7 +148,7 @@
 <fieldset>
 <div class="TRdiv">
 <label for="recInstitut"><span>Receiving Institution: </span></label>
-<input class="validate[required] text-input" type="text" id="recInstitut" onkeyup="lookup3(this.value);" onclick="fill3();" name="recInstitut" value="{$recInstitut|htmlentities}" />
+<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="recInstitut" onkeyup="lookup3(this.value);" onclick="fill3();" name="recInstitut" value="{$recInstitut|htmlentities}" />
 <span class="req" id="msgRecInstitut">{$msgRecInstitut|htmlentities}</span>
 </div>
     
@@ -160,7 +160,7 @@
 
 <div class="TRdiv">
 <label for="coountry"><span>Country: </span></label>
-<input class="validate[required] text-input" type="text" id="coountry" name="coountry" value="{$coountry|htmlentities}" />
+<input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="coountry" name="coountry" value="{$coountry|htmlentities}" />
 <span class="req" id="msgCoountry">{$msgCoountry|htmlentities}</span>
 </div>
 <h3>Period of study: </h3>
@@ -192,8 +192,8 @@
 <fieldset>
 <legend>Motivation</legend>
 <div class="TRdiv">
-<label for="motivation"><span>Briefly state the reasons why you wish to study abroad</span></label>
-<input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" id="motivation" name="motivation" value="{$motivation|htmlentities}" />
+<label for="motivation"><span>Briefly state the reasons why you wish to study abroad</span></label><br />
+<textarea class="validate[required,custom[textarea]" type="text" id="motivation" name="motivation" cols=57" rows="6">{$motivation|htmlentities}</textarea>
 <span class="req" id="msgMotivation">{$msgMotivation|htmlentities}</span>
 </div>
 </fieldset>
@@ -287,7 +287,7 @@
 
 <div class="TRdiv">
 <label for="whichInst"><span>At which Institution</span></label>
-<input class="validate[required] text-input" type="text" id="whichInst" name="whichInst" value="{$whichInst|htmlentities}" />
+<input class="validate[custom[onlyNumberSp]] text-input" type="text" id="whichInst" name="whichInst" value="{$whichInst|htmlentities}" />
 <span class="req" id="msgWhichInst">{$msgWhichInst|htmlentities}</span>
 </div>
 
@@ -297,16 +297,61 @@
 
 <p><strong>PLEASE ATTACH YOUR TRANSCIPT OF RECORDS WITH PREVIOUS COURSE UNITS TAKEN !</strong></p>
 <p>Must be a PDF</p>
+
 {option:oNotFilled}
 <div class="TRdiv">
         <label for="cv"><span>Upload your Transcript Of Records here</span></label>
         <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
     </div>
 {/option:oNotFilled}
+
 {option:oFilled}
-<p><a href="{$source}" title="Transcrip of Record">Transcript of Record</a></p>
+<p>{$trrec}</p>
 {/option:oFilled}
 
+{option:oCoor}
+<script language="javascript">
+ function printpage()
+  {
+   window.print();
+  }
+</script>
+<div class="TRdiv">
+<label for="print">Print dit formulier af</label>
+<input type="button" value="Print" onclick="printpage();" />
+</div>
+{/option:oCoor}
+
+{option:oOffice}
+<div class="TRdiv">
+        <label for="printed"><span>Attach signed Application Form</span></label>
+        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
+    </div>
+<div class="TRdiv">
+		<input type="hidden" name="formAction" id="formRegister" value="doTohostapplic" />
+		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+	</div>
+{/option:oOffice}
+
+{option:oHost}
+<h3>Receiving institution</h3>
+<fieldset>
+<p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
+</p>
+
+<div class="TRdiv">
+<label for="accepted">The above mentioned student is: </label>
+            <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
+            <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
+</div>
+<p><a href="{$source}" title="Attached signed Application Form">Signed Application Form</a></p>
+
+<div class="TRdiv">
+        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5"></textarea>	
+    </div>
+</fieldset>
+
+<fieldset>
 <div class="TRdiv">
 <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
 </div>
@@ -329,69 +374,18 @@
 
 </fieldset>
 
-{option:oCoor}
-<script language="javascript">
- function printpage()
-  {
-   window.print();
-  }
-</script>
-<div class="TRdiv">
-<label for="print">Print dit formulier af</label>
-<input type="button" value="Print" onclick="printpage();">
-</div>
-{/option:oCoor}
-
-{option:oOffice}
-<div class="TRdiv">
-        <label for="printed"><span>Attach signed Application Form</span></label>
-        <input type="file" id="signImg" name="file" />
-    </div>
-<div class="TRdiv">
-		<input type="hidden" name="formAction" id="formRegister" value="doTohost" />
-		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-	</div>
-{/option:oOffice}
-
-{option:oHost}
-<h3>Receiving institution</h3>
-<fieldset>
-<p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
-</p>
-
-<div class="TRdiv">
-<label for="accepted">The above mentioned student is: </label>
-            <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
-            <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
-</div>
-<p><a href="{$source}" title="Attached signed Application Form">Signed Application Form</a></p>
-
-<div class="TRdiv">
-        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5"></textarea>	
-    </div>
-
 <fieldset>
 <legend>Submit the application</legend>
+<div class="TRdiv">
+        <label for="printed"><span>Attach signed Application Form</span></label>
+        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
+    </div>
         <div class="TRdiv">
 		<input type="hidden" name="formAction" id="formRegister" value="doMotivateapplic" />
 		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
 	</div>
 </fieldset>
 
-<div class="TRdiv">
-        <label for="printed"><span>Attach signed Application Form</span></label>
-        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
-    </div>
 {/option:oHost}
-
-{option:oNotFilled}
-<fieldset>
-<legend>Submit the application and go to Learning Agreement</legend>
-        <div class="TRdiv">
-		<input type="hidden" name="formAction" id="formRegister" value="doApplic" />
-		<input class="button" name="btnSend" id="btnSend" type="submit" value="Save and fill in Learning Agreement"/>
-	</div>
-</fieldset>
-{/option:oNotFilled}
 
 </div>

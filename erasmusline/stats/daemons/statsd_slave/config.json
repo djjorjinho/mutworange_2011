@@ -28,6 +28,6 @@
     	"rulefile" : "eis_scenario_rules.json"
     },
     "jsonrpc_redirect" : [
-    	{"regex" : "/query.*fact_efficacy/", "connect_config" : "master_serverconfig"}
+    	{"regex" : "/runScenario.*fact_efficacy/", "connect_config" : "master_serverconfig"}
     ]
 }

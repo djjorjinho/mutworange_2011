@@ -15,36 +15,37 @@ var eis = {
 	scenarioSelect : "",
 	
 	init : function(){
-		$.blockUI();
-		
+		jQuery.blockUI();
 		this.loadDependencies();
-		$.ajaxSetup({async: true});
+		
+		jQuery.ajaxSetup({async: true});
 		
 		this.loadLayout();
 	},
 	
 	loadLayout : function(){
 		
-		jQuery(document).ready(function($) {
+		jQuery(document).ready(function() {
 			
 			eis.loadRules();
 			eis.fillCubes();
-			$('#colorSelector').ColorPicker({
+			jQuery('#colorSelector').ColorPicker({
 				color: '#0000ff',
 				onShow: function (colpkr) {
-					$(colpkr).fadeIn(500);
+					jQuery(colpkr).fadeIn(500);
 					return false;
 				},
 				onHide: function (colpkr) {
-					$(colpkr).fadeOut(500);
+					jQuery(colpkr).fadeOut(500);
 					return false;
 				},
 				onChange: function (hsb, hex, rgb) {
-					$('#colorSelector div').css('backgroundColor', '#' + hex);
+					jQuery('#colorSelector div').css('backgroundColor', '#' + hex);
 				}
 			});
 			
-			eis.scenarioSelect = $('#eis_toolbar select:first').editableSelect({
+			eis.scenarioSelect = jQuery('#eis_toolbar select:first')
+				.editableSelect({
 				onSelect: function(list_item) {
 					eis.getScenario(list_item.text());
 				},
@@ -54,18 +55,31 @@ var eis = {
 			
 			eis.getScenarios();
 			
-			$.unblockUI();
+			jQuery.unblockUI();
 		});
 	},
-	
+	cleanTmpl : function(jqElm){
+		return jqElm;
+		//var elm = 
+		return	jqElm.html(function(i,v){
+			return v.replace("<\![CDATA[","").replace("]]>","");
+			});
+		//log(elm);
+		//return elm;
+	},
 	loadDependencies : function(){
 		
-		$.ajaxSetup({async: false});
+		jQuery.ajaxSetup({async: false});
 
 		jQuery.getScript('core/js/eis/jquery.json-2.2.min.js');
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
+		jQuery.getScript('https://www.google.com/jsapi',function(){
+			//google.load('visualization', '1', {packages: ['corechart']});
+		});
+
+		jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
@@ -157,7 +171,7 @@ var eis = {
 	
 	fillDimensionsAndMeasures : function(reset){
 		if(reset==undefined) reset=true;
-		$.blockUI();
+		jQuery.blockUI();
 		var table = jQuery('#eis_cube_container select option:selected').val();
 		
 		// resetting values
@@ -173,7 +187,7 @@ var eis = {
 		eis.fillDimensions(table,cube);
 		eis.fillMeasures(table,cube);
 		eis.paintScenario();
-		$.unblockUI();
+		jQuery.unblockUI();
 	},
 	
 	fillDimensions : function(table,cube){
@@ -212,7 +226,8 @@ var eis = {
 						));
 			}
 			
-			var mainItem = jQuery('#eis_mainitem_tmpl').tmpl({text : name});
+			var mainItem = jQuery('#eis_mainitem_tmpl')
+				.tmpl({text : name});
 			
 			levels.appendTo(mainItem.find('ul:first'));
 			
@@ -253,16 +268,34 @@ var eis = {
 		
 	},
 	
-	addToColumns : function(){
-		if(eis.selectedItem == "") return;
+	itemExists : function(){
+		if(eis.selectedItem == "") return true;
 		
-		// TODO validation
-		
-		eis.scenario.columns.push(eis.selectedItem);
-		
+		if(jQuery.inArray(eis.selectedItem,eis.scenario.columns)!=-1 || 
+			jQuery.inArray(eis.selectedItem,eis.scenario.rows)!=-1
+		){
+			return true;
+		}
+		return false;
+	},
+	
+	clearSelection : function(){
 		eis.selectedItem = "";
 		jQuery('#eis_dimensions li').removeClass('selected');
 		jQuery('#eis_measures li').removeClass('selected');
+	},
+	
+	addToColumns : function(){
+		if(eis.selectedItem == "") return;
+		
+		if(eis.itemExists()){
+			eis.clearSelection();
+			return;
+		} 
+		
+		eis.scenario.columns.push(eis.selectedItem);
+		
+		eis.clearSelection();
 		
 		eis.paintScenario();
 	},
@@ -270,13 +303,14 @@ var eis = {
 	addToRows : function(){
 		if(eis.selectedItem == "") return;
 		
-		// TODO validation
+		if(eis.itemExists()){
+			eis.clearSelection();
+			return;
+		} 
 		
 		eis.scenario.rows.push(eis.selectedItem);
 		
-		eis.selectedItem = "";
-		jQuery('#eis_dimensions li').removeClass('selected');
-		jQuery('#eis_measures li').removeClass('selected');
+		eis.clearSelection();
 		
 		eis.paintScenario();
 	},
@@ -331,7 +365,7 @@ var eis = {
 	},
 	
 	getHighlightColor : function(){
-		var rgbString = $('#colorSelector div').css('background-color');
+		var rgbString = jQuery('#colorSelector div').css('background-color');
 		var parts = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/); 
 		delete (parts[0]);
 		
@@ -379,7 +413,7 @@ var eis = {
 				var obj = jsonPath(eis.rules, expr)[0];
 				//log(obj);
 				(parts[1]=='all') ?  
-				 jQuery('#eis_tbmes_tmpl').tmpl(
+						jQuery('#eis_tbmes_tmpl').tmpl(
 								{text:obj.name,mes:col,type:tb}
 								).appendTo('#'+tb+'_list')
 				: jQuery('#eis_tbdim_tmpl').tmpl(
@@ -431,7 +465,7 @@ var eis = {
 	},
 	
 	setScenario : function(_result){
-		$.blockUI();
+		jQuery.blockUI();
 		
 		eis.scenario = _result;
 
@@ -442,11 +476,11 @@ var eis = {
 		eis.paintScenario();
 		eis.runScenario();
 		eis.paintHlights(_result.highlight);
-		$.unblockUI();
+		jQuery.unblockUI();
 	},
 	
 	getScenario : function(name){
-		$.blockUI();
+		jQuery.blockUI();
 		eis.rpcCall("getScenarioConfig",{
 			user_id : _userid,
 			scenario_name : name
@@ -454,12 +488,12 @@ var eis = {
 		eis.setScenario, 
 		function(error){
 			log(error);
-			$.unblockUI();
+			jQuery.unblockUI();
 		},false);
 	},
 	
 	saveScenario : function(){
-		$.blockUI();
+		jQuery.blockUI();
 		var instance = eis.scenarioSelect.editableSelectInstances()[0];
 		eis.scenario.scenario_name = instance.current_value;
 		eis.scenario.user_id = _userid;
@@ -474,11 +508,11 @@ var eis = {
 					instance.addOption(instance.current_value);
 				}
 				
-				$.unblockUI();
+				jQuery.unblockUI();
 			}, 
 		function(error){
 			log(error);
-			$.unblockUI();
+			jQuery.unblockUI();
 		},true);
 		delete eis.scenario.filters['_hash'];
 	},
@@ -489,23 +523,23 @@ var eis = {
 	},
 	
 	runScenario : function(){
-		$.blockUI();
+		jQuery.blockUI();
 		delete eis.scenario.filters['_hash'];
 		eis.rpcCall("runScenario",eis.scenario,
 		function(result){
 				eis.simpleHtmlTable(result);
-				$.unblockUI();
+				jQuery.unblockUI();
 			}, 
 		function(error){
 			log(error);
-			$.unblockUI();
+			jQuery.unblockUI();
 		},false);
 		
 		eis.scenario.filters['_hash']=true;
 	},
 	
 	newScenario : function(){
-		$.blockUI();
+		jQuery.blockUI();
 		// resetting values
 		eis.scenario.cube = "";
 		eis.scenario.columns = [];
@@ -517,11 +551,11 @@ var eis = {
 		jQuery('#eis_cube_container select').val("");
 		eis.fillDimensionsAndMeasures();
 		eis.paintScenario();
-		$.unblockUI();
+		jQuery.unblockUI();
 	},
 	
 	swapColumnsRows : function(){
-		$.blockUI();
+		jQuery.blockUI();
 		var aux = eis.scenario.columns;
 		eis.scenario.columns = eis.scenario.rows;
 		eis.scenario.rows = aux;
@@ -529,13 +563,13 @@ var eis = {
 		eis.paintScenario();
 		eis.runScenario();
 		eis.paintHlights(eis.scenario.highlight);
-		$.unblockUI();
+		jQuery.unblockUI();
 	},
 	
 	exportScenario : function(){
-		$.blockUI();
-		$.postGo("modules/stats/export.php","runScenario",eis.scenario);
-		$.unblockUI();
+		jQuery.blockUI();
+		jQuery.postGo("modules/stats/export.php","runScenario",eis.scenario);
+		jQuery.unblockUI();
 	},
 	
 	simpleHtmlTable : function(data){
@@ -548,7 +582,7 @@ var eis = {
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
-		    	var cnt = eis.scenario.rows.length; cnt++;
+		    	var cnt = eis.scenario.rows.length; //cnt++;
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
@@ -568,7 +602,7 @@ var eis = {
 	
 	
 	addHlight : function(elm){
-		$.blockUI();
+		jQuery.blockUI();
 		var colors = eis.getHighlightColor();
 
 		var parent =jQuery(elm).parent();
@@ -581,10 +615,10 @@ var eis = {
 			eis.scenario.highlight.push(item);
 		}
 
-		if($('#resultTable').length>0){
+		if(jQuery('#resultTable').length>0){
 			eis.paintHlights([item]);
 		}
-		$.unblockUI();
+		jQuery.unblockUI();
 	},
 	
 	paintHlights : function(items){
@@ -596,8 +630,8 @@ var eis = {
 			var color = item.color;
 			var contrast = item.contrast;
 			
-			$('#resultTable td.res_value').each(function(){
-					var	val = parseInt($(this).text());
+			jQuery('#resultTable td.res_value').each(function(){
+					var	val = parseInt(jQuery(this).text());
 					
 				   switch(op){
 				   	case 'ge' : if(val >= value) 
@@ -629,17 +663,120 @@ var eis = {
 	
 	resetHlight : function(){
 		eis.scenario.highlight=[];
-		var table = $('#resultTable');
+		var table = jQuery('#resultTable');
 		if(table.length>0){
-			$(table).find('td.res_value').each(function(){
+			jQuery(table).find('td.res_value').each(function(){
 				eis.paintElm(this,'#ffffff','#000000');
 			});
 		}
 	},
 	
+	
+	
+	
 	showGraph : function(){
+		jQuery.blockUI();
+		delete eis.scenario.filters['_hash'];
+		
+		
+			eis.rpcCall("runScenario",eis.scenario,
+					function(result){
+						eis.showGraph2(result);
+					},
+					function(error){},
+					true		
+				);
+			
+		/*eis.rpcCall("runScenario",eis.scenario,
+		function(result){
+				eis.showGraph2(result, graph_type);
+				jQuery.unblockUI();
+			}, 
+		function(error){
+			log(error);
+			jQuery.unblockUI();
+		},false);*/
+		
+		eis.scenario.filters['_hash']=true;
+		
+		
 		
 	},
+	
+	
+	
+	showGraph2 : function(data){
+
+		/*out="";
+		out+="<table class='presentation_table' id='resultTable'>";
+		    out+= "<thead>";
+		    for (var item1 in data[0]) {
+		        out+= "<td class='res_column'><b>"+item1+"<b></td>";
+		    }
+		    out+= "</thead>";*/
+			//log(data);
+			var count = 0;
+			var dt = [];
+			
+		    for (var row in data) {
+		    	var cnt = eis.scenario.rows.length;
+		        
+		    	
+		        if(count == 0 ){
+		        	temp_dt=[];
+		        	temp_dt.push('Column');
+			        for (var item2 in data[row]) {
+
+			        	var val = data[row][item2];
+				        temp_dt.push(item2);
+
+			            cnt--;
+			        }
+			        
+			        
+			        
+		        }
+		        else{
+		        	temp_dt=[];
+		        	
+		        	for (var item2 in data[row]) {
+		        		
+		        		if(cnt > 0 ){
+			        		var val = data[row][item2];
+				        	temp_dt.push(item2);
+			        	}
+			        	else{
+			        		var val = data[row][item2];
+				        	temp_dt.push(parseInt(item2));
+			        	}
+			        	
+			            cnt--;
+			        }
+		        }
+		        
+		        dt.push(temp_dt);
+		        count++;
+
+		    }
+		    
+		    var rowData = dt;
+		    
+		    var data = google.visualization.arrayToDataTable(rowData);
+		    
+		    var ac = new google.visualization.ComboChart(document.getElementById('chart_div'));
+	        ac.draw(data, {
+	          title : 'EIS Scenario Combo Chart',
+	          width: 700,
+	          height: 400,
+	          vAxis: {title: "Columns / Measures"},
+	          hAxis: {title: "Rows"},
+	          seriesType: "bars",
+	        });
+		    
+
+	},
+	
+	
 	
 	removeTBItem : function(elm,id,type){
 		var list = eis.scenario[type];
@@ -708,7 +845,7 @@ var eis = {
 		var filterPanel = jQuery('#eis_filters');
 		var op = filterPanel.find('select:eq(0) :selected').val();
 		var values = filterPanel.find('select:eq(1) :selected')
-			.map(function(i,obj){return $(obj).val();});
+			.map(function(i,obj){return jQuery(obj).val();});
 		var filter = field+'.'+op;
 		
 		eis.scenario.filters[filter] = values.get();

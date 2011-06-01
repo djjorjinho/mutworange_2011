@@ -40,14 +40,18 @@ class MainController extends PlonkController {
                     
                     PlonkSession::set('id', $values['email']);
                     PlonkSession::set('userLevel', $values['userLevel']);
+                    
                     if (PlonkSession::get('id') === 0) {
                         
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                     } else if (PlonkSession::get('userLevel') == 'Student') {
                         
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-                    } else {
-                        
+                    }
+                    else if(PlonkSession::get('userLevel') == "International Relations Office Staff") {
+                        PlonkWebsite::redirect('index.php?module=office&view=office');
+                    }
+                    else {
                         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . 'staff&' . PlonkWebsite::$viewKey . '=staff');
                     }
                 }

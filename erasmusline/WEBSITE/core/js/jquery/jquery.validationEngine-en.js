@@ -90,6 +90,10 @@
                     "regex": /^[a-zA-Z''\-'\séàèç]{1,100}$/,
                     "alertText": "* Letters only"
                 },
+                "textarea": {
+                    "regex": /^[a-zA-Z''\-'\séàèç\!\,\.\?\)\(]{1,1000}$/,
+                    "alertText": "* Letters only"
+                },
                 "onlyLetterNumber": {
                     "regex": /^[0-9a-zA-Z''\-'\séàèç]{1,100}$/,
                     "alertText": "* No special characters allowed"

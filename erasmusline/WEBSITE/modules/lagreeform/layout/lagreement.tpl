@@ -84,6 +84,7 @@
 
     </fieldset>
     
+    {option:oNotFilled}
     <fieldset>
         <legend>Submit Learning Agreement</legend>
         <p>
@@ -91,6 +92,9 @@
             <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
         </p>
     </fieldset>
+    {/option:oNotFilled}
+    
+    {option:oCoor}
 
     <fieldset>
         <legend>Sending Institution</legend>
@@ -146,7 +150,7 @@
         </div>
 
     </fieldset>
-    {option:oCoor}
+    
 <script language="javascript">
  function printpage()
   {
@@ -154,7 +158,8 @@
   }
 </script>
 <div class="TRdiv">
-        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5"></textarea>
+        <label for="coordinator">Motivation</label>
+        <textarea class="validate[required],custom[textarea]" type="text" name="coordinator" id="coordinator" cols="50" rows="6"></textarea>
     </div>
 <div class="TRdiv">
 <label for="print">Print dit formulier af</label>

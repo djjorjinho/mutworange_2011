@@ -35,6 +35,9 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Staff');
+		
+		//Add Exams modul
+		require_once './modules/exams/exams.php';
     }
 
     public function showReapplics() {
