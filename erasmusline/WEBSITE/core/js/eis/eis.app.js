@@ -671,9 +671,21 @@ var eis = {
 	},
 	
 	
+	validateScenario: function(){
+		if((eis.scenario.columns == null && eis.scenario.rows == null) ||
+				( eis.scenario.columns.length == 0 
+				|| eis.scenario.rows.length == 0)){
+			return true;
+		}				
+		return false;
+	},
 	
 	
 	showGraph : function(){
+		
+		if(eis.validateScenario() == true){
+			return false;
+		}
 		jQuery.blockUI();
 		delete eis.scenario.filters['_hash'];
 		
@@ -819,6 +831,9 @@ var eis = {
 		    
 
 	},
+	
+	
+	
 	
 	
 	
