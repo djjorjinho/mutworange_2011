@@ -39,7 +39,21 @@ class Pivot
     }
 
     private $_pivotTotal = false;
-
+	
+    public static function concatKey(){
+    	$str = "";
+    	$arr = func_get_args();
+    	$num = func_num_args();
+    	foreach(range(0,$num-1) as $idx){
+    		$val = $arr[$idx];
+    		if(isset($val)){
+    			if($idx>0) $str.=" | ";
+    			$str .= $val;
+    		}
+    	}
+    	return $str;
+    }
+    
     /**
      * @param boolean $bool
      * @return Pivot
@@ -180,7 +194,7 @@ class Pivot
                                     $value = $colValues[$k];
                                 }
                                 
-                                $_out["{$split}|{$col}|{$k}"] = $value;
+                                $_out[self::concatKey($split,$col,$k)] = $value;
                                 if ($this->_lineTotal) {
                                     $_lineTotal[$k] += $value;
                                 }
@@ -227,7 +241,7 @@ class Pivot
                                     } else {
                                         $value = $colValues[$k];
                                     }
-                                    $_out["{$split}|{$col}|{$k}"] = $value;
+                                    $_out[self::concatKey($split,$col,$k)] = $value;
                                     if ($this->_lineTotal) {
                                         $_lineTotal[$k] += $value;
                                     }
@@ -271,7 +285,7 @@ class Pivot
                                     $k = ($_k instanceof Pivot_Callback || $_k instanceof Pivot_Count) ? $_k->getKey() : $_k;
                                     $value = ($_k instanceof Pivot_Callback) ? 
                                         $_k->cbk($p0Total[$split][$col]) : $p0Total[$split][$col][$k];
-                                    $_out["{$split}|{$col}|{$k}"] = $value;
+                                    $_out[self::concatKey($split,$col,$k)] = $value;
                                     $_lineTotal[$k] += $value;
                                 }
                             }
@@ -317,7 +331,7 @@ class Pivot
                                         } else {
                                             $value = $colValues[$k];
                                         }
-                                        $_out["{$split}|{$col}|{$k}"] = $value;
+                                        $_out[self::concatKey($split,$col,$k)] = $value;
                                         if ($this->_lineTotal) {
                                             $_lineTotal[$k] += $value;
                                         }
@@ -363,7 +377,7 @@ class Pivot
                                     $k = ($_k instanceof Pivot_Callback || $_k instanceof Pivot_Count) ? $_k->getKey() : $_k;
                                     $value = ($_k instanceof Pivot_Callback) ? 
                                         $_k->cbk($p0Total[$split][$col]) : $p0Total[$split][$col][$k];
-                                    $_out["{$split}|{$col}|{$k}"] = $value;
+                                    $_out[self::concatKey($split,$col,$k)] = $value;
                                     $_lineTotal[$k] += $value;
                                 }
                             }
@@ -400,7 +414,7 @@ class Pivot
                                     $k = ($_k instanceof Pivot_Callback || $_k instanceof Pivot_Count) ? $_k->getKey() : $_k;
                                     $value = ($_k instanceof Pivot_Callback) ? 
                                         $_k->cbk($p1Total[$split][$col]) : $p1Total[$split][$col][$k];
-                                    $_out["{$split}|{$col}|{$k}"] = $value;
+                                    $_out[self::concatKey($split,$col,$k)] = $value;
                                     $_lineTotal[$k] += $value;
                                 }
                             }
@@ -439,7 +453,7 @@ class Pivot
                         $k = ($_k instanceof Pivot_Callback || $_k instanceof Pivot_Count) ? $_k->getKey() : $_k;
                         $value = ($_k instanceof Pivot_Callback) ? 
                             $_k->cbk($fullTotal[$split][$col]) : $fullTotal[$split][$col][$k];
-                        $_out["{$split}|{$col}|{$k}"] = $value;
+                        $_out[self::concatKey($split,$col,$k)] = $value;
                         $_lineTotal[$k] += $value;
                     }
                 }
