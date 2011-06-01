@@ -75,6 +75,7 @@ var eis = {
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
+		jQuery.getScript('http://www.google.com/jsapi');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
@@ -577,7 +578,7 @@ var eis = {
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
-		    	var cnt = eis.scenario.rows.length; cnt++;
+		    	var cnt = eis.scenario.rows.length; //cnt++;
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
@@ -666,9 +667,106 @@ var eis = {
 		}
 	},
 	
+	
+	
+	
 	showGraph : function(){
+		jQuery.blockUI();
+		google.load('visualization', '1', {packages: ['corechart']});
+		delete eis.scenario.filters['_hash'];
+		
+		google.setOnLoadCallback(function(){showGraph2(eis.rpcCall("runScenario",
+				eis.scenario))});
+		/*eis.rpcCall("runScenario",eis.scenario,
+		function(result){
+				eis.showGraph2(result, graph_type);
+				jQuery.unblockUI();
+			}, 
+		function(error){
+			log(error);
+			jQuery.unblockUI();
+		},false);*/
+		
+		eis.scenario.filters['_hash']=true;
+		
+		
 		
 	},
+	
+	
+	
+	showGraph2 : function(data){
+
+		/*out="";
+		out+="<table class='presentation_table' id='resultTable'>";
+		    out+= "<thead>";
+		    for (var item1 in data[0]) {
+		        out+= "<td class='res_column'><b>"+item1+"<b></td>";
+		    }
+		    out+= "</thead>";*/
+			//log(data);
+			var count = 0;
+			var dt = [];
+			
+		    for (var row in data) {
+		    	var cnt = eis.scenario.rows.length;
+		        
+		    	
+		        if(count > 0 ){
+		        	temp_dt=[];
+		        	temp_dt.push('Column');
+			        for (var item2 in data[row]) {
+
+			        	var val = data[row][item2];
+				        temp_dt.push(item2);
+
+			            cnt--;
+			        }
+			        
+			        
+			        
+		        }
+		        else{
+		        	temp_dt=[];
+		        	
+		        	for (var item2 in data[row]) {
+		        		
+		        		if(cnt > 0 ){
+			        		var val = data[row][item2];
+				        	temp_dt.push(item2);
+			        	}
+			        	else{
+			        		var val = data[row][item2];
+				        	temp_dt.push(parseInt(item2));
+			        	}
+			        	
+			            cnt--;
+			        }
+		        }
+		        
+		        dt.push(temp_dt);
+		        count++;
+
+		    }
+		    
+		    var rowData = dt;
+		    
+		    var data = google.visualization.arrayToDataTable(rowData);
+		    
+		    var ac = new google.visualization.ComboChart(document.getElementById('chart_div'));
+	        ac.draw(data, {
+	          title : 'EIS Scenario Combo Chart',
+	          width: 700,
+	          height: 400,
+	          vAxis: {title: "Columns / Measures"},
+	          hAxis: {title: "Rows"},
+	          seriesType: "bars",
+	        });
+		    
+
+	},
+	
+	
 	
 	removeTBItem : function(elm,id,type){
 		var list = eis.scenario[type];

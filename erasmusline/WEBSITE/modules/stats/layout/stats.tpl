@@ -107,6 +107,7 @@
 			
 		
 		<div class="presentation_div border_eis" id="resultTableDiv">
+			<div id="chart_div"></div>
 		</div>
 
 	</div>
