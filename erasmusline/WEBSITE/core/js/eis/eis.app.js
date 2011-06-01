@@ -577,7 +577,7 @@ var eis = {
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
-		    	var cnt = eis.scenario.rows.length; cnt++;
+		    	var cnt = eis.scenario.rows.length; //cnt++;
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 

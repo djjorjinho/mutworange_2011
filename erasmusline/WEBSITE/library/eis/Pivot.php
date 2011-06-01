@@ -157,7 +157,7 @@ class Pivot
                 foreach ($tmp as $p0 => $p0Values) {
                     $i++;
                     $_out = $_lineTotal = array();
-                    $_out[self::_ID] = ++$cont;
+                    //$_out[self::_ID] = ++$cont;
                     if ($this->_typeMark) {
                         $_out['type'] = self::TYPE_LINE;
                     }
@@ -206,7 +206,7 @@ class Pivot
                     $p0Total  = array();
                     foreach ($p0Values as $p1 => $p1Values) {
                         $_out = $_lineTotal = array();
-                        $_out[self::_ID] = ++$cont;
+                        //$_out[self::_ID] = ++$cont;
                         if ($this->_typeMark) {
                             $_out['type'] = self::TYPE_LINE;
                         }
@@ -252,7 +252,7 @@ class Pivot
                     }
                     if ($this->_pivotTotal) {
                         $_out = $_lineTotal = array();
-                        $_out[self::_ID] = ++$cont;
+                        //$_out[self::_ID] = ++$cont;
                         if ($this->_typeMark) {
                             $_out['type'] = self::TYPE_PIVOT_TOTAL_LEVEL1;
                         }
@@ -295,7 +295,7 @@ class Pivot
                     foreach ($p0Values as $p1 => $p1Values) {
                         foreach ($p1Values as $p2 => $p2Values) {
                             $_out = $_lineTotal = array();
-                            $_out[self::_ID] = ++$cont;
+                            //$_out[self::_ID] = ++$cont;
                             if ($this->_typeMark) {
                                 $_out['type'] = self::TYPE_LINE;
                             }
@@ -344,7 +344,7 @@ class Pivot
                     }
                     if ($this->_pivotTotal) {
                         $_out = $_lineTotal = array();
-                        $_out[self::_ID] = ++$cont;
+                        //$_out[self::_ID] = ++$cont;
                         if ($this->_typeMark) {
                             $_out['type'] = self::TYPE_PIVOT_TOTAL_LEVEL2;
                         }
@@ -381,7 +381,7 @@ class Pivot
 
                     if ($this->_pivotTotal) {
                         $_out = $_lineTotal = array();
-                        $_out[self::_ID] = ++$cont;
+                        //$_out[self::_ID] = ++$cont;
                         if ($this->_typeMark) {
                             $_out['type'] = self::TYPE_PIVOT_TOTAL_LEVEL1;
                         }
@@ -420,7 +420,7 @@ class Pivot
         }
         if ($this->_fullTotal) {
             $_out = $_lineTotal = array();
-            $_out[self::_ID] = ++$cont;
+            //$_out[self::_ID] = ++$cont;
             if ($this->_typeMark) {
                 $_out['type'] = self::TYPE_FULL_TOTAL;
             }
