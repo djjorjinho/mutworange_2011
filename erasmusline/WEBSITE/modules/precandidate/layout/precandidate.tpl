@@ -193,7 +193,7 @@
 <fieldset>
     <legend>Motivation</legend>    
     <div class="TRdiv">
-        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="motivation" id="motivation" cols="50" rows="5">{$motivation|htmlentities}</textarea>
+        <textarea class="validate[required],custom[textarea]" type="text" name="motivation" id="motivation" cols="50" rows="5">{$motivation|htmlentities}</textarea>
         <span class="req" id="msgMotivation">{$msgMotivation|htmlentities}</span>	
     </div>
 </fieldset>
@@ -236,7 +236,7 @@
 <fieldset>
     <legend>Motivation</legend>    
     <div class="TRdiv">
-        <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
+        <textarea class="validate[required],custom[textarea]" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
         <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
     </div>
     <div class="TRdiv">

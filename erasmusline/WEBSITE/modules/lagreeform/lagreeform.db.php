@@ -244,8 +244,7 @@ class LagreeformDB {
     public static function getErasmusInfo($id) {
         $db = PlonkWebsite::getDB();
         
-        $student = $db->retrieveOne("select studentId, users_email, startDate, endDate, educationPerInstId, statusOfErasmus, traineeOrStudy, uploadedWhat, ectsCredits, mothertongue,
-                                            action,beenAbroad from erasmusStudent where users_email = '".$id."'");
+        $student = $db->retrieveOne("select * from erasmusStudent where users_email = '".$id."'");
         
         return $student;
     }

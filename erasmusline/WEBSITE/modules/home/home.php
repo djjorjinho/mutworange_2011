@@ -93,7 +93,7 @@ class HomeController extends PlonkController {
 
                 if (!empty($latestEvent)) {
                     $action = "";
-                    $this->pageTpl->assign('action', '<a href="index.php?module=' . $latestEvent['module'] . '&view=' . $latestEvent['view'] . '" title="' . $latestEvent['levelName'] . '">' . $latestEvent['levelName'] . '</a>');
+                    $this->pageTpl->assign('action', $latestEvent['levelName']);
                     if ($latestEvent['action'] == 2) {
                         $action = "Pending";
                     } else if ($latestEvent['action'] == 1) {
@@ -216,6 +216,7 @@ class HomeController extends PlonkController {
 
         PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
     }
+    
 
 }
 

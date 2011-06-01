@@ -31,7 +31,7 @@ class DBTest extends PHPUnit_TestCase {
 		   description => 'Other'
 		   );
 		$id = $db->insert($obj,'dim_gender');
-		$this->assertRegexp("/^\d+$/",$id);
+		$this->assertRegexp("/O/",$id);
 
 	}
 	

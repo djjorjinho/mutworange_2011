@@ -24,7 +24,8 @@ class AdminController extends PlonkController {
      */
     protected $actions = array(
         'logout',
-        'confirm'
+        'confirm',
+        'infox'
     );
 
     public function checkLogged() {
@@ -192,4 +193,11 @@ class AdminController extends PlonkController {
         //AdminDB::deleteStudents('users','userId',$toDeny);
     }
 
+    public function doInfox() {
+        include('modules/infox/infox.php');
+        $method = array('infox:test1', 'infox:test2');
+        $table = array('tab1', 'tab2');
+        $data = array(array('data11','data12','data13'),array('data21','data22','data23'));
+        echo InfoxController::dataTransfer($method, $table, $data, 4);
+    }
 }

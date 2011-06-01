@@ -60,6 +60,11 @@
         * Institute
         */
               define('INSTITUTE', 'KAHO Sint-Lieven');
+              
+       /**
+        * Office coordinator
+        */
+              define('INST_EMAIL', 'info@kul.pt');
 
        /**
         * Academic Year

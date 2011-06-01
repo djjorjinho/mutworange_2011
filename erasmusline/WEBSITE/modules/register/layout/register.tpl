@@ -1,7 +1,7 @@
 <div class="mainDiv">
 <form action="" method="post" enctype="multipart/form-data" id="register">	
 <fieldset>
-    <legend>Pre-candidate form</legend>     
+    <legend>Register form</legend>     
     <span class="req" id="error">{$error}</span><br />
 	<div class="TRdiv">
             <label for="familyName"><span>Last Name : </span></label>
