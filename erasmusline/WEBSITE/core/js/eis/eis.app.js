@@ -75,9 +75,8 @@ var eis = {
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
-		jQuery.getScript('https://www.google.com/jsapi',function(){
-			// google.load('visualization', '1', {packages: ['corechart']});
-		});
+		jQuery.getScript('core/js/eis/jquery.simplemodal.js');
+		jQuery.getScript('https://www.google.com/jsapi');
 
 		jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
 		// jQuery.getScript('core/js/eis/accessibilityInspector.js');
@@ -678,6 +677,11 @@ var eis = {
 		jQuery.blockUI();
 		delete eis.scenario.filters['_hash'];
 		
+		
+		$('#chart_div').modal();
+		//return false;
+		
+		
 		var type = document.getElementById('chart_select').value;		
 		
 			eis.rpcCall("runScenario",eis.scenario,
@@ -778,39 +782,38 @@ var eis = {
 			        		
 			        		if(cnt < 1 ){
 			        			if(condition){
-			        				string += ' | '+item2;
-			        				temp_dt.push(string);
+			        				string += ' | '+item2;			        				
 			        				condition=false;
 			        			}
+			        			
+			        			temp_dt.push(string);
+			        			
 				        		if(data[row][item2] == undefined){
 				        			temp_dt.push(0);
 				        		}else{
 					        		temp_dt.push(parseInt(data[row][item2]));
 				        		}
+				        		dt.push(temp_dt);
+				        		temp_dt=[];
 				        	}
 				        	else{
 					        	string += data[row][item2]+" | ";
 				        	}
 				        	
 				            cnt--;
-				        }
-			        
-			        
-			        dt.push(temp_dt);
-	
+				        }			        	
 			    }
 				
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', 'Description');
 				data.addColumn('number', 'Value');
-				
 				var data = google.visualization.arrayToDataTable(dt);
 				  
 				  
 
 				// Create and draw the visualization.
 				new google.visualization.PieChart(document.getElementById('chart_div')).
-				draw(data, {title:"EIS Scenario Pie Chart"});
+				draw(data, {width: 600, height: 400, is3D: true, title:"EIS Scenario Pie Chart"});
 				
 			}
 		    
