@@ -16,8 +16,8 @@ var eis = {
 	
 	init : function(){
 		jQuery.blockUI();
-		
 		this.loadDependencies();
+		
 		jQuery.ajaxSetup({async: true});
 		
 		this.loadLayout();
@@ -75,7 +75,11 @@ var eis = {
 		jQuery.getScript('core/js/eis/jsonpath-0.8.0.min.js');
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
-		jQuery.getScript('https://www.google.com/jsapi');
+		jQuery.getScript('https://www.google.com/jsapi',function(){
+			google.load('visualization', '1', {packages: ['corechart']});
+		});
+
+		//jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
 		//jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
 		this.loadColorPicker();
@@ -672,11 +676,17 @@ var eis = {
 	
 	showGraph : function(){
 		jQuery.blockUI();
-		google.load('visualization', '1', {packages: ['corechart']});
 		delete eis.scenario.filters['_hash'];
 		
-		google.setOnLoadCallback(function(){showGraph2(eis.rpcCall("runScenario",
-				eis.scenario))});
+		
+			eis.rpcCall("runScenario",eis.scenario,
+					function(result){
+						eis.showGraph2(result);
+					},
+					function(error){},
+					true		
+				);
+			
 		/*eis.rpcCall("runScenario",eis.scenario,
 		function(result){
 				eis.showGraph2(result, graph_type);
@@ -712,7 +722,7 @@ var eis = {
 		    	var cnt = eis.scenario.rows.length;
 		        
 		    	
-		        if(count > 0 ){
+		        if(count == 0 ){
 		        	temp_dt=[];
 		        	temp_dt.push('Column');
 			        for (var item2 in data[row]) {
