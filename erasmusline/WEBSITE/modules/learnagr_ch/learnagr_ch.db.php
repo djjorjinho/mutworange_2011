@@ -29,8 +29,9 @@ class learnagr_chDB {
                where cour.educationId=(SELECT ers.educationPerInstId from erasmusstudent as ers where ers.users_email='" . $db->escape($stId) . "')
                and g.localGrade>=(
                 SELECT scale from institutions where instEmail=(
-                select hostInstitutionId from erasmusstudent as ers where ers.users_email='" . $db->escape($stId) . "'))   ");
-        return $stInfo;   
+                select hostInstitutionId from erasmusstudent as ers where ers.users_email='" . $db->escape($stId) . "'))
+               and g.studentId='" . $db->escape($stId) . "'");
+        return $stInfo;
     }
 
     public static function getSelectedCourses($stId) {

@@ -25,18 +25,33 @@ class abroad_stayController extends PlonkController {
     private $resultRows = 20;
     private $searchFor = '';
     private $mail = '';
-
+       
+    public function checkLogged() {
+        if (!PlonkSession::exists('id')) {
+            
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        } else {
+            //Plonk::dump('test');
+            if (PlonkSession::get('id') === 0) {
+                $this->id = PlonkSession::get('id');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+            }
+        }
+    }
+    
     public function showselect() {
-
-
-
-
-
-        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
-        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="core/js/sorttable.js" type="text/javascript"></script>');
-        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
+        $this->checkLogged();
+        $this->mainTpl->assign('pageJava', '
+        <script src="core/js/jquery/jquery-1.5.js" type="text/javascript"></script>
+        <script src="core/js/jquery/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery/sorttable.js" type="text/javascript"></script>');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="core/css/Style.css" type="text/css"/>
+            <link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->pageTpl->assign('back', 'index.php?module=abroad_stay&view=select');
 
@@ -75,7 +90,7 @@ class abroad_stayController extends PlonkController {
         if ($this->form == '1') {
 
             $this->pageTpl->assignOption('showCertS');
-            $this->mainTpl->assign('pageTitle', 'Certificate of Arrival');
+            $this->mainTpl->assign('siteTitle', 'Certificate of Arrival');
             $this->pageTpl->assign('form', 'Date of Arrival');
             $query = abroad_stayDB::checkRecords($this->student, 'startDate');
             if (!empty($query)) {
@@ -91,7 +106,7 @@ class abroad_stayController extends PlonkController {
 
             $this->pageTpl->assignOption('showCertS');
 
-            $this->mainTpl->assign('pageTitle', 'Certificate of Departure');
+            $this->mainTpl->assign('siteTitle', 'Certificate of Departure');
             $this->pageTpl->assign('form', 'Date of Departure');
             $query = abroad_stayDB::checkRecords($this->student, 'endDate');
             if (!empty($query)) {
@@ -106,7 +121,7 @@ class abroad_stayController extends PlonkController {
         if ($this->form == '3') {
             $this->pageTpl->assignOption('showResenddep');
 
-            $this->mainTpl->assign('pageTitle', 'Certificate of Stay');
+            $this->mainTpl->assign('siteTitle', 'Certificate of Stay');
             $this->pageTpl->assign('form', 'Staying Period');
             $query = abroad_stayDB::checkRecords($this->student, 'endDate');
             $query2 = abroad_stayDB::checkRecords($this->student, 'startDate');
@@ -122,7 +137,7 @@ class abroad_stayController extends PlonkController {
     public function sendedList() {
         $this->pageTpl->assign('view', 'Send a Cerification');
         $this->pageTpl->assignOption('showSelectAboardUser');
-        $this->mainTpl->assign('pageTitle', "Select Student Records");
+        $this->mainTpl->assign('siteTitle', "Select Student Records");
         $this->pageTpl->assignOption('showSendedCertificatesList');
 
         ////Generates Student List
@@ -175,7 +190,7 @@ class abroad_stayController extends PlonkController {
     public function showList() {
         $this->pageTpl->assign('view', 'Sended Certificates');
         $this->pageTpl->assignOption('showSelectAboardUser');
-        $this->mainTpl->assign('pageTitle', "Select Student");
+        $this->mainTpl->assign('siteTitle', "Select Student");
 
 
 

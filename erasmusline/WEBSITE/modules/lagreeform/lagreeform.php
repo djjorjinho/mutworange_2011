@@ -940,7 +940,7 @@ class LagreeformController extends PlonkController {
                 'table' => 'forms',
                 'data' => $formArray,
                 'emailField' => 'studentId'
-            )
+            );
 
             $jsonStringEras = json_encode($er);
             $jsonStringEvent = json_encode($event);

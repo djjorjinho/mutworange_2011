@@ -20,13 +20,31 @@ class trrecController extends PlonkController {
     private $mail = '';
     private $form = '';
 
+        public function checkLogged() {
+        if (!PlonkSession::exists('id')) {
+            
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        } else {
+            //Plonk::dump('test');
+            if (PlonkSession::get('id') === 0) {
+                $this->id = PlonkSession::get('id');
+            } else if (PlonkSession::get('userLevel') == 'Student') {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            } else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+            }
+        }
+    }
+    
     public function showselect() {
-
-        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
-        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script><script src="core/js/sorttable.js" type="text/javascript"></script>');
-        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
+        $this->checkLogged();
+        $this->mainTpl->assign('pageJava', '<script src="core/js/jquery/jquery-1.5.js" type="text/javascript"></script>
+        <script src="core/js/jquery/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script>
+        <script src="core/js/jquery/sorttable.js" type="text/javascript"></script>');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="core/css/Style.css" type="text/css"/>
+            <link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->errors = '';
 
@@ -36,7 +54,7 @@ class trrecController extends PlonkController {
         if ($this->position == 'selectSend') {
             $this->pageTpl->assignOption('showSelectTranscriptSelect');
             $this->pageTpl->assign('view', 'Sended TranScripts');
-            $this->mainTpl->assign('pageTitle', "Transcript of Records");
+            $this->mainTpl->assign('siteTitle', "Transcript of Records");
 
 
             if (!empty($this->searchSt)) {
@@ -90,7 +108,7 @@ class trrecController extends PlonkController {
             $this->pageTpl->assignOption('showSelectTranscriptSelect');
             $this->pageTpl->assign('view', 'Send a TranScript');
 
-            $this->mainTpl->assign('pageTitle', "Sended TranScripts Of Records");
+            $this->mainTpl->assign('siteTitle', "Sended TranScripts Of Records");
 
 
             if (!empty($this->searchSt)) {
@@ -139,7 +157,7 @@ class trrecController extends PlonkController {
             $this->pageTpl->assign('back', 'index.php?module=trrec&view=select');
             $this->pageTpl->assignOption('showTranscript');
             $this->pageTpl->assignOption('showSendAtrBtn');
-            $this->mainTpl->assign('pageTitle', "TranScript Of Records");
+            $this->mainTpl->assign('siteTitle', "TranScript Of Records");
             $this->pageTpl->assign('action', 'doPostdata');
             $this->pageTpl->assignOption('showSendAtr');
             $this->getDBdata('reg', $this->student);
@@ -156,7 +174,7 @@ class trrecController extends PlonkController {
             $this->pageTpl->assignOption('showTranscript');
             $this->pageTpl->assignOption('showSendedTr');
             $this->pageTpl->assign('action', 'doResend');
-            $this->mainTpl->assign('pageTitle', "TranScript Of Records");
+            $this->mainTpl->assign('siteTitle', "TranScript Of Records");
             $this->pageTpl->assign('num', $name);
             $json = trrecDB::getRecords($this->form);
             $this->getDBdata('viewRec', $name);
@@ -385,9 +403,9 @@ class trrecController extends PlonkController {
                     $j = $i + 1;
                     $this->pageTpl->assignIteration('courses', '
 
-    <input type="hidden" name="coursetitle' . $j . '" value="' . $stRec[$i]['courseId'] . '" />                
+                    
 <tr>
-<td> ' . $stRec[$i]['courseCode'] . '</td><td> ' . $stRec[$i]['courseName'] . '</td>
+<td> <input type="hidden" name="coursetitle' . $j . '" value="' . $stRec[$i]['courseId'] . '" />' . $stRec[$i]['courseCode'] . '</td><td> ' . $stRec[$i]['courseName'] . '</td>
 <td> ' . $stRec[$i]['ectsCredits'] . '</td>
 <td> <select  name="corDur' . $j . '" id="corDur' . $j . '" ><option></option><option>Y</option><option>1S</option><option>1T</option><option>2S</option><option>2T</option></select></td>
 <td><input class="validate[required,custom[integer]]" type="text" size="5" maxlength="2" name="locGrade' . $j . '" id="locGrade' . $j . '" /></td>

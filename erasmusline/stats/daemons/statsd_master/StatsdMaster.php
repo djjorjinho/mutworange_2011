@@ -78,7 +78,8 @@ class StatsdMaster extends Server implements JsonRpcI{
     		'ping' => true,
     		'query' => true,
     		'pingSlave' => true,
-    		'profile' => true
+    		'profile' => true,
+    		'runScenario' => true,
     	);
     	
     	return $methods;
@@ -114,6 +115,10 @@ class StatsdMaster extends Server implements JsonRpcI{
 	
 	function profile(){
 		return $this->profiler->display();
+	}
+	
+	function runScenario($params){
+		return $this->olap->runScenario($params);
 	}
 }
 

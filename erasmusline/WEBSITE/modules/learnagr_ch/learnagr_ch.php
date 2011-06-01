@@ -35,12 +35,11 @@ class learnagr_chController extends PlonkController {
 
     public function showlearnagrch() {
         $this->checkLogged();
-        $this->mainTpl->assign('pageCSS', '<link rel="stylesheet" href="core/css/validationEngine.jquery.css" type="text/css"/>');
-        $this->mainTpl->assign('pageMeta', '<script src="core/js/jquery-1.5.1.min.js" type="text/javascript"></script>
-        <script src="core/js/jquery.validationEngine-en.js" type="text/javascript" charset="utf-8"> </script>
-        <script src="core/js/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
-        <script src="core/js/custom.js" type="text/javascript" charset="utf-8"> </script>');
-        $this->mainTpl->assign('pageTitle', 'Learning Agreement Change');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/Style.css" type="text/css"  media="screen"/>');
+        $this->mainTpl->assign('pageJava', '
+<script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
+<script type="text/javascript" src="./core/js/Custom/custom.js"></script>');
+        $this->mainTpl->assign('siteTitle', 'Learning Agreement Change');
         $this->pageTpl->assign('errorString', $this->errors);
         $this->errors = '';
         $this->fillData('main');
@@ -66,7 +65,7 @@ class learnagr_chController extends PlonkController {
         }
         $this->pageTpl->assign('ECTS', $remEcts);
         $this->pageTpl->assign('ECTStot', $studentEcts[0]['ectsCredits']);
-
+       
         if (empty($stuInfo)) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=formselect&' . PlonkWebsite::$viewKey . '=main');
         }
