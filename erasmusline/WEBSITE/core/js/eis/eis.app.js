@@ -743,12 +743,18 @@ var eis = {
 	showGraph2 : function(data, type){
 
 			var dt = [];
+			var regex = /^measure/;
+			var measure_list = jQuery.grep(eis.scenario.rows
+					,function(elm){
+				return regex.test(elm);
+			});
+			var measure_count=measure_list.length;
 			
 			if(type == 'bars' || type == 'line'){
 				
 				var temp_dt2=[];
-				var cnt = eis.scenario.rows.length;
-				
+				var cnt = eis.scenario.rows.length-measure_count;
+	
 				temp_dt2.push('Column');
 				for (var item2 in data[0]) {
 	  				
@@ -762,7 +768,8 @@ var eis = {
 				
 				
 			    for (var row in data) {
-			    	var cnt = eis.scenario.rows.length;		        
+			    	var cnt = eis.scenario.rows.length-measure_count;
+			    	log(eis.scenario);
 			    	temp_dt=[];
 			    	
 			        	
@@ -797,7 +804,7 @@ var eis = {
 			    
 			    var ac = new google.visualization.ComboChart(
 			    		document.getElementById('chart_div'));
-			    
+			    log(dt);
 		        ac.draw(data, {
 		          title : 'EIS Scenario Combo Chart',
 		          width: 650,
@@ -810,7 +817,7 @@ var eis = {
 			
 			if(type == 'pie'){
 				for (var row in data) {
-			    	var cnt = eis.scenario.rows.length;		        
+			    	var cnt = eis.scenario.rows.length-measure_count;		        
 			    	temp_dt=[];
 			    	
 		        	var condition = true;
@@ -844,9 +851,7 @@ var eis = {
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', 'Description');
 				data.addColumn('number', 'Value');
-				var data = google.visualization.arrayToDataTable(dt);
-
-				// Create and draw the visualization.
+				data.addRows(dt);
 				new google.visualization.PieChart(
 						document.getElementById('chart_div')).
 						draw(data, 
