@@ -31,11 +31,13 @@
            <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}" title="Admin">Admin</a>
 {/option:oAdmin}
 {option:oLogged}
-      <a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
-            <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
-            <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}" title="Residences" >Residences</a>
+		<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
+      	<a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
+        <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
+        <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}" title="Residences" >Residences</a>
 {/option:oLogged}
 {option:oNotLogged}
+	<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>
 {/option:oNotLogged}
       <a href="index.php?module=info&amp;view=erasmus" class="{$tabInfo}" title="Info">Info</a>      

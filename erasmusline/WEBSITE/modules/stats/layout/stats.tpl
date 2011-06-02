@@ -68,7 +68,7 @@
 		
 			<div class="presentation_div_menu border_eis" title="Task Toolbar" id="eis_toolbar">
 				<span>Tasks</span>
-				<select name="Scenarios" title="Scenario Select">
+				<select name="Scenarios" title="Scenario Select" class="w100">
 					<option selected="selected" value="">Select</option>
 				</select>
 				
@@ -124,7 +124,7 @@
 <script type="text/javascript" src="core/js/eis/jquery.blockUI.js"></script>
 <script type="text/javascript" src="core/js/eis/eis.app.js"></script>
 <script type="text/javascript"> 
-var _userid = {$userid};
+var _userid = '{$userid}';
 var _userlevel = '{$userlevel}';
 </script>
 <ol id="qunit-tests"><li></li></ol>
@@ -171,7 +171,7 @@ var _userlevel = '{$userlevel}';
 </script>
 
 <script id="eis_multiselect" type="text/x-jquery-tmpl">
-    <select multiple="multiple" size="5">
+    <select multiple="multiple" size="4">
 	</select>
 </script>
 
@@ -181,7 +181,7 @@ var _userlevel = '{$userlevel}';
 </script>
 
 <script id="eis_filtermain" type="text/x-jquery-tmpl">
-    <div> ${title} </div>
+    <div> <b>${title}</b> </div>
 
 	<button title="Add Filter" onclick="eis.addFilter('${field}')">Add</button>
 	<button title="Cancel Filter Adding" onclick="eis.cancelFilter()">Cancel</button>

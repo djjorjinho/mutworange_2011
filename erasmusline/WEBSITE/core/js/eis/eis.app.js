@@ -885,11 +885,17 @@ var eis = {
 		jQuery('#eis_filtermain').tmpl({title:name,field:field})
 												.appendTo(filterPanel);
 		
+		var div = jQuery('<div></div>');
+		
 		var valselect = jQuery('#eis_multiselect').tmpl({});
-		valselect.insertAfter(filterPanel.find('div'));
+		valselect.appendTo(div);
+		div.insertAfter(filterPanel.find('div:first'));
+		
+		div = jQuery('<div></div>');
 		
 		var opselect = jQuery('#eis_select').tmpl({});
-			opselect.insertAfter(filterPanel.find('div'));
+			opselect.appendTo(div);
+			div.insertAfter(filterPanel.find('div:first'));
 			
 		ops.appendTo(opselect);
 		values.appendTo(valselect);

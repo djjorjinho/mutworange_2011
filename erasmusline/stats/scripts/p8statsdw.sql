@@ -302,7 +302,7 @@ DROP TABLE IF EXISTS `p8statsdw`.`scenarios` ;
 
 CREATE  TABLE IF NOT EXISTS `p8statsdw`.`scenarios` (
   `scenarios_id` VARCHAR(45) NOT NULL ,
-  `users_id` INT UNSIGNED NOT NULL ,
+  `users_id` VARCHAR(100) NOT NULL ,
   `config` TEXT NULL ,
   PRIMARY KEY (`scenarios_id`, `users_id`) )
 ENGINE = MyISAM;
