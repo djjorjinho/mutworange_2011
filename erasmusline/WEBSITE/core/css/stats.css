@@ -63,7 +63,7 @@
 .presentation_div_cubes {
   background: white;
   width: 96%;
-  height: 10%;
+  height: 8%;
   margin-left: 2%;
   margin-top: 2%;
   
@@ -72,7 +72,7 @@
 .presentation_div_filter {
   background: white;
   width: 96%;
-  height: 18%;
+  height: 20%;
   margin-left: 2%;
   margin-top: 2%;
   
@@ -81,7 +81,7 @@
 .presentation_div_HV {
   background: white;
   width: 96%;
-  height: 18%;
+  height: 20%;
   margin-left: 2%;
   margin-top: 2%;
   
@@ -181,7 +181,7 @@ li.selected{
 #simplemodal-overlay {background-color:#000; cursor:wait;}
 
 /* Container */
-#simplemodal-container {height:405px; width:605px; color:#bbb; background-color:white; border:4px solid #444; padding:12px;}
+#simplemodal-container {height:455px; width:655px; color:#bbb; background-color:white; border:4px solid #444; padding:12px;}
 #simplemodal-container .simplemodal-data {padding:8px;}
 #simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
 #simplemodal-container a {color:#ddd;}
