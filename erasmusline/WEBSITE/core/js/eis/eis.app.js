@@ -586,7 +586,10 @@ var eis = {
 	},
 	
 	simpleHtmlTable : function(data){
-
+		var regex = /^measure/;
+		var drows = jQuery.grep(eis.scenario.rows,function(elm){
+			return !regex.test(elm);
+		});
 		out="";
 		out+="<table class='presentation_table' id='resultTable'>";
 		    out+= "<thead>";
@@ -595,7 +598,7 @@ var eis = {
 		    }
 		    out+= "</thead>";
 		    for (var row in data) {
-		    	var cnt = eis.scenario.rows.length; // cnt++;
+		    	var cnt = drows.length; // cnt++;
 		        out+= "<tr>";
 		        for (var item2 in data[row]) {
 		        	var cls = cnt > 0 ? 'res_row' : 'res_value'; 
