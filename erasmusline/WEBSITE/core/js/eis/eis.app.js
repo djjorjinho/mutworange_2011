@@ -252,6 +252,7 @@ var eis = {
 	},
 	
 	toggleShow : function(elm){
+		
 		jQuery(elm).parent().find('ul').toggle();
 	},
 	
@@ -673,20 +674,41 @@ var eis = {
 	
 	
 	validScenario: function(){
-		if(eis.scenario==null)
+		if(eis.scenario==null){
 			return false;
+		}
 		
-		if(!eis.scenario.hasOwnProperty('columns'))
+		if(!eis.scenario.hasOwnProperty('columns')){
 			return false;
+		}
 		
-		if(eis.scenario.columns.length == 0)
+		if(eis.scenario.columns.length == 0){
 			return false;
+		}
 		
-		if(!eis.scenario.hasOwnProperty('rows'))
+		if(!eis.scenario.hasOwnProperty('rows')){
 			return false;
+		}
 		
-		if(eis.scenario.rows.length == 0)
+		if(eis.scenario.rows.length == 0){
 			return false;
+		}
+	
+		var regex = /^measure/;
+		var dims = jQuery.grep(eis.scenario.columns,function(elm){
+			return !regex.test(elm);
+		});
+		if(dims.length == 0){
+			return false;
+		}
+		
+		dims = jQuery.grep(eis.scenario.rows,function(elm){
+			return !regex.test(elm);
+		});
+		if(dims.length == 0){
+			return false;
+		}
+			
 		
 		return true;
 	},

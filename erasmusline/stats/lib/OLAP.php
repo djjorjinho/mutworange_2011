@@ -72,8 +72,12 @@ class OLAP{
 				
 		#print("fields\n");
 		#print_r($fields);
-		
-		$sql .= "SELECT ".implode(',',$fields);
+		$distinct="";
+		if($fields[0]=='distinct'){
+			$distinct = array_shift($fields);
+		}
+				
+		$sql .= "SELECT ${distinct} ".implode(',',$fields);
 		
 		#print("tables\n");
 		#print_r($tables);
@@ -235,7 +239,12 @@ class OLAP{
 		if($op=='sum-dis'){
 			$aux='distinct';
 			$aggregator='sum';
+		}elseif($op=='distinct'){
+			array_unshift($fields, "distinct");
+			$aggregator='';
+			$aux='';
 		}
+		
 		array_push($fields,"${aggregator}(${aux} ${field}) as `${measure_name}`");
 	}
 	
