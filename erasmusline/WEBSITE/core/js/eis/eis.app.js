@@ -60,12 +60,9 @@ var eis = {
 	},
 	cleanTmpl : function(jqElm){
 		return jqElm;
-		// var elm =
 		return	jqElm.html(function(i,v){
 			return v.replace("<\![CDATA[","").replace("]]>","");
 			});
-		// log(elm);
-		// return elm;
 	},
 	loadDependencies : function(){
 		
@@ -81,11 +78,11 @@ var eis = {
 		jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
 		// jQuery.getScript('core/js/eis/accessibilityInspector.js');
 		
-		this.loadColorPicker();
-		this.loadEditableSelect();
+		eis.loadColorPicker();
+		eis.loadEditableSelect();
 		
 		// comment when done
-		this.loadQunit();
+		//eis.loadQunit();
 	},
 	
 	loadEditableSelect : function(){
@@ -492,6 +489,7 @@ var eis = {
 	},
 	
 	saveScenario : function(){
+		if(!eis.validScenario()) return;
 		jQuery.blockUI();
 		var instance = eis.scenarioSelect.editableSelectInstances()[0];
 		eis.scenario.scenario_name = instance.current_value;
@@ -522,6 +520,7 @@ var eis = {
 	},
 	
 	runScenario : function(){
+		if(!eis.validScenario()) return;
 		jQuery.blockUI();
 		delete eis.scenario.filters['_hash'];
 		eis.rpcCall("runScenario",eis.scenario,
@@ -554,6 +553,7 @@ var eis = {
 	},
 	
 	swapColumnsRows : function(){
+		if(!eis.validScenario()) return;
 		jQuery.blockUI();
 		var aux = eis.scenario.columns;
 		eis.scenario.columns = eis.scenario.rows;
@@ -566,6 +566,7 @@ var eis = {
 	},
 	
 	exportScenario : function(){
+		if(!eis.validScenario()) return;
 		jQuery.blockUI();
 		jQuery.postGo("modules/stats/export.php","runScenario",eis.scenario);
 		jQuery.unblockUI();
@@ -671,41 +672,46 @@ var eis = {
 	},
 	
 	
-	validateScenario: function(){
-		if((eis.scenario.columns == null && eis.scenario.rows == null) ||
-				( eis.scenario.columns.length == 0 
-				|| eis.scenario.rows.length == 0)){
-			return true;
-		}				
-		return false;
+	validScenario: function(){
+		if(eis.scenario==null)
+			return false;
+		
+		if(!eis.scenario.hasOwnProperty('columns'))
+			return false;
+		
+		if(eis.scenario.columns.length == 0)
+			return false;
+		
+		if(!eis.scenario.hasOwnProperty('rows'))
+			return false;
+		
+		if(eis.scenario.rows.length == 0)
+			return false;
+		
+		return true;
 	},
 	
 	
 	showGraph : function(){
 		
-		if(eis.validateScenario() == true){
-			return false;
-		}
+		if(!eis.validScenario()) return;
+		
 		jQuery.blockUI();
 		delete eis.scenario.filters['_hash'];
 		
-		
 		$('#chart_div').modal();
-		//return false;
-		
 		
 		var type = document.getElementById('chart_select').value;		
 		
-			eis.rpcCall("runScenario",eis.scenario,
-					function(result){
-						eis.showGraph2(result, type);
-					},
-					function(error){},
-					true		
-				);			
+		eis.rpcCall("runScenario",eis.scenario,
+				function(result){
+					eis.showGraph2(result, type);
+				},
+				function(error){},
+				true		
+			);
 		
 		eis.scenario.filters['_hash']=true;
-		
 		
 		jQuery.unblockUI();	
 	},
@@ -715,8 +721,6 @@ var eis = {
 	showGraph2 : function(data, type){
 
 			var dt = [];
-			
-			
 			
 			if(type == 'bars' || type == 'line'){
 				
@@ -766,12 +770,12 @@ var eis = {
 			        dt.push(temp_dt);
 	
 			    }
-			   //log(dt); 
-			   // var rowData = dt;
 			    
 			    var data = google.visualization.arrayToDataTable(dt);
 			    
-			    var ac = new google.visualization.ComboChart(document.getElementById('chart_div'));
+			    var ac = new google.visualization.ComboChart(
+			    		document.getElementById('chart_div'));
+			    
 		        ac.draw(data, {
 		          title : 'EIS Scenario Combo Chart',
 		          width: 600,
@@ -787,55 +791,50 @@ var eis = {
 			    	var cnt = eis.scenario.rows.length;		        
 			    	temp_dt=[];
 			    	
+		        	var condition = true;
+		        	var string = "";
+		        	for (var item2 in data[row]) {
+		        		
+		        		if(cnt < 1 ){
+		        			if(condition){
+		        				string += ' | '+item2;			        				
+		        				condition=false;
+		        			}
+		        			
+		        			temp_dt.push(string);
+		        			
+			        		if(data[row][item2] == undefined){
+			        			temp_dt.push(0);
+			        		}else{
+				        		temp_dt.push(parseInt(data[row][item2]));
+			        		}
+			        		dt.push(temp_dt);
+			        		temp_dt=[];
+			        	}
+			        	else{
+				        	string += data[row][item2]+" | ";
+			        	}
 			        	
-			        	var condition = true;
-			        	var string = "";
-			        	for (var item2 in data[row]) {
-			        		
-			        		if(cnt < 1 ){
-			        			if(condition){
-			        				string += ' | '+item2;			        				
-			        				condition=false;
-			        			}
-			        			
-			        			temp_dt.push(string);
-			        			
-				        		if(data[row][item2] == undefined){
-				        			temp_dt.push(0);
-				        		}else{
-					        		temp_dt.push(parseInt(data[row][item2]));
-				        		}
-				        		dt.push(temp_dt);
-				        		temp_dt=[];
-				        	}
-				        	else{
-					        	string += data[row][item2]+" | ";
-				        	}
-				        	
-				            cnt--;
-				        }			        	
+			            cnt--;
+			        }			        	
 			    }
 				
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', 'Description');
 				data.addColumn('number', 'Value');
 				var data = google.visualization.arrayToDataTable(dt);
-				  
-				  
 
 				// Create and draw the visualization.
-				new google.visualization.PieChart(document.getElementById('chart_div')).
-				draw(data, {width: 600, height: 400, is3D: true, title:"EIS Scenario Pie Chart"});
+				new google.visualization.PieChart(
+						document.getElementById('chart_div')).
+						draw(data, 
+						{width: 600, height: 400, is3D: true, 
+							title:"EIS Scenario Pie Chart"});
 				
 			}
 		    
 
 	},
-	
-	
-	
-	
-	
 	
 	removeTBItem : function(elm,id,type){
 		var list = eis.scenario[type];
@@ -855,7 +854,8 @@ var eis = {
 			.appendTo(filterPanel);
 			return;
 		}
-		var availOps = {eq:"Equals",gt:"Greater",lt:"Less",ge:"Greater/Equal",le:"Less/Equal"};
+		var availOps = {eq:"Equals",gt:"Greater",lt:"Less",
+				ge:"Greater/Equal",le:"Less/Equal"};
 		var ops = jQuery([]);
 		var values = jQuery([]);
 		
@@ -882,7 +882,8 @@ var eis = {
 			return;
 		}
 		
-		jQuery('#eis_filtermain').tmpl({title:name,field:field}).appendTo(filterPanel);
+		jQuery('#eis_filtermain').tmpl({title:name,field:field})
+												.appendTo(filterPanel);
 		
 		var valselect = jQuery('#eis_multiselect').tmpl({});
 		valselect.insertAfter(filterPanel.find('div'));
