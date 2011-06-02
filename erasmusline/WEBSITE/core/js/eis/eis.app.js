@@ -80,9 +80,21 @@ var eis = {
 		
 		eis.loadColorPicker();
 		eis.loadEditableSelect();
+		eis.loadJAlert();
 		
 		// comment when done
 		//eis.loadQunit();
+	},
+	
+	loadJAlert : function(){
+		var css_href = "core/js/jalert/jquery.alerts.css";
+		var head = document.getElementsByTagName('head')[0]; 
+		jQuery(document.createElement('link')).attr({type: 'text/css', 
+				href: css_href, rel: 'stylesheet', 
+		    	media: 'screen'}).appendTo(head);
+		
+		jQuery.getScript('core/js/jalert/'+
+				'jquery.alerts.js');
 	},
 	
 	loadEditableSelect : function(){
@@ -683,6 +695,7 @@ var eis = {
 		}
 		
 		if(eis.scenario.columns.length == 0){
+			jAlert("Please select one Dimension for the columns");
 			return false;
 		}
 		
@@ -691,6 +704,7 @@ var eis = {
 		}
 		
 		if(eis.scenario.rows.length == 0){
+			jAlert("Please select one Dimension for the rows");
 			return false;
 		}
 	
@@ -699,13 +713,16 @@ var eis = {
 			return !regex.test(elm);
 		});
 		if(dims.length == 0){
+			jAlert("Please select one Dimension for the columns");
 			return false;
 		}
 		
 		dims = jQuery.grep(eis.scenario.rows,function(elm){
+
 			return !regex.test(elm);
 		});
 		if(dims.length == 0){
+			jAlert("Please select one Dimension for the rows");
 			return false;
 		}
 			
