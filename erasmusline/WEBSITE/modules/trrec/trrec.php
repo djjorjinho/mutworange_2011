@@ -30,8 +30,8 @@ class trrecController extends PlonkController {
                 $this->id = PlonkSession::get('id');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-            } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+            } else if ((PlonkSession::get('userLevel')!='Teaching Staff') && (PlonkSession::get('userLevel')!='Erasmus Coordinator')){
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
             }
         }
     }

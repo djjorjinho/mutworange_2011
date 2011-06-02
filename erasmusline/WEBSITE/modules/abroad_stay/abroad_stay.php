@@ -25,10 +25,10 @@ class abroad_stayController extends PlonkController {
     private $resultRows = 20;
     private $searchFor = '';
     private $mail = '';
-       
+
     public function checkLogged() {
         if (!PlonkSession::exists('id')) {
-            
+
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
             //Plonk::dump('test');
@@ -36,12 +36,12 @@ class abroad_stayController extends PlonkController {
                 $this->id = PlonkSession::get('id');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-            } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+            } else if (PlonkSession::get('userLevel') != 'Erasmus Coordinator') {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
             }
         }
     }
-    
+
     public function showselect() {
         $this->checkLogged();
         $this->mainTpl->assign('pageJava', '

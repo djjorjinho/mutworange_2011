@@ -20,7 +20,7 @@
         </select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
 
 </div>
-    <div style="width:450px;padding-left: 20%;padding-top: 2%;">
+    <div style="width:450px;padding-left: 20%;margin-top: 2%;">
     <table id="tblSearch"  class="sortable" width="450px" align="center">
         <tr>
             <th>MatrNum</th>
@@ -32,7 +32,6 @@
         {iteration:iStudentsList}{$studentsList}{/iteration:iStudentsList}
     </table>
     </div>
-    <p>&nbsp;</p>
     <div class="leftAlDiv" align="right">
         <form method="post">
             <input type="hidden" name="prev" id="prev" value="{$prev}" />
@@ -53,9 +52,6 @@
             <input {$hiddenN}  class="button" name="postForm" id="postForm" type="submit" value="Next"/>
         </form>
     </div>
-    <p>&nbsp;</p>
-
-
 
 {/option:showSelectAboardUser}
 
