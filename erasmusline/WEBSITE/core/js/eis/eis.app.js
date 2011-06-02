@@ -778,8 +778,8 @@ var eis = {
 			    
 		        ac.draw(data, {
 		          title : 'EIS Scenario Combo Chart',
-		          width: 600,
-		          height: 400,
+		          width: 650,
+		          height: 450,
 		          vAxis: {title: "Columns / Measures"},
 		          hAxis: {title: "Rows"},
 		          seriesType: type,
@@ -828,7 +828,7 @@ var eis = {
 				new google.visualization.PieChart(
 						document.getElementById('chart_div')).
 						draw(data, 
-						{width: 600, height: 400, is3D: true, 
+						{width: 650, height: 450, is3D: true, 
 							title:"EIS Scenario Pie Chart"});
 				
 			}
