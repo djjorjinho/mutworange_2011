@@ -243,9 +243,12 @@ class OLAP{
 			array_unshift($fields, "distinct");
 			$aggregator='';
 			$aux='';
+		}elseif($op=='avg'){
+			$aggregator='round';
+			$aux='avg';
 		}
 		
-		array_push($fields,"${aggregator}(${aux} ${field}) as `${measure_name}`");
+		array_push($fields,"${aggregator}(${aux}(${field})) as `${measure_name}`");
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,
