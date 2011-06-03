@@ -169,7 +169,8 @@ li.selected {
 	border: solid 1px black;
 	padding-top: 4px;
 	padding-bottom: 4px;
-	padding-right: 4px; padding-left: 4px;
+	padding-right: 4px; 
+	padding-left: 4px;
 }
 
 .res_column {
@@ -187,6 +188,7 @@ li.selected {
 	padding-bottom: 4px;
 	padding-right: 4px;
 	padding-left: 4px;
+	text-align: center;
 }
 
 #chart_div {

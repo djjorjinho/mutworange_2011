@@ -946,7 +946,8 @@ var eis = {
 			
 		ops.appendTo(opselect);
 		values.appendTo(valselect);
-			
+		
+		valselect.focus();
 	},
 	
 	cancelFilter : function(){
@@ -961,7 +962,13 @@ var eis = {
 			.map(function(i,obj){return jQuery(obj).val();});
 		var filter = field+'.'+op;
 		
-		eis.scenario.filters[filter] = values.get();
+		selValues = values.get();
+		if(selValues.length==0){
+			eis.cancelFilter();
+			return;
+		}
+		
+		eis.scenario.filters[filter] =  selValues;
 		eis.paintScenario();
 		eis.cancelFilter();
 		
@@ -978,8 +985,4 @@ var eis = {
 
 
 // main app cycle
-
-
 eis.init();
-
-
