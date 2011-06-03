@@ -37,10 +37,53 @@ class OLAPTest extends PHPUnit_TestCase {
 		$config = JSONConfig::load(dirname(__FILE__).'/../config/','eis_scenario_config');
     	
     	$results = $this->olap->runScenario($config['params']);
-
+		print substr(print_r($results,true),-850,850);
     	$this->assertTrue(is_array($results));
     }
     
+    function testOLAP2(){
+    	$params=array(
+    		cube => 'fact_efficiency',
+    		columns => array("dim_gender.dim_gender_id",
+    					"dim_mobility.dim_mobility_id"),
+    		rows => array("dim_date.all"),
+    		filters => array()
+    	);
+    	 
+    	$results = $this->olap->runScenario($params);
+    	print substr(print_r($results,true),-850,850);
+    	$this->assertTrue(is_array($results));
+    }
+    
+    function testOLAP3(){
+    	$params=array(
+    	cube => 'fact_efficacy',
+    	columns => array("dim_gender.dim_gender_id"),
+    	rows => array("dim_institution.institution_code","dim_date.year",
+    					"dim_institution_host.institution_code"),
+    	filters => array('dim_date.year.le' => '2010')
+    	);
+    
+    	$results = $this->olap->runScenario($params);
+    	print substr(print_r($results,true),-850,850);
+    	$this->assertTrue(is_array($results));
+    }
+    
+    function testOLAP4(){
+    	$params=array(
+    	cube => 'fact_efficacy',
+    	columns => array("dim_gender.dim_gender_id","dim_date.year","measure.M1","measure.M5"),
+    	rows => array("dim_institution.institution_code","dim_date.semester",
+        					"dim_institution_host.institution_code",
+        					"dim_study.area_code","dim_study.degree_code","measure.M3"),
+    	filters => array()
+    	);
+    
+    	$results = $this->olap->runScenario($params);
+    	print substr(print_r($results,true),-850,850);
+    	
+    	$this->assertTrue(is_array($results));
+    }
     
     
 }
