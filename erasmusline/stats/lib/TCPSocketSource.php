@@ -58,7 +58,7 @@ class TCPSocketSource extends LooPHP_EventSource{
 						// receive response message
 						#while((
 						$buff = 
-							stream_socket_recvfrom($read_resource,4096);
+							stream_get_contents($read_resource);
 						#) != ""){
 								
 							$msg .= $buff;

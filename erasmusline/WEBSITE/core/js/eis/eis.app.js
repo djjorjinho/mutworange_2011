@@ -166,7 +166,7 @@ var eis = {
 	fillCubes : function(){
 		var cubes = eis.rules.cubes;
 		
-		var len = cubes.length;
+		var len = cubes!=undefined ? cubes.length : 0;
 		for(var i=0;i<len;i++){
 			var cube = cubes[i];
 			jQuery('#eis_option_tmpl').tmpl( 

@@ -68,7 +68,7 @@ class UnixSocketSource extends LooPHP_EventSource{
 						// receive response message
 						#while((
 						$buff = 
-							stream_socket_recvfrom($read_resource,1500);
+							stream_get_contents($read_resource);
 						#) != ""){
 								
 							$msg .= $buff;

@@ -21,7 +21,7 @@ class Client{
 		
 		// receive response message
 		#while((
-		$buff = stream_socket_recvfrom($this->socket,4096);
+		$buff = stream_get_contents($this->socket);
 		#) != ""){
 			$response .= $buff;
 		#}
