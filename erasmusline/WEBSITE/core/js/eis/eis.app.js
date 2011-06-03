@@ -83,7 +83,7 @@ var eis = {
 		eis.loadJAlert();
 		
 		// comment when done
-		//eis.loadQunit();
+		// eis.loadQunit();
 	},
 	
 	loadJAlert : function(){
@@ -682,7 +682,7 @@ var eis = {
 		var table = jQuery('#resultTable');
 		if(table.length>0){
 			jQuery(table).find('td.res_value').each(function(){
-				eis.paintElm(this,'#ffffff','#000000');
+				eis.paintElm(this,'#ebebeb','#000000');
 			});
 		}
 	},
