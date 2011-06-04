@@ -54,19 +54,19 @@ class TCPSocketSource extends LooPHP_EventSource{
 					$obj = $this->callback_obj;
 					$event_loop->addEvent( function() use ( $read_resource,$obj, $event_loop) {
 						
-						$msg="";
-						// receive response message
-						#while((
-						$buff = 
-							stream_get_contents($read_resource);
-						#) != ""){
-								
-							$msg .= $buff;
-						#}
-	
+						$packed_len = stream_get_contents($read_resource, 4); 
+						//The first 4 bytes contain our N-packed length
+						$hdr = unpack('Nlen', $packed_len);
+						$len = $hdr['len'];
+						$msg = stream_get_contents($read_resource, $len);
 						$obj->onMessage($msg,$send_data,$event_loop);
 						
-						stream_socket_sendto( $read_resource, $send_data );
+						// send
+						$len = strlen($send_data);
+						$send_data = pack('N', $len) . $send_data; 
+						//Pack the length in a network-friendly way, then prepend it to the data.
+						stream_socket_sendto($read_resource,$send_data);
+						
 						fclose( $read_resource );
 					}, 0 );
 					unset( $this->_socket_array[(int)$read_resource] );

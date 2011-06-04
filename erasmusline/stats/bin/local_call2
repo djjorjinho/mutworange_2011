@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
-list($func,$daemon,$msg) = $argv;
-$socket = stream_socket_client("unix:///tmp/erasmusline/${daemon}/${daemon}.sock");
+list($func,$ip,$port,$msg) = $argv;
+$socket = stream_socket_client("tcp://${ip}:${port}");
 
 function send($socket,&$msg){
 
@@ -23,4 +23,5 @@ $received=null;
 receive($socket,$received);
 
 print $received;
+
 ?>

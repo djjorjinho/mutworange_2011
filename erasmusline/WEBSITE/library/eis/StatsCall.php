@@ -69,15 +69,14 @@ class StatsCall{
 	}
 	
 	function makeCall(&$json,&$msg){
-		stream_socket_sendto($this->socket,$json);
+		$len = strlen($json);
+		$send_data = pack('N', $len) . $json; //Pack the length in a network-friendly way, then prepend it to the data.
+		stream_socket_sendto($this->socket,$send_data);
 		
-		$msg="";
-		// receive response message
-		#while((
-		$buff = stream_get_contents($this->socket);
-		#) != ""){
-			$msg .= $buff;
-		#}
+		$packed_len = stream_get_contents($this->socket, 4); //The first 4 bytes contain our N-packed length
+		$hdr = unpack('Nlen', $packed_len);
+		$len = $hdr['len'];
+		$msg = stream_get_contents($this->socket, $len);
 
 	}
 	

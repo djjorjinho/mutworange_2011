@@ -15,16 +15,17 @@ class Client{
 		
 	}
 	
-	function sendMessage(&$message,&$response){
+	function sendMessage(&$msg,&$response){
 		
-		stream_socket_sendto($this->socket,$message);
+		$len = strlen($msg);
+		$send_data = pack('N', $len) . $msg; //Pack the length in a network-friendly way, then prepend it to the data.
+		stream_socket_sendto($this->socket,$send_data);
 		
 		// receive response message
-		#while((
-		$buff = stream_get_contents($this->socket);
-		#) != ""){
-			$response .= $buff;
-		#}
+		$packed_len = stream_get_contents($this->socket, 4); //The first 4 bytes contain our N-packed length
+		$hdr = unpack('Nlen', $packed_len);
+		$len = $hdr['len'];
+		$response = stream_get_contents($this->socket, $len);
 	}
 	
 }
