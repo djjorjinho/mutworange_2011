@@ -370,9 +370,8 @@ class OLAP{
 		
 		
 		$data = Pivot::factory($result)
-			->pivotOn($rows)
-			->addColumn($columns,$measures)
-			->fetch();
+				->newFetch($columns, $rows, $measures);
+		
 			System_Daemon::debug(print_r(
 				array($data,$result,$columns,$rows,$measures),true));
 				

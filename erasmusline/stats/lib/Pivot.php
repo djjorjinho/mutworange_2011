@@ -123,6 +123,7 @@ class Pivot{
                         	[$reg[$split]]
                         	[$reg[$column]]
                         	[$item] += $reg[$item];
+                        
                         $this->_splits[$reg[$split]]
                         	[$reg[$column]]
                         	[$item] = $item;
@@ -172,6 +173,7 @@ class Pivot{
                         	[$reg[$split]]
                         	[$reg[$column]]
                         	[$item] += $reg[$item];
+                        
                         $this->_splits[$reg[$split]]
                         	[$reg[$column]]
                         	[$item] = $item;
@@ -276,6 +278,10 @@ class Pivot{
                 
             }
         }
+        
+        print("fetch: ".print_r($tmp,true));
+        //print("splits: ".print_r($this->_splits,true));
+        
         return $this->_buildOutput($tmp, $fetchType, $tmpCount);
     }
 
@@ -795,9 +801,13 @@ class Pivot{
             											} elseif ($_k instanceof Pivot_Callback) {
             												$value = $_k->cbk($colValues);
             											} else {
+            												
+            												
             												$value = $colValues[$k];
             											}
+            											
             											$_out[self::concatKey($split,$col,$k)] = $value;
+            											
             											// totals related
             											if ($this->_lineTotal) {
             												$_lineTotal[$k] += $value;
@@ -888,8 +898,7 @@ class Pivot{
 
     const FETCH_STRUCT = 1;
 
-    private function _getColumnItem($reg, $key)
-    {
+    private function _getColumnItem($reg, $key){
         return $reg[$this->_pivotOn[$key]];
     }
 
@@ -902,6 +911,58 @@ class Pivot{
     {
         return new Pivot_Count($key);
     }
+    
+    function newFetch($columns,$rows,$measures){
+    	$this->_column = $columns;
+    	$this->_columnValues = $measures;
+    	$this->_pivotOn = $rows;
+    	
+    	
+    	$tmp = $splits = $tmpCount = array();
+    	$clen = count($columns)-1;
+    	$rlen = count($rows)-1;
+    	$mlen = count($measures)-1;
+    	 
+    	foreach ($this->_recordset as $reg) {
+    
+    		foreach ($measures as $item) {
+    			$ref =& $tmp;
+    			$sref =& $splits;
+    			// assigning row split keys
+    			foreach(range(0,$rlen) as $idx){
+    				$k = $this->_getColumnItem($reg,$idx);
+    				if(!isset($ref[$k]))
+    				$ref[$k] = array();
+    
+    				$ref =& $ref[$k];
+    			}
+    	   
+    			// assingning column split keys
+    			foreach(range(0,$clen) as $idx){
+    				$f = $columns[$idx];
+    				$k = $reg[$f];
+    
+    				if(!isset($ref[$k]))
+    				$ref[$k] = array();
+    				$ref =& $ref[$k];
+    
+    				// only column splits assoc. array
+    				if(!isset($sref[$reg[$f]]))
+    				$sref[$reg[$f]] = array();
+    				$sref =& $sref[$reg[$f]];
+    			}
+    	   
+    			// assigning values
+    			$ref[$item] += $reg[$item];
+    			$sref[$item] = $item;
+    		}
+    	}
+    	
+    	$this->_splits = $splits;
+    	
+    	return $this->_buildOutput($tmp,null,$tmpCount);
+    }
+    
 }
 
 class Pivot_Count
