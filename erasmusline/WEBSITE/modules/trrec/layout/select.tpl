@@ -2,40 +2,38 @@
 {$errorString}
 {option:showSelectTranscriptSelect}
 {$selectError}
-<div class="selDiv">
-    <div class="small"><form method="POST" action=''>
-            <input type="hidden" name="formAction" id="formValidate" value="doViewsended" />
-            <input class="buttonLook" name="postForm" id="postForm" type="submit" value="{$view}"/>
-        </form></div>
+<div class="buttonPanel">
+        <div class="small"><form method="POST" action=''>
+                <input type="hidden" name="formAction" id="formValidate" value="doViewsended" />
+                <input class="buttonLook" name="postForm" id="postForm" type="submit" value="{$view}"/>
+            </form></div>
+    </div>
+    <div class="alCenterDiv">
+        <h2>Welcome</h2>
+        <p>Select Student from the list</p>
 
-</div>
-<div class="alCenterDiv2" align="center">
-    <h2>Welcome</h2>
-    <p>Select Student from the list</p>
+        <form method="post">Find:<select name="selection">
+                <option value="userId">Matr. Num</option>
+                <option value="familyName">Last Name</option>
 
-    <form method="post">Find:<select name="selection">
-            <option value="userId">Matr. Num</option>
-            <option value="familyName">Last Name</option>
+            </select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
 
-        </select><input type="hidden" name="pos"  value="{$view}"/><input type="text" name="Search" id="Search" value="" /><input type="hidden" name="formAction" id="formValidate" value="doSearch" /><input class="button" name="postForm" id="postForm" type="submit" value="Search"/></form>
-
-
-    <table id="tblSearch"  class="sortable" align="center" style="width:450px;">
-        <tr>
-            <th>MatrNum</th>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th></th>
-        </tr>
-
-        {iteration:iStudentsList}{$studentsList}{/iteration:iStudentsList}
-
-
-
-
-
-    </table>
-    <p>&nbsp;</p>
+    </div>
+    <div style="width:450px;padding-left: 20%;margin-top: 2%;">
+        <table id="tblSearch"  class="sortable" width="450px" align="center">
+            <thead>
+                <tr>
+                    <th>MatrNum</th>
+                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {iteration:iStudentsList}{$studentsList}{/iteration:iStudentsList}
+            </tbody>
+        </table>
+    </div>
     <div class="leftAlDiv" align="right">
         <form method="post">
             <input type="hidden" name="prev" id="prev" value="{$prev}" />
@@ -56,10 +54,6 @@
             <input {$hiddenN}  class="button" name="postForm" id="postForm" type="submit" value="Next"/>
         </form>
     </div>
-
-
-
-</div>
 {/option:showSelectTranscriptSelect}
 
 

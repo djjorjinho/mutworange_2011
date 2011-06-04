@@ -185,6 +185,7 @@ INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `levelDescrip`, `module`, `v
 (11, 'Certificate Of Arrival', NULL, 'abroadstay', 'certarrival', 'Change to Learning Agreement'),
 (12, 'Redo Student Application Form', NULL, 'lagreeform', 'applicform', NULL),
 (13, 'Redo Learning Agreement', NULL, 'lagreeform', 'lagreement', NULL);
+(14,'Transcript of Records',NULL,'trrec','select',NULL);
 
 -- --------------------------------------------------------
 

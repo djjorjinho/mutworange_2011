@@ -1,6 +1,16 @@
 <?php
 
 class acom_regDB {
+    public static function checkDB() {
+        $db = PlonkWebsite::getDB();
+        $studentId=  PlonkSession::get('id');
+        $stInfo = $db->retrieve("SELECT * FROM forms 
+            where  studentId='".$db->escape($studentId)."'
+            and erasmusLevelId=10");
+
+        return $stInfo;
+    }
+    
     public static function getInst($stId) {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("SELECT instName,iBan,bic,instStreetNr,instPostalCode,instCity FROM institutions where  instEmail=(select hostInstitutionId from 
@@ -42,7 +52,7 @@ class acom_regDB {
     public static function getResidence($stId,$resId){
         $db = PlonkWebsite::getDB();
         $acom = $db->retrieve("
-                SELECT * FROM residence as r where r.available='1' and country=(
+                SELECT * FROM residence as r where country=(
                 SELECT ins.instCountry from institutions as ins where ins.instEmail=(
                 SELECT ers.hostInstitutionId from erasmusstudent as ers where ers.users_email='".$db->escape($stId)."')
                    ) And r.residenceId='".$db->escape($resId)."'");

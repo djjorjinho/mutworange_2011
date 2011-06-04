@@ -111,6 +111,6 @@
 
 
     {option:showComplete}
-    
+        {$success}
     {/option:showComplete}
 </div>

@@ -16,7 +16,8 @@ class acom_regController extends PlonkController {
     private $error = '';
     private $position = '1';
     private $mail = '';
-    
+    protected $view = '';
+
     public function checkLogged() {
         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
@@ -27,9 +28,10 @@ class acom_regController extends PlonkController {
                 $this->pageTpl->assignOption('oStudent');
             } else {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
-                }
+            }
         }
     }
+
     public function showacom_reg() {
         $this->checkLogged();
         $this->mainTpl->assign('siteTitle', 'Accomodation Registration');
@@ -38,9 +40,14 @@ class acom_regController extends PlonkController {
             <link type="text/css" rel="stylesheet" href="./core/css/Style.css"/>');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-        
+
         $this->pageTpl->assign('errorString', $this->error);
         $this->error = '';
+
+        $checkFilled = acom_regDB::checkDB();
+        if (!empty($checkFilled)) {
+            $this->position = '3';
+        }
 
         if ($this->position == '1') {
             $this->pageTpl->assignOption('showSelectAccommodationYN');
@@ -62,9 +69,24 @@ class acom_regController extends PlonkController {
         }
 
         if ($this->position == '3') {
+            $filled = acom_regDB::checkDB();
+            $x = json_decode($filled[0]['content'], true);
             $this->pageTpl->assignOption('showComplete');
+            $this->view = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/viewFilled.tpl');
 
-            $this->pageTpl->assign('success', $this->mail->getContent());
+            if (isset($x['res'])) {
+                $this->view->assignOption('Yes');
+                $this->view->assign('startDate', $x['startDate']);
+                $this->view->assign('endDate', $x['endDate']);
+                $this->view->assign('stAcName', $x['stAcName']);
+                $this->view->assign('stAcIban', $x['stAcIban']);
+                $this->view->assign('stAcBic', $x['stAcBic']);
+                $this->fillResidence(acom_regDB::getResidence(PlonkSession::get('id'), $x['res']), 'view');
+            } else {
+                $this->getDBdata(PlonkSession::get('id'), 'view');
+                $this->view->assignOption('No');
+            }
+            $this->pageTpl->assign('success', $this->view->getContent());
         }
     }
 
@@ -141,6 +163,9 @@ class acom_regController extends PlonkController {
         if ($act == 'mail') {
             $this->pageTpl = $this->mail;
         }
+        if ($act == 'view') {
+            $this->pageTpl = $this->view;
+        }
 
 
         $query = acom_regDB::getStudentInfo($name);
@@ -164,6 +189,9 @@ class acom_regController extends PlonkController {
     private function fillResidence($resAvail, $act) {
         if ($act == 'mail') {
             $this->pageTpl = $this->mail;
+        }
+        if ($act == 'view') {
+            $this->pageTpl = $this->view;
         }
         $this->pageTpl->setIteration('iResidence');
 
@@ -207,7 +235,7 @@ class acom_regController extends PlonkController {
             $i++;
         }
 
-        if ($act == 'mail') {
+        if ($act == 'mail' || $act == 'view') {
             $this->pageTpl->assign('Acselection', 'checked');
         } else {
             $this->pageTpl->assign('Acselection', '');
