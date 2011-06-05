@@ -1,4 +1,5 @@
 <?php
+require_once("lib/System/Daemon.php");
 class Pivot{
     /**
      * @param struct $recorset
@@ -279,10 +280,11 @@ class Pivot{
             }
         }
         
-        print("fetch: ".print_r($tmp,true));
-        //print("splits: ".print_r($this->_splits,true));
-        
-        return $this->_buildOutput($tmp, $fetchType, $tmpCount);
+        //System_Daemon::debug("splits: ".print_r($this->_splits,true));
+    	//System_Daemon::debug("tmp: ".print_r($tmp,true));
+        $data = $this->_buildOutput($tmp, $fetchType, $tmpCount); 
+        //System_Daemon::debug("data: ".print_r($data,true));
+        return $data;
     }
 
     const TYPE_LINE = 0;
@@ -959,9 +961,92 @@ class Pivot{
     	}
     	
     	$this->_splits = $splits;
-    	
-    	return $this->_buildOutput($tmp,null,$tmpCount);
+    	//System_Daemon::debug("new splits: ".print_r($splits,true));
+    	//System_Daemon::debug("new tmp: ".print_r($tmp,true));
+    	$data = $this->newBuildOutput($tmp,$columns,$rows,$measures,$splits);
+    	//System_Daemon::debug("new data: ".print_r($data,true));
+    	return $data;
     }
+    
+    function newBuildOutput(&$tmp,&$columns,&$rows,&$measures,&$splits){
+    	$out=array();
+    	$clen = count($columns)-1;
+    	$rlen = count($rows)-1;
+    	$mlen = count($measures)-1;
+    	
+    	$code ="";
+    	// begin row pivots
+    	foreach(range(0,$rlen) as $idx){
+    		if($idx==0){
+    			$code .= 'foreach ($tmp as $p0 => $p0Values) {'."\n";
+    		}else{
+    			$i = $idx-1;
+    			$code .= 'foreach ($p'.$i.'Values as $p'.$idx.' => $p'.$idx.'Values){'."\n";
+    		}
+    	}
+    	// iteration array
+    	$code.= '$_out=array();'."\n";
+    	foreach(range(0,$rlen) as $idx){
+    		$code.= '$_out[$rows['.$idx.']] = $p'.$idx.';'."\n";
+    	}
+    	
+    	// column elements concatenation
+    	$_aux=array();
+    	foreach(range(0,$clen) as $idx){
+    		if($idx==0){
+    			$code.='foreach (array_keys($splits) as $s'.$idx.') {'."\n";
+    			$code.='$cols = $p'.$rlen.'Values[$s'.$idx.'];'."\n";
+    			$code.='$spl'.$idx.'=$splits[$s'.$idx.'];'."\n";
+    			if($idx==$clen){
+    				$code.='$colValues = $cols;'."\n";
+    				//$code.='print("colvalues: ".print_r($colValues,true)."\n");';
+    			}
+    			array_push($_aux, '$s'.$idx);
+    			//$code.='print("spl'.$idx.': ".print_r($spl'.$idx.',true)."\n");';
+    		}else{
+    			$i=$idx-1;
+    			$code.='foreach(array_keys($spl'.$i.') as $s'.$idx.'){'."\n";
+    			
+    			if($idx==$clen){
+    				$code.='$colValues = $cols[$s'.$idx.'];'."\n";
+    				//$code.='print("colvalues: ".print_r($colValues,true)."\n");';
+    			}else{
+    				$code.='$cols = $cols[$s'.$idx.'];'."\n";
+    				$code.='$spl'.$idx.'=$spl'.$i.'[$s'.$idx.'];'."\n";
+    			}   			
+
+    			array_push($_aux, '$s'.$idx);
+    		}
+    	}
+    	
+    	// measure concat
+    	$code.='foreach ($measures as $k) {'."\n";
+    	//$code.='System_Daemon::debug("colvalues: ".print_r($colValues,true));."\n");';
+    	$code.='$value = $colValues[$k];'."\n";
+    	$code.='$_out[Pivot::concatKey('.implode(',',$_aux).',$k)] = $value;'."\n";
+    	$code.='}'."\n";
+    	
+    	// close column elements
+    	foreach(range(0,$clen) as $idx){
+    		$code .='}'."\n";
+    	}
+    	
+    	// new array item
+    	$code.='$out[] = $_out;'."\n";
+    	
+    	// end row pivots
+    	foreach(range(0,$rlen) as $idx){
+    		$code .='}'."\n";
+    	}
+    	$code .= 'return $out;';
+    	
+    	System_Daemon::debug( $code );
+    	
+    	$newfunc=create_function('&$tmp,&$out,&$columns,&$rows,&$measures,&$splits',$code);
+
+    	return $newfunc($tmp,$out,$columns,$rows,$measures,$splits);
+    }
+    
     
 }
 

@@ -55,16 +55,8 @@ class PivotTest extends PHPUnit_TestCase {
     	//print_r($res);
     }
     
-    function dtestPivot1(){
-    	$columns = array('year', 'month','country');
-    	$rows = array('host');
-    	$measures = array('users');
-    	 
-    	//print_r($this->runPivot($this->result, $columns, $rows, $measures));
-    }
-    
     function testNewPivot(){
-    	$columns = array('year', 'month');
+    	$columns = array('year','month');
     	$rows = array('country','host');
     	$measures = array('users','clicks');
     	

@@ -368,12 +368,11 @@ class OLAP{
 			$columns[$i] = $this->translateDimension($columns[$i],$cube);
 		}
 		
+		$data = Pivot::factory($result)->newFetch($columns, $rows, $measures);
+		//$data = Pivot::factory($result)->pivotOn($rows)->addColumn($columns,$measures)->fetch();
 		
-		$data = Pivot::factory($result)
-				->newFetch($columns, $rows, $measures);
-		
-			System_Daemon::debug(print_r(
-				array($data,$result,$columns,$rows,$measures),true));
+			//System_Daemon::debug(print_r(
+				//array($data,$result,$columns,$rows,$measures),true));
 				
 		return $data;
 	}

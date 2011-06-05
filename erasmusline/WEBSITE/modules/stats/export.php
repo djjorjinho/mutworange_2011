@@ -3,9 +3,7 @@ error_reporting(0);
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
 set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}..${sep}"));
-require_once('library/eis/Pivot.php');
 require_once('library/eis/StatsCall.php');
-error_reporting(0);
 
 function exportCSV($data){
 	header('Content-Type: application/octet-stream');
