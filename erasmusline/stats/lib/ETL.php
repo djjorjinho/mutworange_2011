@@ -61,21 +61,31 @@ class ETL{
 		
 		$res = $db->getMany($query);
 		
+		// number of students
+		$count_sql = "select count(distinct student_id) as count".
+								" from $efficiency_ods".
+								" where ${efficiency_ods}_id > ${last_id}";
+		
+		$count_res = $db->getOne($count_sql);
+		
 		// trasnformation rules
 		$rules = $this->getEfficiencyTransformationRules();
 		
 		// transform,load and calculate statistical values by context
-		$context = array(count=>0,max_rsp=>0,min_rsp=>0,
-						total_rsp=>0,lodg_avail=>0);
+		$context = array(count=>0,max_rsp=>0,min_rsp=>9001,
+						total_rsp=>0,lodg_avail=>0,num=>0);
+		
+		$context['count'] = $count_res['count'];
+		
 		foreach($res as $row){
-			$context['count']++;
+			$context['num']++;
 			$NRow = $this->transformODSRow($rules,$row,$context);
 			$db->insert($NRow,$mrg_table);
 			$last_id = $row["${efficiency_ods}_id"];
 		}
 		
 		// data mine - needs previous table for comparisons
-		if(isset($prev_table)){
+		if(isset($prev_table) && !empty($prev_table)){
 			$prev_table_row = 
 					$db->getOne("select * from ${prev_table} limit 1");
 			
@@ -296,7 +306,7 @@ class ETL{
 				
 				$ctx['total_rsp'] += $days;
 				
-				$ctx['avg_rsp'] = $ctx['total_rsp'] / $ctx['count'];
+				$ctx['avg_rsp'] = $ctx['total_rsp'] / $ctx['num'];
 				
 				$NRow[$field] = $days;
 			},

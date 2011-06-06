@@ -313,11 +313,12 @@ class PopulateDB {
             if($reject) break;
         }
     	
+        
+        // another approved student
     	$dt1 = new DateTime('2011-05-15 10:00:00');
     	$dt2 = new DateTime('2011-05-15 10:00:00');
     	$dt2->add(new DateInterval("P10D"));
     	
-        // another approved student
         $obj = array(
         	'student_id' => "PT-ISEP-4",
         	'institution_code' => 'isep',
@@ -386,6 +387,81 @@ class PopulateDB {
             $db->insert($obj,$this->ods_tables[0]);
             if($reject) break;
         }
+        
+        
+        // one rejected student
+        $dt1 = new DateTime('2011-05-05 10:00:00');
+        $dt2 = new DateTime('2011-05-05 10:00:00');
+        $dt2->add(new DateInterval("P2D"));
+         
+        
+        $obj = array(
+                	'student_id' => "PT-ISEP-6",
+                	'institution_code' => 'isep',
+                	'institution_host_code' => 'gun',
+                	'country_code' => 'pt',
+                	'country_host_code' => 'en',
+                	'year' => 2011,
+                	'semester' => 2,
+                	'dim_mobility_id' => 'both',
+                	'dim_gender_id' => 'F',
+                	'lodging_available' => 0
+        );
+        
+        $cnt=0;
+        $reject=false;
+        foreach ($csv as $R){
+        	$cnt++;
+        
+        	$dt1->add(new DateInterval("P3D"));
+        	$dt2->add(new DateInterval("P30D"));
+        
+        	$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+        	$obj['dim_phase_id'] = $R['dim_phase_id'];
+        
+        	if($cnt>2){
+        		$obj['reject_date'] = $dt2->format('Y-m-d H:i:s');
+        		unset($obj['approve_date']);
+        		$reject=true;
+        	}else{
+        		$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+        	}
+        
+        
+        	$db->insert($obj,$this->ods_tables[0]);
+        	if($reject) break;
+        }
+        
+        // another approved student
+        $dt1 = new DateTime('2011-04-25 10:00:00');
+        $dt2 = new DateTime('2011-05-05 10:00:00');
+        $dt2->add(new DateInterval("P13D"));
+        
+        $obj = array(
+                	'student_id' => "PT-ISEP-7",
+                	'institution_code' => 'isep',
+                	'institution_host_code' => 'gent',
+                	'country_code' => 'pt',
+                	'country_host_code' => 'be',
+                	'year' => 2011,
+                	'semester' => 2,
+                	'dim_mobility_id' => 'study',
+                	'dim_gender_id' => 'M',
+                	'lodging_available' => 1
+        );
+        
+        foreach ($csv as $R){
+        
+        	$dt1->add(new DateInterval("P9D"));
+        	$dt2->add(new DateInterval("P11D"));
+        
+        	$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+        	$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+        	$obj['dim_phase_id'] = $R['dim_phase_id'];
+        
+        	$db->insert($obj,$this->ods_tables[0]);
+        }
+        
     }
     
     function checkHotCache(){

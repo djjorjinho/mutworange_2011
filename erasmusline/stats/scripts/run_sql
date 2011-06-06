@@ -2,10 +2,12 @@
 dir=$(cd `dirname $0` && pwd)
 cd ${dir}
 
+echo "p8statsdw.sql:";
 mysql -uerasmusline -porange < p8statsdw.sql
 
 ./populateDB.php
 
+echo "fact_efficiency_2010_2s.sql:";
 mysql -uerasmusline -porange p8statsdw < fact_efficiency_2010_2s.sql
 
 echo ""

@@ -4,5 +4,7 @@ cd ${dir}
 
 
 echo "drop database if exists erasmusline; create database erasmusline;" | mysql -uerasmusline -porange
+
+echo "erasmusline.sql:"
 mysql -uerasmusline -porange erasmusline < erasmusline.sql
 echo ""
