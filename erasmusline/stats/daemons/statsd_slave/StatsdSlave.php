@@ -230,7 +230,7 @@ class StatsdSlave extends Server implements JsonRpcI{
 			$scenario['scenarios_id'] = $name;
 			$scenario['config'] = $config;
 			$scenario['table'] = 'scenarios';
-			$db->update($scenario);
+			$db->update($scenario,"users_id='$userid' AND scenarios_id='$name'");
 		}else{
 			$scenario = array(
 				users_id => $userid,

@@ -234,7 +234,7 @@ class DB{
 	 * @param array associative array containing the the data to be updated
 	 * @return mixed query result
 	 */
-	function update($obj){
+	function update($obj,$where){
 		if(!is_array($obj)) throw new Exception("Not a valid object!");
 		list($table,$id) = preg_split("/\./",$obj['dbkey']);
 		if(empty($table)) $table = $obj['table'];
@@ -266,9 +266,10 @@ class DB{
 			}
 		}
 		
-		$sql = "UPDATE $table SET $update WHERE ${table}_id = '$id'";
+		$sql = "UPDATE $table SET $update ";
+		$wh = empty($where)? "WHERE ${table}_id = '$id'" : "WHERE ".$where;
 		
-		$result = $this->query($sql);
+		$result = $this->query($sql.$wh);
 		
 		return $result;
 	}
