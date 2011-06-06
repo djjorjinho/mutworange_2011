@@ -177,6 +177,8 @@ class OLAP{
 						$dim['desc'] : 
 						"$dim[table].$dim[desc]";
 					
+					if($dim['desc']=="") $aux="'All $dim[name]'";
+					
 					array_push($fields,"$aux as `$dim[name]`");
 				}
 					
