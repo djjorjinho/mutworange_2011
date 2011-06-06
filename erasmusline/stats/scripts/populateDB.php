@@ -462,6 +462,36 @@ class PopulateDB {
         	$db->insert($obj,$this->ods_tables[0]);
         }
         
+        
+        // another approved student
+        $dt1 = new DateTime('2011-05-11 10:00:00');
+        $dt2 = new DateTime('2011-05-16 10:00:00');
+        $dt2->add(new DateInterval("P10D"));
+         
+        $obj = array(
+                	'student_id' => "PT-ISEP-8",
+                	'institution_code' => 'isep',
+                	'institution_host_code' => 'gent',
+                	'country_code' => 'pt',
+                	'country_host_code' => 'be',
+                	'year' => 2011,
+                	'semester' => 2,
+                	'dim_mobility_id' => 'study',
+                	'dim_gender_id' => 'F',
+                	'lodging_available' => 0
+        );
+        
+        foreach ($csv as $R){
+        
+        	$dt1->add(new DateInterval("P3D"));
+        	$dt2->add(new DateInterval("P4D"));
+        
+        	$obj['create_date'] = $dt1->format('Y-m-d H:i:s');
+        	$obj['approve_date'] = $dt2->format('Y-m-d H:i:s');
+        	$obj['dim_phase_id'] = $R['dim_phase_id'];
+        
+        	$db->insert($obj,$this->ods_tables[0]);
+        }
     }
     
     function checkHotCache(){
