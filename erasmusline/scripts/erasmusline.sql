@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `erasmuslevel` (
   `view` varchar(45) DEFAULT NULL,
   `next` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`levelId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `erasmuslevel`
@@ -184,7 +184,7 @@ INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `levelDescrip`, `module`, `v
 (10, 'Accomodation Registration Form', NULL, 'accomodation', 'accomodation', 'Certificate Of Arrival'),
 (11, 'Certificate Of Arrival', NULL, 'abroadstay', 'certarrival', 'Change to Learning Agreement'),
 (12, 'Redo Student Application Form', NULL, 'lagreeform', 'applicform', NULL),
-(13, 'Redo Learning Agreement', NULL, 'lagreeform', 'lagreement', NULL);
+(13, 'Redo Learning Agreement', NULL, 'lagreeform', 'lagreement', NULL),
 (14,'Transcript of Records',NULL,'trrec','select',NULL);
 
 -- --------------------------------------------------------
