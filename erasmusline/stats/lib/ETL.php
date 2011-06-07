@@ -252,6 +252,8 @@ class ETL{
 				$NRow[$field] = $obj->getDimId(
 						array(dim_phase_id => $row['dim_phase_id'])
 						,"dim_phase",array(description=>$row['dim_phase_id']));
+				
+				if($row['dim_phase_id']=='precandidate') $NRow['student'] = 1;
 			},
 			
 			dim_institution_id => 

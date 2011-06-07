@@ -30,6 +30,8 @@
 			"table" : "fact_efficiency","description" : "Efficiency",
 			"measures" : [
 				{"id" : "M1", "name" : "Student Participation", 
+					"column" : "student", "aggregator" : "sum"},
+				{"id" : "M2", "name" : "Total Student Participation", 
 					"column" : "val_participants", "aggregator" : "sum-dis"},
 				{"id" : "M4", "name" : "Student Participation (%)", 
 					"column" : "perc_students", "aggregator" : "sum-dis"},

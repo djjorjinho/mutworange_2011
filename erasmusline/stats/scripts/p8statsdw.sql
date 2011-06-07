@@ -135,6 +135,7 @@ CREATE  TABLE IF NOT EXISTS `p8statsdw`.`fact_efficiency` (
   `response_days` SMALLINT UNSIGNED NULL ,
   `student_lodging` TINYINT UNSIGNED NULL ,
   `rejected` TINYINT UNSIGNED NULL ,
+  `student` TINYINT UNSIGNED NULL DEFAULT 0 ,
   INDEX `fk_fact_efficiency_dim_enddate` (`dim_date_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_host_institution` (`dim_institution_host_id` ASC) ,
   INDEX `fk_fact_efficiency_dim_home_institution` (`dim_institution_id` ASC) ,
