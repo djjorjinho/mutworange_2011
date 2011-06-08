@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+<script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
 
 <div class="mainDiv">
 <h2>Learning agreement</h2>
@@ -58,10 +59,12 @@
                 <th>Course unit title (as indicated in the information package)</th>
                 <th>Number of ECTS credits</th>
             </tr>
+            {option:oNotFilled}
             <tr>
                             <td></td><td></td><td></td>
                             <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /><input type="hidden" id="courseCount" name="courseCount" value="{$courseCount}" /></td>
                         </tr>
+            {/option:oNotFilled}
             {iteration:iCourses}
             {$row}
             {/iteration:iCourses}

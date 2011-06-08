@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/>
                     <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
                     <script type="text/javascript" src="./core/js/datepicker/js/jquery-ui-1.8.9.custom.min.js"></script>
-                    <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
                     <script>
 	$(function() {
 		$( "#signDate" ).datepicker();
@@ -38,7 +37,7 @@
 
                 <script>
                 jQuery(function($){
-                   $("#signDate").mask("9999-99-99");
+                   $("#signDasdfte").mask("9999-99-99");
                    $("#date").mask("9999-99-99");
                    $("#signDepSignDate").mask("9999-99-99");
                    $("#signInstSignDate").mask("9999-99-99");

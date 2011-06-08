@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+<script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
+
 <div class="mainDiv">
 <h2>Student Application Form</h2>
 
@@ -229,9 +231,11 @@
     <th>Yes - No</th>
     <th></th>
 </tr>
+{option:oNotFilled}
 <tr>
 <td><input type="button" name="addLanguage" value="Add" id="addLanguage"/><input type="button" name="removeLanguage" value="Remove" id="remLanguage" /><input type="hidden" id="languageCount" name="languageCount" value="{$languageCount}" /></td>
 </tr>
+{/option:oNotFilled}
 
 {iteration:iLanguages}
 {$language}
@@ -251,10 +255,12 @@
 <th>Country</th>
 <th></th>
 </tr>
+{option:oNotFilled}
 <tr>
                             <td></td><td></td><td></td><td></td>
                             <td><input type="button" name="addWork" value="Add" id="addWork"/><input type="button" name="removeWork" value="Remove" id="remWork" /><input type="hidden" id="workCount" name="workCount" value="{$workCount}" /></td>
                         </tr>
+{/option:oNotFilled}
 
 {iteration:iWorks}
 {$work}
@@ -287,7 +293,7 @@
 
 <div class="TRdiv">
 <label for="whichInst"><span>At which Institution</span></label>
-<input class="validate[custom[onlyNumberSp]] text-input" type="text" id="whichInst" name="whichInst" value="{$whichInst|htmlentities}" />
+<input class="validate[custom[onlyLetterNumber]] text-input" type="text" id="whichInst" name="whichInst" value="{$whichInst|htmlentities}" />
 <span class="req" id="msgWhichInst">{$msgWhichInst|htmlentities}</span>
 </div>
 
@@ -303,6 +309,10 @@
         <label for="cv"><span>Upload your Transcript Of Records here</span></label>
         <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
     </div>
+    <div class="TRdiv">
+		<input type="hidden" name="formAction" id="formRegister" value="doApplic" />
+		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+	</div>
 {/option:oNotFilled}
 
 {option:oFilled}
@@ -310,30 +320,6 @@
 {/option:oFilled}
 
 {option:oCoor}
-<script language="javascript">
- function printpage()
-  {
-   window.print();
-  }
-</script>
-<div class="TRdiv">
-<label for="print">Print dit formulier af</label>
-<input type="button" value="Print" onclick="printpage();" />
-</div>
-{/option:oCoor}
-
-{option:oOffice}
-<div class="TRdiv">
-        <label for="printed"><span>Attach signed Application Form</span></label>
-        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
-    </div>
-<div class="TRdiv">
-		<input type="hidden" name="formAction" id="formRegister" value="doTohostapplic" />
-		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-	</div>
-{/option:oOffice}
-
-{option:oHost}
 <h3>Receiving institution</h3>
 <fieldset>
 <p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
@@ -344,9 +330,9 @@
             <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
             <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
 </div>
-<p><a href="{$source}" title="Attached signed Application Form">Signed Application Form</a></p>
 
 <div class="TRdiv">
+    <label for="coordinator">Motivation</label>
         <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5"></textarea>	
     </div>
 </fieldset>
@@ -373,6 +359,35 @@
 </div>
 
 </fieldset>
+<script language="javascript">
+ function printpage()
+  {
+   window.print();
+  }
+</script>
+<div class="TRdiv">
+<label for="print">Print dit formulier af</label>
+<input type="button" value="Print" onclick="printpage();" />
+</div>
+{/option:oCoor}
+
+{option:oOffice}
+<fieldset>
+    <h3>Sending Institution</h3>
+<div class="TRdiv">
+        <label for="printed"><span>Attach signed Application Form</span></label>
+        <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
+    </div>
+<div class="TRdiv">
+		<input type="hidden" name="formAction" id="formRegister" value="doTohostapplic" />
+		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+	</div>
+</fieldset>
+{/option:oOffice}
+
+{option:oHost}
+
+<p><a href="{$source}" title="Attached signed Application Form">Signed Application Form</a></p>
 
 <fieldset>
 <legend>Submit the application</legend>
