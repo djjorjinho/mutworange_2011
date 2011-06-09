@@ -15,6 +15,8 @@
 		<input type="hidden" name="formAction" id="formRegister" value="doSearch" />
 		<input class="button" name="btnSearch" id="btnSend" type="submit" value="Search"/>
 	</div> 
+    
+   <a href='index.php?module=residence&amp;view=add'>Add</a>
     {$error}
 {iteration:iResidences}
     <div class="TRdiv">

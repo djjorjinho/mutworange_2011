@@ -17,7 +17,7 @@
 <h3>Owner</h3>
 <p>Name: {$familyName} {$firstName}</p>
 <p>Telephone: {$tel}</p>
-<p>Email: <a href="mailto:{$email}">{$email}</p>
+<p>Email: <a href="mailto:{$email}">{$email}</a></p>
 {option:oReservation}
 <h3>Make Reservation</h3>
 <p>Fill in the <a href="index.php?module=acom_reg&view=acom_reg">Accommodation Registration </a></p>
