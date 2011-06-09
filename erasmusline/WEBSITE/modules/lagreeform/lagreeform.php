@@ -1042,6 +1042,11 @@ class LagreeformController extends PlonkController {
         $this->userid = LagreeformDB::getStudentByForm(PlonkFilter::getGetValue('form'));
         $user = LagreeformDB::getInfoUser($this->userid);
         $erasmus = LagreeformDB::getErasmusInfo($this->userid);
+        foreach($erasmus as $key=>$value) {
+            if($value === null) {
+                unset($erasmus[$key]);
+            }
+        }
         $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application and Learning Agreement');
         
         
@@ -1066,7 +1071,7 @@ class LagreeformController extends PlonkController {
                 'emailField' => 'email');
             $er = array(
                 'table' => 'erasmusstudent',
-                'data' => array($erasmus['users_email']),
+                'data' => $erasmus,
                 'emailField' => 'users_email'
             );
 
@@ -1080,7 +1085,7 @@ class LagreeformController extends PlonkController {
             
             if (!empty($_FILES['pic']['tmp_name'])) {
                 $this->upload('Application.pdf');
-                //$b->FileTransferBelgium($_FILES['file']['name'], $erasmus['hostInstitutionId'], $this->userid);
+                $b->fileTransfer('forms:saveFile',$this->userid,$_FILES['file']['name'], $erasmus['hostInstitutionId']);
             }
             PlonkWebsite::redirect('index.php?module=office');
         } catch (Exception $e) {

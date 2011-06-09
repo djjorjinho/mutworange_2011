@@ -1,43 +1,50 @@
 @CHARSET "UTF-8";
 /******* GENERAL RESET *******/
 
-/*body{
-	background: #fff;
-	line-height:14px;
-	font-size: 12px;
-	font-family: Arial,  Verdana, Helvetica, sans-serif;
-	margin:0pt;
-	cursor:default;
-
-}*/
-
-
 .mainDiv{
-    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-family: Tahoma;
     font-size:12px;
-    border:solid 2px #b7ddf2;
-    background:#ebf4fb;
     width:600px;
     margin-left: 10%;
 }
 
-
-
-
-.TRdiv input{
-    width:250px;
-    font-size:12px;
-    border:solid 1px #aacfe4;
+fieldset {
+    border:1px solid #998c86;    
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;    
 }
-.TRdiv select{
-    width:250px;
-    font-size:12px;
-    border:solid 1px #aacfe4;
+legend {
+    margin-left:30px;
+    padding:10px;
 }
+
+ .TRdiv input, select, textarea{
+    width:225px;
+    border:solid 1px #DFDFDF;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+}
+.TRdiv input:focus, select:focus, textarea:focus {
+    border:1px solid #ff6d06;    
+}
+
+input[type="submit"]  {    
+    border:1px solid #998c86;    
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;  
+}
+
+input[type="submit"]:hover {
+    border:1px solid #ff6d06;
+}
+
+
+ 
 .lol {
     background-color: #fdd7d7;
-
-
 }
 
 /******* Transip Records *******/
@@ -47,26 +54,29 @@ div.curFocus {
 
 
 label {
-    width: 14em;
-    display: block;
-    float: left;
-    padding-top: 4px;
-    vertical-align: middle;
-
+    width:100px;
+    float:left;
+    text-align:right;
+    padding:4px 15px 0 0;
+    color: #333333;
+    
 }
 .TRdiv {
-    display: table;
-    min-width:1px;
-    padding: 0.2em;
-    position: relative;
+    width:365px;
+    _width:355px;
+    clear:both;
+    padding:10px 0 10px 0;
+    _padding:5px 0 5px 0;
+    color:#a53d17;
 
 }
 
 
 .req {
     margin-left: 2px;
-    color: #ee0101;
-    font-size:16px;
+    color: #ff6d06;
+    font-size:12px;
+    float:right;
 
 }
 
@@ -99,8 +109,37 @@ label {
     width:100%;
     position: relative;
     float: left;
+}
 
 
+input.radio
+{
+	display:block;
+	height:13px;
+	line-height:1.4em;
+	margin:6px 0 0 3px;
+	width:13px;
+        
+}
+
+label.description
+{
+	border:none;
+	color:#222;
+	display:block;
+	font-weight:700;
+	line-height:150%;
+	padding:0 0 1px;
+}
+.radioResidences span
+{    
+	color:#444;
+	float:left;
+	margin:0 4px 0 0;
+	padding:0 0 8px;
+}
+.radioResidences {
+    width:300px;
 }
 
 
