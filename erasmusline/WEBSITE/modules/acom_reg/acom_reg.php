@@ -34,6 +34,16 @@ class acom_regController extends PlonkController {
 
     public function showacom_reg() {
         $this->checkLogged();
+        $level = acom_regDB::checkLevel();
+        if ($level != 'Accomodation Registration Form') {
+            //PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        }
+        $x=PlonkFilter::getGetValue('institutionId');
+        echo $x;
+        if (isset($x)) {
+            $this->position='2yesSession';
+        }
+
         $this->mainTpl->assign('siteTitle', 'Accomodation Registration');
         $this->mainTpl->assign('pageMeta', '
             <link type="text/css" rel="stylesheet" href="./core/css/validationEngine.jquery.css"/>
@@ -62,7 +72,14 @@ class acom_regController extends PlonkController {
             $resAvail = acom_regDB::getResidences(PlonkSession::get('id'));
             $this->fillResidence($resAvail, '');
         }
-
+        if ($this->position == '2yesSession') {
+            $this->mainTpl->assign('pageMeta', '');
+            $this->mainTpl->assign('pageCSS', '');
+            $this->pageTpl->assignOption('showSelectAccomodation');
+            $resAvail=acom_regDB::getResidenceAV(PlonkSession::get('id'), $x);
+            $this->fillResidence($resAvail, 'session');
+        }
+        
         if ($this->position == '2no') {
             $this->pageTpl->assignOption('showAccomNo');
             $this->getDBdata(PlonkSession::get('id'), '');
@@ -235,7 +252,7 @@ class acom_regController extends PlonkController {
             $i++;
         }
 
-        if ($act == 'mail' || $act == 'view') {
+        if ($act == 'mail' || $act == 'view' ||$act=='session') {
             $this->pageTpl->assign('Acselection', 'checked');
         } else {
             $this->pageTpl->assign('Acselection', '');
