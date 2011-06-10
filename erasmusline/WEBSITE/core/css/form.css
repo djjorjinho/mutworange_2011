@@ -40,6 +40,7 @@ input[type="submit"]  {
 
 input[type="submit"]:hover {
     border:1px solid #ff6d06;
+    cursor: pointer;
 }
 
 
@@ -159,6 +160,22 @@ label {
 
 .linkResidence a {
     color:#ff6d06;
+}
+
+.mainDiv img {
+    margin-left:25px;
+    margin-bottom:25px;
+}
+
+a:hover  {
+   color:#ff6d06;
+   cursor: pointer;
+}
+
+#pending, #approved, #denied {
+    width: 600px;
+    height: 30px;
+    background-color: white;
 }
 
 

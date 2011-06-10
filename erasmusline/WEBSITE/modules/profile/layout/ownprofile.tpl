@@ -1,7 +1,7 @@
-<h2>{$fName} {$faName}<span> ({$userLevel})</span></h2>
-
-<h3>About {$fName}</h3>
-
+<div class="mainDiv">
+    <h3>Profile of {$fName} {$faName}</h3>
+<fieldset>
+    <legend>General Information</legend>
 <ul>
         <li>
             Full name: {$fName} {$faName}
@@ -21,19 +21,25 @@
         <li>
             City: {$city}
         </li>
+        <li>
+            Userlevel: {$userLevel}
+        </li>
     </ul>
+</fieldset>
 
-<h3>Erasmus info</h3>
+    <fieldset>
+        <legend>Erasmus info</legend>
 <img src="{$profile}" alt="profile" height="200" width="200" />
-<h4>Your current Erasmus progress<h4>
+<p>Your current Erasmus progress<p>
 <table>
     <tr>
         <td></td>
         <td><span class="progressBar" id="pb1"></span></td>
     </tr>
 </table>
-
-<h4>Period</h4>
+        </fieldset>
+    <fieldset>
+<legend>Period</legend>
 
 <ul>
 <li>
@@ -43,7 +49,9 @@
     End date: {$end}
 </li>
 </ul>
-<h4>Where from - where to</h4>
+        </fieldset>
+    <fieldset>
+<legend>Where from - where to</legend>
 <ul>
 <li>
     Home institution: {$home}
@@ -57,10 +65,13 @@
 <li>
     Host Coordinator {$dCoordinator}
 </li>
-
-<h4>What?</h4>
+</ul>
+</fieldset>
+<fieldset>
+<legend>What?</legend>
+<ul>
 <li>
-   Study: {$study}
+   Education: {$study}
 </li>
 <li>
     Courses:
@@ -72,32 +83,9 @@
     </ul>
 </li>
 </ul>
+</fieldset>
 
-<h3>Lodging</h4>
-<h4>Period</h4>
-<ul>
-    <li>
-        From: {$from}
-    </li>
-    <li>
-        Untill: {$till}
-    </li>
-</ul>
 
-<h4>Where</h4>
-<ul>
-    <li>Postalcode: {$postal}</li>
-    <li>City: {$city}</li>
-    <li>Street + Nr: {$street}</li>
-</ul>
-
-<h4>Info</h4>
-<ul>
-    <li>Price: {$price} ({$water_elek_included} - {$internet}</li>
-    <li>Personal kitchen: {$kitchen}</li>
-    <li>Personal bathroom: {$bathroom}</li>
-    <li>Number of beds: {$beds}</li>
-    <li>Description: {$descrip}</li>
-</ul>
+</div>
 
 

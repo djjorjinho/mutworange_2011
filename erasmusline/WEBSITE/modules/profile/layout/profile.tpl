@@ -1,7 +1,8 @@
-<div id="info">
-    <h2>{$fName} <span>({$userLevel})</span></h2>
+<div class="mainDiv">
+    <h3>Profile of {$faName} {$fName}</h3>
 
-    <h3>Personal info</h3>
+    <fieldset>
+        <legend>Personal Information</legend>
     <ul>
         <li>
             Full name: {$fName} {$faName}
@@ -21,7 +22,11 @@
         <li>
             City: {$city}
         </li>
+        <li>
+            Userlevel: {$userLevel}
+        </li>
     </ul>
+        </fieldset>
 
 
 </div>

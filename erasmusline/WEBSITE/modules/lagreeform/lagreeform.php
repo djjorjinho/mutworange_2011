@@ -894,8 +894,8 @@ class LagreeformController extends PlonkController {
         );
 
 
-        //LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid . '"');
-        //LagreeformDB::updateErasmusStudent('forms', $formArray, 'formId = ' . $this->formid);
+        LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid . '"');
+        LagreeformDB::updateErasmusStudent('forms', $formArray, 'formId = ' . $this->formid);
 
         $user = LagreeformDB::getInfoUser($this->userid);
         $erasmus = LagreeformDB::getErasmusInfo($this->userid);
@@ -926,10 +926,10 @@ class LagreeformController extends PlonkController {
             $tables = array('studentsEvents', 'erasmusstudent', 'forms');
             $data = array($event, $er, $form);
             $idInst = $erasmus['homeInstitutionId'];
-            //$b->dataTransfer($methods, $tables, $data, $idInst);
+            $b->dataTransfer($methods, $tables, $data, $idInst);
 
             if (!empty($_FILES['pic']['tmp_name'][0])) {
-                $this->upload('Application.pdf');
+                $this->upload($this->formid.'.pdf');
                 $b->fileTransfer('forms:saveFile', $this->userid, $_FILES['pic']['name'][0], $erasmus['homeInstitutionId'],$this->formid.'.pdf');
             }
             PlonkWebsite::redirect('index.php?module=office');
@@ -1007,13 +1007,26 @@ class LagreeformController extends PlonkController {
                 'data' => $erasmus,
                 'emailField' => 'users_email'
             );
+            
+            $event = array(
+                'table' => 'studentsEvents',
+                'data' => $valueEvent
+            );
 
-            $jsonStringUser = json_encode($us);
-            $jsonStringEras = json_encode($er);
+            $form = array(
+                'table' => 'forms',
+                'data' => $formArray,
+                'emailField' => 'formId'
+            );
 
             $b = new InfoxController;
-            //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
-            $b->TransferBelgium($jsonStringEras, $erasmus['hostInstitutionId']);
+            
+            $methods = array('forms:insertInDb', 'forms:toDb', 'forms:toDb');
+            $tables = array('studentsEvents', 'erasmusstudent', 'forms');
+            $data = array($event, $er, $form);
+            $idInst = $erasmus['homeInstitutionId'];
+            $b->dataTransfer($methods, $tables, $data, $idInst);
+            
             if (!empty($_FILES['file']['name'])) {
                 $this->upload('Application.pdf');
                 $b->FileTransferBelgium($_FILES['file']['name'], $erasmus['hostInstitutionId'], $this->userid);
@@ -1112,17 +1125,83 @@ class LagreeformController extends PlonkController {
     }
 
     public function doTohostagree() {
-        
+        $this->userid = LagreeformDB::getStudentByForm(PlonkFilter::getGetValue('form'));
+        $user = LagreeformDB::getInfoUser($this->userid);
+        $erasmus = LagreeformDB::getErasmusInfo($this->userid);
+        $form = LagreeformDB::getForm(PlonkFilter::getGetValue('form'));
+        foreach ($erasmus as $key => $value) {
+            if ($value === null) {
+                unset($erasmus[$key]);
+            }
+        }
+        $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application and Learning Agreement');
+
+        $valueEvent = array(
+            'reader' => 'Student',
+            'timestamp' => date("Y-m-d"),
+            'motivation' => '',
+            'studentId' => $this->userid,
+            'action' => 99,
+            'erasmusLevelId' => $erasmusLevel['levelId'],
+            'eventDescrip' => 'Learning Agreement sent to host institution.',
+            'readIt' => 0
+        );
+
+        LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
+
+        try {
+
+            $us = array(
+                'table' => 'users',
+                'data' => $user,
+                'emailField' => 'email');
+            $er = array(
+                'table' => 'erasmusstudent',
+                'data' => $erasmus,
+                'emailField' => 'users_email'
+            );
+            $form = array(
+                'table' => 'forms',
+                'data' => $form,
+                'emailField' => 'formId'
+            );
+
+            $b = new InfoxController;
+            //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
+            $methods = array('forms:toDb', 'forms:toDb', 'forms:toDb');
+            $tables = array('users', 'erasmusstudent', 'forms');
+            $data = array($us, $er, $form);
+            $idInst = $erasmus['hostInstitutionId'];
+            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            
+            if (!empty($_FILES['pic']['tmp_name'][0])) {
+                $this->upload($this->formid.'.pdf');
+                $b->fileTransfer('forms:saveFile', $this->userid, $_FILES['pic']['name'][0], $idInst,$this->formid.'.pdf');
+            }
+            
+            //Plonk::dump($success);
+            if ($success !== '0') {
+                PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
+            } else {
+                PlonkWebsite::redirect('index.php?module=office&view=office&success=false');
+            }
+        } catch (Exception $e) {
+            Plonk::dump('failed');
+        }
     }
 
     private function upload($fileName) {
-        $uploaddir = "files/" . $this->userid . "/";
+        $uploaddir = "files/" . $this->userid . "";
+        
+        if(!PlonkDirectory::exists($uploaddir)) {
+            mkdir($uploaddir);
+            }
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
                 $tmp_name = $_FILES["pic"]["tmp_name"][$key];
                 $name = $fileName;
-                $uploadfile = $uploaddir . basename($name);
+                $uploadfile = $uploaddir."/" . basename($name);
 
                 if (move_uploaded_file($tmp_name, $uploadfile)) {
                     $cover = $uploadfile;

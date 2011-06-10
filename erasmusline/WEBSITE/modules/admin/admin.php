@@ -14,8 +14,6 @@ class AdminController extends PlonkController {
     protected $views = array(
         'admin',
         'students',
-        'confirmaction',
-        'toconfirm',
         'staff'
     );
     /**
@@ -24,7 +22,6 @@ class AdminController extends PlonkController {
      */
     protected $actions = array(
         'logout',
-        'confirm',
         'infox',
         'add'
         
@@ -103,50 +100,6 @@ class AdminController extends PlonkController {
         $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
     }
 
-    public function showToconfirm() {
-        // Main Layout
-        // Logged or not logged, that is the question...
-
-        $this->checkLogged();
-
-        // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('siteTitle', 'Students to confirm/deny');
-        $this->mainTpl->assign('breadcrumb','');
-        $this->mainTpl->assign('pageJava','');
-
-
-        $this->pageTpl->assignOption('oAdmin');
-        // assign menu active state
-        $this->mainTpl->assignOption('oNavAdmin');
-
-        // assign iterations: overlopen van de gevonden users
-        $this->pageTpl->setIteration('iStudents');
-        $i = 0;
-
-        // gets info of all the users
-        $students = AdminDB::getNonConfirmed();
-
-        // loops through all the users (except for the user with id 1 = admin) and assigns the values
-        foreach ($students as $student) {
-
-            $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-            $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-            $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-            $this->pageTpl->assignIteration('i', $student['userId']);
-            $this->pageTpl->assignIteration('acceptedYes', '');
-            $this->pageTpl->assignIteration('acceptedNo', '');
-            $this->pageTpl->assignIteration('acceptedWait', 'checked');
-
-            // refill the iteration (mandatory!)
-            $this->pageTpl->refillIteration('iStudents');
-            $i++;
-        }
-
-        // parse the iteration
-        $this->pageTpl->parseIteration('iStudents'); // alternative: $tpl->parseIteration();
-    }
-
     public function showStaff() {
         $this->checkLogged();
 
@@ -189,22 +142,6 @@ class AdminController extends PlonkController {
         PlonkSession::destroy();
 
         PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
-    }
-
-    public function doConfirm() {
-
-        $toAccept = array();
-        $toDeny = array();
-        foreach ($_POST as $key => $value) {
-            if ($value === '2') {
-                $toAccept[] = substr($key, 8);
-            }
-            if ($value === '0') {
-                $toDeny[] = substr($key, 8);
-            }
-        }
-        AdminDB::updateStudents('users', 'isValidUser', 'userId', '2', $toAccept);
-        //AdminDB::deleteStudents('users','userId',$toDeny);
     }
 
     public function doInfox() {

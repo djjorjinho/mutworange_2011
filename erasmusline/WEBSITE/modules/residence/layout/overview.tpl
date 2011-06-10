@@ -1,5 +1,5 @@
 <div class="mainDiv">
-<form action="" method="post" enctype="multipart/form-data" id="search">	
+<form action="" method="post" enctype="multipart/form-data">	
     
     <div class="TRdiv">
             <label for="country"><span>Country</span></label>
@@ -11,14 +11,18 @@
 	</div>
     
 
+<form action="" method="post" enctype="multipart/form-data">
         <div class="TRdiv">               
-		<input type="hidden" name="formAction" id="formRegister" value="doSearch" />
+		<input type="hidden" name="formAction" value="doSearch" />
 		<input class="button" name="btnSearch" id="btnSend" type="submit" value="Search"/>
 	</div> 
+</form>
+<form action="" method="post" enctype="multipart/form-data">
       <div class="TRdiv">               
-		<input type="hidden" name="formAction" id="formRegister" value="doAddlink" />
+		<input type="hidden" name="formAction" value="doAddlink" />
 		<input class="button" name="btnAddlink" id="btnSend" type="submit" value="Add"/>
 	</div> 
+</form>
     
     {$error}
             

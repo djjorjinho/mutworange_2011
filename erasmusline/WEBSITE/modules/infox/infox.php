@@ -77,7 +77,6 @@ class InfoxController extends PlonkController {
     }
 
     public function showAirport() {
-        echo 'test';
         if (PlonkFilter::getPostValue('json')) {
             $obj = json_decode(PlonkFilter::getPostValue('json'));
             for ($i = 0; $i < count($obj); $i++) {

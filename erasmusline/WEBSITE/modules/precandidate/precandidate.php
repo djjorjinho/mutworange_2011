@@ -461,13 +461,17 @@ class PrecandidateController extends PlonkController {
     }
     private function upload() {
         $id = PlonkSession::get('id');
-        $uploaddir = "files/" . $id . "/";
+        $uploaddir = "files/" . $id . "";
+        
+        if(!PlonkDirectory::exists($uploaddir)) {
+            mkdir($uploaddir);
+            }
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
                 $tmp_name = $_FILES["pic"]["tmp_name"][$key];
                 $name = $_FILES["pic"]["name"][$key];
-                $uploadfile = $uploaddir . basename($name);
+                $uploadfile = $uploaddir."/" . basename($name);
 
                 if (move_uploaded_file($tmp_name, $uploadfile)) {
                     $cover = $uploadfile;
