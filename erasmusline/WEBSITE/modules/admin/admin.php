@@ -208,10 +208,14 @@ class AdminController extends PlonkController {
     }
 
     public function doInfox() {
-        include('modules/infox/infox.php');
+		include('modules/infox/infox.php');
         $method = array('infox:test1', 'infox:test2');
         $table = array('tab1', 'tab2');
         $data = array(array('data11','data12','data13'),array('data21','data22','data23'));
-        echo InfoxController::dataTransfer($method, $table, $data, 4);
+        echo InfoxController::dataTransfer($method, $table, $data, "info@kahosl.be");
+        
+        // File transfer
+        $method = "infox:filetest";
+        echo InfoxController::fileTransfer($method, "C:/Program Files/git/msysgit/git/mutworange/erasmusline/WEBSITE/test.txt", "info@kahosl.be");
     }
 }
