@@ -33,7 +33,7 @@ class PrecandidateController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'ErasmusLine');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/precandidate.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="core/css/form.css" type="text/css" media="screen"/>');
+        $this->mainTpl->assign('pageMeta', '');
     }
 
     public function showPrecandidate() {
@@ -238,6 +238,7 @@ class PrecandidateController extends PlonkController {
 
             $jsonArray = json_encode($newArray);
             $values = array(
+                'formdId' => Functions::createRandomString(),
                 'type' => 'Precandidate',
                 'date' => date("Y-m-d"),
                 'content' => $jsonArray,

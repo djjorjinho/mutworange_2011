@@ -694,11 +694,6 @@ class PlonkDB {
         // add trailing ;
         $query .= ';';
 
-        if ($table == 'erasmusstudent') {
-            //echo substr($query, 0, 150);
-            echo substr($query, 250);
-        }
-
         // execute query and return the result
         return $this->execute($query);
     }

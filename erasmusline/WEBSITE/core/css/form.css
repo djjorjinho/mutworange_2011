@@ -142,6 +142,26 @@ label.description
     width:300px;
 }
 
+#pending, #approved, #denied {
+    background-color: white;
+    color:  #ff6d06;
+    width: 600px;
+    height: 30px;
+    border: 1px solid  #ff6d06;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#approved {
+    border: 1px solid  green;
+    color:  green;
+}
+
+#denied {
+    border: 1px solid  red;
+    color: red;
+}
+
 
 /* button  CSS*/
 

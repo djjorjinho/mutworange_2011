@@ -30,6 +30,18 @@ class OfficeController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Office coordinator');
+        
+        if(PlonkFilter::getGetValue('success') != null) {
+            if(PlonkFilter::getGetValue('success') == 'true') {
+                $this->pageTpl->assign('message', 'Info was sent succesfull');
+            }
+            else if (PlonkFilter::getGetValue('success') == 'false') {
+                $this->pageTpl->assign('message', 'Info couldn\'t be sent because the host institute couldn\'t be accesed.');
+            }
+            else {
+                $this->pageTpl->assign('message', '');
+            }
+        }
     }
     
     public function showReapplics() {

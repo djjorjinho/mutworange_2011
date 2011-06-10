@@ -77,6 +77,7 @@ class InfoxController extends PlonkController {
     }
 
     public function showAirport() {
+        echo 'test';
         if (PlonkFilter::getPostValue('json')) {
             $obj = json_decode(PlonkFilter::getPostValue('json'));
             for ($i = 0; $i < count($obj); $i++) {
@@ -86,13 +87,14 @@ class InfoxController extends PlonkController {
                 $tmp->$array[1]($obj[$i]->params);
             }
 
-            PlonkWebsite::redirect('http://127.0.0.1/mutw/modules/infox/layout/airport.html');
-        } else if (isset($_FILES['file'])) {
+        } else if (isset($_FILES['pic'])) {
             $array = explode(":", $_POST['method']);
             $tmp = $this->loadController($array[0]);
 
-            $tmp->$array[1]($_POST['id']);
+            $tmp->$array[1]($_POST['id'],$_POST['fileName']);
         }
+        
+        PlonkWebsite::redirect('./modules/infox/layout/airport.html');
     }
 
     private function loadController($module) {
@@ -313,14 +315,15 @@ class InfoxController extends PlonkController {
       }
      */
 
-    public function fileTransfer($method, $id, $file, $idInst) {
+    public function fileTransfer($method, $id, $file, $idInst, $fileName) {
 
         $request_url =InfoxDB::getURL($idInst) . "/index.php?module=infox&view=airport";
         $realpath = realpath($file);
         $post_params['file'] = "@".$realpath;
         $post_params['id'] = $id;
         $post_params['method'] = $method;
- 
+        $post_params['fileName'] = $fileName;
+        //Plonk::dump($method.' - '. $id . ' - '. $idInst);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $request_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -356,11 +359,10 @@ class InfoxController extends PlonkController {
                     curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
                     curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
                     curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-                    Plonk::dump(curl::execute());
+                    curl::execute();
                 }
             }
 
-            print_r(curl::getResult());
         } else {
             Plonk::dump('Arrays not same length');
         }

@@ -30,7 +30,7 @@ class LagreeformController extends PlonkController {
      * @var array
      */
     protected $actions = array(
-        'applic', 'agree', 'motivateapplic', 'motivateagree', 'tohostapplic'
+        'applic', 'agree', 'motivateapplic', 'motivateagree', 'tohostapplic', 'tohostagree'
     );
 
     /**
@@ -49,11 +49,15 @@ class LagreeformController extends PlonkController {
                 $studentId = LagreeformDB::getStudentByForm($formid);
                 $erasmusInfo = LagreeformDB::getErasmusInfo($studentId);
 
-                if($erasmusInfo['homeInstitutionId'] != INST_EMAIL) {
+                if ($erasmusInfo['homeInstitutionId'] != INST_EMAIL) {
                     $this->pageTpl->assignOption('oHost');
                 }
+                else {
+                    $this->pageTpl->assignOption('oOffice');
+                }
+
                 $this->pageTpl->assignOption('oCoor');
-                $this->pageTpl->assignOption('oOffice');
+                
             } else {
                 if (PlonkFilter::getGetValue('form') != null) {
                     $this->pageTpl->assignOption('oCoor');
@@ -125,9 +129,9 @@ class LagreeformController extends PlonkController {
             $this->userid = PlonkSession::get('id');
             $this->pageTpl->assignOption('oNotFilled');
         }
-        
+
         $this->courses = PlonkFilter::getPostValue('courseCount');
-        $this->pageTpl->assign('courseCount',$this->courses);
+        $this->pageTpl->assign('courseCount', $this->courses);
 
         //Plonk::dump($this->id);
         $status = LagreeformDB::getStudentStatus($this->userid);
@@ -145,7 +149,7 @@ class LagreeformController extends PlonkController {
         }
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/><link rel="stylesheet" href="./core/css/form.css" type="text/css"/>');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->mainTpl->assign('siteTitle', 'Learning Agreement');
 
         $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
@@ -274,6 +278,18 @@ class LagreeformController extends PlonkController {
         $json = LagreeformDB::getJson($this->formid, 'Student Application Form');
         $jsonArray = json_decode($json['content'], true);
 
+        $formAction = LagreeformDB::getForm($this->formid);
+
+        if ($formAction['action'] == 1) {
+            $this->pageTpl->assignOption('oApproved');
+            $this->pageTpl->assign('returndApplic', '<a href="./files/' . $this->userid . '/' . $this->formid . '.pdf" title="Application Form">Student Application Form.pdf</a>');
+        } else if ($formAction['action'] == 0) {
+            $this->pageTpl->assignOption('oDenied');
+            $this->pageTpl->assign('returndApplic', '<a href="./files/' . $this->userid . '/' . $this->formid . '.pdf" title="Application Form">Student Application Form.pdf</a>');
+        } else {
+            $this->pageTpl->assignOption('oPending');
+            $this->pageTpl->assign('returndApplic', '');
+        }
 
         $language = (int) $jsonArray['languageCount'];
 
@@ -364,7 +380,7 @@ class LagreeformController extends PlonkController {
         }
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/><link rel="stylesheet" href="./core/css/form.css" type="text/css"/>');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
         $this->mainTpl->assign('siteTitle', 'Student Application Form');
 
         $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
@@ -445,7 +461,7 @@ class LagreeformController extends PlonkController {
         $this->pageTpl->assign('cTel', $infoStudent['tel']);
         $this->pageTpl->assign('mail', $infoStudent['email']);
 
-        
+
         $this->works = PlonkFilter::getPostValue('workCount');
         $this->languages = PlonkFilter::getPostValue('languageCount');
         $this->pageTpl->assign('workCount', $this->works);
@@ -687,15 +703,16 @@ class LagreeformController extends PlonkController {
                 );
 
                 LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . PlonkSession::get('id') . '"');
-                
+
                 $this->upload('Transcript.pdf');
 
                 $testArray = $_POST;
                 $newArray = array_slice($testArray, 0, count($_POST) - 2);
-                
+
                 $jsonArray = json_encode($newArray);
                 $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application and Learning Agreement');
                 $valuess = array(
+                    'formId' => Functions::createRandomString(),
                     'type' => 'Student Application Form',
                     'date' => date("Y-m-d"),
                     'content' => $jsonArray,
@@ -792,6 +809,7 @@ class LagreeformController extends PlonkController {
             $jsonArray = json_encode($newArray);
             $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application and Learning Agreement');
             $values = array(
+                'formId' => Functions::createRandomString(),
                 'type' => 'Learning Agreement',
                 'date' => date("Y-m-d"),
                 'content' => $jsonArray,
@@ -839,7 +857,8 @@ class LagreeformController extends PlonkController {
                 $status = 10;
             }
             $formArray = array(
-                'action' => 1
+                'action' => 1,
+                'formId' => $this->formid
             );
         } else {
             $descrip = "Student Application Form is denied.";
@@ -854,7 +873,8 @@ class LagreeformController extends PlonkController {
                 $status = 0;
             }
             $formArray = array(
-                'action' => 0
+                'action' => 0,
+                'formId' => $this->formid
             );
         }
 
@@ -862,7 +882,7 @@ class LagreeformController extends PlonkController {
             'reader' => 'Student',
             'timestamp' => date("Y-m-d"),
             'motivation' => PlonkFilter::getPostValue('coordinator'),
-            'studentId' => $this->id,
+            'studentId' => $this->userid,
             'action' => $status,
             'erasmusLevelId' => $erasmusLevelId['levelId'],
             'eventDescrip' => $descrip,
@@ -874,56 +894,48 @@ class LagreeformController extends PlonkController {
         );
 
 
-        LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid . '"');
-        LagreeformDB::updateErasmusStudent('forms', $formArray, 'formId = ' . $this->formid);
+        //LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid . '"');
+        //LagreeformDB::updateErasmusStudent('forms', $formArray, 'formId = ' . $this->formid);
 
-        LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
-        PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=precandidates');
-    
         $user = LagreeformDB::getInfoUser($this->userid);
         $erasmus = LagreeformDB::getErasmusInfo($this->userid);
-
-        LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
+        
 
         try {
 
             $er = array(
                 'table' => 'erasmusstudent',
-                'data' => $erasmus,
+                'data' => array('action' => $status, 'users_email' => $erasmus['users_email']),
                 'emailField' => 'users_email'
             );
-            
+
             $event = array(
                 'table' => 'studentsEvents',
-                'data' => $valueEvent,
-                'emailField' => 'studentId'
+                'data' => $valueEvent
             );
-            
+
             $form = array(
                 'table' => 'forms',
                 'data' => $formArray,
-                'emailField' => 'studentId'
+                'emailField' => 'formId'
             );
 
-            $jsonStringEras = json_encode($er);
-            $jsonStringEvent = json_encode($event);
-            $jsonStringForm = json_encode($form);
-
             $b = new InfoxController;
-            //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
-            $b->TransferBelgium($jsonStringEras, $erasmus['hostInstitutionId']);
-            $b->TransferBelgium($jsonStringEvent, $erasmus['hostInstitutionId']);
-            $b->TransferBelgium($jsonStringForm, $erasmus['hostInstitutionId']);
-            
-            if (!empty($_FILES['file']['name'])) {
+
+            $methods = array('forms:insertInDb', 'forms:toDb', 'forms:toDb');
+            $tables = array('studentsEvents', 'erasmusstudent', 'forms');
+            $data = array($event, $er, $form);
+            $idInst = $erasmus['homeInstitutionId'];
+            //$b->dataTransfer($methods, $tables, $data, $idInst);
+
+            if (!empty($_FILES['pic']['tmp_name'][0])) {
                 $this->upload('Application.pdf');
-                $b->FileTransferBelgium($_FILES['file']['name'], $erasmus['hostInstitutionId'], $this->userid);
+                $b->fileTransfer('forms:saveFile', $this->userid, $_FILES['pic']['name'][0], $erasmus['homeInstitutionId'],$this->formid.'.pdf');
             }
             PlonkWebsite::redirect('index.php?module=office');
         } catch (Exception $e) {
             Plonk::dump('failed');
         }
-        
     }
 
     public function doMotivateagree() {
@@ -980,14 +992,14 @@ class LagreeformController extends PlonkController {
         $values = array(
             'action' => $status
         );
-       
+
         LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->id . '"');
         LagreeformDB::updateErasmusStudent('forms', $formArray, 'formId = ' . $this->formid);
 
         LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
         PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=precandidates');
-    
-        
+
+
         try {
 
             $er = array(
@@ -1042,14 +1054,15 @@ class LagreeformController extends PlonkController {
         $this->userid = LagreeformDB::getStudentByForm(PlonkFilter::getGetValue('form'));
         $user = LagreeformDB::getInfoUser($this->userid);
         $erasmus = LagreeformDB::getErasmusInfo($this->userid);
-        foreach($erasmus as $key=>$value) {
-            if($value === null) {
+        $form = LagreeformDB::getForm(PlonkFilter::getGetValue('form'));
+        foreach ($erasmus as $key => $value) {
+            if ($value === null) {
                 unset($erasmus[$key]);
             }
         }
         $erasmusLevel = LagreeformDB::getErasmusLevelId('Student Application and Learning Agreement');
-        
-        
+
+
         $valueEvent = array(
             'reader' => 'Student',
             'timestamp' => date("Y-m-d"),
@@ -1074,27 +1087,36 @@ class LagreeformController extends PlonkController {
                 'data' => $erasmus,
                 'emailField' => 'users_email'
             );
+            $form = array(
+                'table' => 'forms',
+                'data' => $form,
+                'emailField' => 'formId'
+            );
 
             $b = new InfoxController;
             //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
-            $methods = array('forms:toDb','forms:toDb');
-            $tables = array('users','erasmusstudent');
-            $data = array($us,$er);
+            $methods = array('forms:toDb', 'forms:toDb', 'forms:toDb');
+            $tables = array('users', 'erasmusstudent', 'forms');
+            $data = array($us, $er, $form);
             $idInst = $erasmus['hostInstitutionId'];
-            $b->dataTransfer($methods, $tables, $data, $idInst);
-            
-            if (!empty($_FILES['pic']['tmp_name'])) {
-                $this->upload('Application.pdf');
-                $b->fileTransfer('forms:saveFile',$this->userid,$_FILES['file']['name'], $erasmus['hostInstitutionId']);
+            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            //Plonk::dump($success);
+            if ($success !== '0') {
+                PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
+            } else {
+                PlonkWebsite::redirect('index.php?module=office&view=office&success=false');
             }
-            PlonkWebsite::redirect('index.php?module=office');
         } catch (Exception $e) {
             Plonk::dump('failed');
         }
     }
 
+    public function doTohostagree() {
+        
+    }
+
     private function upload($fileName) {
-        $uploaddir = "files/" . $this->userid. "/";
+        $uploaddir = "files/" . $this->userid . "/";
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
