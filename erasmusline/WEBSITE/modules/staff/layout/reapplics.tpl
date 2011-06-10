@@ -1,8 +1,9 @@
-<h2>Pending Retried Student Application Forms</h2>
-<table cellspacing="1">
-        <caption>
-            Students who made a new Application Form
-        </caption>
+<div class="mainDiv">
+    <h3>Pending Retried Student Application Forms</h3>
+    <fieldset>
+        <legend>Retried Student Application FormsLearning Agreements</legend>
+        
+<table border="1" cellspacing="0">
         <tr>
             <th>
                 Name
@@ -23,3 +24,5 @@
         </tr>
 		{/iteration:iReApplics}
     </table>
+        </fieldset>
+    </div>

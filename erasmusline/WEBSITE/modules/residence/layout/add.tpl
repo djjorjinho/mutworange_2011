@@ -96,41 +96,44 @@
                 <span class="req" id="msgBeds">{$msgBeds|htmlentities}</span>	
             </div>
             <div class="radioResidences">
-                    <label class="description" for="kitchen">Kitchen :</label>
-                    <span><input type="radio" {$kitchenYes} id="kitchenYes" name="kitchen" value="1" class="validate[required] radio"  /><label class="labelRadio">Communal</label>
-                        <input type="radio" {$kitchenNO} id="kitchenNo" name="kitchen" value="0" class="validate[required] radio" /><label class="labelRadio">Personal</label>
-                        <span class="req" id="msgKitchen">{$msgKitchen|htmlentities}</span></span>
+                <div class="radioResidence">
+                <label class="description" for="kitchen">Kitchen :</label>
+                Communal<input type="radio" {$kitchenYes} id="kitchenYes" name="kitchen" value="1" class="validate[required] radio"  />
+                               Personal<input type="radio" {$kitchenNO} id="kitchenNo" name="kitchen" value="0" class="validate[required] radio" />
+                               <span class="req" id="msgKitchen">{$msgKitchen|htmlentities}</span><br />
+                </div><div class="radioResidence">
                     <label class="description" for="bathroom">Bathroom : </label>
-                    <span><input type="radio" {$bathroomYes} id="bathroomYes" name="bathroom" value="1" class="validate[required] radio"  /><label class="labelRadio">Communal</label>
-                        <input type="radio" {$bathroomNo} id="bathroomNo" name="bathroom" value="0" class="validate[required] radio" /><label class="labelRadio">Personal</label>
-                        <span class="req" id="msgBathroom">{$msgBathroom|htmlentities}</span></span>
-                    <label class="description" for="water">Water : </label>
-                    <span><input type="radio" {$waterYes} id="waterYes" name="water" value="1" class="validate[required] radio"  /><label class="labelRadio">Included</label>
-                        <input type="radio" {$waterNo} id="waterNo" name="water" value="0" class="validate[required] radio" /><label class="labelRadio">Not Included</label>
-                        <span class="req" id="msgWater">{$msgWater|htmlentities}</span></span>
-                    <label class="description" for="internet">Internet : </label>
-                    <span><input type="radio" {$internetYes} id="internetYes" name="internet" value="1" class="validate[required] radio"  /><label class="labelRadio">Included</label>
-                        <input type="radio" {$internetNo} id="internetNo" name="internet" value="0" class="validate[required] radio" /><label class="labelRadio">Not Included</label>
-                        <span class="req" id="msgInternet">{$msgInternet|htmlentities}</span></span>
-                    <label class="description" for="television">Television : </label>
-                    <span><input type="radio" {$televisionYes} id="televisionYes" name="television" value="1" class="validate[required] radio"  /><label class="labelRadio">Included</label>
-                        <input type="radio" {$televisionNo} id="televisionNo" name="television" value="0" class="validate[required] radio" /><label class="labelRadio">Not Included</label>
-                        <span class="req" id="msgTelevision">{$msgTelevision|htmlentities}</span></span>
-                    <label class="description" for="elektricity">Elektricity :</label>
-                    <span><input type="radio" {$elektricityYes} id="elektricityYes" name="elektricity" value="1" class="validate[required] radio"  /><label class="labelRadio">Included</label>
-                        <input type="radio" {$elektricityNo} id="elektricityNo" name="elektricity" value="0" class="validate[required] radio" /><label class="labelRadio">Not Included</label>
-                        <span class="req" id="msgElektricity">{$msgElektricity|htmlentities}</span></span>
-                </div>
+                Communal<input type="radio" {$bathroomYes} id="bathroomYes" name="bathroom" value="1" class="validate[required] radio"  />
+                               Personal<input type="radio" {$bathroomNo} id="bathroomNo" name="bathroom" value="0" class="validate[required] radio" />
+                               <span class="req" id="msgBathroom">{$msgBathroom|htmlentities}</span><br />
+                </div><div class="radioResidence"><label class="description" for="water">Water : </label>
+                Included<input type="radio" {$waterYes} id="waterYes" name="water" value="1" class="validate[required] radio"  />
+                               Not Included<input type="radio" {$waterNo} id="waterNo" name="water" value="0" class="validate[required] radio" />
+                               <span class="req" id="msgWater">{$msgWater|htmlentities}</span><br />
+                </div><div class="radioResidence"><label class="description" for="internet">Internet : </label>
+                Included<input type="radio" {$internetYes} id="internetYes" name="internet" value="1" class="validate[required] radio"  />
+                               Not Included<input type="radio" {$internetNo} id="internetNo" name="internet" value="0" class="validate[required] radio" />
+                               <span class="req" id="msgInternet">{$msgInternet|htmlentities}</span><br />
+                </div><div class="radioResidence"><label class="description" for="television">Television : </label>
+                Included<input type="radio" {$televisionYes} id="televisionYes" name="television" value="1" class="validate[required] radio"  />
+                               Not Included<input type="radio" {$televisionNo} id="televisionNo" name="television" value="0" class="validate[required] radio" />
+                               <span class="req" id="msgTelevision">{$msgTelevision|htmlentities}</span><br />
+                </div><div class="radioResidence"><label class="description" for="elektricity">Elektricity :</label>
+                Included<input type="radio" {$elektricityYes} id="elektricityYes" name="elektricity" value="1" class="validate[required] radio"  />
+                               Not Included<input type="radio" {$elektricityNo} id="elektricityNo" name="elektricity" value="0" class="validate[required] radio" />
+                               <span class="req" id="msgElektricity">{$msgElektricity|htmlentities}</span>
+            </div></div>
 
-                <div class="TRdiv">
-                    <label for="description"><span>Description : </span></label>
-                    <textarea class="validate[required],custom[textarea]" type="text" name="description" id="description" cols="50" rows="5">{$description|htmlentities}</textarea>
-                    <span class="req" id="msgDescription">{$msgDescription|htmlentities}</span>	
-                </div>
+            <div class="TRdiv">
+                <label for="description"><span>Description : </span></label>
+                <textarea class="validate[required],custom[textarea]" type="text" name="description" id="description" cols="50" rows="5">{$description|htmlentities}</textarea>
+                <span class="req" id="msgDescription">{$msgDescription|htmlentities}</span>	
+            </div>
         </fieldset>
 
         <div class="TRdiv">               
             <input type="hidden" name="formAction" id="add" value="doAdd" />
             <input class="button" name="btnAdd" id="btnAdd" type="submit" value="Add Residence"/>
         </div>
+        </form>
 </div>

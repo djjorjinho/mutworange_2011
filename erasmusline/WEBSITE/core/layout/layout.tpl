@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
-    <link rel="stylesheet" href="./core/css/form.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
     {$pageMeta}
     {$pageJava}
     

@@ -25,8 +25,14 @@ class AdminController extends PlonkController {
     protected $actions = array(
         'logout',
         'confirm',
-        'infox'
+        'infox',
+        'add'
+        
     );
+    
+    public function doAdd() {
+        PlonkWebsite::redirect("index.php?module=register&view=register");
+    }
 
     public function checkLogged() {
         //Plonk::dump(PlonkSession::get('id').'hgdjdh');
@@ -53,6 +59,8 @@ class AdminController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Admin page');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
     }
 
     public function showStudents() {
@@ -65,6 +73,8 @@ class AdminController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Overview students');
+        $this->mainTpl->assign('breadcrumb','');
+        $this->mainTpl->assign('pageJava','');
 
 
         $this->pageTpl->assignOption('oAdmin');
@@ -102,6 +112,8 @@ class AdminController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Students to confirm/deny');
+        $this->mainTpl->assign('breadcrumb','');
+        $this->mainTpl->assign('pageJava','');
 
 
         $this->pageTpl->assignOption('oAdmin');
@@ -141,6 +153,8 @@ class AdminController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Overview staff');
+        $this->mainTpl->assign('breadcrumb','');
+        $this->mainTpl->assign('pageJava','');
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iStaff');

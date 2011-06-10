@@ -1,8 +1,9 @@
-<h2>Pending Learning Agreements</h2>
-<table cellspacing="1">
-        <caption>
-            Students who filled in Learning Agreement
-        </caption>
+<div class="mainDiv">
+    <h3>Pending Learning Agreements</h3>
+    <fieldset>
+        <legend>Learning Agreements</legend>
+        
+<table border="1" cellspacing="0">
         <tr>
             <th>
                 Name
@@ -14,8 +15,7 @@
 		{iteration:iAgreements}
         <tr>
             <td>
-            	<a href="{$hrefProfile}" class="userFoto" title="Photo user"><img src="{$hrefPhoto}" alt="Picture user" height="45" width="45" /></a>
-                <a href="{$hrefProfile}">{$name}</a>
+            	 <a href="{$hrefProfile}">{$name}</a>
             </td>
             <td>
                 <a href="{$url}" title="learning agreement">View</a>
@@ -23,3 +23,5 @@
         </tr>
 		{/iteration:iAgreements}
     </table>
+        </fieldset>
+    </div>

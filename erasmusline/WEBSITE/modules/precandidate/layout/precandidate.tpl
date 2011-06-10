@@ -1,7 +1,6 @@
 <div class="mainDiv">
 <form action="" method="post" enctype="multipart/form-data" id="precandidate" name="precandidate">	
 <fieldset>
-    {$pageJava}
     <legend>Student Information</legend>    
     <div class="TRdiv">
         <label for="familyName"><span>Last Name : </span></label>
@@ -170,24 +169,26 @@
             </select>
             <span class="req" id="msgTraineeOrStudy">{$msgTraineeOrStudy|htmlentities}</span>
     </div>
-    <div class="TRdiv">
+    <div class="radioResidences">
+                <div class="radioResidence">
             <label for="cribb"><span>Op kot : </span></label>
-            <span>Yes</span><input type="radio" {$cribYes} id="cribYes" name="cribb" value="Yes" class="validate[required] radio"  />
-            <span>No</span><input type="radio" {$cribNo} id="cribNo" name="cribb" value="No" class="validate[required] radio" />
-            <span class="req" id="msgCribb">{$msgCribb|htmlentities}</span>
+            Yes<input type="radio" {$cribYes} id="cribYes" name="cribb" value="Yes" class="validate[required] radio"  />
+            No<input type="radio" {$cribNo} id="cribNo" name="cribb" value="No" class="validate[required] radio" />
+            <span class="req" id="msgCribb">{$msgCribb|htmlentities}</span><br />
     </div>
-    <div class="TRdiv">
+    <div class="radioResidence">
             <label for="cribRent"><span>Wens je je kot over te laten tijdens je uitwissling : </span></label>
-            <span>Yes<input type="radio" id="rentYes" {$rentYes} name="cribRent" value="Yes" class="validate[required] radio" /></span>
-            <span>No<input type="radio" id="rentNo" {$rentNo} name="cribRent" value="No" class="validate[required] radio" /></span>
-            <span class="req" id="msgCribRent">{$msgCribRent|htmlentities}</span>
+            Yes<input type="radio" id="rentYes" {$rentYes} name="cribRent" value="Yes" class="validate[required] radio" />
+            No<input type="radio" id="rentNo" {$rentNo} name="cribRent" value="No" class="validate[required] radio" />
+            <span class="req" id="msgCribRent">{$msgCribRent|htmlentities}</span><br />
     </div>
-   <div class="TRdiv">
+   <div class="radioResidence">
             <label for="scolarship"><span>Deelnemen zonder Europese subsidie : </span></label>
-            <span>Yes<input type="radio" id="scolYes" {$scolYes} name="scolarship" value="Yes" class="validate[required] radio" /></span>
-            <span>No<input type="radio" id="scolNo" {$scolNo} name="scolarship" value="No" class="validate[required] radio" /></span>
+            Yes<input type="radio" id="scolYes" {$scolYes} name="scolarship" value="Yes" class="validate[required] radio" />
+            No<input type="radio" id="scolNo" {$scolNo} name="scolarship" value="No" class="validate[required] radio" />
             <span class="req" id="msgScolarship">{$msgScolarship|htmlentities}</span>
     </div>
+        </div>
 </fieldset>    
 {/option:oNotFilled}
 <fieldset>
@@ -239,16 +240,18 @@
         <textarea class="validate[required],custom[textarea]" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
         <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
     </div>
-    <div class="TRdiv">
+    <div class="radioResidences">
+    <div class="radioResidence">
 <label for="approve"><span>Approve or Deny: </span></label>
-            <span>Yes</span><input class="validate[required] radio" type="radio"  name="approve" value="1" id="yes"  />
-            <span>No</span><input class="validate[required] radio" type="radio"  name="approve" value="0" id="no"  />
+            Yes<input class="validate[required] radio" type="radio"  name="approve" value="1" id="yes"  />
+            No<input class="validate[required] radio" type="radio"  name="approve" value="0" id="no"  />
             <span class="req" id="msgApprove">{$msgApprove|htmlentities}</span>
-</div>
-    <div class="TRdiv">               
+</div></div>
+   
+</fieldset> <div class="TRdiv">               
         <input type="hidden" name="formAction" id="formPre" value="doMotivate" />
 	<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
     </div>
-</fieldset>
 {/option:oCoor}
 </form>
+    </div>

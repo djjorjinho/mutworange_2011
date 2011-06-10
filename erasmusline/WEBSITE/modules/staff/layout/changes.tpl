@@ -1,8 +1,9 @@
-<h2>Pending Change of Learning Agreements</h2>
-<table cellspacing="1">
-        <caption>
-            Students who applied for Change of Learning Agreemnts
-        </caption>
+<div class="mainDiv">
+    <h3>Pending Changes of Learning Agreements</h3>
+    <fieldset>
+        <legend>Changes of Learning Agreements</legend>
+        
+<table border="1" cellspacing="0">
         <tr>
             <th>
                 Name
@@ -23,3 +24,5 @@
         </tr>
 		{/iteration:iChanges}
     </table>
+        </fieldset>
+    </div>

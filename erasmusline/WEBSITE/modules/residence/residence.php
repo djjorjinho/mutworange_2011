@@ -6,7 +6,7 @@ class ResidenceController extends PlonkController {
         'detail', 'overview', 'add'
     );
     protected $actions = array(
-        'search', 'add'
+        'search', 'add','addlink','acom'
     );
     protected $variables = array(
         'familyName', 'firstName', 'email', 'telephone', 'mobilePhone', 'streetNr',
@@ -17,6 +17,12 @@ class ResidenceController extends PlonkController {
     protected $fields = array();
     protected $errors = array();
     protected $rules = array();
+    public function doAcom() {
+        PlonkWebsite::redirect("index.php?module=acom_reg&view=acom_reg&residenceId=" . PlonkFilter::getGetValue('id'));
+    }
+    public function doAddlink() {
+        PlonkWebsite::redirect("index.php?module=residence&view=add");
+    }
 
     public function showDetail() {
         $this->checklogged();
@@ -80,15 +86,63 @@ class ResidenceController extends PlonkController {
         $this->fillCountries(PlonkFilter::getGetValue('search'));
 
         if (PlonkFilter::getGetValue('search') == null) {
-            $residences = ResidenceDB::getResidences();
-        } else {
-            $residences = ResidenceDB::getResidencesByCountry(PlonkFilter::getGetValue('search'));
-        }
-        if (!empty($residences)) {
-            $this->pageTpl->assign('error', '');
-            $this->fillResidences($residences);
-        } else {
             $this->pageTpl->assign('error', 'No results found');
+                $this->pageTpl->assign('linkPrevious', "");
+                $this->pageTpl->assign('linkNext', "");
+        } else {
+
+            $residences = ResidenceDB::getResidencesByCountry(PlonkFilter::getGetValue('search'));
+            if (!empty($residences)) {
+                $this->pageTpl->assign('error','');
+                $count = count($residences);
+
+                $perpage = 3;
+                $numberofpages = ceil($count / $perpage);
+                if (PlonkFilter::getGetValue('page') != null) {
+                    $page = PlonkFilter::getGetValue('page');
+                    if ($page == $numberofpages) {
+                        $this->pageTpl->assign('disabledNext', 'disabled');
+                        $this->pageTpl->assign('disabledPrevious', '');
+                        $this->pageTpl->assign('linkPrevious', "<a href='index.php?module=residence&amp;view=overview&amp;search=" . PlonkFilter::getGetValue('search') . "&amp;page=" . ($page - 1) . "'><<</a>");
+                        $this->pageTpl->assign('linkNext', ">>");
+                    } else if ($page == 1) {
+                        $this->pageTpl->assign('disabledNext', '');
+                        $this->pageTpl->assign('disabledPrevious', 'disabled');
+                        $this->pageTpl->assign('linkPrevious', "<<");
+                        $this->pageTpl->assign('linkNext', "<a href='index.php?module=residence&amp;view=overview&amp;search=" . PlonkFilter::getGetValue('search') . "&amp;page=" . ($page + 1) . "'>>></a>");
+                    } else {
+                        $this->pageTpl->assign('disabledNext', '');
+                        $this->pageTpl->assign('disabledPrevious', '');
+                        $this->pageTpl->assign('linkPrevious', "<a href='index.php?module=residence&amp;view=overview&amp;search=" . PlonkFilter::getGetValue('search') . "&amp;page=" . ($page - 1) . "'><<</a>");
+                        $this->pageTpl->assign('linkNext', "<a href='index.php?module=residence&amp;view=overview&amp;search=" . PlonkFilter::getGetValue('search') . "&amp;page=" . ($page + 1) . "'>>></a>");
+                    }
+                } else {
+                    $page = 1;
+                    $this->pageTpl->assign('disabledNext', '');
+                    $this->pageTpl->assign('disabledPrevious', 'disabled');
+                    $this->pageTpl->assign('linkPrevious', "<<");
+                    $this->pageTpl->assign('linkNext', "<a href='index.php?module=residence&amp;view=overview&amp;search=" . PlonkFilter::getGetValue('search') . "&amp;page=" . ($page + 1) . "'>>></a>");
+                }
+
+                $this->pageTpl->setIteration('iPagination');
+                for ($i = 1; $i <= $numberofpages; $i++) {
+                    if ($i == $page) {
+                        $this->pageTpl->assignIteration('text', '<span class="current">' . $page . '</span>');
+                    } else {
+                        $this->pageTpl->assignIteration('text', '<a href="index.php?module=residence&amp;view=overview&amp;search=' . PlonkFilter::getGetValue("search") . '&amp;page=' . $i . '">' . $i . '</a>');
+                    }
+                    $this->pageTpl->refillIteration('iPagination');
+                }
+                $this->pageTpl->parseIteration('iPagination');
+
+                $Limit = "limit " . ($page - 1) * $perpage . ',' . $perpage;
+                $List = ResidenceDB::getPaging($Limit, PlonkFilter::getGetValue('search'));
+                $this->fillResidences($List);
+            } else {
+                $this->pageTpl->assign('error', "No results found");
+                $this->pageTpl->assign('linkPrevious', "");
+                $this->pageTpl->assign('linkNext', "");
+            }
         }
     }
 
@@ -313,7 +367,7 @@ class ResidenceController extends PlonkController {
         $this->rules[] = "required,cityResidence,City is required";
         $this->rules[] = "required,price,price is required";
         $this->rules[] = "required,postalCodeResidence,Postal Code is required";
-         $this->rules[] = "required,streetNrResidence,Street is required";        
+        $this->rules[] = "required,streetNrResidence,Street is required";
         $this->rules[] = "required,beds,Beds is required";
         $this->rules[] = "required,kitchen,Kitchen is required";
         $this->rules[] = "required,bathroom,Bathroom is required";

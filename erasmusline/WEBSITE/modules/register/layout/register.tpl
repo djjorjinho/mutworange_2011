@@ -31,11 +31,13 @@
             <input value="{$password2|htmlentities}" class="validate[required,equals[password],custom[onlyLetterNumber]] text-input" type="password" name="password2" id="password2" />
             <span class="req" id="msgPassword2">{$msgPassword2|htmlentities}</span>	
        </div>  
-        <div class="TRdiv">
+        <div class="radioResidences">
+                <div class="radioResidence">
             <label for="sex"><span>Gender : </span></label>
-            <span>M<input type="radio" {$sexTrue} id="M" name="sex" value="1" class="validate[required] radio" /></span>
-            <span>F<input type="radio" {$sexFalse} id="F" name="sex" value="0" class="validate[required] radio" /></span>
-        </div>
+            M<input type="radio" {$sexTrue} id="M" name="sex" value="1" class="validate[required] radio" />
+            F<input type="radio" {$sexFalse} id="F" name="sex" value="0" class="validate[required] radio" />
+            <span class="req" id="msgKitchen">*</span><br />
+        </div></div>
         <div class="TRdiv">
             <label for="birthDate"><span>Birth Date</span></label>
             <input class="validate[required,custom[date]]" text-input" value="{$birthDate|htmlentities}" name="birthDate" id="birthDate" />
@@ -60,7 +62,7 @@
             <input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" name="street" id="street" value="{$street|htmlentities}"/>
             <span class="req" id="msgStreet">{$msgStreet|htmlentities}</span>	
 	</div>
-        <div>
+        <div class="TRdiv">
             <label for="city"><span>City</span></label>
             <input class="validate[required,custom[onlyLetterSp]] text-input" type="text" name="city" id="city" value="{$city|htmlentities}"/>
             <span class="req" id="msgCity">{$msgCity|htmlentities}</span>	
@@ -82,7 +84,7 @@
         
         <div class="TRdiv">
             {option:oAdmin}
-            <label for="userLevel"><span>User Level</span><label>
+            <label for="userLevel"><span>User Level</span></label>
             <select name="userLevel" value="{$selectedUserLevel}">
                {iteration:iUserLevel}
                      {$userLevel}

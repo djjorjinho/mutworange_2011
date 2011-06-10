@@ -25,6 +25,7 @@ legend {
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
     border-radius:3px;
+    margin-left:15px;
 }
 .TRdiv input:focus, select:focus, textarea:focus {
     border:1px solid #ff6d06;    
@@ -100,66 +101,64 @@ label {
     position: relative;
 
     float: right;
-
-
-
-
 }
+
+
+
+
+
+.radioResidences {
+    width:365px;    
+}
+.radioResidence {
+    float:left;
+}
+
+.radioResidence input { 
+    margin-left: 25px;
+    margin-bottom:10px;
+    margin-right:15px;
+}
+.radioResidence label {
+    margin-right:10px;
+}
+
 .alCenterDiv {
     width:100%;
     position: relative;
     float: left;
 }
 
-
-input.radio
-{
-	display:block;
-	height:13px;
-	line-height:1.4em;
-	margin:6px 0 0 3px;
-	width:13px;
-        
+.mainDiv p,ul,li {
+    margin-left: 25px;
+    margin-bottom:10px;
 }
 
-label.description
-{
-	border:none;
-	color:#222;
-	display:block;
-	font-weight:700;
-	line-height:150%;
-	padding:0 0 1px;
+.radioExams {
+    margin-left: 25px;
+    margin-bottom:10px;
 }
-.radioResidences span
-{    
-	color:#444;
-	float:left;
-	margin:0 4px 0 0;
-	padding:0 0 8px;
+.mainDiv table {
+    width: 365px;
+    margin-left:15px;
+    margin-bottom: 15px;
+    
 }
-.radioResidences {
-    width:300px;
-}
-
-#pending, #approved, #denied {
-    background-color: white;
-    color:  #ff6d06;
-    width: 600px;
-    height: 30px;
-    border: 1px solid  #ff6d06;
+.mainDiv th,tr {
     text-align: center;
-    padding-top: 10px;
 }
 
-#approved {
-    border: 1px solid  green;
-    color:  green;
+.mainDiv td {
+    width: 200px;
+    height:50px;
 }
 
-#denied {
-    border: 1px solid  red;
-    color: red;
+.events a {
+    color:#ff6d06;
+}
+
+.linkResidence a {
+    color:#ff6d06;
 }
 
 

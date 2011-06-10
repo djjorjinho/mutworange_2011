@@ -18,7 +18,7 @@ class ResidenceDB {
         $db = PlonkWebsite:: getDB();
         $residences = $db->retrieve("select * from residence 
             inner join country on residence.country = country.Code 
-            where country.Code = '" . $db->escape($country) . "'");
+            where country.Code = '" . $db->escape($country) . "' AND residence.available = 1");
         return $residences;        
     }
     
@@ -72,6 +72,16 @@ class ResidenceDB {
         
         return $user;
     
+    }
+    
+     public static function getPaging($limit,$country) {
+        $db = PlonkWebsite::getDB();
+        
+        $books = $db->retrieve("select * from residence 
+            inner join country on residence.country = country.Code 
+            where country.Code = '" . $db->escape($country) . "' AND residence.available = 1 " . $limit );
+        
+        return $books;
     }
     
 }

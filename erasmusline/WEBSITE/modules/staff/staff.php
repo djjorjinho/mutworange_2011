@@ -35,6 +35,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Staff');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
 		
 		//Add Exams modul
 		require_once './modules/exams/exams.php';
@@ -48,6 +50,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Retried Student Application Form');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
 
         // gets info of all the users
         $reapplic = StaffDB::getForms('ReStudent Application Form');
@@ -80,6 +84,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Precandidates');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
 
         // gets info of all the users
         $pres = StaffDB::getForms('Precandidate');
@@ -112,6 +118,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
 
         // gets info of all the users
         $agrees = StaffDB::getLagree();
@@ -144,6 +152,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Change of Learning Agreements');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
 
         // gets info of all the users
         $changes = StaffDB::getForms('Change Of Learning Agreement');
@@ -177,6 +187,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Application forms');
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
 
         // gets info of all the users
         $id = StaffDB::getIdLevel("Student Application and Learning Agreement");

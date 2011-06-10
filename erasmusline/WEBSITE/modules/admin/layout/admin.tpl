@@ -1,7 +1,15 @@
-<h2>Hee jij daar! ;)</h2>
+<div class="mainDiv">
+    <h3>Admin Homepage</h3>
 
-<form method="post" action="index.php?module=admin&view=admin">
-<input type="hidden" name="formAction" value="doInfox" />
-<input type="submit" value="Send Single User">
-</form>
+    <fieldset>
+        <legend>User Accounts</legend>
+    <ul>
+    <li class="level2"><a href="index.php?module=admin&amp;view=toconfirm" title="Users to be confirmed">Users to be confirmed</a></li>
+    <li class="level2"><a href="index.php?module=admin&amp;view=students" title="Students">Students</a></li>
+    <li class="level2"><a href="index.php?module=admin&amp;view=staff" title="Staff">Staff</a></li>
+    <li class="level2"><a href="index.php?module=register&amp;view=register" title="Add staff member">Add staff member</a></li>
+</ul>
+    </fieldset>
+
+</div>
 

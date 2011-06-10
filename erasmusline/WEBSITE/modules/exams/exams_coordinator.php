@@ -1,5 +1,5 @@
 <?php
-	$examStr = "<h3>Manage exams for the students in their home universities</h3>";
+	$examStr = "";
 	
 	if(isset($_POST["studentHomeA"])) {
 		//HOME EXAMS Finish
@@ -199,7 +199,7 @@
 		$str .= '<input type="radio" name="maine" value="host" /> View requests from foreign students<br />';
 		$str .= '<input type="radio" name="maine" value="homeA" /> View our approved students<br />';
 		$str .= '<input type="radio" name="maine" value="hostA" /> View approved foreign students<br />';
-		$str .= '<input type="submit" name="" value=" Submit " /> </form>';
+		$str .= '<div class="TRdiv"><input type="submit" name="" value=" Submit " /> </div></form>';
 		$this->pageTpl->assign('exams', $examStr.$str);
 		
 	}

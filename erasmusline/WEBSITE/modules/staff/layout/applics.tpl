@@ -1,8 +1,9 @@
-<h2>Pending Student Application Forms</h2>
-<table cellspacing="1">
-        <caption>
-            Students who filled in Student Application Form
-        </caption>
+<div class="mainDiv">
+    <h3>Pending Student Application Forms</h3>
+    <fieldset>
+        <legend>Student Application Forms</legend>
+        
+<table border="1" cellspacing="0">
         <tr>
             <th>
                 Name
@@ -14,8 +15,7 @@
 		{iteration:iApplics}
         <tr>
             <td>
-            	<a href="{$hrefProfile}" class="userFoto" title="Photo user"><img src="{$hrefPhoto}" alt="Picture user" height="45" width="45" /></a>
-                <a href="{$hrefProfile}">{$name}</a>
+            	<a href="{$hrefProfile}">{$name}</a>
             </td>
             <td>
                 <a href="{$url}" title="student application form">View</a>
@@ -23,3 +23,5 @@
         </tr>
 		{/iteration:iApplics}
     </table>
+        </fieldset>
+</div>
