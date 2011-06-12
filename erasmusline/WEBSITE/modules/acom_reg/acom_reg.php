@@ -35,7 +35,7 @@ class acom_regController extends PlonkController {
     public function showacom_reg() {
         $this->checkLogged();
         $level = acom_regDB::checkLevel();
-        if ($level[0]['statusOfErasmus'] != 'Application Registration Form') {
+        if (($level[0]['statusOfErasmus'] != 'Student Application and Learning Agreement') && ($level[0]['action'] == 11)) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         }
         $x = PlonkFilter::getGetValue('institutionId');

@@ -14,7 +14,7 @@ class acom_regDB {
     public static function checkLevel() {
         $db = PlonkWebsite::getDB();
         $studentId=  PlonkSession::get('id');
-        $stInfo = $db->retrieve("SELECT statusOfErasmus FROM erasmusstudent 
+        $stInfo = $db->retrieve("SELECT statusOfErasmus, action FROM erasmusstudent 
             where  users_email='".$db->escape($studentId)."'");
 
         return $stInfo;
