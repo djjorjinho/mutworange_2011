@@ -53,8 +53,8 @@ class RegisterController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Register');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/register.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
-        $this->mainTpl->assign('breadcrumb','');
+        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=home&view=home" title="Home">Home</a><a href="index.php?module=register&view=register" title="Register">Register</a>');
     }
 
     private function fillNationality($nationality = '') {

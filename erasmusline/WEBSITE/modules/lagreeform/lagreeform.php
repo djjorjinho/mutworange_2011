@@ -168,7 +168,6 @@ class LagreeformController extends PlonkController {
             return;
         }
 
-        Plonk::dump('after');
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
 
@@ -248,7 +247,7 @@ class LagreeformController extends PlonkController {
 				&nbsp;
 	                </div>
 		</div></td>
-	                        <td><input class="validate[required,custom[onlyNumberSp]]" type="text" id="ects' . $i . '" name="ects' . $i . '" value="' . $this->fields["ects" . $i] . '" /></td>
+	                        <td><input class="validate[required,custom[onlyNumberSp]]" type="text" disabled="disabled" id="ects' . $i . '" name="ects' . $i . '" value="' . $this->fields["ects" . $i] . '" /></td>
 	                        <td><span class="req">' . $error . '</span></td>
 	                          </tr>');
             // refill the iteration (mandatory!)

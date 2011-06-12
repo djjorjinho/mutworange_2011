@@ -1,8 +1,11 @@
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
     <h3>Profile of {$fName} {$faName}</h3>
+    
 <fieldset>
-    <legend>General Information</legend>
-<ul>
+    <legend><h3>General Information</h3></legend>
+    <img id="profile" src="{$profile}" alt="profile" height="200" width="200" />
+<ul class="personalInfo">
         <li>
             Full name: {$fName} {$faName}
         </li>
@@ -25,11 +28,7 @@
             Userlevel: {$userLevel}
         </li>
     </ul>
-</fieldset>
-
-    <fieldset>
-        <legend>Erasmus info</legend>
-<img src="{$profile}" alt="profile" height="200" width="200" />
+<div id="progress">
 <p>Your current Erasmus progress<p>
 <table>
     <tr>
@@ -37,10 +36,13 @@
         <td><span class="progressBar" id="pb1"></span></td>
     </tr>
 </table>
-        </fieldset>
-    <fieldset>
-<legend>Period</legend>
+</div>
 
+</fieldset>
+    
+<fieldset>
+<legend><h3>Erasmusinfo</h3></legend>
+<h3>Period</h3>
 <ul>
 <li>
     Start date: {$start}
@@ -49,9 +51,8 @@
     End date: {$end}
 </li>
 </ul>
-        </fieldset>
-    <fieldset>
-<legend>Where from - where to</legend>
+
+<h3>Where from - where to</h3>
 <ul>
 <li>
     Home institution: {$home}
@@ -66,9 +67,8 @@
     Host Coordinator {$dCoordinator}
 </li>
 </ul>
-</fieldset>
-<fieldset>
-<legend>What?</legend>
+
+<h3>What?</h3>
 <ul>
 <li>
    Education: {$study}
@@ -79,7 +79,7 @@
         {iteration:iCourses}
             <li>{$course}: {$ects}</li>
         {/iteration:iCourses}
-            <li>Total: {$total}
+            <li>Total: {$total}</li>
     </ul>
 </li>
 </ul>

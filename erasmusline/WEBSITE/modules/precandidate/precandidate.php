@@ -30,7 +30,7 @@ class PrecandidateController extends PlonkController {
     protected $formid;
 
     private function MainTplAssigns() {
-        $this->mainTpl->assign('siteTitle', 'ErasmusLine');
+        $this->mainTpl->assign('siteTitle', 'Precandidate');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/precandidate.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->mainTpl->assign('pageMeta', '');
@@ -281,7 +281,7 @@ class PrecandidateController extends PlonkController {
                 'studentId' => PlonkSession::get('id'),
                 'action' => '2',
                 'erasmusLevelId' => $erasmusLevelId['levelId'],
-                'eventDescrip' => 'Precandidate ingevuld.',
+                'eventDescrip' => 'Filled in Precandidate.',
                 'readIt' => 0
             );
 

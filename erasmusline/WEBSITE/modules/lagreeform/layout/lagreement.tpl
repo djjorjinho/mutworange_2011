@@ -79,17 +79,19 @@
         <fieldset>
             <legend>Student - Courses in host institute</legend>
             <p><strong>Details of the proposed study programme abroad/learning agreement.</strong></p>
+            
             <table id="coursesTable">
+                <caption>Start typing the course unit title.</caption>
                 <tr>
-                    <th>Course unit code (if any) and page no. of the information package</th>
-                    <th>Course unit title (as indicated in the information package)</th>
-                    <th>Number of ECTS credits</th>
+                    <th>Course unit code</th>
+                    <th>Course unit title</th>
+                    <th>ECTS credits</th>
+                    <th>
+                    <input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /><input type="hidden" id="courseCount" name="courseCount" value="{$courseCount}" />
+                </th>
                 </tr>
                 {option:oNotFilled}
-                <tr>
-                    <td></td><td></td><td></td>
-                    <td><input type="button" name="addCourse" value="Add" id="addCourse"/><input type="button" name="remCourse" value="Remove" id="remCourse" /><input type="hidden" id="courseCount" name="courseCount" value="{$courseCount}" /></td>
-                </tr>
+                
                 {/option:oNotFilled}
                 {iteration:iCourses}
                 {$row}

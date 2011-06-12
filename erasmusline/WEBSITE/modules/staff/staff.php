@@ -41,40 +41,6 @@ class StaffController extends PlonkController {
 		//Add Exams modul
 		require_once './modules/exams/exams.php';
     }
-
-    public function showReapplics() {
-        // Main Layout
-        // Logged or not logged, that is the question...
-
-        $this->checkLogged();
-        // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('siteTitle', 'Retried Student Application Form');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','');
-
-        // gets info of all the users
-        $reapplic = StaffDB::getForms('ReStudent Application Form');
-
-        // assign iterations: overlopen van de gevonden users
-        $this->pageTpl->setIteration('iReApplics');
-
-        // loops through all the users (except for the user with id 1 = admin) and assigns the values
-        foreach ($reapplic as $student) {
-            if ($student['email'] != 'admin') {
-                $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
-
-                // refill the iteration (mandatory!)
-                $this->pageTpl->refillIteration('iReApplics');
-            }
-        }
-
-        // parse the iteration
-        $this->pageTpl->parseIteration('iReApplics'); // alternative: $tpl->parseIteration();
-    }
     
     public function showPrecandidates() {
         // Main Layout
@@ -98,7 +64,7 @@ class StaffController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=precandidate&view=precandidate&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
@@ -132,7 +98,7 @@ class StaffController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
@@ -166,7 +132,7 @@ class StaffController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
@@ -202,7 +168,7 @@ class StaffController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
