@@ -30,7 +30,9 @@ class OfficeController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Office coordinator');
-        
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a>');
+        $this->mainTpl->assign('pageJava', '');
+        $this->pageTpl->assign('message', 'No notifications.');
         if(PlonkFilter::getGetValue('success') != null) {
             if(PlonkFilter::getGetValue('success') == 'true') {
                 $this->pageTpl->assign('message', 'Info was sent succesfull');
@@ -44,38 +46,6 @@ class OfficeController extends PlonkController {
         }
     }
     
-    public function showReapplics() {
-        // Main Layout
-        // Logged or not logged, that is the question...
-
-        $this->checkLogged();
-        // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('siteTitle', 'Retried Student Application Form');
-
-        // gets info of all the users
-        $reapplic = OfficeDB::getForms('ReStudent Application Form');
-
-        // assign iterations: overlopen van de gevonden users
-        $this->pageTpl->setIteration('iReApplics');
-
-        // loops through all the users (except for the user with id 1 = admin) and assigns the values
-        foreach ($reapplic as $student) {
-            if ($student['email'] != 'admin') {
-                $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
-
-                // refill the iteration (mandatory!)
-                $this->pageTpl->refillIteration('iReApplics');
-            }
-        }
-
-        // parse the iteration
-        $this->pageTpl->parseIteration('iReApplics'); // alternative: $tpl->parseIteration();
-    }
-    
     public function showAgreements() {
         // Main Layout
         // Logged or not logged, that is the question...
@@ -84,6 +54,8 @@ class OfficeController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=agreements" title="Learning Agreements">Learning Agreements</a>');
+        $this->mainTpl->assign('pageJava', '');
 
         // gets info of all the users
         $agrees = OfficeDB::getLagree();
@@ -96,7 +68,7 @@ class OfficeController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
@@ -116,6 +88,8 @@ class OfficeController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Change of Learning Agreements');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=changes" title="Change of Learning Agreements">Change of Learning Agreements</a>');
+        $this->mainTpl->assign('pageJava', '');
 
         // gets info of all the users
         $changes = OfficeDB::getForms('Change Of Learning Agreement');
@@ -128,7 +102,7 @@ class OfficeController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
@@ -149,6 +123,8 @@ class OfficeController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Application forms');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=applics" title="Student Application Forms">Student Application Forms</a>');
+        $this->mainTpl->assign('pageJava', '');
 
         // gets info of all the users
         $id = OfficeDB::getIdLevel("Student Application and Learning Agreement");
@@ -162,7 +138,7 @@ class OfficeController extends PlonkController {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)

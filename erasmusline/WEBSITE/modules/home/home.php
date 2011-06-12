@@ -69,8 +69,11 @@ class HomeController extends PlonkController {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 $this->id = PlonkSession::get('id');
-            } else {
+            } else if(PlonkSession::get('userLevel') == 'Erasmus Coordinator') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+            }
+            else {
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=office&' . PlonkWebsite::$viewKey . '=office');
             }
         }
 

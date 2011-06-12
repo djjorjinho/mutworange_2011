@@ -15,7 +15,7 @@ class FormsController extends PlonkController {
 
             $id = $data[$emailField];
             $record = $db->checkRecordExists($emailField, $id, $table);
-            if (!empty($record) || $record[$id] != null) {
+            if (!empty($record)) {
 
                 $db->updateBelgium($table, $data, $emailField . ' = "' . $id . '"');
 
@@ -41,26 +41,21 @@ class FormsController extends PlonkController {
         }
     }
 
-    public function saveFile($id, $fileName) {
-        Plonk::dump('sdfsqdf');
-        if (isset($_FILES['pic'])) {
-            $uploaddir = '../../../files/' . $id;
-            $uploadfile = "";
+    public function saveFile($params, $folder) {
 
-            $tmp_name = $_FILES["pic"]["tmp_name"][0];
-            $name = $_FILES["pic"]["name"][0];
+        $uploaddir = 'files/' . $folder;
+        $uploadfile = '';
 
-            if(!PlonkDirectory::exists($uploaddir)) {
+        $tmp_name = $_FILES["file"]["tmp_name"];
+        $fileName = $_FILES["file"]["name"];
+
+        if (!PlonkDirectory::exists($uploaddir)) {
             mkdir($uploaddir);
-            }
-
-            $uploadfile = $uploaddir . '/' . $fileName;
-            echo $uploadfile;
-            echo $_FILES['pic']['tmp_name'][0];
-
-            $msg = move_uploaded_file($tmp_name, $uploadfile);
-            echo $msg . '("';
         }
+
+        $uploadfile = $uploaddir . '/' . $fileName;
+
+        $msg = move_uploaded_file($tmp_name, $uploadfile);
     }
 
 }

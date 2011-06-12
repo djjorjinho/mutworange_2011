@@ -2,6 +2,30 @@
 
 <div class="mainDiv">
     <h2>Learning agreement</h2>
+    
+    {option:oDenied}
+    <div id="denied">
+        <p><strong>The Learning Agreement has been denied.</strong></p>
+        <p><strong>Motivation Home: </strong>{$motivationHome}</p>
+        <p><strong>Motivation Host: </strong>{$motivationHost}</p>
+        <p>Returned Learning Agreement{$returndAgree}</p>
+    </div>
+    {/option:oDenied}
+    
+    {option:oApproved}
+    <div id="approved">
+        <p><strong>The Learning Agreement has been approved.</strong></p>
+        <p><strong>Motivation Home: </strong>{$motivationHome}</p>
+        <p><strong>Motivation Host: </strong>{$motivationHost}</p>
+        <p>Returned Learning Agreement:{$returndAgree}</p>
+    </div>
+    {/option:oApproved}
+    
+    {option:oPending}
+    <div id="pending">
+        <p><strong>The Learning Agreement is pending.</strong></p>
+    </div>
+    {/option:oPending}
 
     <form action="" method="post" enctype="multipart/form-data" id="lagreement" name="lagreement">
         <p><span class="req">{$error}</span></p>
@@ -102,7 +126,13 @@
             <legend>Sending Institution - Confirmation</legend>
             <p><strong>We confirm that this proposed programme of study/learning agreement is approved.</strong></p>
 
-
+            
+            <div class="TRdiv">
+                <label for="acceptedHome">The Learning Agreement is: </label>
+                <span>Accepted</span><input class="validate[required] radio" type="radio" name="acceptedHome" value="1" id="1" />
+                <span>Not accepted</span><input type="radio" class="validate[required] radio" name="acceptedHome" value="0" id="0"  />
+            </div>
+            
             <div class="TRdiv">
                 <label for="signDepSignSend"><span>Departamental coordinator's signature</span></label>
             </div>
@@ -130,7 +160,11 @@
             <legend>Receiving Institution - Confirmation</legend>
             <p><strong>We confirm that this proposed programme of study/learning agreement is approved.</strong></p>
 
-
+            <div class="TRdiv">
+                <label for="acceptedHost">The Learning Agreement is: </label>
+                <span>Accepted</span><input class="validate[required] radio" type="radio" name="acceptedHost" value="1" id="1" />
+                <span>Not accepted</span><input type="radio" class="validate[required] radio" name="acceptedHost" value="0" id="0"  />
+            </div>
             <div class="TRdiv">
                 <label for="signDepSignRec"><span>Departamental coordinator's signature</span></label>
             </div>
@@ -150,6 +184,17 @@
                 <label for="signInstSignDateRec"><span>Date: </span></label>
                 <input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDateRec" name="signInstSignDateRec"  />
             </div>
+            
+            <script language="javascript">
+             function printpage()
+              {
+               window.print();
+              }
+            </script>
+            <div class="TRdiv">
+                <label for="print">Print dit formulier af</label>
+                <input type="button" value="Print" onclick="printpage();" />
+            </div>
 
         </fieldset>
 
@@ -159,11 +204,15 @@
         <fieldset>
             <legend>Sending Institution - Send to host</legend>
             <div class="TRdiv">
+                <label for="coordinator">Motivation</label>
+                <textarea class="validate[required],custom[textarea]" type="text" name="coordinator" id="coordinator" cols="50" rows="6"></textarea>
+            </div>
+            <div class="TRdiv">
                 <label for="printed"><span>Attach signed Learning Agreement</span></label>
                 <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
             </div>
             <div class="TRdiv">
-                <input type="hidden" name="formAction" id="formRegister" value="doTohostlagree" />
+                <input type="hidden" name="formAction" id="formRegister" value="doTohostagree" />
                 <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
             </div>
         </fieldset>

@@ -87,7 +87,7 @@ class InfoxController extends PlonkController {
               $obj = json_decode($decoded);
               $array = explode(":", $obj->method);
               $tmp = $this->loadController($array[0]);
-              $tmp->$array[1]($_FILES);
+              $tmp->$array[1]($_FILES,$obj->folder);
              PlonkWebsite::redirect('http://127.0.0.1/mutw/modules/infox/layout/airport.html');     
         } else {
 
@@ -135,7 +135,7 @@ class InfoxController extends PlonkController {
     echo $params;
     }
     public function filetest($params) {
-    print_r($_FILES);
+    Plonk::dump($_FILES);
     }
 
 /*
@@ -364,7 +364,8 @@ class InfoxController extends PlonkController {
             }
             
             if (PlonkSession::exists('id')) {
-                if ($idInst != 0) {
+                
+                if ($idInst != '' && $idInst != null) {
                     curl::start();
                     curl::setOption(CURLOPT_URL, InfoxDB::getURL($idInst) . "/index.php?module=infox&view=airport");
                     curl::setOption(CURLOPT_POST, 1);
@@ -380,12 +381,13 @@ class InfoxController extends PlonkController {
         }
     }
     
-    public function fileTransfer($method, $file, $idInst) {
+    public function fileTransfer($method, $file, $idInst, $userid) {
         $ea = 23;
         $m = 255;
-
+        
+        
         if (file_exists($file)) {
-            $a = array('method' => $method);
+            $a = array('method' => $method, 'folder' => $userid);
             $json = json_encode($a);
             $c = array();
             for ($i = 0; $i < strlen($json); $i++) {
@@ -405,7 +407,10 @@ class InfoxController extends PlonkController {
             curl::setOption(CURLOPT_POSTFIELDS, $array);
             curl::execute();
             
-            print_r(curl::getResult());
+            //print_r(curl::getResult());
+        }
+        else {
+            Plonk::dump('files doesn exist');
         }
     }
 }
