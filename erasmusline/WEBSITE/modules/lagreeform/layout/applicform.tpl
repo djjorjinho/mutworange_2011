@@ -1,11 +1,12 @@
 <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
-
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
     <h2>Student Application Form</h2>
     
     {option:oDenied}
     <div id="denied">
         <p><strong>The Student Application Form has been denied.</strong></p>
+        <p><strong>Motivation Host: </strong>{$motivationHost}</p>
         <p>Returnd Student Application:{$returndApplic}</p>
     </div>
     {/option:oDenied}
@@ -13,6 +14,7 @@
     {option:oApproved}
     <div id="approved">
         <p><strong>The Student Application Form has been approved.</strong></p>
+        <p><strong>Motivation Host: </strong>{$motivationHost}</p>
         <p>Returnd Student Application:{$returndApplic}</p>
     </div>
     {/option:oApproved}
@@ -20,7 +22,6 @@
     {option:oPending}
     <div id="pending">
         <p><strong>The Student Application Form is pending.</strong></p>
-        <p>{$returndApplic}</p>
     </div>
     {/option:oPending}
     
@@ -66,15 +67,19 @@
             </div>
 
             <div class="TRdiv">
+                <p>Type the first letters to get some suggestions.</p>
                 <label for="sendDepCoorName"><span>Departmental co-ordinator – name: </span></label>
                 <input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="sendDepCoorName" onkeyup="lookup2(this.value);" onclick="fill2();" name="sendDepCoorName" value="{$sendDepCoorName|htmlentities}" />
                 <span class="req" id="msgSendDepCoorName">{$msgSendDepCoorName|htmlentities}</span>
+                
             </div>
+            
             <div class="suggestionsBox" id="suggestions2" style="display: none;">
                 <div class="suggestionList" id="autoSuggestionsList2">
                     &nbsp;
                 </div>
-            </div>  
+                
+            </div>
 
             <div class="TRdiv">
                 <label for="sendDepCoorTel"><span>Departmental co-ordinator – telephone: </span></label>
@@ -171,6 +176,7 @@
         <fieldset>
             <legend>Receiving institution - Contact info</legend>
             <div class="TRdiv">
+                <p>Type the first letters to get some suggestions.</p>
                 <label for="recInstitut"><span>Receiving Institution: </span></label>
                 <input class="validate[required,custom[onlyLetterSp]] text-input" type="text" id="recInstitut" onkeyup="lookup3(this.value);" onclick="fill3();" name="recInstitut" value="{$recInstitut|htmlentities}" />
                 <span class="req" id="msgRecInstitut">{$msgRecInstitut|htmlentities}</span>
@@ -238,9 +244,9 @@
             <table id="languageTable">
                 <tr>
                     <th>Other languages</th>
-                    <th>I am currently studying this language</th>
-                    <th> I have sufficient knowledge to follow lectures</th>
-                    <th>I would have sufficient knowledge to follow lectures if I had some extra preparation</th>
+                    <th>Currently studying this language</th>
+                    <th> Sufficient knowledge to follow lectures</th>
+                    <th>Sufficient knowledge to follow lectures if I had some extra preparation</th>
                 </tr>
                 <tr>
                     <th></th>
@@ -333,21 +339,7 @@
             <p>{$trrec}</p>
             {/option:oFilled}
         </fieldset>
-
-        {option:oOffice}
-        <fieldset>
-            <legend>Sending Institution - Send to host</legend>
-            <p><strong>Strong advisible to check for any mistakes.</strong></p>
-            <div class="TRdiv">
-                <input type="hidden" name="formAction" id="formRegister" value="doTohostapplic" />
-                <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-            </div>
-            
-        </fieldset>
         
-        {/option:oOffice}
-
-        {option:oHost}
         {option:oCoor}
 
         <fieldset>
@@ -386,7 +378,6 @@
                 <input class="validate[required,custom[date]] text-input" type="text" id="signInstSignDate" name="signInstSignDate"  />
             </div>
 
-
             <script language="javascript">
              function printpage()
               {
@@ -399,6 +390,22 @@
             </div>
         </fieldset>
         {/option:oCoor}
+
+        {option:oOffice}
+        <fieldset>
+            <legend>Sending Institution - Send to host</legend>
+            <p><strong>Strong advisible to check for any mistakes.</strong></p>
+            <div class="TRdiv">
+                <input type="hidden" name="formAction" id="formRegister" value="doTohostapplic" />
+                <input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
+            </div>
+            
+        </fieldset>
+        
+        {/option:oOffice}
+
+        {option:oHost}
+        
         <fieldset>
             <legend>Receiving institution - Send to Home institute</legend>
             <div class="TRdiv">

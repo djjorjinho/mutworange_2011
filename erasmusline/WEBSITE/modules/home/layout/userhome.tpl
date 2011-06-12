@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
     <h3>Welcome to your home page, {$user}</h3>
 <fieldset>

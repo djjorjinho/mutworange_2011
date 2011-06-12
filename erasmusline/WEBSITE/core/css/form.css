@@ -172,11 +172,35 @@ a:hover  {
    cursor: pointer;
 }
 
+/* Application form */
+
+
 #pending, #approved, #denied {
-    width: 600px;
-    height: 30px;
+    width: 570px;
+    height: auto;
+    padding: 15px 15px 15px 15px;
     background-color: white;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
 }
+
+#pending {
+    border: 1px solid #ff6d06;
+    color: #ff6d06;
+}
+
+#approved {
+    border: 1px solid green;
+    color: green;
+}
+
+#denied {
+    border: 1px solid red;
+    color: red;
+}
+
+
 
 
 /* button  CSS*/

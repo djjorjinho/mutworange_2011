@@ -1,4 +1,26 @@
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
+<h2>Precandidate</h2>
+{option:oDenied}
+    <div id="denied">
+        <p><strong>The Precandidate has been denied.</strong></p>
+        <p><strong>Motivation: </strong>{$motivationTop}</p>
+    </div>
+    {/option:oDenied}
+    
+    {option:oApproved}
+    <div id="approved">
+        <p><strong>The Precandidate has been approved.</strong></p>
+        <p><strong>Motivation: </strong>{$motivationTop}</p>
+    </div>
+    {/option:oApproved}
+    
+    {option:oPending}
+    <div id="pending">
+        <p><strong>The Precandidate is pending.</strong></p>
+    </div>
+    {/option:oPending}
+
 <form action="" method="post" enctype="multipart/form-data" id="precandidate" name="precandidate">	
 <fieldset>
     <legend>Student Information</legend>    
@@ -192,7 +214,7 @@
 </fieldset>    
 {/option:oNotFilled}
 <fieldset>
-    <legend>Motivation</legend>    
+    <legend>Student - Motivation</legend>    
     <div class="TRdiv">
         <textarea class="validate[required],custom[textarea]" type="text" name="motivation" id="motivation" cols="50" rows="5">{$motivation|htmlentities}</textarea>
         <span class="req" id="msgMotivation">{$msgMotivation|htmlentities}</span>	
@@ -235,7 +257,7 @@
     
 {option:oCoor}
 <fieldset>
-    <legend>Motivation</legend>    
+    <legend>Erasmus coordinator - Motivation</legend>    
     <div class="TRdiv">
         <textarea class="validate[required],custom[textarea]" type="text" name="coordinator" id="coordinator" cols="50" rows="5">{$coordinator|htmlentities}</textarea>
         <span class="req" id="msgCoordinator">{$msgCoordinator|htmlentities}</span>	
