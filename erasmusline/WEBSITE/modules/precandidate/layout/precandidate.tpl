@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
 <h2>Precandidate</h2>
 {option:oDenied}

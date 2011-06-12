@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <h2>Pending Learning Agreements</h2>
 <table cellspacing="1">
         <caption>
