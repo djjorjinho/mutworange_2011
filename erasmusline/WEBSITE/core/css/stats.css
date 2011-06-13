@@ -1,15 +1,6 @@
 @CHARSET "UTF-8";
 /******* GENERAL RESET *******/
 
-/*body{
-	background: #fff;
-	line-height:14px;
-	font-size: 12px;
-	font-family: Arial,  Verdana, Helvetica, sans-serif;
-	margin:0pt;
-	cursor:default;
-
-}*/
 .mainDiv {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
@@ -193,6 +184,16 @@ li.selected {
 
 #chart_div {
 	display: none;
+}
+
+.eis_box_title{
+	font-weight:bold;
+	font-size:12px;
+	font-style:italic;
+}
+
+.eis_hand{
+	cursor:pointer;
 }
 
 /* Overlay */
