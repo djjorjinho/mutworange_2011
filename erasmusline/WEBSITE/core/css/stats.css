@@ -74,6 +74,8 @@
 	height: 5%;
 	margin-left: 1%;
 	margin-top: 1%;
+	padding-top:2px;
+	padding-left:2px;
 }
 
 .presentation_div_options {
@@ -85,6 +87,8 @@
 	padding-top: 1px;
 	padding-left: 1px;
 	overflow: auto;
+	padding-top:2px;
+	padding-left:2px;
 }
 
 .presentation_div {
