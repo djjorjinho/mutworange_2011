@@ -1,12 +1,21 @@
 <?php
 
 class acom_regDB {
-    public static function checkDB() {
+        public static function checkDB() {
         $db = PlonkWebsite::getDB();
         $studentId=  PlonkSession::get('id');
         $stInfo = $db->retrieve("SELECT * FROM forms 
             where  studentId='".$db->escape($studentId)."'
             and erasmusLevelId=10");
+
+        return $stInfo;
+    }
+    
+    public static function checkLevel() {
+        $db = PlonkWebsite::getDB();
+        $studentId=  PlonkSession::get('id');
+        $stInfo = $db->retrieve("SELECT statusOfErasmus, action FROM erasmusstudent 
+            where  users_email='".$db->escape($studentId)."'");
 
         return $stInfo;
     }
@@ -56,6 +65,15 @@ class acom_regDB {
                 SELECT ins.instCountry from institutions as ins where ins.instEmail=(
                 SELECT ers.hostInstitutionId from erasmusstudent as ers where ers.users_email='".$db->escape($stId)."')
                    ) And r.residenceId='".$db->escape($resId)."'");
+        return $acom;
+    }
+    public static function getResidenceAV($stId,$resId){
+        $db = PlonkWebsite::getDB();
+        $acom = $db->retrieve("
+                SELECT * FROM residence as r where country=(
+                SELECT ins.instCountry from institutions as ins where ins.instEmail=(
+                SELECT ers.hostInstitutionId from erasmusstudent as ers where ers.users_email='".$db->escape($stId)."')
+                   ) And r.residenceId='".$db->escape($resId)."' AND r.available=1");
         return $acom;
     }
     

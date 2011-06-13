@@ -347,7 +347,12 @@ function validateFields($fields, $rules)
         if (preg_match('/[^A-Za-z0-9\s.,\'\-]/', $fields[$field_name]))
           $errors[$field_name] = $error_message; 
         break;
-        
+      case "textarea":
+          //Plonk::dump('sqlmdkjf');
+          if(preg_match("/[^a-zA-Z''\-'\séàèç\!\,\.\?\)\(]/", $fields[$field_name])) {
+              $errors[$field_name] = $error_message;
+          }
+          break;              
       case "custom_alpha":
         $chars = array();
         $chars["L"] = "[A-Z]";

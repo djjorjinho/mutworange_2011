@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
+
     {$pageMeta}
     {$pageJava}
     
@@ -19,8 +20,8 @@
   <div id="wrapper">
     <div id="header">    
       <div id="headNavi">
-		  <a href="#" title="Contact">Contact</a>
-		  <a href="index.php?module=about&amp;view=about" title="About">About</a>
+		  <a href="index.php?module=info&amp;view=contact" title="Contact">Contact</a>
+		  <a href="index.php?module=info&amp;view=erasmusLine" title="About">About</a>
 {option:oNotLogged}
 &nbsp;
 {/option:oNotLogged}
@@ -40,7 +41,7 @@
 	<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>
 {/option:oNotLogged}
-      <a href="index.php?module=info&amp;view=erasmus" class="{$tabInfo}" title="Info">Info</a>      
+      <a href="index.php?module=info&amp;view=info" class="{$tabInfo}" title="Info">Info</a>      
 {option:oLogged}
       <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
 {/option:oLogged}
@@ -103,8 +104,8 @@
 {/option:oStudent}
 <!-- END SUBNAVBAR -->
       
-      <div id="footer">
-      &copy; 2011 by EU | Sitemap | Contact | Disclaimer | Legal info
+      <div id="footer" class="info">
+          &copy; 2011 by <a href="index.php?module=info&amp;view=erasmus">Erasmus</a> | <a href="index.php?module=info&amp;view=erasmusline">ErasmusLine</a> | <a href="index.php?module=info&amp;view=contact">Contact</a> | <a href="index.php?module=info&amp;view=partners">Partners</a> | <a href="index.php?module=info&amp;view=faq">FAQ</a>
       </div>
     </div>
   </div>

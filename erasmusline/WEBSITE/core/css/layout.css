@@ -137,3 +137,61 @@ a:hover {
     padding-left: 20px;
     font-size: 14px;
 }
+
+
+#leftInfo {
+    width: 150px;
+    float:left;
+    margin-left: -45px;
+    margin-top:15px;
+}
+
+#infoInfo {
+    width: 450px;
+    float:right;
+}
+
+#infoInfo fieldset {
+    padding: 15px 15px 15px 15px;
+    margin-top:15px;
+}
+
+#profile {
+    float:left;
+}
+
+ul.personalInfo li {
+    margin-left: 225px;
+}
+
+#progress {
+    float:left;
+}
+
+#coursesTable td input {
+    margin-left:15px;
+    margin-right: 15px;
+}
+
+#coursesTable td {
+    height: 30px;
+}
+
+#staffTable img {
+    float:left;
+    
+}
+
+#staffTable tr {
+    opacity: 0.80;
+}
+
+#staffTable td {
+    margin-left: 100px;
+    height:10px;
+}
+
+
+#staffTable tr:hover {
+    opacity: 1;
+}

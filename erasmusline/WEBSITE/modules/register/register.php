@@ -19,11 +19,14 @@ class RegisterController extends PlonkController {
         'city', 'postalCode', 'nationality'
     );
     protected $actions = array(
-        'submit', 'login'
+        'submit', 'login','return'
     );
     protected $code;
     protected $id;
 
+    public function doReturn() {
+        PlonkWebsite::redirect("index.php?module=home&view=home");
+    }
     public function showRegistersucces() {
         $this->checkLogged();
         $this->mainTplAssigns();
@@ -50,7 +53,8 @@ class RegisterController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Register');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/register.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
+        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=home&view=home" title="Home">Home</a><a href="index.php?module=register&view=register" title="Register">Register</a>');
     }
 
     private function fillNationality($nationality = '') {

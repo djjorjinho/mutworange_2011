@@ -30,13 +30,15 @@ class PrecandidateController extends PlonkController {
     protected $formid;
 
     private function MainTplAssigns() {
-        $this->mainTpl->assign('siteTitle', 'ErasmusLine');
+        $this->mainTpl->assign('siteTitle', 'Precandidate');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/precandidate.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="core/css/form.css" type="text/css" media="screen"/>');
+        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&view=userhome" title="Home">Home</a><a href="index.php?module=precandidate&view=precandidate&form='.$this->formid.'" title="Precandidate">Precanddiate</a>');
     }
 
     public function showPrecandidate() {
+        $this->formid = PlonkFilter::getGetValue('form');
         $this->checkLogged();
         $this->CountryAssign();
         $this->MainTplAssigns();
@@ -106,6 +108,18 @@ class PrecandidateController extends PlonkController {
         foreach ($jsonArray as $key => $value) {
             $this->pageTpl->assign($key, $value);
             $this->pageTpl->assign('msg' . ucfirst($key), '');
+        }
+        
+        $formAction = PrecandidateDB::getForm($this->formid);
+
+        if ($formAction['action'] == 1) {
+            $this->pageTpl->assignOption('oApproved');
+            $this->pageTpl->assign('motivationTop', $formAction['motivationHome']);
+        } else if ($formAction['action'] == 0) {
+            $this->pageTpl->assignOption('oDenied');
+            $this->pageTpl->assign('motivationTop', $formAction['motivationHome']);
+        } else {
+            $this->pageTpl->assignOption('oPending');
         }
     }
 
@@ -238,6 +252,7 @@ class PrecandidateController extends PlonkController {
 
             $jsonArray = json_encode($newArray);
             $values = array(
+                'formId' => Functions::createRandomString(),
                 'type' => 'Precandidate',
                 'date' => date("Y-m-d"),
                 'content' => $jsonArray,
@@ -266,7 +281,7 @@ class PrecandidateController extends PlonkController {
                 'studentId' => PlonkSession::get('id'),
                 'action' => '2',
                 'erasmusLevelId' => $erasmusLevelId['levelId'],
-                'eventDescrip' => 'Precandidate ingevuld.',
+                'eventDescrip' => 'Filled in Precandidate.',
                 'readIt' => 0
             );
 
@@ -307,11 +322,12 @@ class PrecandidateController extends PlonkController {
         );
 
         $values = array(
-            'action' => (int) PlonkFilter::getPostValue('approve')
+            'action' => (int) PlonkFilter::getPostValue('approve'),
+            'motivationHome' => PlonkFilter::getPostValue('coordinator')
         );
 
-        PrecandidateDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid.'"');
-        PrecandidateDB::updateErasmusStudent('forms', $values, 'formId = '.$this->formid);
+        PrecandidateDB::updateErasmusStudent('erasmusstudent', array('action' => (int)  PlonkFilter::getPostValue('approve')), 'users_email = "' . $this->userid.'"');
+        PrecandidateDB::updateErasmusStudent('forms', $values, 'formId = "'.$this->formid.'"');
 
         PrecandidateDB::insertStudentEvent('studentsEvents', $valueEvent);
         PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=precandidates');
@@ -460,13 +476,17 @@ class PrecandidateController extends PlonkController {
     }
     private function upload() {
         $id = PlonkSession::get('id');
-        $uploaddir = "files/" . $id . "/";
+        $uploaddir = "files/" . $id . "";
+        
+        if(!PlonkDirectory::exists($uploaddir)) {
+            mkdir($uploaddir);
+            }
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
                 $tmp_name = $_FILES["pic"]["tmp_name"][$key];
                 $name = $_FILES["pic"]["name"][$key];
-                $uploadfile = $uploaddir . basename($name);
+                $uploadfile = $uploaddir."/" . basename($name);
 
                 if (move_uploaded_file($tmp_name, $uploadfile)) {
                     $cover = $uploadfile;

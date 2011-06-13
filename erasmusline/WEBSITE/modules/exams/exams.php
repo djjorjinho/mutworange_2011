@@ -11,7 +11,7 @@
 	if($items['userLevel'] == "Erasmus Coordinator") {
 		require_once './modules/exams/exams_coordinator.php';
 	} else if($items['userLevel'] == "Student") {	
-		$examStr = '<h3>Take exams in your home University</h3>';
+		$examStr = '';
 		
 		$aStr = "";
 		

@@ -18,9 +18,8 @@ class ResidenceDB {
         $db = PlonkWebsite:: getDB();
         $residences = $db->retrieve("select * from residence 
             inner join country on residence.country = country.Code 
-            where country.Code = '" . $db->escape($country) . "'");
-        return $residences;
-        
+            where country.Code = '" . $db->escape($country) . "' AND residence.available = 1");
+        return $residences;        
     }
     
     public static function getCountries() {
@@ -57,6 +56,32 @@ class ResidenceDB {
             where users_email = '" . $db->escape($id) . "'");
         
         return $erasmuslevel;
+    }
+    
+    public static function insert($table, $values) {
+       
+        $db = PlonkWebsite::getDB();
+        
+        $insertId = $db->insert($table, $values);
+    }
+    
+    public static function userExists($email) {
+        $db = PlonkWebsite::getDB();
+        
+        $user = $db->retrieveOne("select * from owner where email = '".$db->escape($email)."'");
+        
+        return $user;
+    
+    }
+    
+     public static function getPaging($limit,$country) {
+        $db = PlonkWebsite::getDB();
+        
+        $books = $db->retrieve("select * from residence 
+            inner join country on residence.country = country.Code 
+            where country.Code = '" . $db->escape($country) . "' AND residence.available = 1 " . $limit );
+        
+        return $books;
     }
     
 }

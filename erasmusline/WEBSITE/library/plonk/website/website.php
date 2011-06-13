@@ -189,6 +189,7 @@ class PlonkWebsite
 		require_once 'plonk/database/database.php';			// PlonkDatabase
 		require_once 'plonk/cookie/cookie.php';				// PlonkCookie
 		require_once 'plonk/session/session.php';			// PlonkSession
+                require_once 'plonk/filesystem/directory.php';
 		
 		// disable magic quotes
 		PlonkFilter::disableMagicQuotes();

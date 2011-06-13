@@ -1,5 +1,8 @@
+<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
-<h3>Residence</h3>
+    <h3>Residence detail</h3>
+    <fieldset>
+    <legend>Residence</legend>
 <p>Prijs: {$price}</p>
 <p>Street + Nr: {$streetNr}</p>
 <p>City: {$city}</p>
@@ -14,13 +17,23 @@
 <p>Description: {$description}</p>
 <p>Television: {$television}</p>   
 <p>Availability: {$available}</p>
-<h3>Owner</h3>
+</fieldset>
+    <fieldset>
+<legend>Owner</legend>
 <p>Name: {$familyName} {$firstName}</p>
 <p>Telephone: {$tel}</p>
-<p>Email: <a href="mailto:{$email}">{$email}</p>
+<p>Email: <a href="mailto:{$email}">{$email}</a></p>
+</fieldset>
 {option:oReservation}
-<h3>Make Reservation</h3>
-<p>Fill in the <a href="index.php?module=acom_reg&view=acom_reg">Accommodation Registration </a></p>
+<fieldset>
+<legend>Make Reservation</legend>
+<form action="" method="post" enctype="multipart/form-data">
+     <div class="TRdiv">               
+		<input type="hidden" name="formAction" id="formAcom" value="doAcom" />
+		<input class="button" name="btnAcom" id="btnAcom" type="submit" value="Fill in Accomodation Registration Form"/>
+	</div> 
+</form>
 {/option:oReservation}
+</fieldset>
 
 </div>

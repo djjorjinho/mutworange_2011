@@ -1,7 +1,21 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-?>
+class InfoDB {
+    
+    public static function getPartners() {
+        $db = PlonkWebsite::getDB();
+        
+        $partners = $db->retrieve("select * from institutions");
+        
+        return $partners;
+    }
+    
+    public static function getInstitute($email) {
+        $db = PlonkWebsite::getDB();
+        
+        $institute = $db->retrieveOne("select * from institutions 
+            where instEmail = '" . $email . "'");
+        return $institute;
+                
+    }
+}

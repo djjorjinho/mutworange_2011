@@ -67,7 +67,9 @@ class JsonRpcDispatcher{
 				return $this->jsonError("FUNC_NOT_AVAILABLE",0,$json['id']);
 				
 			}else{
-				return $this->jsonResult($result,$json['id']);
+				$json_result = $this->jsonResult($result,$json['id']);
+				System_Daemon::debug("Encoded Message: ".$json_result."\n");
+				return $json_result;
 			}
 			
 		}catch(Exception $e){

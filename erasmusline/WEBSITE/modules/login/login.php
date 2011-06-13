@@ -30,6 +30,8 @@ class LoginController extends PlonkController {
         // Assign main properties
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('breadcrumb','');
+        $this->mainTpl->assign('pageJava','');
     }
 
     public function showLogin() {
@@ -40,8 +42,11 @@ class LoginController extends PlonkController {
         if (PlonkFilter::getGetValue('error') === '1') {
             $this->pageTpl->assign('errorMsg', 'Username or password is incorrect');
         }
-        if (PlonkFilter::getGetValue('error') === '2') {
+        else if (PlonkFilter::getGetValue('error') === '2') {
             $this->pageTpl->assign('errorMsg', 'We couldn\'t find you. Is it possible you don\'t have an <a href="index.php?module=register&view=register" title="Create account">account</a> yet?');
+        }
+        else {
+            $this->pageTpl->assign('errorMsg','');
         }
     }
 

@@ -1,43 +1,58 @@
 @CHARSET "UTF-8";
 /******* GENERAL RESET *******/
 
-/*body{
-	background: #fff;
-	line-height:14px;
-	font-size: 12px;
-	font-family: Arial,  Verdana, Helvetica, sans-serif;
-	margin:0pt;
-	cursor:default;
-
-}*/
-
-
 .mainDiv{
-    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-family: Tahoma;
     font-size:12px;
-    border:solid 2px #b7ddf2;
-    background:#ebf4fb;
     width:600px;
     margin-left: 10%;
 }
 
-
-
-
-.TRdiv input{
-    width:250px;
-    font-size:12px;
-    border:solid 1px #aacfe4;
+fieldset {
+    border:1px solid #998c86;    
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;    
+    margin-top:15px;
 }
-.TRdiv select{
-    width:250px;
-    font-size:12px;
-    border:solid 1px #aacfe4;
+legend {
+    margin-left:30px;
+    padding:10px;
 }
+
+legend h3 {
+    color: #ff6d06;
+}
+
+ .TRdiv input, select, textarea{
+    width:225px;
+    border:solid 1px #DFDFDF;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    margin-left:15px;
+}
+.TRdiv input:focus, select:focus, textarea:focus {
+    border:1px solid #ff6d06;    
+}
+
+input[type="submit"]  {    
+    border:1px solid #998c86;    
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;  
+    padding: 5px 5px 5px 5px;
+}
+
+input[type="submit"]:hover {
+    border:1px solid #ff6d06;
+    cursor: pointer;
+}
+
+
+ 
 .lol {
     background-color: #fdd7d7;
-
-
 }
 
 /******* Transip Records *******/
@@ -47,26 +62,29 @@ div.curFocus {
 
 
 label {
-    width: 14em;
-    display: block;
-    float: left;
-    padding-top: 4px;
-    vertical-align: middle;
-
+    width:100px;
+    float:left;
+    text-align:right;
+    padding:4px 15px 0 0;
+    color: #333333;
+    
 }
 .TRdiv {
-    display: table;
-    min-width:1px;
-    padding: 0.2em;
-    position: relative;
+    width:365px;
+    _width:355px;
+    clear:both;
+    padding:10px 0 10px 0;
+    _padding:5px 0 5px 0;
+    color:#a53d17;
 
 }
 
 
 .req {
     margin-left: 2px;
-    color: #ee0101;
-    font-size:16px;
+    color: #ff6d06;
+    font-size:12px;
+    float:right;
 
 }
 
@@ -90,18 +108,107 @@ label {
     position: relative;
 
     float: right;
-
-
-
-
 }
+
+
+
+
+
+.radioResidences {
+    width:365px;    
+}
+.radioResidence {
+    float:left;
+}
+
+.radioResidence input { 
+    margin-left: 25px;
+    margin-bottom:10px;
+    margin-right:15px;
+}
+.radioResidence label {
+    margin-right:10px;
+}
+
 .alCenterDiv {
     width:100%;
     position: relative;
     float: left;
-
-
 }
+
+.mainDiv p,ul,li {
+    margin-left: 25px;
+    margin-bottom:10px;
+}
+
+.radioExams {
+    margin-left: 25px;
+    margin-bottom:10px;
+}
+.mainDiv table {
+    width: 365px;
+    margin-left:15px;
+    margin-bottom: 15px;
+    
+}
+.mainDiv th,tr {
+    text-align: center;
+}
+
+.mainDiv td {
+    width: 200px;
+    height:50px;
+}
+
+.events a {
+    color:#ff6d06;
+}
+
+.linkResidence a {
+    color:#ff6d06;
+}
+
+.mainDiv img {
+    margin-left:25px;
+    margin-bottom:25px;
+}
+
+a:hover  {
+   color:#ff6d06;
+   cursor: pointer;
+}
+
+/* Application form */
+
+
+#pending, #approved, #denied {
+    width: 570px;
+    height: auto;
+    padding: 15px 15px 15px 15px;
+    background-color: white;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+}
+
+#pending {
+    border: 1px solid #ff6d06;
+    color: #ff6d06;
+}
+
+#approved {
+    border: 1px solid green;
+    color: green;
+}
+
+#denied {
+    border: 1px solid red;
+    color: red;
+}
+
+
+
+
 
 
 /* button  CSS*/

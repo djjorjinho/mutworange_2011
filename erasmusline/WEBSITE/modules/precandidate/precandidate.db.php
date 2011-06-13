@@ -135,6 +135,16 @@ class PrecandidateDB {
         
         return $student['studentId'];
     }
+    
+    public static function getForm($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $form = $db->retrieveOne("select * from forms where formId = '".$id."'");
+         
+        return $form;
+        
+       
+    }
 
 }
 

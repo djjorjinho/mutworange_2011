@@ -31,10 +31,10 @@ echo "======== RUNNING TESTS ======="
 
 cd ../../test/
 pwd
-./run
+#./run
 
 cd ../stats/test
 pwd
-./run
+#./run
 
 cd ..

@@ -74,16 +74,42 @@ class InfoxController extends PlonkController {
     public function showInfox() {
     }
     public function showAirport() {
-        if (PlonkFilter::getPostValue('json')) {
-            $obj = json_decode(PlonkFilter::getPostValue('json'));
-            for ($i = 0; $i < count($obj); $i++) {
-                $array = explode(":", $obj[$i]->method);
-                $tmp = $this->loadController($array[0]);
-            
-                $tmp->$array[1]($obj[$i]->params);
-            }
-        
-            PlonkWebsite::redirect('http://127.0.0.1/mutw/modules/infox/layout/airport.html');     
+        $da = 151;
+        $m = 255;
+
+        if (PlonkFilter::getPostValue('params')) {
+            // Start decoding
+              $c = explode("#", PlonkFilter::getPostValue('params'));
+              $decoded = "";
+              for ($i = 0; $i < count($c); $i++) {
+               	$decoded .= InfoxDB::UTF8_CharEncode(InfoxDB::powmod($c[$i], $da, $m));
+              }
+              $obj = json_decode($decoded);
+              $array = explode(":", $obj->method);
+              $tmp = $this->loadController($array[0]);
+              $tmp->$array[1]($_FILES,$obj->folder);
+             PlonkWebsite::redirect('http://127.0.0.1/mutw/modules/infox/layout/airport.html');     
+        } else {
+
+          if (PlonkFilter::getPostValue('json')) {
+          // Start decoding
+              $c = explode("#", PlonkFilter::getPostValue('json'));
+              $decoded = "";
+              for ($i = 0; $i < count($c); $i++) {
+               	$decoded .= InfoxDB::UTF8_CharEncode(InfoxDB::powmod($c[$i], $da, $m));
+              }
+  
+    
+              $obj = json_decode($decoded);
+              for ($i = 0; $i < count($obj); $i++) {
+                  $array = explode(":", $obj[$i]->method);
+                  $tmp = $this->loadController($array[0]);
+              
+                  $tmp->$array[1]($obj[$i]->params);
+              }
+          
+             PlonkWebsite::redirect('http://127.0.0.1/mutw/modules/infox/layout/airport.html');     
+          }
         }
     }
     
@@ -107,6 +133,9 @@ class InfoxController extends PlonkController {
     }
     public function test2($params) {
     echo $params;
+    }
+    public function filetest($params) {
+    Plonk::dump($_FILES);
     }
 
 /*
@@ -304,6 +333,9 @@ class InfoxController extends PlonkController {
     }
 */    
     public function dataTransfer($method, $table, $data, $idInst) {
+        $ea = 23;
+        $m = 255;
+    
         $c1 = count($method);
         $c2 = count($table);
         $c3 = count($data);
@@ -319,15 +351,26 @@ class InfoxController extends PlonkController {
             }
             $json = json_encode($array);
             
+            // Start encoding json String
+            $c = array();
+            for ($i = 0; $i < strlen($json); $i++) {
+              array_push($c, InfoxDB::UTF8_CharDecode($json[$i]));
+            }
+            $encoded = "";
+            for ($i = 0; $i < count($c); $i++) {
+              if ($i > 0)
+                $encoded .= "#";
+              $encoded .= InfoxDB::powmod($c[$i], $ea, $m);
+            }
+            
             if (PlonkSession::exists('id')) {
-                if ($idInst != 0) {
+                
+                if ($idInst != '' && $idInst != null) {
                     curl::start();
                     curl::setOption(CURLOPT_URL, InfoxDB::getURL($idInst) . "/index.php?module=infox&view=airport");
                     curl::setOption(CURLOPT_POST, 1);
                     curl::setOption(CURLOPT_RETURNTRANSFER, true);
-                    curl::setOption(CURLOPT_USERPWD, InfoxDB::getAuthUsername() . ":" . InfoxDB::getAuthPwd());
-                    curl::setOption(CURLOPT_POSTFIELDS, "json=" . $json);
-                    curl::setOption(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+                    curl::setOption(CURLOPT_POSTFIELDS, "json=" . $encoded);
                     curl::execute();
                 }
             }
@@ -335,6 +378,39 @@ class InfoxController extends PlonkController {
             print_r(curl::getResult());
         } else {
             Plonk::dump('Arrays not same length');
+        }
+    }
+    
+    public function fileTransfer($method, $file, $idInst, $userid) {
+        $ea = 23;
+        $m = 255;
+        
+        
+        if (file_exists($file)) {
+            $a = array('method' => $method, 'folder' => $userid);
+            $json = json_encode($a);
+            $c = array();
+            for ($i = 0; $i < strlen($json); $i++) {
+              array_push($c, InfoxDB::UTF8_CharDecode($json[$i]));
+            }
+            $encoded = "";
+            for ($i = 0; $i < count($c); $i++) {
+              if ($i > 0)
+                $encoded .= "#";
+              $encoded .= InfoxDB::powmod($c[$i], $ea, $m);
+            }
+            $array = array('file' => "@" . realpath($file), "params" => $encoded);
+            curl::start();
+            curl::setOption(CURLOPT_URL, InfoxDB::getURL($idInst) . "/index.php?module=infox&view=airport");
+            curl::setOption(CURLOPT_POST, 1);
+            curl::setOption(CURLOPT_RETURNTRANSFER, true);
+            curl::setOption(CURLOPT_POSTFIELDS, $array);
+            curl::execute();
+            
+            //print_r(curl::getResult());
+        }
+        else {
+            Plonk::dump('files doesn exist');
         }
     }
 }

@@ -30,6 +30,8 @@ class ProfileController extends PlonkController {
      */
     private function mainTplAssigns($pageTitle) {
         // Assign main properties
+        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb','');
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '
             <script type="text/javascript">
@@ -118,6 +120,9 @@ class ProfileController extends PlonkController {
             $this->pageTpl->parseIteration();
             $this->pageTpl->assign('total', $i);
         }
+        else {
+            $this->pageTpl->assign('total', '');
+        }
     }
 
     public function showProfile() {
@@ -148,13 +153,28 @@ class ProfileController extends PlonkController {
         $this->pageTpl->assign('userLevel', $info['userLevel']);
         if(!empty($erasmuslevel)) {
             if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
-                $this->erasmusLevel = 1 * 10;
+                if($erasmuslevel['action'] == 2)
+                    $this->erasmusLevel = 5;
+                if($erasmuslevel['action'] == 1)
+                    $this->erasmusLevel = 10;
             }
-            if ($erasmuslevel['statusOfErasmus'] == 'Student Application Form') {
-                $this->erasmusLevel = 1.5 * 10;
+            if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
+                if($erasmuslevel['action'] == 22)
+                    $this->erasmusLevel = 15;
+                if($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
+                    $this->erasmusLevel = 25;
+                if($erasmuslevel['action'] == 11)
+                    $this->erasmusLevel = 40;
+                else
+                    $this->erasmusLevel = 10;
             }
-            if ($erasmuslevel['statusOfErasmus'] == 'Learning Agreement') {
-                $this->erasmusLevel = 100;
+            if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
+                if($erasmuslevel['action'] == 1)
+                    $this->erasmusLevel = 50;
+                if($erasmuslevel['action'] == 2)
+                    $this->erasmusLevel = 45;
+                else
+                    $this->erasmusLevel = 40;
             }
         }
 

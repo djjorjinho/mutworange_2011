@@ -1,30 +1,37 @@
-<h2>Admin panel</h2>
-<p>Here you can add new staff members or delete them</p>
-
-<caption>
-            <h2>Staff</h2>
-        </caption>
+<div class="mainDiv">
+    <h3>Admin Homepage</h3>
+    <fieldset>
+    <legend>Staff Members</legend>
+    <table border="1" cellspacing="0">
         <tr>
             <th>
                 Name
             </th>
             <th>
-                Delete/Password
+                Delete
             </th>
+            <th>Password</th>
         </tr>
 		{iteration:iStaff}
         <tr>
             <td>
-            	<a href="{$hrefProfile}" class="userFoto" title="Photo user"><img src="{$hrefPhoto}" alt="Picture user" height="45" width="45" /></a>
-                <a href="{$hrefProfile}">{$name}</a>
+            	<a href="{$hrefProfile}">{$name}</a>
             </td>
             <td>
                 <a href="{$deleteUrl}" class="delete" title="Delete">Delete</a>
-				<a href="{$passUrl}" class = "Send" title="Send password">Send password</a>
+				
             </td>
+            <td><a href="{$passUrl}" class = "Send" title="Send password">Send password</a></td>
         </tr>
 		{/iteration:iStaff}
     </table>
+    </fieldset>
+    <form action="" method="post" enctype="multipart/form-data" id="add" name="add">
+        <div class="TRdiv">               
+            <input type="hidden" name="formAction" id="add" value="doAdd" />
+            <input class="button" name="btnAdd" id="btnAdd" type="submit" value="Add Staff Member"/>
+        </div>
+    </form>
     
-    <p><a href="index.php?module=register&view=register" title="New user">New staff</a></p>
+    </div>
     
