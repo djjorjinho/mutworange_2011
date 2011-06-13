@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
+    <h1>WITH A SMILE ON OUR FACE WE WILL WIN THE RACE!!! LALALALALALALALALALALALALALALALALALALAA</h1>
+    <p>Sorry ^^ iLolled</p>
  <form action="" method="post" enctype="multipart/form-data">   
      <fieldset>
                   <legend><h3>Sign up now</h3></legend>
