@@ -204,7 +204,7 @@
 
         {option:oOffice}
         <fieldset>
-            <legend>Sending Institution - Send to host</legend>
+            <legend>Sending Institution - Send to host (if approved)</legend>
             <div class="TRdiv">
                 <label for="coordinator">Motivation</label>
                 <textarea class="validate[required],custom[textarea]" type="text" name="coordinator" id="coordinator" cols="50" rows="6"></textarea>

@@ -256,5 +256,11 @@ class LagreeformDB {
         
         return $form;
     }
+    
+    public static function deleteCourses($table,$where) {
+        $db = PlonkWebsite::getDB();
+        
+        $db->delete($table, $where);
+    }
 
 }
