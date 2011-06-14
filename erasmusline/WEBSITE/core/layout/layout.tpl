@@ -18,13 +18,14 @@
   
   <body>
   <div id="wrapper">
-    <div id="header">    
+    <div id="header">
       <div id="headNavi">
 		  <a href="index.php?module=info&amp;view=contact" title="Contact">Contact</a>
 		  <a href="index.php?module=info&amp;view=erasmusLine" title="About">About</a>
 {option:oNotLogged}
 &nbsp;
 {/option:oNotLogged}
+        
       </div>
       <div id="nav-main">
 {option:oAdmin}
@@ -97,7 +98,7 @@
 <div id="subnav">
 <ul>
     <li class="level2"><a href="#" title="Progress">Progess</a></li>
-    <li class="level2"><a href="index.php?module=profile&view=edit" title="Edit profile">Edit profile</a></li>
+    <li class="level2"><a href="index.php?module=profile&amp;view=edit" title="Edit profile">Edit profile</a></li>
 </ul>
 </div>
 {/option:oStudent}

@@ -49,7 +49,7 @@
         <input type="text" name="tel" id="tel" value="{$tel|htmlentities}" />
     </div>
     <div class="TRdiv">
-        <label for="mobilePhone"<span>Mobile Phone : </span></label>
+        <label for="mobilePhone"><span>Mobile Phone : </span></label>
         <input type="text" name="mobilePhone" id="mobilePhone" value="{$mobilePhone|htmlentities}" />
     </div>
 </fieldset>
@@ -126,7 +126,8 @@
                      {$stud}
                {/iteration:iStudy}
             </select>
-            <span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>    
+            <span class="req" id="msgStudy">{$msgStudy|htmlentities}</span>
+     </div>
 </fieldset>
     
     <fieldset>    
@@ -139,7 +140,7 @@
                {/iteration:iChoice1}
             </select>
             <span class="req" id="msgChoice1">{$msgChoice1|htmlentities}</span>
-            
+    </div>        
     <div class="TRdiv">
         <label for="choice2"><span>Second Choice : </span></label>
         <select name="choice2"  >

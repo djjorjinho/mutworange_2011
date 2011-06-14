@@ -109,15 +109,15 @@ class HomeController extends PlonkController {
                     }
                     $this->pageTpl->assign('status', $action);
                     if ($latestEvent['levelName'] == "Certificate Of Arrival") {
-                        $this->pageTpl->assign('next', '<li><a href="index.php?module=learnagr_ch&view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
-                        <li><a href="index.php?module=mobility&view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
+                        $this->pageTpl->assign('next', '<li><a href="index.php?module=learnagr_ch&amp;view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
+                        <li><a href="index.php?module=mobility&amp;view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
                     } else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
                         $this->pageTpl->assign('next', "<li>Your Precandidate has been denied. Sorry</li>");
                     } else {
                         if ($action == "Pending") {
                             $this->pageTpl->assign('next', 'Waiting for confirmation of ' . $latestEvent['levelName']);
                         } else {
-                            $this->pageTpl->assign('next', '<li><a href="index.php?module=' . $next['module'] . '&view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a></li>');
+                            $this->pageTpl->assign('next', '<li><a href="index.php?module=' . $next['module'] . '&amp;view=' . $next['view'] . '" title="' . $next['levelName'] . '">' . $next['levelName'] . '</a></li>');
                         }
                     }
                 }
@@ -125,23 +125,23 @@ class HomeController extends PlonkController {
                 if ($statusStudent['action'] == 0) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application is denied. Learning Agreement is denied');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=applicform" title="Fill in Student Application and Learning Agreement">Fill in Student Application and Learning Agreement</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&amp;view=applicform" title="Fill in Student Application and Learning Agreement">Fill in Student Application and Learning Agreement</a>');
                 } else if ($statusStudent['action'] == 1) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application is denied. Learning Agreement is approved.');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=applicform" title="Fill in Student Application Form">Fill in Student Application Form</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&amp;view=applicform" title="Fill in Student Application Form">Fill in Student Application Form</a>');
                 } else if ($statusStudent['action'] == 2) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form.');
                     $this->pageTpl->assign('status', 'Student Application is denied, Learning Agreement is pending.');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=applicform" title="Fill in Student Application Form">Fill in Student Application Form</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&amp;view=applicform" title="Fill in Student Application Form">Fill in Student Application Form</a>');
                 } else if ($statusStudent['action'] == 10) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is approved, Learning Agreement is denied.');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&amp;view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
                 } else if ($statusStudent['action'] == 11) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is approved, Learning Agreement is approved.');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=acom_reg&view=acom_reg" title="Fill in Accomodation registration form">Fill in Accomodation registration form</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=acom_reg&amp;view=acom_reg" title="Fill in Accomodation registration form">Fill in Accomodation registration form</a>');
                 } else if ($statusStudent['action'] == 12) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is approved, Learning Agreement is pending.');
@@ -149,7 +149,7 @@ class HomeController extends PlonkController {
                 } else if ($statusStudent['action'] == 20) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is pending, Learning Agreement is denied.');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&amp;view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
                 } else if ($statusStudent['action'] == 21) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is pending, Learning Agreement is approved.');
@@ -161,13 +161,13 @@ class HomeController extends PlonkController {
                 } else {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form but not Learning Agreement.');
                     $this->pageTpl->assign('status', 'Waiting for you to fill in Learning Agreement.');
-                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
+                    $this->pageTpl->assign('next', '<a href="index.php?module=lagreeform&amp;view=lagreement" title="Fill in Learning Agreement">Fill in Learning Agreement</a>');
                 }
             }
         } else {
             $this->pageTpl->assign('action', 'No previous action taken.');
             $this->pageTpl->assign('status', 'No status due to no previous action.');
-            $this->pageTpl->assign('next', '<a href="index.php?module=precandidate&view=precandidate" title="precandidate">Fill in pre candidate form</a>');
+            $this->pageTpl->assign('next', '<a href="index.php?module=precandidate&amp;view=precandidate" title="precandidate">Fill in pre candidate form</a>');
         }
 
 
@@ -179,11 +179,11 @@ class HomeController extends PlonkController {
 
             foreach ($forms as $form) {
                 if ($form['type'] == "Student Application Form") {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' ' . '<a href="index.php?module=' . $form['module'] . '&view=applicform&form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' ' . '<a href="index.php?module=' . $form['module'] . '&amp;view=applicform&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 } else if ($form['type'] == "Learning Agreement") {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' '. '<a href="index.php?module=' . $form['module'] . '&view=lagreement&form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' '. '<a href="index.php?module=' . $form['module'] . '&amp;view=lagreement&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 } else {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' '. '<a href="index.php?module=' . $form['module'] . '&view=' . $form['view'] . '&form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' '. '<a href="index.php?module=' . $form['module'] . '&amp;view=' . $form['view'] . '&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 }$this->pageTpl->refillIteration('iForms');
             }
 
@@ -201,7 +201,7 @@ class HomeController extends PlonkController {
             $this->pageTpl->setIteration('iEvents');
 
             foreach ($events as $event) {
-                $this->pageTpl->assignIteration('event', '<li class="events">' . $event['timestamp'] . ' - ' . $event['eventDescrip'] . '  :  <a href="index.php?module=home&view=notify&event=' . $event['eventId'] . '" title="read" >OK</a></li>');
+                $this->pageTpl->assignIteration('event', '<li class="events">' . $event['timestamp'] . ' - ' . $event['eventDescrip'] . '  :  <a href="index.php?module=home&amp;view=notify&amp;event=' . $event['eventId'] . '" title="read" >OK</a></li>');
                 $this->pageTpl->refillIteration('iEvents');
             }
 

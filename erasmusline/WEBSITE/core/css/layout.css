@@ -26,6 +26,7 @@ a:hover {
     background: url(../css/images/header.png);
     border: 1px solid #f0f0f0;
 }
+
 #footer {
     float: left;
     width: 949px;
@@ -38,9 +39,11 @@ a:hover {
 
  #nav-main {
     float: right;
+    
 }
 
 #nav-main a{
+    z-index: 4000;
     float: left;
     color: #333;
     font-weight: bold;

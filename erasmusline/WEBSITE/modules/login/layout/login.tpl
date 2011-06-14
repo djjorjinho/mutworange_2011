@@ -10,7 +10,7 @@
                         <span class="req">*</span>
                 </div>
                 <div class="TRdiv">
-			<label for="password">Password</span></label>
+			<label for="password"><span>Password</span></label>
 			<input class="field" type="password" name="Password"/>
                         <span class="req">*</span>
                 </div>    

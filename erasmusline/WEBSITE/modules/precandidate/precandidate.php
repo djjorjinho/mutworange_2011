@@ -34,7 +34,7 @@ class PrecandidateController extends PlonkController {
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/precandidate.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&view=userhome" title="Home">Home</a><a href="index.php?module=precandidate&view=precandidate&form='.$this->formid.'" title="Precandidate">Precanddiate</a>');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=userhome" title="Home">Home</a><a href="index.php?module=precandidate&amp;view=precandidate&amp;form='.$this->formid.'" title="Precandidate">Precanddiate</a>');
     }
 
     public function showPrecandidate() {
@@ -344,6 +344,10 @@ class PrecandidateController extends PlonkController {
         $this->pageTpl->assign('rentYes', 'checked');
         $this->pageTpl->assign('cribYes', 'checked');
         $this->pageTpl->assign('scolYes', 'checked');
+        
+        $this->pageTpl->assign('rentNo', '');
+        $this->pageTpl->assign('cribNo', '');
+        $this->pageTpl->assign('scolNo', '');
 
         $studies = PrecandidateDB::getEducations();
         $countries = PrecandidateDB::getCountries();

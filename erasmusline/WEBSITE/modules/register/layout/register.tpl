@@ -41,7 +41,7 @@
         </div></div>
         <div class="TRdiv">
             <label for="birthDate"><span>Birth Date:</span></label>
-            <input class="validate[required,custom[date]]" text-input" value="{$birthDate|htmlentities}" name="birthDate" id="birthDate" />
+            <input class="validate[required,custom[date]] text-input" value="{$birthDate|htmlentities}" name="birthDate" id="birthDate" />
             <span class="req" id="msgBirthDate">*</span>
         </div>
         <div class="TRdiv">
@@ -55,7 +55,7 @@
             <span class="req" id="msgTelephone">{$msgTelephone|htmlentities}</span>	
 	</div>
         <div class="TRdiv">
-            <label for="mobilePhone"<span>Mobile Phone:</span></label>
+            <label for="mobilePhone"><span>Mobile Phone:</span></label>
             <input class="validate[required,custom[onlyNumberSp]] text-input" type="text" name="mobilePhone" id="mobilePhone" value="{$mobilePhone|htmlentities}"/>
             <span class="req" id="msgMobilePhone">{$msgMobilePhone|htmlentities}</span>	
 	</div>

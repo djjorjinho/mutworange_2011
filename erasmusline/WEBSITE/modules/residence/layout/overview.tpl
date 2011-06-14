@@ -11,7 +11,6 @@
 	</div>
     
 
-<form action="" method="post" enctype="multipart/form-data">
         <div class="TRdiv">               
 		<input type="hidden" name="formAction" value="doSearch" />
 		<input class="button" name="btnSearch" id="btnSend" type="submit" value="Search"/>

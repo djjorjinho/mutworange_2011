@@ -21,7 +21,7 @@ class ProfileDB {
         $db = PlonkWebsite::getDB();
 
         // query DB
-        $item = $db->retrieveOne('SELECT * FROM users WHERE email = "' . $db->escape($id).'"');
+        $item = $db->retrieveOne('SELECT * FROM users inner join country on users.country = country.Code WHERE email = "' . $db->escape($id).'"');
 
         // return the result
         return $item;

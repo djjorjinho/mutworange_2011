@@ -54,7 +54,7 @@ class RegisterController extends PlonkController {
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/register.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=home&view=home" title="Home">Home</a><a href="index.php?module=register&view=register" title="Register">Register</a>');
+        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=home&amp;view=home" title="Home">Home</a><a href="index.php?module=register&amp;view=register" title="Register">Register</a>');
     }
 
     private function fillNationality($nationality = '') {
@@ -118,12 +118,16 @@ class RegisterController extends PlonkController {
                 $this->pageTpl->assign('msg' . ucfirst($value), '*');
                 $this->pageTpl->assign($value, '');
                 $this->pageTpl->assign('sexTrue', 'checked');
+                $this->pageTpl->assign('sexFalse','');
+                $this->pageTpl->assign('selectedNationality','');
             } else {
                 if ($value === 'sex') {
                     if ($this->fields[$value] == '1') {
                         $this->pageTpl->assign($value . 'True', 'checked');
+                        $this->pageTpl->assign($value. 'False', '');
                     } else {
                         $this->pageTpl->assign($value . 'False', 'checked');
+                        $this->pageTpl->assign($value. 'True', '');
                     }
                 }
                 if (!array_key_exists($value, $this->errors)) {

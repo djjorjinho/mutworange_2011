@@ -206,6 +206,14 @@ a:hover  {
     color: red;
 }
 
+.eval input[type="checkbox"] {
+   margin-right: 25px;
+   margin-left:25px;
+   margin-bottom: 10px;
+   
+    
+}
+
 
 
 

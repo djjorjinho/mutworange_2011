@@ -23,6 +23,9 @@ class ProfileController extends PlonkController {
     protected $actions = array('edit'
     );
     private $id, $erasmusLevel;
+    
+    protected $fields = array();
+    protected $errors = array();
 
     /**
      * Assign variables that are main and the same for every view
@@ -31,7 +34,15 @@ class ProfileController extends PlonkController {
      */
     private function mainTplAssigns($pageTitle) {
         // Assign main properties
-        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('pageJava', '<link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css" /><script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
+<script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>        
+<script type="text/javascript">
+           jQuery(document).ready(function(){
+           // binds form submission and fields to the validation engine
+           jQuery("#register").validationEngine();
+       });</script>
+       <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>');
         $this->mainTpl->assign('breadcrumb', '');
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '
@@ -180,7 +191,7 @@ class ProfileController extends PlonkController {
         $this->pageTpl->assign('userLevel', $info['userLevel']);
 
 
-        $this->pageTpl->assign('nationality', $info['country']);
+        $this->pageTpl->assign('nationality', $info['Name']);
     }
 
     public function showEdit() {
@@ -196,17 +207,33 @@ class ProfileController extends PlonkController {
         $user = ProfileDB::getItemsById(PlonkSession::get('id'));
 
         foreach ($variables as $value) {
-            if ($value === 'sex') {
-                if ($user[$value] == '1') {
-                    $this->pageTpl->assign($value . 'True', 'checked');
-                } else {
-                    $this->pageTpl->assign($value . 'False', 'checked');
+            if (empty($this->fields)) {
+                if ($value === 'sex') {
+                    if ($user[$value] == '1') {
+                        $this->pageTpl->assign($value . 'True', 'checked');
+                    } else {
+                        $this->pageTpl->assign($value . 'False', 'checked');
+                    }
                 }
-            } else {
+                $this->pageTpl->assign('msg' . ucfirst($value), '*');
                 $this->pageTpl->assign($value, $user[$value]);
+                $this->pageTpl->assign('sexTrue', 'checked');
+            } else {
+                if ($value === 'sex') {
+                    if ($this->fields[$value] == '1') {
+                        $this->pageTpl->assign($value . 'True', 'checked');
+                    } else {
+                        $this->pageTpl->assign($value . 'False', 'checked');
+                    }
+                }
+                if (!array_key_exists($value, $this->errors)) {
+                    $this->pageTpl->assign('msg' . ucfirst($value), '');
+                    $this->pageTpl->assign($value, $this->fields[$value]);
+                } else {
+                    $this->pageTpl->assign('msg' . ucfirst($value), $this->errors[$value]);
+                    $this->pageTpl->assign($value, $this->fields[$value]);
+                }
             }
-
-            $this->pageTpl->assign('msg' . ucfirst($value), '*');
         }
 
         $countries = ProfileDB::getCountries();
@@ -250,6 +277,7 @@ class ProfileController extends PlonkController {
             ProfileDB::updateUser('users', $values, 'email = "'.PlonkSession::get('id').'"');
 
             if (!empty($_FILES['pic'])) {
+                //Plonk::dump($_FILES);
                 $this->upload();
             }
 
@@ -259,8 +287,10 @@ class ProfileController extends PlonkController {
 
     private function upload() {
 
-        mkdir("files/" . PlonkFilter::getPostValue('email') . '/', 0777);
-        $uploaddir = "files/" . PlonkFilter::getPostValue('email') . "/";
+        if(!PlonkDirectory::exists("files/".PlonkSession::get('id'))) {
+        mkdir("files/" . PlonkSession::get('id') . '/', 0777);
+        }
+        $uploaddir = "files/" . PlonkSession::get('id') . "/";
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {

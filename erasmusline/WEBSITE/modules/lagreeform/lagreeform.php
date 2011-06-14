@@ -101,7 +101,7 @@ class LagreeformController extends PlonkController {
             $this->pageTpl->assign($key, $value);
             $this->pageTpl->assign('msg' . ucfirst($key), '');
         }
-
+        
         $formAction = LagreeformDB::getForm($this->formid);
 
         if ($formAction['action'] == 1) {
@@ -161,7 +161,7 @@ class LagreeformController extends PlonkController {
 
         if (PlonkFilter::getGetValue('form') != null) {
             $this->formid = PlonkFilter::getGetValue('form');
-            $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&view=userhome" title="Home">Home</a><a href="index.php?module=lagreeform&view=lagreement&form=' . $this->formid . '" title="Learning Agreement">Learning Agreement</a>');
+            $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=userhome" title="Home">Home</a><a href="index.php?module=lagreeform&amp;view=lagreement&form=' . $this->formid . '" title="Learning Agreement">Learning Agreement</a>');
             $this->filledLagreement();
             if (PlonkFilter::getGetValue('student') == null) {
                 $this->mainTpl->assign('pageJava', '');
@@ -170,7 +170,7 @@ class LagreeformController extends PlonkController {
             //Plonk::dump('before');
             return;
         } else {
-            $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&view=userhome" title="Home">Home</a><a href="index.php?module=lagreeform&view=lagreement" title="Learning Agreement">Learning Agreement</a>');
+            $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=userhome" title="Home">Home</a><a href="index.php?module=lagreeform&amp;view=lagreement" title="Learning Agreement">Learning Agreement</a>');
         }
 
         // assign vars in our main layout tpl

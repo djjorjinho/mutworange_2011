@@ -115,7 +115,7 @@ class InfoController extends PlonkController {
             $this->pageTpl->assignIteration('instCity', $value['instCity']);
             $this->pageTpl->assignIteration('instPostalCode',$value['instPostalCode']);
             $this->pageTpl->assignIteration('instCountry',$value['instCountry']);
-            $this->pageTpl->assignIteration('instWebsite',$value['instWebsite']);
+            $this->pageTpl->assignIteration('instWebsite','http://'.$value['instWebsite']);
             $this->pageTpl->assignIteration('tel',$value['instTel']);
             
             $this->pageTpl->refillIteration('iPartners');
