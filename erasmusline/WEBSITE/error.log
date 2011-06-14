@@ -1,5 +1,0 @@
-[2011-06-14 21:38:56]  infox.php:417 url: http://localhost/erasmusline
-[2011-06-14 21:38:56]  controller.php:226 raw message: u_vx4grNFRp0aD8T1WpJSn5m0QfV3RgkkJBXALkns0Ini-u7WA3ZdWzg6luN99DO0sMHv6I8pyaFMKz_fRoEOrGVGnAM4cleTdso0v2t2ETtmMrAIDiWM2cRqLFJPoC_YmbxzqnQXfcVHkDbV9-6Vu8Ml1i7HvFXpLfoxRe6kTi5S18A-LTG_Y3e8Ru0vap5zscOva61Qlykt1PsTi9u8Ei_zuhqAXzrVkh3jzIg3zjRPxtIaIZEv6_oPYcOHz4gQvG7T5vp97X-Bh954T9-8g..
-[2011-06-14 21:38:56]  controller.php:226 Decrypted message: [{"method":"infox:test1","params":"{\"table\":\"tab1\",\"data\":[\"data11\",\"data12\",\"data13\"]}"},{"method":"infox:test2","params":"{\"table\":\"tab2\",\"data\":[\"data21\",\"data22\",\"data23\"]}"}]
-[2011-06-14 21:38:56]  infox.php:423 url: http://localhost/erasmusline
-[2011-06-14 21:38:56]  controller.php:226 Decoded message: {"method":"infox:filetest","folder":"admin"}
