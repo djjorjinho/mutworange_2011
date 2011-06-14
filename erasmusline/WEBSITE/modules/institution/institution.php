@@ -4,8 +4,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once "./modules/partnership/partnership.php";
+
 
 class InstitutionController extends PlonkController {
+
 
 	/**
 	 * The views allowed for this module
@@ -27,9 +30,6 @@ class InstitutionController extends PlonkController {
 		 * @var array
 		 */
 		protected $actions = array(
-        'logout',
-        'confirm',
-        'infox',
         'submit',
 		);
 
@@ -167,17 +167,20 @@ class InstitutionController extends PlonkController {
         				PlonkWebsite::$viewKey . '=courses');
         			}
         			if($type=='e'){
+
+        				/**
+        				 * TODO: creat a check for courses using it first
+        				 * and then allowing the delete
+        				 *
+        				 */
+
         				$where = "studyId = ".$id." AND institutionId = '".
         				INST_EMAIL."'";
         				InstitutionDB::delete('educationperinstitute',$where);
 
-        				/**
-        				 * TODO: since they are shared, make a selection
-        				 * of the list of this inst, and if name equals then
-        				 * add that id, else add new entry
-        				 */
-        				/*$where = 'educationId = '.$id;
-        				 InstitutionDB::delete('education',$where);*/
+        				$where = 'educationId = '.$id;
+        				InstitutionDB::delete('education',$where);
+
         				PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
         				PlonkWebsite::$moduleKey . '=institution&' .
         				PlonkWebsite::$viewKey . '=educations');
@@ -286,7 +289,45 @@ class InstitutionController extends PlonkController {
 
         }
 
+        public function showEditinstitution() {
 
+        	// Logged or not logged, that is the question...
+        	$this->checkLogged();
+
+        	// assign vars in our main layout tpl
+        	$this->mainTpl->assign('pageMeta', '<link rel="stylesheet"
+        	href="./core/css/form.css" type="text/css" />');
+        	$this->mainTpl->assign('siteTitle', 'Edit education');
+
+
+
+
+        	// gets info of selected course
+        	$where = "institutionId = '" . INST_EMAIL . "' AND studyId = '" .
+        	$_GET['id']."'";
+
+        	$education_d1 = InstitutionDB::select('educationperinstitute',$where);
+
+        	$where = "educationId = '" . $_GET['id']."'";
+
+        	$education_d2 = InstitutionDB::select('education',$where);
+        	foreach ($education_d1 as $education_v1){
+        		foreach ($education_d2 as $education_v2) {
+        			$this->pageTpl->assign('educationName',$education_v2['educationName']);
+        			$this->pageTpl->assign('educationDesc',$education_v1['Description']);
+        			$this->pageTpl->assign('hid',$_GET['id']);
+        		}
+        	}
+
+
+        	foreach ($this->variables as $value) {
+        		if (empty($this->fields)) {
+        			$this->pageTpl->assign('msg' . ucfirst($value), '*');
+        			$this->pageTpl->assign($value, '');
+        		}
+        	}
+
+        }
 
         private function fillEducation($selectedID = '') {
 
@@ -396,6 +437,8 @@ class InstitutionController extends PlonkController {
 
         			if (PlonkSession::exists('id')) {
         				if (PlonkSession::get('id') == '0') {
+        					$obj = new PartnershipController();
+
         					InstitutionDB::insertDB('coursespereducperinst', $values);
         					PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
         					PlonkWebsite::$moduleKey . '=institution&' .
@@ -421,16 +464,37 @@ class InstitutionController extends PlonkController {
         				 	* of the list of this inst, and if name equals then
         				 	* add that id, else add new entry
         				 	*/
-        					$values = array(
+
+
+        					$educations = InstitutionDB::getEducationInfo();
+        					$res = true;
+        					$id;
+        					foreach ($educations as $key => $value) {
+        						if($_POST["educationname"] == $value['educationName']){
+        							$res = false;
+        							break;
+        						}
+        					}
+
+        					if($res){
+
+        						$values = array(
 	                			'educationName' => $_POST["educationname"],//htmlentities(PlonkFilter::getPostValue('educationName')),
-        					);
-        					$id=InstitutionDB::insertDB('education', $values);
-        					$values2 = array(
+        						);
+
+        						$id=InstitutionDB::insertDB('education', $values);
+        						$values2 = array(
 				                'studyId' => $id,
 				                'Description' => $_POST["educationdesc"],//htmlentities(PlonkFilter::getPostValue('educationDesc')),
 				                'institutionId' => INST_EMAIL           
-        					);
-        					InstitutionDB::insertDB('educationperinstitute', $values2);
+        						);
+        						InstitutionDB::insertDB('educationperinstitute', $values2);
+
+        					}
+        					else{
+
+        						//error of choice
+        					}
         					PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
         					PlonkWebsite::$moduleKey . '=institution&' .
         					PlonkWebsite::$viewKey . '=educations');
