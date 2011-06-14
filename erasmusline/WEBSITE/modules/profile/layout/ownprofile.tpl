@@ -28,6 +28,7 @@
             Userlevel: {$userLevel}
         </li>
     </ul>
+{option:oStudent}
 <div id="progress">
 <p>Your current Erasmus progress<p>
 <table>
@@ -37,9 +38,11 @@
     </tr>
 </table>
 </div>
+{/option:oStudent}
 
 </fieldset>
-    
+
+{option:oStudent}
 <fieldset>
 <legend><h3>Erasmusinfo</h3></legend>
 <h3>Period</h3>
@@ -83,8 +86,9 @@
     </ul>
 </li>
 </ul>
-</fieldset>
 
+</fieldset>
+{/option:oStudent}
 
 </div>
 
