@@ -30,8 +30,8 @@ class InstitutionDB {
 
 		$educationInfo = $db->retrieve("SELECT * FROM education inner join
 		educationperinstitute on education.educationId = 
-		educationperinstitute.studyId");// WHERE educationperinstitute.institutionId 
-		//= '".INST_EMAIL."'");
+		educationperinstitute.studyId WHERE educationperinstitute.institutionId 
+		= '".INST_EMAIL."'");
 
 		return $educationInfo;
 
