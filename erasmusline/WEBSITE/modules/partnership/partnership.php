@@ -23,14 +23,22 @@ class PartnershipController extends PlonkController {
     	error_log($message."\n",3,dirname(__FILE__)."${sep}error.log");
     }
     
-    public function send($intitutionId,$method,$params){
+    public function sendInstitution($intitutionId,$method,$params){
+    	if(!isset($intitutionId) || empty($intitutionId)){
+    		throw new Exception("Invalid Institution!");
+    	}
+    	$url = PartnershipDB::getURL($intitutionId);
+    	return $this->send($url,$method,$params);
+    }
+    
+    public function send($instUrl,$method,$params){
     	
     	if(!PlonkSession::exists('id')){
     		throw new Exception("Invalid user!");
     	}
     	
-    	if(!isset($intitutionId) || empty($intitutionId)){
-    		throw new Exception("Invalid Institution!");
+    	if(!isset($instUrl) || empty($instUrl)){
+    		throw new Exception("Invalid url");
     	}
     	
     	if(preg_match("/:/", $method)<1){
@@ -48,7 +56,7 @@ class PartnershipController extends PlonkController {
     							'params' => $params)));
     	
     	$url = (preg_match("/^loopback/",$method)>0) ? self::curDomainURL() : 
-    								PartnershipDB::getURL($intitutionId);
+    								$instUrl;
     	
     	$curl = new curl();
     								
@@ -233,7 +241,5 @@ class PartnershipController extends PlonkController {
 		return $params;
 	}
 	
-	
-    
 }
 ?>
