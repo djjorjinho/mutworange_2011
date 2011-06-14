@@ -46,7 +46,7 @@ class PartnershipController extends PlonkController {
     							array('method' => $method,
     							'params' => $params)));
     	
-    	$url = (preg_match("/^loopback/",$method)>0) ? "http://localhost/erasmusline" : 
+    	$url = (preg_match("/^loopback/",$method)>0) ? self::curDomainURL() : 
     								PartnershipDB::getURL($intitutionId);
     	
     	$curl = new curl();
@@ -56,6 +56,7 @@ class PartnershipController extends PlonkController {
         			"/index.php?module=partnership&view=receive");
         $curl->setOption(CURLOPT_POST, 1);
         $curl->setOption(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
         $curl->setOption(CURLOPT_POSTFIELDS, "payload=" . $encrypted);
         $curl->execute();
         
@@ -113,16 +114,35 @@ class PartnershipController extends PlonkController {
     }
     
     function showPartnership(){
+    	header('Content-Type: text/plain');
     	$res = $this->send("xpto","loopback:ping",array(
     					"hello" => "User!"
     				));
-    	header('Content-Type: text/plain');
+    	
     	ob_start();
     	echo print_r($res,true);
     	flush();
     	ob_flush(); 
     	exit(0);
     }
+    
+    static function curDomainURL() {
+		 $pageURL = 'http';
+		 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+		 $pageURL .= "://";
+		 if ($_SERVER["SERVER_PORT"] != "80") {
+		  	$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+		 } else {
+		  	$pageURL .= $_SERVER["SERVER_NAME"];
+		 }
+		 
+		 $pageURL .= (preg_match("/WEBSITE/",$_SERVER["REQUEST_URI"])) ? 
+		 			"/erasmusline/WEBSITE" : "/erasmusline";
+		 
+		 return $pageURL;
+	}
+	
+	
     
 }
 ?>
