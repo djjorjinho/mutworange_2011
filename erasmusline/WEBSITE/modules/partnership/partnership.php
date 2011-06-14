@@ -12,16 +12,18 @@ class PartnershipController extends PlonkController {
 	private static $debug=false;
     protected $views = array('partnership','receive');
     
+    
+    private $institution_t = 'institutions';
+	private $educations_t = 'education';
+	private $courses_t = 'coursespereducationperinst';
+    
+    
     public function __construct(){
     	$this->crypt = new Crypt();
     	$this->db = new ODB();
     }
     
-    public static function log($message){
-    	if(!self::$debug) return;
-    	$sep = DIRECTORY_SEPARATOR;
-    	error_log($message."\n",3,dirname(__FILE__)."${sep}error.log");
-    }
+    
     
     public function sendInstitution($intitutionId,$method,$params){
     	if(!isset($intitutionId) || empty($intitutionId)){
@@ -71,9 +73,9 @@ class PartnershipController extends PlonkController {
         
         // json message
         $result = $curl->getResult();
-        self::log("result response message: ".$result);
+        Util::log("result response message: ".$result);
         $message = json_decode($this->crypt->decrypt($result),true);
-        self::log("result message: ".$message);
+        Util::log("result message: ".$message);
         
         return $message;
     }
@@ -84,18 +86,18 @@ class PartnershipController extends PlonkController {
     		
 	    	$payload = PlonkFilter::getPostValue('payload');
 	    	if(empty($payload)){
-	    		self::log("error Invalid Infox payload!");
+	    		Util::log("error Invalid Infox payload!");
 	    		throw new Exception('Invalid Infox payload!');
 	    	}
 	    	
 	    	$message = json_decode($this->crypt->decrypt($payload),true);
 	    	
 	    	if(!isset($message)){
-	    		self::log("error Invalid JSON message");
+	    		Util::log("error Invalid JSON message");
 	    		throw new Exception("Invalid JSON message");
 	    	}
 	    	
-	    	self::log("incomming message: ".$message);
+	    	Util::log("incomming message: ".$message);
 	    	
 	    	list($module,$method) = preg_split("/:/", $message['method']);
 	    	
@@ -113,11 +115,11 @@ class PartnershipController extends PlonkController {
 	    	$encrypted = $this->crypt->encrypt(
 	    						json_encode($result));
 	    	
-	    	self::log("encrypted: ".$encrypted);
+	    	Util::log("encrypted: ".$encrypted);
 	    	$this->output($encrypted);
 	    	
     	}catch(Exception $e){
-    		self::log("Exception: ".$e->getMessage());
+    		Util::log("Exception: ".$e->getMessage());
     		$out = $this->crypt->encrypt($this->jsonError($e->getMessage(),
     						"${module}:${method}"));
     		$this->output($out);
@@ -203,42 +205,170 @@ class PartnershipController extends PlonkController {
 	
 	function newInstitution($params){
 		$db = $this->db;
-		return $params;
+		
+		$institution_t = $this->institution_t;
+		$educations_t = $this->educations_t;
+		$courses_t = $this->courses_t;
+		
+		$eduTrans = array(); // education id's dictionary
+		
+		$institution = $params['instData'];
+		$institutionId = $institution['instEmail'];
+		$educations = $params['educationsData'];
+		$courses = $params['coursesData'];
+		
+		$db->beginTransaction();
+		
+		// insert institution
+		$instId = $db->insert($institution, $institution_t);
+		
+		// insert educations by order and return new id's array by order
+		$educations_id = array_map(
+		function($item)use($db,$educations_t,$eduTrans){
+			$oldId = $item['educationId'];
+			unset($item['educationId']);
+			$id = $db->insert($item, $educations_t);
+			$eduTrans[$oldId] = $id; // id translation hash
+			return $id;
+		}, $educations);
+		
+		// replace education id's and insert courses
+		$courses_id = array_map(
+		function($item)use($db,$courses_t,$eduTrans){
+			unset($item['courseId']);
+			$oldId = $item['educationId'];
+			$item['educationId'] = $eduTrans[$oldId]; // swap for new id
+			$id = $db->insert($item, $courses_t);
+			return $id;
+		}, $courses);
+		
+		$db->commitTransaction();
+		return array('OK'=>true,'educations_ids'=>$educations_id,
+					'courses_id'=>$courses_id);
 	}
 	
 	function newCourse($params){
 		$db = $this->db;
-		return $params;
+
+		
+		$courses_t = $this->courses_t;
+		$educations_t = $this->educations_t;
+		
+		$item = $params['courseData'];
+		unset($item['courseId']);
+		
+		$education = $params['educationData'];
+		$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$education[educationName]'");
+		
+		$item['educationId'] = $education['educationId'];
+		
+		$id = $db->insert($item, $courses_t);
+		
+
+		return array('OK'=>true, 'id'=>$id);
 	}
 	
 	function newEducation($params){
 		$db = $this->db;
-		return $params;
+
+		$educations_t = $this->educations_t;
+		
+		$item = $params['educationData'];
+		unset($item['educationId']);
+		$id = $db->insert($item, $educations_t);
+		
+
+		return array('OK'=>true,'id'=>$id);
 	}
 	
 	function updateInstitution($params){
 		$db = $this->db;
-		return $params;
+		
+		$item = $params['instData'];
+		unset($item['instId']);
+		$item['table'] = $this->institution_t;
+		
+		$num = $db->update($item, "instEmail='$item[instEmail]'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function updateEducation($params){
 		$db = $this->db;
-		return $params;
+		$educations_t = $this->educations_t;
+		
+		$item = $params['educationData'];
+		unset($item['educationId']);
+		
+		$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$item[educationName]'");
+		
+		$item['table'] = $educations_t;
+		$num = $db->update($item, "educationId='$education[educationId]'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function updateCourse($params){
 		$db = $this->db;
-		return $params;
+		$educations_t = $this->educations_t;
+		$courses_t = $this->courses_t;
+		
+		$education = $params['educationData'];
+		$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$education[educationName]'");
+		
+		$item = $params['courseData'];
+		$instId = $item['institutionId'];
+		$code = $item['courseCode'];
+		
+		unset($item['courseId']);
+		unset($item['courseCode']);
+		unset($item['institutionId']);
+		unset($item['educationId']);
+		
+		$item['table'] = $courses_t;
+		$num = $db->update($item, "educationId='$education[educationId]'".
+			" and institutionId='${instId}' and courseCode='${code}'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function deleteEducation($params){
 		$db = $this->db;
-		return $params;
+		$educations_t = $this->educations_t;
+		$courses_t = $this->courses_t;
+		
+		$education = $params['educationData'];
+		$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$education[educationName]'");
+		
+		$c = $db->getOne("select count(*) as cnt from $courses_t".
+							" where educationId='$education[educationId]'");
+		
+		if($c['cnt']>0){
+			throw new Exception("EDU_HAS_COURSES");
+		}
+		
+		$num = $db->delete($educations_t, 
+			"educationId='$education[educationId]'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function deleteCourse($params){
 		$db = $this->db;
-		return $params;
+		$courses_t = $this->courses_t;
+		
+		$inst = $params['instData'];
+		$course = $params['courseData'];
+		
+		$num = $db->delete($courses_t, 
+			"courseCode='$course[courseCode]' ".
+			" and institutionId='$inst[instEmail]'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 }

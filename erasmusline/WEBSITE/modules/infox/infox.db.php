@@ -139,6 +139,7 @@ class InfoxDB {
       }
       return $ContBytes;
     }
+    
     function powmod($base, $exp, $modulus) {
       $basepow2 = $base;
       $exppow2 = $exp;
