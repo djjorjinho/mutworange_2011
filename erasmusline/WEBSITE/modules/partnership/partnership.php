@@ -12,8 +12,7 @@ class PartnershipController extends PlonkController {
     protected $views = array('receive');
     
     public function __construct(){
-    	parent::__construct();
-    	
+   	
     	$this->crypt = new Crypt();
     	$this->odb = new ODB();
     }
@@ -42,8 +41,11 @@ class PartnershipController extends PlonkController {
     							array('method' => $method,
     							'params' => $params)));
     	
+    	$url = (preg_match("/^loopback/",$method)>0) ? "http://127.0.0.1" : 
+    								PartnershipDB::getURL($intitutionId);
+    							
     	curl::start();
-        curl::setOption(CURLOPT_URL, PartnershipDB::getURL($intitutionId). 
+        curl::setOption(CURLOPT_URL, $url.
         			"/index.php?module=partnership&view=receive");
         curl::setOption(CURLOPT_POST, 1);
         curl::setOption(CURLOPT_RETURNTRANSFER, true);
@@ -86,6 +88,10 @@ class PartnershipController extends PlonkController {
     	print $encrypted;
     	
     	exit(0);
+    }
+    
+    function ping($params){
+    	return array("hello"=>"world!!!");
     }
     
 }
