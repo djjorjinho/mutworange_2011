@@ -108,6 +108,10 @@
 			}
 		},
 		"dim_date.year" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"2010":"2010","2011":"2011"} },
-		"dim_date.semester" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"1":"First","2":"Second"} }
+		"dim_date.semester" : { "op" : {"eq":true,"le":true,"lt":true,"ge":true,"gt":true}, "values" : {"1":"First","2":"Second"} },
+		"dim_institution.institution_code" : {"op":{"eq":true},"values":{"fkl":"Kiel Uni.","gent":"Gent Uni.","isep":"ISEP Uni.","gun":"Glasgow Uni."}},
+		"dim_institution_host.institution_code" : {"op":{"eq":true},"values":{"fkl":"Kiel Uni.","gent":"Gent Uni.","isep":"ISEP Uni.","gun":"Glasgow Uni."}},
+		"dim_institution.country_code" : {"op":{"eq":true},"values":{"de":"Germany","pt":"Portugal","en":"England","be":"Belgium"}},
+		"dim_institution_host.country_code" : {"op":{"eq":true},"values":{"de":"Germany","pt":"Portugal","en":"England","be":"Belgium"}}
 	}
 }

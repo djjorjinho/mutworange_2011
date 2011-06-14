@@ -445,8 +445,11 @@ var eis = {
 			".levels[?(@['column']=='"+parts[1]+"')]";
 			var obj = jsonPath(eis.rules, expr)[0];
 			
-			jQuery('#eis_tbfil_tmpl').tmpl({text:obj.name,field:i})
-				.appendTo(filterList);
+			var desc = eis.getFilterDescription(i,field);
+			
+			jQuery('#eis_tbfil_tmpl').tmpl({text:obj.name,field:i,
+					op:desc[0],values:desc[1]})
+					.appendTo(filterList);
 			
 		}
 		
@@ -962,7 +965,7 @@ var eis = {
 			.map(function(i,obj){return jQuery(obj).val();});
 		var filter = field+'.'+op;
 		
-		selValues = values.get();
+		var selValues = values.get();
 		if(selValues.length==0){
 			eis.cancelFilter();
 			return;
@@ -979,6 +982,30 @@ var eis = {
 		jQuery(elm).parent('span').remove();
 		var list = eis.scenario.filters;
 		delete eis.scenario.filters[id];
+	},
+	
+	getFilterDescription : function(filter,values){
+		var parts = filter.split('.');
+		var field = parts[0]+'.'+parts[1];
+		var op = parts[2];
+		var filter_field = eis.rules.filters[field];
+		var desc_op="";
+		var desc_vals="";
+		switch(op){
+		case "eq" : desc_op = 'Equals'; break;
+		case "lt" : desc_op = 'Less Than'; break;
+		case "le" : desc_op = 'Less/Equals'; break;
+		case "gt" : desc_op = 'Greater Than'; break;
+		case "ge" : desc_op = 'Greater/Equals'; break;
+			default : desc_op = 'N/A';
+		}
+		
+		for(var idx in values){
+			desc_vals += "["+filter_field.values[values[idx]]+"]";
+		}
+		
+		var description = [desc_op,desc_vals];
+		return description;
 	}
 	
 };
