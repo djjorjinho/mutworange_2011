@@ -4,6 +4,7 @@ $sep = DIRECTORY_SEPARATOR;
 set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}..${sep}"));
 require_once('library/eis/ODB.php');
 require_once('library/eis/Crypt.php');
+require_once('library/eis/Util.php');
 require_once('library/curl.php');
 class PartnershipController extends PlonkController {
 	private $crypt;
@@ -49,12 +50,42 @@ class PartnershipController extends PlonkController {
         curl::setOption(CURLOPT_POSTFIELDS, "payload=" . $encrypted);
         curl::execute();
         
-        
+        // json message
         $result = curl::getResult();
+        $message = json_decode($this->crypt->decrypt($result),true);
+        return $message;
     }
     
     function showReceive(){
+    	$payload = PlonkFilter::getPostValue('payload');
+    	if(empty($payload)){
+    		throw new Exception('Invalid Infox payload!');
+    	}
     	
+    	$message = json_decode($this->crypt->decrypt($payload),true);
+    	
+    	if(!isset($message)){
+    		throw new Exception("Invalid JSON message");
+    	}
+    	
+    	list($module,$method) = preg_split(":", $message['method']);
+    	
+    	$obj = ($module=='partnership') ? 
+    				$this : Util::loadController($module);
+    	
+    	$runnable = array($obj,$method);
+    	
+    	if(is_callable($runnable)){
+    		throw new Exception('Invalid invocation');
+    	}
+    	
+    	$result = call_user_func_array($runnable,array($message['params']));
+    	$encrypted = $this->encrypt(
+    						json_encode($result));
+    	
+    	print $encrypted;
+    	
+    	exit(0);
     }
     
 }

@@ -25,7 +25,8 @@ class Crypt{
 	}
 	
 	// 3DES Encrypting
-	function encrypt($string, $key) {
+	function encrypt($string) {
+		$key = $this->key;
     	$enc = "";
     	$iv = $this->iv;
     	$enc=mcrypt_cbc(MCRYPT_TripleDES, $key, $string, MCRYPT_ENCRYPT,$iv);
@@ -34,7 +35,8 @@ class Crypt{
 	}
 
 	// 3DES Decrypting 
-	function decrypt($string, $key) {
+	function decrypt($string) {
+		$key = $this->key;
     	$dec = "";
     	$string = trim($this->urlsafe_b64decode($string));
     	$iv = $this->iv;
