@@ -28,7 +28,6 @@
       </div>
       <div id="nav-main">
 {option:oAdmin}
-		<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
            <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}" title="Admin">Admin</a>
 {/option:oAdmin}
 {option:oLogged}
@@ -97,8 +96,8 @@
 {option:oStudent}
 <div id="subnav">
 <ul>
-    <li class="lavel2"><a href="#" title="Progress">Progess</a></li>
-    <li class="level2"><a href="#" title="Edit profile">Edit profile</a></li>
+    <li class="level2"><a href="#" title="Progress">Progess</a></li>
+    <li class="level2"><a href="index.php?module=profile&view=edit" title="Edit profile">Edit profile</a></li>
 </ul>
 </div>
 {/option:oStudent}

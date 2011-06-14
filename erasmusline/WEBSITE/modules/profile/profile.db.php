@@ -80,5 +80,19 @@ class ProfileDB {
             where grades.studentId = '" . $db->escape($id)."'");
         return $courses;
     }
+    
+    public static function getCountries() {
+        $db = PlonkWebsite::getDB();
+        
+        $items = $db->retrieve("select Name,Code from country");
+        
+        return $items;        
+    }
+    
+        public static function updateUser($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
 
 }
