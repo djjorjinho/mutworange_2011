@@ -66,11 +66,11 @@ class InstitutionDB {
 
 	}
 
-	public static function update($table,$value) {
+	public static function update($table,$value,$where='') {
 		// create db instance
 		$db = PlonkWebsite::getDB();
 
-		$db->update($table,$value,'');
+		$db->update($table,$value,$where);
 	}
 
 	public static function select($table,$where) {
@@ -78,7 +78,8 @@ class InstitutionDB {
 		$db = PlonkWebsite::getDB();
 
 		// retrieve info from table gebruikers
-		$select = $db->select($table,$where);
+		$select = $db->retrieve("SELECT * FROM " . $table . "
+		WHERE " . $where);
 
 		return $select;
 	}
