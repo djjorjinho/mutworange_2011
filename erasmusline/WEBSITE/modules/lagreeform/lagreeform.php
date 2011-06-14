@@ -101,7 +101,7 @@ class LagreeformController extends PlonkController {
             $this->pageTpl->assign($key, $value);
             $this->pageTpl->assign('msg' . ucfirst($key), '');
         }
-        
+
         $formAction = LagreeformDB::getForm($this->formid);
 
         if ($formAction['action'] == 1) {
@@ -787,7 +787,11 @@ class LagreeformController extends PlonkController {
 
                 LagreeformDB::insertJson('forms', $valuess);
 
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=lagreeform&' . PlonkWebsite::$viewKey . '=lagreement');
+                if ($status == 30 || $status = 2 || $status == 0) {
+                    PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=lagreeform&' . PlonkWebsite::$viewKey . '=lagreement');
+                } else {
+                    PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+                }
             }
         }
 
