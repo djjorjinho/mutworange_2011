@@ -8,17 +8,17 @@ require_once('library/eis/Util.php');
 require_once('library/curl.php');
 class PartnershipController extends PlonkController {
 	private $crypt;
-	private $odb;
-	private $debug=false;
+	private $db;
+	private static $debug=false;
     protected $views = array('partnership','receive');
     
     public function __construct(){
     	$this->crypt = new Crypt();
-    	$this->odb = new ODB();
+    	$this->db = new ODB();
     }
     
     public static function log($message){
-    	if(!$this->debug) return;
+    	if(!self::$debug) return;
     	$sep = DIRECTORY_SEPARATOR;
     	error_log($message."\n",3,dirname(__FILE__)."${sep}error.log");
     }
@@ -122,7 +122,7 @@ class PartnershipController extends PlonkController {
     
     function showPartnership(){
     	header('Content-Type: text/plain');
-    	$res = $this->send("xpto","loopback:lol",array(
+    	$res = $this->send("xpto","loopback:ping",array(
     					"hello" => "User!"
     				));
     	$out = print_r($res,true);
@@ -193,21 +193,45 @@ class PartnershipController extends PlonkController {
 	 * 
 	 */
 	
-	function newInstitution($params){}
+	function newInstitution($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function newCourse($params){}
+	function newCourse($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function newEducation($params){}
+	function newEducation($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function updateInstitution($params){}
+	function updateInstitution($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function updateEducation($params){}
+	function updateEducation($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function updateCourse($params){}
+	function updateCourse($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function deleteEducation($params){}
+	function deleteEducation($params){
+		$db = $this->db;
+		return $params;
+	}
 	
-	function deleteCourse($params){}
+	function deleteCourse($params){
+		$db = $this->db;
+		return $params;
+	}
 	
 	
     
