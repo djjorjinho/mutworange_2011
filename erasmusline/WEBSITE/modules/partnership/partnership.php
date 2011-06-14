@@ -9,12 +9,17 @@ require_once('library/curl.php');
 class PartnershipController extends PlonkController {
 	private $crypt;
 	private $odb;
-    protected $views = array('receive');
+    protected $views = array('partnership','receive');
     
     public function __construct(){
-   	
     	$this->crypt = new Crypt();
     	$this->odb = new ODB();
+    }
+    
+    public static function log($message){
+    	return;
+    	$sep = DIRECTORY_SEPARATOR;
+    	error_log($message."\n",3,dirname(__FILE__)."${sep}error.log");
     }
     
     public function send($intitutionId,$method,$params){
@@ -27,7 +32,7 @@ class PartnershipController extends PlonkController {
     		throw new Exception("Invalid Institution!");
     	}
     	
-    	if(preg_match(":", $method)<1){
+    	if(preg_match("/:/", $method)<1){
     		throw new Exception("Invalid method invocation! ".
     							"must be \$module:\$methodname");
     	}
@@ -36,62 +41,87 @@ class PartnershipController extends PlonkController {
     		throw new Exception("Invalid Parameters! must be assoc. array!");
     	}
     	
-    	$encrypted = $this->encrypt(
+    	$encrypted = $this->crypt->encrypt(
     						json_encode(
     							array('method' => $method,
     							'params' => $params)));
     	
-    	$url = (preg_match("/^loopback/",$method)>0) ? "http://127.0.0.1" : 
+    	$url = (preg_match("/^loopback/",$method)>0) ? "http://localhost/erasmusline" : 
     								PartnershipDB::getURL($intitutionId);
-    							
-    	curl::start();
-        curl::setOption(CURLOPT_URL, $url.
+    	
+    	$curl = new curl();
+    								
+    	$curl->start();
+        $curl->setOption(CURLOPT_URL, $url.
         			"/index.php?module=partnership&view=receive");
-        curl::setOption(CURLOPT_POST, 1);
-        curl::setOption(CURLOPT_RETURNTRANSFER, true);
-        curl::setOption(CURLOPT_POSTFIELDS, "payload=" . $encrypted);
-        curl::execute();
+        $curl->setOption(CURLOPT_POST, 1);
+        $curl->setOption(CURLOPT_RETURNTRANSFER, true);
+        $curl->setOption(CURLOPT_POSTFIELDS, "payload=" . $encrypted);
+        $curl->execute();
         
         // json message
-        $result = curl::getResult();
+        $result = $curl->getResult();
+        self::log("result message: ".$result);
         $message = json_decode($this->crypt->decrypt($result),true);
+        self::log("result message: ".$message);
+        
         return $message;
     }
     
     function showReceive(){
     	$payload = PlonkFilter::getPostValue('payload');
     	if(empty($payload)){
+    		self::log("error Invalid Infox payload!");
     		throw new Exception('Invalid Infox payload!');
     	}
     	
     	$message = json_decode($this->crypt->decrypt($payload),true);
     	
     	if(!isset($message)){
+    		self::log("error Invalid JSON message");
     		throw new Exception("Invalid JSON message");
     	}
     	
-    	list($module,$method) = preg_split(":", $message['method']);
+    	self::log("incomming message: ".$message);
     	
-    	$obj = ($module=='partnership') ? 
+    	list($module,$method) = preg_split("/:/", $message['method']);
+    	
+    	$obj = ($module=='partnership' || $module=='loopback') ? 
     				$this : Util::loadController($module);
     	
     	$runnable = array($obj,$method);
     	
-    	if(is_callable($runnable)){
-    		throw new Exception('Invalid invocation');
+    	if(!is_callable($runnable)){
+    		throw new Exception("Invalid invocation of ${method} method");
     	}
     	
     	$result = call_user_func_array($runnable,array($message['params']));
-    	$encrypted = $this->encrypt(
+    	$encrypted = $this->crypt->encrypt(
     						json_encode($result));
     	
-    	print $encrypted;
-    	
+    	self::log("encrypted: ".$encrypted);
+    	ob_start();
+    	header('Content-Type: text/plain');
+    	echo $encrypted;
+    	flush();
+    	ob_flush(); 
     	exit(0);
     }
     
     function ping($params){
-    	return array("hello"=>"world!!!");
+    	return array("Hi"=>$params['hello']);
+    }
+    
+    function showPartnership(){
+    	$res = $this->send("xpto","loopback:ping",array(
+    					"hello" => "User!"
+    				));
+    	header('Content-Type: text/plain');
+    	ob_start();
+    	echo print_r($res,true);
+    	flush();
+    	ob_flush(); 
+    	exit(0);
     }
     
 }
