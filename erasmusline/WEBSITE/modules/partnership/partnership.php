@@ -9,6 +9,7 @@ require_once('library/curl.php');
 class PartnershipController extends PlonkController {
 	private $crypt;
 	private $odb;
+	private $debug=false;
     protected $views = array('partnership','receive');
     
     public function __construct(){
@@ -17,7 +18,7 @@ class PartnershipController extends PlonkController {
     }
     
     public static function log($message){
-    	return;
+    	if(!$this->debug) return;
     	$sep = DIRECTORY_SEPARATOR;
     	error_log($message."\n",3,dirname(__FILE__)."${sep}error.log");
     }
@@ -62,7 +63,7 @@ class PartnershipController extends PlonkController {
         
         // json message
         $result = $curl->getResult();
-        self::log("result message: ".$result);
+        self::log("result response message: ".$result);
         $message = json_decode($this->crypt->decrypt($result),true);
         self::log("result message: ".$message);
         
@@ -70,43 +71,49 @@ class PartnershipController extends PlonkController {
     }
     
     function showReceive(){
-    	$payload = PlonkFilter::getPostValue('payload');
-    	if(empty($payload)){
-    		self::log("error Invalid Infox payload!");
-    		throw new Exception('Invalid Infox payload!');
+    	$module=$method="";
+    	try{
+    		
+	    	$payload = PlonkFilter::getPostValue('payload');
+	    	if(empty($payload)){
+	    		self::log("error Invalid Infox payload!");
+	    		throw new Exception('Invalid Infox payload!');
+	    	}
+	    	
+	    	$message = json_decode($this->crypt->decrypt($payload),true);
+	    	
+	    	if(!isset($message)){
+	    		self::log("error Invalid JSON message");
+	    		throw new Exception("Invalid JSON message");
+	    	}
+	    	
+	    	self::log("incomming message: ".$message);
+	    	
+	    	list($module,$method) = preg_split("/:/", $message['method']);
+	    	
+	    	$obj = ($module=='partnership' || $module=='loopback') ? 
+	    				$this : Util::loadController($module);
+	    	
+	    	$runnable = array($obj,$method);
+	    	
+	    	if(!is_callable($runnable)){
+	    		throw new Exception("Invalid invocation of ${method} method");
+	    	}
+	    	
+	    	$result = call_user_func_array($runnable,array($message['params']));
+	    	
+	    	$encrypted = $this->crypt->encrypt(
+	    						json_encode($result));
+	    	
+	    	self::log("encrypted: ".$encrypted);
+	    	$this->output($encrypted);
+	    	
+    	}catch(Exception $e){
+    		self::log("Exception: ".$e->getMessage());
+    		$out = $this->crypt->encrypt($this->jsonError($e->getMessage(),
+    						"${module}:${method}"));
+    		$this->output($out);
     	}
-    	
-    	$message = json_decode($this->crypt->decrypt($payload),true);
-    	
-    	if(!isset($message)){
-    		self::log("error Invalid JSON message");
-    		throw new Exception("Invalid JSON message");
-    	}
-    	
-    	self::log("incomming message: ".$message);
-    	
-    	list($module,$method) = preg_split("/:/", $message['method']);
-    	
-    	$obj = ($module=='partnership' || $module=='loopback') ? 
-    				$this : Util::loadController($module);
-    	
-    	$runnable = array($obj,$method);
-    	
-    	if(!is_callable($runnable)){
-    		throw new Exception("Invalid invocation of ${method} method");
-    	}
-    	
-    	$result = call_user_func_array($runnable,array($message['params']));
-    	$encrypted = $this->crypt->encrypt(
-    						json_encode($result));
-    	
-    	self::log("encrypted: ".$encrypted);
-    	ob_start();
-    	header('Content-Type: text/plain');
-    	echo $encrypted;
-    	flush();
-    	ob_flush(); 
-    	exit(0);
     }
     
     function ping($params){
@@ -115,15 +122,12 @@ class PartnershipController extends PlonkController {
     
     function showPartnership(){
     	header('Content-Type: text/plain');
-    	$res = $this->send("xpto","loopback:ping",array(
+    	$res = $this->send("xpto","loopback:lol",array(
     					"hello" => "User!"
     				));
+    	$out = print_r($res,true);
+    	$this->output($out);
     	
-    	ob_start();
-    	echo print_r($res,true);
-    	flush();
-    	ob_flush(); 
-    	exit(0);
     }
     
     static function curDomainURL() {
@@ -141,6 +145,69 @@ class PartnershipController extends PlonkController {
 		 
 		 return $pageURL;
 	}
+	
+	
+	function output(&$out){
+		header('Content-Type: text/plain');
+		ob_start();
+		echo $out;
+    	flush();
+    	ob_flush(); 
+    	exit(0);
+	}
+	
+	/**
+	 * 
+	 * Generates a JSON-RPC error message
+	 * @param string error message
+	 * @param string error code
+	 * @param int id number to match incomming json-rpc message (optional)
+	 * @param string exception message if you catch it
+	 */
+	function jsonError($error,$method){
+		$obj = array(
+			"error" => $error,
+			"method" => $method
+		);
+		
+		return json_encode($obj);
+	}
+	
+	/**
+	 * 
+	 * Generates a JSON-RPC result message
+	 * @param mixed result variable, can be array, string, etc.
+	 */
+	function jsonResult(&$result){
+		
+		$obj = array(
+			"result" => $result
+		);
+		
+		return json_encode($obj);
+	}
+	
+	/**
+	 * 
+	 * Synchronization methods
+	 * 
+	 */
+	
+	function newInstitution($params){}
+	
+	function newCourse($params){}
+	
+	function newEducation($params){}
+	
+	function updateInstitution($params){}
+	
+	function updateEducation($params){}
+	
+	function updateCourse($params){}
+	
+	function deleteEducation($params){}
+	
+	function deleteCourse($params){}
 	
 	
     
