@@ -285,12 +285,12 @@ class ODB{
 	 * @param id
 	 * @return int success confirmation
 	 */
-	function delete($table,$field,$id){
+	function delete($table,$where=null){
 
-		if(empty($table) || empty($id) || empty($id))
+		if(empty($table) || !isset($where))
 			throw new Exception("Can't update! check id or table");
 		
-		$sql = "DELETE FROM ${table} WHERE ${field} = '${id}'";
+		$sql = "DELETE FROM ${table} WHERE ${where}";
 		
 		$result = $this->query($sql);
 

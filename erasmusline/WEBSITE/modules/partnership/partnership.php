@@ -289,9 +289,9 @@ class PartnershipController extends PlonkController {
 		unset($item['instId']);
 		$item['table'] = $this->institution_t;
 		
-		$db->update($item, "instEmail='$item[instEmail]'");
+		$num = $db->update($item, "instEmail='$item[instEmail]'");
 		
-		return $params;
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function updateEducation($params){
@@ -305,9 +305,9 @@ class PartnershipController extends PlonkController {
 				"where educationName ='$item[educationName]'");
 		
 		$item['table'] = $educations_t;
-		$db->update($item, "educationId='$education[educationId]'");
+		$num = $db->update($item, "educationId='$education[educationId]'");
 		
-		return $params;
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function updateCourse($params){
@@ -329,20 +329,46 @@ class PartnershipController extends PlonkController {
 		unset($item['educationId']);
 		
 		$item['table'] = $courses_t;
-		$db->update($item, "educationId='$education[educationId]'".
+		$num = $db->update($item, "educationId='$education[educationId]'".
 			" and institutionId='${instId}' and courseCode='${code}'");
 		
-		return $params;
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function deleteEducation($params){
 		$db = $this->db;
-		return $params;
+		$educations_t = $this->educations_t;
+		$courses_t = $this->courses_t;
+		
+		$education = $params['educationData'];
+		$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$education[educationName]'");
+		
+		$c = $db->getOne("select count(*) as cnt from $courses_t".
+							" where educationId='$education[educationId]'");
+		
+		if($c['cnt']>0){
+			throw new Exception("EDU_HAS_COURSES");
+		}
+		
+		$num = $db->delete($educations_t, 
+			"educationId='$education[educationId]'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 	function deleteCourse($params){
 		$db = $this->db;
-		return $params;
+		$courses_t = $this->courses_t;
+		
+		$inst = $params['instData'];
+		$course = $params['courseData'];
+		
+		$num = $db->delete($courses_t, 
+			"courseCode='$course[courseCode]' ".
+			" and institutionId='$inst[instEmail]'");
+		
+		return array('OK'=>true,'num'=>$num);
 	}
 	
 }
