@@ -12,6 +12,12 @@ class PartnershipController extends PlonkController {
 	private static $debug=false;
     protected $views = array('partnership','receive');
     
+    
+    private $institution_t = 'institutions';
+	private $educations_t = 'education';
+	private $courses_t = 'coursespereducationperinst';
+    
+    
     public function __construct(){
     	$this->crypt = new Crypt();
     	$this->db = new ODB();
@@ -203,21 +209,88 @@ class PartnershipController extends PlonkController {
 	
 	function newInstitution($params){
 		$db = $this->db;
-		return $params;
+		
+		$institution_t = $this->institution_t;
+		$educations_t = $this->educations_t;
+		$courses_t = $this->courses_t;
+		
+		$eduTrans = array(); // education id's dictionary
+		
+		$institution = $params['instData'];
+		$institutionId = $institution['instEmail'];
+		$educations = $params['educationsData'];
+		$courses = $params['coursesData'];
+		
+		$db->beginTransaction();
+		
+		// insert institution
+		$instId = $db->insert($institution, $institution_t);
+		
+		// insert educations by order and return new id's array by order
+		$educations_id = array_map(
+		function($item)use($db,$educations_t,$eduTrans){
+			$oldId = $item['educationId'];
+			unset($item['educationId']);
+			$id = $db->insert($item, $educations_t);
+			$eduTrans[$oldId] = $id; // id translation hash
+			return $id;
+		}, $educations);
+		
+		// replace education id's and insert courses
+		$courses_id = array_map(
+		function($item)use($db,$courses_t,$eduTrans){
+			unset($item['courseId']);
+			$oldId = $item['educationId'];
+			$item['educationId'] = $eduTrans[$oldId]; // swap for new id
+			$id = $db->insert($item, $courses_t);
+			return $id;
+		}, $courses);
+		
+		$db->commitTransaction();
+		return array('OK'=>true,'educations_ids'=>$educations_id,
+					'courses_id'=>$courses_id);
 	}
 	
 	function newCourse($params){
 		$db = $this->db;
-		return $params;
+		$db->beginTransaction();
+		
+		$courses_t = $this->courses_t;
+		$educations_t = $this->educations_t;
+		
+		$item = $params['courseData'];
+		unset($item['courseId']);
+		
+		$education = $params['educationData'];
+		$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$education[educationName]'");
+		
+		$item['educationId'] = $education['educationId'];
+		
+		$id = $db->insert($item, $courses_t);
+		
+		$db->commitTransaction();
+		return array('OK'=>true, 'id'=>$id);
 	}
 	
 	function newEducation($params){
 		$db = $this->db;
-		return $params;
+		$db->beginTransaction();
+		$educations_t = $this->educations_t;
+		
+		$item = $params['educationData'];
+		unset($item['educationId']);
+		$id = $db->insert($item, $educations_t);
+		
+		$db->commitTransaction();
+		return array('OK'=>true,'id'=>$id);
 	}
 	
 	function updateInstitution($params){
 		$db = $this->db;
+		
+		
+		
 		return $params;
 	}
 	

@@ -325,6 +325,19 @@ class ODB{
 		if(!isset($table)) throw new Exception("Not a valid table!");
 		$this->execute("alter table $table disable keys");
 	}
+	
+	function beginTransaction(){
+		$this->execute("START TRANSACTION;");
+	}
+	
+	function commitTransaction(){
+		$this->execute("COMMIT;");
+	}
+	
+	function rollbackTransaction(){
+		$this->execute("ROLLBACK;");
+	}
+	
 }
 
 ?>
