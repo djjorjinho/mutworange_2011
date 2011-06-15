@@ -393,7 +393,7 @@ class PartnershipController extends PlonkController {
 		$study_t = $this->study_t;
 				
 		$education = $params;
-		$instId = $item['institutionId'];
+		$instId = $education['institutionId'];
 		
 		$education = $db->getOne("select * from ${educations_t} ".
 				"where educationName ='$education[educationName]'");
@@ -405,11 +405,11 @@ class PartnershipController extends PlonkController {
 			throw new Exception("EDU_HAS_COURSES");
 		}
 		
+		$db->delete($study_t, 
+			"studyId='$education[educationId]' and institutionId='$instId'");
+		
 		$num = $db->delete($educations_t, 
 			"educationId='$education[educationId]'");
-		
-		$db->delete($study_t, 
-			"studyId='$education[educationId]' and institutionId='$insId'");
 		
 		return array('OK'=>true,'num'=>$num);
 	}
@@ -426,8 +426,6 @@ class PartnershipController extends PlonkController {
 		
 		return array('OK'=>true,'num'=>$num);
 	}
-	
-	
 	
 }
 ?>
