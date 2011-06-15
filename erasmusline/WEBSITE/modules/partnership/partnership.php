@@ -216,7 +216,7 @@ class PartnershipController extends PlonkController {
 		
 		$eduTrans = array(); // education id's dictionary
 		
-		$institution = $params['instData'];
+		$institution = array_shift($params['instData']);
 		$institutionId = $institution['instEmail'];
 		$educations = $params['educationData'];
 		$courses = $params['courseData'];
@@ -224,6 +224,7 @@ class PartnershipController extends PlonkController {
 		$db->beginTransaction();
 		
 		// insert institution
+		unset($institution['instId']);
 		$instId = $db->insert($institution, $institution_t);
 		
 		// insert educations by order and return new id's array by order
