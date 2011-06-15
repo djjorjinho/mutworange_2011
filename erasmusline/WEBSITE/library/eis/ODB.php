@@ -22,7 +22,7 @@ class ODB{
 	 * The constructor reads a json configuration file and stores it in the
 	 * instance var $config
 	 */
-	private function DB($options=null){
+	private function ODB($options=null){
 		
 		if(isset($options)){
 			$this->config = $options;

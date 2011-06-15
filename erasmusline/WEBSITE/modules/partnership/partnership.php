@@ -20,7 +20,7 @@ class PartnershipController extends PlonkController {
     
     public function __construct(){
     	$this->crypt = new Crypt();
-    	$this->db = new ODB();
+    	$this->db = ODB::getInstance();
     }
     
     
@@ -60,11 +60,14 @@ class PartnershipController extends PlonkController {
     	$url = (preg_match("/^loopback/",$method)>0) ? self::curDomainURL() : 
     								$instUrl;
     	
+    	$url .= "/index.php?module=partnership&view=receive";
+    	
+		Util::log("Outgoing URL: ".$url);
+    	
     	$curl = new curl();
     								
     	$curl->start();
-        $curl->setOption(CURLOPT_URL, $url.
-        			"/index.php?module=partnership&view=receive");
+        $curl->setOption(CURLOPT_URL, $url);
         $curl->setOption(CURLOPT_POST, 1);
         $curl->setOption(CURLOPT_RETURNTRANSFER, true);
         $curl->setOption(CURLOPT_SSL_VERIFYPEER, false);
