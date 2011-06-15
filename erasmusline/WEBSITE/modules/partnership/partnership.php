@@ -15,7 +15,7 @@ class PartnershipController extends PlonkController {
     
     private $institution_t = 'institutions';
 	private $educations_t = 'education';
-	private $courses_t = 'coursespereducationperinst';
+	private $courses_t = 'coursespereducperinst';
     
     
     public function __construct(){
@@ -122,7 +122,8 @@ class PartnershipController extends PlonkController {
 	    	$this->output($encrypted);
 	    	
     	}catch(Exception $e){
-    		Util::log("Exception: ".$e->getMessage());
+    		Util::log("Exception on (${module}:${method}): ".$e->getMessage()
+    							."\n");
     		$out = $this->crypt->encrypt($this->jsonError($e->getMessage(),
     						"${module}:${method}"));
     		$this->output($out);
@@ -216,12 +217,23 @@ class PartnershipController extends PlonkController {
 		
 		$eduTrans = array(); // education id's dictionary
 		
-		$institution = array_shift($params['instData']);
+		$institution = $params['instData'];
 		$institutionId = $institution['instEmail'];
 		$educations = $params['educationData'];
 		$courses = $params['courseData'];
 		
+		Util::log(print_r($institution,true));
+		Util::log(print_r($educations,true));
+		Util::log(print_r($courses,true));
+		
 		$db->beginTransaction();
+		
+		$c = $db->getOne("select count(instId) as cnt from $institution_t ".
+					" where instEmail='$institutionId'");
+		
+		if($c['cnt']>0){
+			throw new Exception("INST_EXISTS");
+		}
 		
 		// insert institution
 		unset($institution['instId']);
@@ -229,13 +241,15 @@ class PartnershipController extends PlonkController {
 		
 		// insert educations by order and return new id's array by order
 		$educations_id = array_map(
-		function($item)use($db,$educations_t,$eduTrans){
+		function($item)use($db,$educations_t,&$eduTrans){
 			$oldId = $item['educationId'];
 			unset($item['educationId']);
 			$id = $db->insert($item, $educations_t);
 			$eduTrans[$oldId] = $id; // id translation hash
 			return $id;
 		}, $educations);
+		
+		Util::log(print_r($eduTrans,true));
 		
 		// replace education id's and insert courses
 		$courses_id = array_map(
@@ -248,6 +262,7 @@ class PartnershipController extends PlonkController {
 		}, $courses);
 		
 		$db->commitTransaction();
+		
 		return array('OK'=>true,'educations_ids'=>$educations_id,
 					'courses_id'=>$courses_id);
 	}

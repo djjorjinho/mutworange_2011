@@ -1,6 +1,6 @@
 <?php
 class Util{
-	static $debug = true;
+	static $debug = false;
 	
 	public static function loadController($module){
 		// check if the controller file exists
@@ -31,13 +31,13 @@ class Util{
     		touch($path);
     	}
     	
-    	$level=1;
+    	$level=0;
     	$trace = debug_backtrace();
     	$file   = basename($trace[$level]['file']);
     	$line   = $trace[$level]['line'];
     	$where = " ${file}:${line} ";
 		$dt = new DateTime();
-    	$ts = '['.$dt->format("Y-m-d H:i:s").'] ';
+    	$ts = '['.$dt->format("Y-m-d H:i:s").']';
     	error_log($ts.$where.$message."\n",3,$path);
     }
     
