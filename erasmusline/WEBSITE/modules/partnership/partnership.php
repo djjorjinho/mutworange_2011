@@ -51,11 +51,10 @@ class PartnershipController extends PlonkController {
     	if(!is_array($params)){
     		throw new Exception("Invalid Parameters! must be assoc. array!");
     	}
-    	
-    	$encrypted = $this->crypt->encrypt(
-    						json_encode(
-    							array('method' => $method,
-    							'params' => $params)));
+    	$json = json_encode(array('method' => $method,
+    							'params' => $params));
+    	Util::log("Outgoing JSON: ".$json);
+    	$encrypted = $this->crypt->encrypt($json);
     	
     	$url = (preg_match("/^loopback/",$method)>0) ? self::curDomainURL() : 
     								$instUrl;
@@ -80,6 +79,10 @@ class PartnershipController extends PlonkController {
         $message = json_decode($this->crypt->decrypt($result),true);
         Util::log("result message: ".$message);
         
+        if(!isset($message) || empty($message)){
+        	throw new Exception("Invalid JSON response!");
+        }
+        
         return $message;
     }
     
@@ -100,7 +103,7 @@ class PartnershipController extends PlonkController {
 	    		throw new Exception("Invalid JSON message");
 	    	}
 	    	
-	    	Util::log("incomming message: ".$message);
+	    	Util::log("incomming message: ".print_r($message,true));
 	    	
 	    	list($module,$method) = preg_split("/:/", $message['method']);
 	    	
