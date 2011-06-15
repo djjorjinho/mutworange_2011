@@ -54,7 +54,7 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=precandidates" title="Precandidates">Precandidates</a>');
 
         // gets info of all the users
-        $pres = StaffDB::getForms('Precandidate');
+        $pres = StaffDB::getForms('Precandidate',  PlonkSession::get('id'));
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iPres');
@@ -88,7 +88,7 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=agreements" title="Learning Agreements">Learning Agreements</a>');
 
         // gets info of all the users
-        $agrees = StaffDB::getLagree();
+        $agrees = StaffDB::getLagree(PlonkSession::get('id'));
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iAgreements');
@@ -122,7 +122,7 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=changes" title="Change of Learning Agreements">Change of Learning Agreements</a>');
 
         // gets info of all the users
-        $changes = StaffDB::getForms('Change Of Learning Agreement');
+        $changes = StaffDB::getForms('Change Of Learning Agreement', PlonkSession::get('id'));
 
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iChanges');
@@ -158,7 +158,7 @@ class StaffController extends PlonkController {
 
         // gets info of all the users
         $id = StaffDB::getIdLevel("Student Application and Learning Agreement");
-        $applics = StaffDB::getApplics();
+        $applics = StaffDB::getApplics(PlonkSession::get('id'));
         
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iApplics');

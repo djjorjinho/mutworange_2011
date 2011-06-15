@@ -7,12 +7,12 @@
 
 class StaffDB {
 
-    public static function getForms($formtype) {
+    public static function getForms($formtype, $coordinator) {
         // create db instance
         $db = PlonkWebsite::getDB();
 
         // retrieve info from table gebruikers
-        $pres = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email WHERE forms.type = '".$formtype."' AND forms.action = 2");
+        $pres = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE forms.type = '".$formtype."' AND forms.action = 2 AND (erasmusStudent.hostCoordinatorId = '".$coordinator."' OR erasmusStudent.homeCoordinatorId = '".$coordinator.'"');
 
         return $pres;
     }

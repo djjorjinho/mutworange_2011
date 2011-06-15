@@ -37,6 +37,8 @@ class LagreeformController extends PlonkController {
      * check if user is logged in
      */
     public function checkLogged() {
+        $who = "";
+
         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
@@ -52,11 +54,14 @@ class LagreeformController extends PlonkController {
 
                 if ($erasmusInfo['homeInstitutionId'] != INST_EMAIL) {
                     $this->pageTpl->assignOption('oHost');
+                    $who = 'Host';
                 } else {
                     $this->pageTpl->assignOption('oOffice');
+                    $who = 'Office';
                 }
 
                 $this->pageTpl->assignOption('oCoor');
+                return $who;
             } else {
                 if (PlonkFilter::getGetValue('form') != null) {
                     $this->pageTpl->assignOption('oCoor');
@@ -265,6 +270,21 @@ class LagreeformController extends PlonkController {
         $this->errors = null;
     }
 
+    private function fillDep() {
+        $deps = LagreeformDB::getCoordinators();
+        try {
+            $this->pageTpl->setIteration('iDepCoor');
+            foreach ($deps as $key => $value) {
+                $this->pageTpl->assignIteration('depCoor', '<option value="' . $value['email'] . '"> ' . $value['firstName'] . ' '.$value['familyName']. '</option>');
+
+                $this->pageTpl->refillIteration('iDepCoor');
+            }
+            $this->pageTpl->parseIteration('iDepCoor');
+        } catch (Exception $e) {
+            
+        }
+    }
+
     private function fillFixed() {
         $sendCountry = LagreeformDB::getSendInst();
 
@@ -383,8 +403,11 @@ class LagreeformController extends PlonkController {
     }
 
     public function showApplicform() {
-        $this->checkLogged();
+        $who = $this->checkLogged();
 
+        if ($who == 'Host') {
+            $this->fillDep();
+        }
 
         if (PlonkFilter::getGetValue('form') != null) {
             $this->formid = PlonkFilter::getGetValue('form');
@@ -401,7 +424,7 @@ class LagreeformController extends PlonkController {
             $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&view=userhome" title="Home">Home</a><a href="index.php?module=lagreeform&view=applicform&form=' . $this->formid . '" title="Student Application Form">Student Application Form</a>');
 
             $this->filledApplicform();
-            if (PlonkFilter::getGetValue('student') == null) {
+            if (PlonkFilter::getGetValue('form') == null) {
                 $this->mainTpl->assign('pageJava', '');
             }
             return;
@@ -1160,8 +1183,21 @@ class LagreeformController extends PlonkController {
 
         LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
 
+        $homeCoor = LagreeformDB::getUserInfo($erasmus['homeCoordinatorId']);
+        $office = LagreeformDB::getInstitCoor();
+
         try {
 
+            $coor = array(
+                'table' => 'users',
+                'data' => $homeCoor,
+                'emailField' => 'email'
+            );
+            $office = array(
+                'table' => 'users',
+                'data' => $office,
+                'emailField' => 'email'
+            );
             $us = array(
                 'table' => 'users',
                 'data' => $user,
@@ -1179,9 +1215,9 @@ class LagreeformController extends PlonkController {
 
             $b = new InfoxController;
             //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
-            $methods = array('forms:toDb', 'forms:toDb', 'forms:toDb');
-            $tables = array('users', 'erasmusstudent', 'forms');
-            $data = array($us, $er, $form);
+            $methods = array('forms::toDb', 'forms::toDb', 'forms:toDb', 'forms:toDb', 'forms:toDb');
+            $tables = array('users', 'users', 'users', 'erasmusstudent', 'forms');
+            $data = array($office, $coor, $us, $er, $form);
             $idInst = $erasmus['hostInstitutionId'];
             $success = $b->dataTransfer($methods, $tables, $data, $idInst);
             if ($success !== '0') {
