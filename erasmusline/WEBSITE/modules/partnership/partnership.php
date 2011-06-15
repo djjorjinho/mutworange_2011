@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
 set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}..${sep}"));
@@ -11,11 +12,11 @@ class PartnershipController extends PlonkController {
 	private $db;
 	private static $debug=false;
     protected $views = array('partnership','receive');
-    
-    
+
     private $institution_t = 'institutions';
 	private $educations_t = 'education';
 	private $courses_t = 'coursespereducperinst';
+	private $study_t = 'educationperinstitute';
     
     
     public function __construct(){
@@ -77,7 +78,7 @@ class PartnershipController extends PlonkController {
         $result = $curl->getResult();
         Util::log("result response message: ".$result);
         $message = json_decode($this->crypt->decrypt($result),true);
-        Util::log("result message: ".$message);
+        Util::log("result message: ".print_r($message,true));
         
         if(!isset($message) || empty($message)){
         	throw new Exception("Invalid JSON response!");
@@ -118,10 +119,11 @@ class PartnershipController extends PlonkController {
 	    	
 	    	$result = call_user_func_array($runnable,array($message['params']));
 	    	
-	    	$encrypted = $this->crypt->encrypt(
-	    						json_encode($result));
+	    	$json = json_encode($result);
+	    	Util::log("json result: ".$json);
+	    	$encrypted = $this->crypt->encrypt($json);
 	    	
-	    	Util::log("encrypted: ".$encrypted);
+	    	Util::log("encrypted result: ".$encrypted);
 	    	$this->output($encrypted);
 	    	
     	}catch(Exception $e){
@@ -166,6 +168,7 @@ class PartnershipController extends PlonkController {
 	
 	
 	function output(&$out){
+		
 		header('Content-Type: text/plain');
 		ob_start();
 		echo $out;
@@ -217,6 +220,7 @@ class PartnershipController extends PlonkController {
 		$institution_t = $this->institution_t;
 		$educations_t = $this->educations_t;
 		$courses_t = $this->courses_t;
+		$study_t = $this->study_t;
 		
 		$eduTrans = array(); // education id's dictionary
 		
@@ -244,15 +248,23 @@ class PartnershipController extends PlonkController {
 		
 		// insert educations by order and return new id's array by order
 		$educations_id = array_map(
-		function($item)use($db,$educations_t,&$eduTrans){
+		function($item)
+			use($db,$educations_t,&$eduTrans,$institutionId,$study_t){
 			$oldId = $item['educationId'];
 			unset($item['educationId']);
 			$id = $db->insert($item, $educations_t);
 			$eduTrans[$oldId] = $id; // id translation hash
+			
+			$study = array('studyId' => $id,
+				'Description' => $item['educationName'],
+				'institutionId' => $institutionId);
+			
+			$db->insert($study, $study_t);
+			
 			return $id;
 		}, $educations);
 		
-		Util::log(print_r($eduTrans,true));
+		#Util::log(print_r($eduTrans,true));
 		
 		// replace education id's and insert courses
 		$courses_id = array_map(
@@ -277,12 +289,11 @@ class PartnershipController extends PlonkController {
 		$courses_t = $this->courses_t;
 		$educations_t = $this->educations_t;
 		
-		$item = $params['courseData'];
+		$item = $params;
 		unset($item['courseId']);
 		
-		$education = $params['educationData'];
 		$education = $db->getOne("select * from ${educations_t} ".
-				"where educationName ='$education[educationName]'");
+				"where educationName ='$item[educationName]'");
 		
 		$item['educationId'] = $education['educationId'];
 		
@@ -393,6 +404,8 @@ class PartnershipController extends PlonkController {
 		
 		return array('OK'=>true,'num'=>$num);
 	}
+	
+	
 	
 }
 ?>
