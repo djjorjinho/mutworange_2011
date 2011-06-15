@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting(E_ERROR);
 $ipath = get_include_path();
 $sep = DIRECTORY_SEPARATOR;
 set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}..${sep}"));
@@ -168,7 +168,6 @@ class PartnershipController extends PlonkController {
 	
 	
 	function output(&$out){
-		
 		header('Content-Type: text/plain');
 		ob_start();
 		echo $out;
@@ -282,6 +281,26 @@ class PartnershipController extends PlonkController {
 					'courses_id'=>$courses_id);
 	}
 	
+	function newEducation($params){
+		$db = $this->db;
+
+		$educations_t = $this->educations_t;
+		$study_t = $this->study_t;
+		
+		$item = $params;
+		unset($item['educationId']);
+		$instId = $item['institutionId'];
+		$id = $db->insert($item, $educations_t);
+		
+		$study = array('studyId' => $id,
+				'Description' => $item['educationName'],
+				'institutionId' => $instId);
+			
+		$db->insert($study, $study_t);
+
+		return array('OK'=>true,'id'=>$id);
+	}
+	
 	function newCourse($params){
 		$db = $this->db;
 
@@ -302,24 +321,11 @@ class PartnershipController extends PlonkController {
 
 		return array('OK'=>true, 'id'=>$id);
 	}
-	
-	function newEducation($params){
-		$db = $this->db;
 
-		$educations_t = $this->educations_t;
-		
-		$item = $params['educationData'];
-		unset($item['educationId']);
-		$id = $db->insert($item, $educations_t);
-		
-
-		return array('OK'=>true,'id'=>$id);
-	}
-	
 	function updateInstitution($params){
 		$db = $this->db;
 		
-		$item = $params['instData'];
+		$item = $params;
 		unset($item['instId']);
 		$item['table'] = $this->institution_t;
 		
@@ -331,15 +337,27 @@ class PartnershipController extends PlonkController {
 	function updateEducation($params){
 		$db = $this->db;
 		$educations_t = $this->educations_t;
+		$study_t = $this->study_t;
 		
-		$item = $params['educationData'];
+		$item = $params;
 		unset($item['educationId']);
 		
+		// todo inner join
 		$education = $db->getOne("select * from ${educations_t} ".
-				"where educationName ='$item[educationName]'");
+				"where educationName ='$item[oldName]'");
+		
+		$instId = $item['instEmail'];
 		
 		$item['table'] = $educations_t;
 		$num = $db->update($item, "educationId='$education[educationId]'");
+		
+		$study = array('studyId' => $education['educationId'],
+				'Description' => $item['Description'],
+				'institutionId' => $instId,
+				'table' => $study_t);
+		
+		$db->update($study,"institutionId='$instId'".
+							" and studyId='$education[educationId]'");
 		
 		return array('OK'=>true,'num'=>$num);
 	}
@@ -349,22 +367,21 @@ class PartnershipController extends PlonkController {
 		$educations_t = $this->educations_t;
 		$courses_t = $this->courses_t;
 		
-		$education = $params['educationData'];
+		$item = $params;
 		$education = $db->getOne("select * from ${educations_t} ".
-				"where educationName ='$education[educationName]'");
+				"where educationName ='$item[educationName]'");
 		
-		$item = $params['courseData'];
 		$instId = $item['institutionId'];
 		$code = $item['courseCode'];
 		
 		unset($item['courseId']);
 		unset($item['courseCode']);
 		unset($item['institutionId']);
-		unset($item['educationId']);
+		$item['educationId'] = $education[educationId];
 		
 		$item['table'] = $courses_t;
-		$num = $db->update($item, "educationId='$education[educationId]'".
-			" and institutionId='${instId}' and courseCode='${code}'");
+		$num = $db->update($item, "institutionId='${instId}'".
+								" and courseCode='${code}'");
 		
 		return array('OK'=>true,'num'=>$num);
 	}
@@ -373,8 +390,11 @@ class PartnershipController extends PlonkController {
 		$db = $this->db;
 		$educations_t = $this->educations_t;
 		$courses_t = $this->courses_t;
+		$study_t = $this->study_t;
+				
+		$education = $params;
+		$instId = $item['institutionId'];
 		
-		$education = $params['educationData'];
 		$education = $db->getOne("select * from ${educations_t} ".
 				"where educationName ='$education[educationName]'");
 		
@@ -388,6 +408,9 @@ class PartnershipController extends PlonkController {
 		$num = $db->delete($educations_t, 
 			"educationId='$education[educationId]'");
 		
+		$db->delete($study_t, 
+			"studyId='$education[educationId]' and institutionId='$insId'");
+		
 		return array('OK'=>true,'num'=>$num);
 	}
 	
@@ -395,12 +418,11 @@ class PartnershipController extends PlonkController {
 		$db = $this->db;
 		$courses_t = $this->courses_t;
 		
-		$inst = $params['instData'];
-		$course = $params['courseData'];
+		$course = $params;
 		
 		$num = $db->delete($courses_t, 
 			"courseCode='$course[courseCode]' ".
-			" and institutionId='$inst[instEmail]'");
+			" and institutionId='$course[institutionId]'");
 		
 		return array('OK'=>true,'num'=>$num);
 	}
