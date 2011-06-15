@@ -142,7 +142,8 @@ class PartnershipController extends PlonkController {
     
     static function curDomainURL() {
 		 $pageURL = 'http';
-		 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+		 if ( key_exists('HTTPS', $_SERVER) && 
+		 		$_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
 		 $pageURL .= "://";
 		 if ($_SERVER["SERVER_PORT"] != "80") {
 		  	$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
@@ -214,8 +215,8 @@ class PartnershipController extends PlonkController {
 		
 		$institution = $params['instData'];
 		$institutionId = $institution['instEmail'];
-		$educations = $params['educationsData'];
-		$courses = $params['coursesData'];
+		$educations = $params['educationData'];
+		$courses = $params['courseData'];
 		
 		$db->beginTransaction();
 		

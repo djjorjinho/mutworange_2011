@@ -1,6 +1,6 @@
 <?php
 class Util{
-	static $debug = false;
+	static $debug = true;
 	
 	public static function loadController($module){
 		// check if the controller file exists
