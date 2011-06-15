@@ -45,7 +45,7 @@ class InstitutionController extends PlonkController {
         protected $rules = array();
 
         public function checkLogged() {
-        	/*
+        	/**
         	 * TODO: Update to the latest checkLogged
         	 */
         }
@@ -61,7 +61,9 @@ class InstitutionController extends PlonkController {
         	$this->mainTpl->assign('siteTitle', 'Admin page');
 
         	$instDatas = InstitutionDB::getInstData();
-
+        	 
+        	 
+       	
         	foreach ($instDatas as $instData) {
         		$this->pageTpl->assign('instname', $instData['instName']);
         		$this->pageTpl->assign('editUrl', $_SERVER['PHP_SELF']
@@ -299,24 +301,25 @@ class InstitutionController extends PlonkController {
         	href="./core/css/form.css" type="text/css" />');
         	$this->mainTpl->assign('siteTitle', 'Edit education');
 
+			
+        	
+        	$params = array(
+				           'instData' => InstitutionDB::getInstData(),
+				           'courseData' => InstitutionDB::getCourseInfo(),
+                   		   'educationData' => InstitutionDB::getEducationInfo(),
+        	);
+			$obj = new PartnershipController();
+			$obj->send('http://10.0.28.143/erasmusline', 'partnership:newInstitution', $params);
+			
+			
+        	
+        	
+        	
+        	$inst_data = InstitutionDB::getInstData();
 
+        	foreach ($inst_data as $inst){
+        		$this->pageTpl->assign('institutionName',$inst['instName']);
 
-
-        	// gets info of selected course
-        	$where = "institutionId = '" . INST_EMAIL . "' AND studyId = '" .
-        	$_GET['id']."'";
-
-        	$education_d1 = InstitutionDB::select('educationperinstitute',$where);
-
-        	$where = "educationId = '" . $_GET['id']."'";
-
-        	$education_d2 = InstitutionDB::select('education',$where);
-        	foreach ($education_d1 as $education_v1){
-        		foreach ($education_d2 as $education_v2) {
-        			$this->pageTpl->assign('educationName',$education_v2['educationName']);
-        			$this->pageTpl->assign('educationDesc',$education_v1['Description']);
-        			$this->pageTpl->assign('hid',$_GET['id']);
-        		}
         	}
 
 
@@ -577,7 +580,7 @@ class InstitutionController extends PlonkController {
         			if (PlonkSession::exists('id')) {
         				if (PlonkSession::get('id') == '0') {
         					$values = array(
-        						'educationId' => $_POST["hiddenid"],
+        						'instEmail' => INST_EMAIL,
 	                			'educationName' => $_POST["educationname"],//htmlentities(PlonkFilter::getPostValue('educationName')),
         					);
         					InstitutionDB::update('education', $values);
