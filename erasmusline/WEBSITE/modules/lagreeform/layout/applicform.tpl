@@ -134,7 +134,7 @@
             </div>
 
             <div class="TRdiv">
-                <label for="nation"><span>Nationality; </span></label>
+                <label for="nation"><span>Nationality: </span></label>
                 <input class="validate[required] text-input" type="text" id="nation" name="nation" value="{$nation|htmlentities}" />
             </div>
 
@@ -359,7 +359,12 @@
             </div>
 
             <div class="TRdiv">
-                <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
+                <label for="hostDepCoor"><span>Departamental coordinator's signature</span></label>
+                <select name="hostDepCoor" >
+               {iteration:iDepCoor}
+                     {$depCoor}
+               {/iteration:iDepCoor}
+            </select>
             </div>
 
             <div class="TRdiv">

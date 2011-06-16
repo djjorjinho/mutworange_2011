@@ -32,7 +32,6 @@ class OfficeController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Office coordinator');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a>');
         $this->mainTpl->assign('pageJava', '');
-        $this->pageTpl->assign('message', 'No notifications.');
         if(PlonkFilter::getGetValue('success') != null) {
             if(PlonkFilter::getGetValue('success') == 'true') {
                 $this->pageTpl->assign('message', 'Info was sent succesfull');
@@ -41,9 +40,9 @@ class OfficeController extends PlonkController {
                 $this->pageTpl->assign('message', 'Info couldn\'t be sent because the host institute couldn\'t be accesed.');
             }
             else {
-                $this->pageTpl->assign('message', '');
+                $this->pageTpl->assign('message', 'No notifications.');
             }
-        }
+        }      
     }
     
     public function showAgreements() {

@@ -79,7 +79,7 @@ class LagreeformDB {
     public static function getInstitCoor() {
         $db = PlonkWebsite::getDB();
 
-        $user = $db->retrieveOne('select * from users where userLevel = "International relations office staff"');
+        $user = $db->retrieveOne('select email, firstName, familyName, tel from users where userLevel = "International relations office staff"');
 
         return $user;
     }
@@ -261,6 +261,22 @@ class LagreeformDB {
         $db = PlonkWebsite::getDB();
         
         $db->delete($table, $where);
+    }
+    
+    public static function getLimitedUsernfo($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $user = $db->retrieveOne("select email, firsName, familyName, tel, from users where email = '".$id."'");
+        
+        return $user;
+    }
+    
+    public static function getCoordinators() {
+        $db = PlonkWebsite::getDB();
+        
+        $coordinators = $db->retrieve('select email, firstName, familyName from users where userLevel == "Erasmus Coordinator" AND institutionId == "'.INST_EMAIL.'"');
+       
+        return $coordinators;
     }
 
 }
