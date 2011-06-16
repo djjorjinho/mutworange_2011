@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR);
+date_default_timezone_set('UTC');
 class Util{
 	static $debug = true;
 	
@@ -37,7 +39,7 @@ class Util{
     	$line   = $trace[$level]['line'];
     	$where = " ${file}:${line} ";
 		$dt = new DateTime();
-    	$ts = '['.$dt->format("Y-m-d H:i:s").']';
+    	$ts = '['.$dt->format("Y-m-d H:i:s").'UTC]';
     	error_log($ts.$where.$message."\n",3,$path);
     }
     

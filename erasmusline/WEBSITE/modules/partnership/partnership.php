@@ -11,7 +11,7 @@ class PartnershipController extends PlonkController {
 	private $crypt;
 	private $db;
 	private static $debug=false;
-    protected $views = array('partnership','receive');
+    protected $views = array('partnership','receive','test');
 
     private $institution_t = 'institutions';
 	private $educations_t = 'education';
@@ -24,17 +24,25 @@ class PartnershipController extends PlonkController {
     	$this->db = ODB::getInstance();
     }
     
+    public function showTest(){
+
+    	$this->send("https://localhost/erasmusline","loopback:ping",
+    		array(
+    			"hello" => 'Daniel!'
+    		),true);
     
+    	
+    }
     
-    public function sendInstitution($intitutionId,$method,$params){
+    public function sendInstitution($intitutionId,$method,$params,$bgprocess=false){
     	if(!isset($intitutionId) || empty($intitutionId)){
     		throw new Exception("Invalid Institution!");
     	}
     	$url = PartnershipDB::getURL($intitutionId);
-    	return $this->send($url,$method,$params);
+    	return $this->send($url,$method,$params,$bgprocess);
     }
     
-    public function send($instUrl,$method,$params){
+    public function send($instUrl,$method,$params,$bgprocess=false){
     	
     	if(!PlonkSession::exists('id')){
     		throw new Exception("Invalid user!");
@@ -63,9 +71,26 @@ class PartnershipController extends PlonkController {
     	$url .= "/index.php?module=partnership&view=receive";
     	
 		Util::log("Outgoing URL: ".$url);
+		
+    	if($bgprocess){
+    		$sep = DIRECTORY_SEPARATOR;
+    		$script = dirname(__FILE__)."${sep}bgsend.php";
+    		$args = '--url="'.$url.'" --payload="'.$encrypted.'"';
+    		
+    		if(preg_match("/WIN/", PHP_OS)){
+    			$cmd="start /B php.exe ${script} ${args}";
+    			Util::log("CMD: ".$cmd);
+    			pclose(popen($cmd, "r"));
+    		}else{
+    			$cmd = "php ${script} ${args} &";
+    			Util::log("CMD: ".$cmd);
+    			system($cmd);
+    		}
+    		
+    		return array("bgprocess"=>true);
+    	}
     	
     	$curl = new curl();
-    								
     	$curl->start();
         $curl->setOption(CURLOPT_URL, $url);
         $curl->setOption(CURLOPT_POST, 1);
