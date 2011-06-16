@@ -359,8 +359,8 @@
             </div>
 
             <div class="TRdiv">
-                <label for="signDepSign"><span>Departamental coordinator's signature</span></label>
-                <select name="HostDepCoor" >
+                <label for="hostDepCoor"><span>Departamental coordinator's signature</span></label>
+                <select name="hostDepCoor" >
                {iteration:iDepCoor}
                      {$depCoor}
                {/iteration:iDepCoor}

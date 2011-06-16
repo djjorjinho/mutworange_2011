@@ -933,10 +933,16 @@ class LagreeformController extends PlonkController {
             if ($prev == 20) {
                 $status = 10;
             }
+            $testArray = $_POST;
+            $newArray = array_slice($testArray, 0, count($_POST) - 2);
+
+            $jsonArray = json_encode($newArray);
+            
             $formArray = array(
                 'action' => 1,
                 'formId' => $this->formid,
-                'motivationHost' => PlonkFilter::getPostValue('coordinator')
+                'motivationHost' => PlonkFilter::getPostValue('coordinator'),
+                'content' => $jsonArray
             );
         } else {
             $descrip = "Student Application Form is denied.";
@@ -950,10 +956,15 @@ class LagreeformController extends PlonkController {
             if ($prev == 20) {
                 $status = 0;
             }
+            $testArray = $_POST;
+            $newArray = array_slice($testArray, 0, count($_POST) - 2);
+
+            $jsonArray = json_encode($newArray);
             $formArray = array(
                 'action' => 0,
                 'formId' => $this->formid,
-                'motivationHost' => PlonkFilter::getPostValue('coordinator')
+                'motivationHost' => PlonkFilter::getPostValue('coordinator'),
+                'content' => $jsonArray
             );
         }
 
@@ -969,7 +980,8 @@ class LagreeformController extends PlonkController {
         );
 
         $values = array(
-            'action' => $status
+            'action' => $status,
+            'hostCoordinatorId' =>  PlonkFilter::getPostValue('hostDepCoor')
         );
 
 
@@ -1251,10 +1263,15 @@ class LagreeformController extends PlonkController {
 
         if (PlonkFilter::getPostValue('acceptedHome') == 1) {
 
-            $descrip = "Learnign Agreement approved by home institute and sent to host.";
+            $descrip = "Learning Agreement approved by home institute and sent to host.";
 
+            $testArray = $_POST;
+            $newArray = array_slice($testArray, 0, count($_POST) - 2);
+
+            $jsonArray = json_encode($newArray);
             $formMot = array(
-                'motivationHome' => PlonkFilter::getPostValue('coordinator')
+                'motivationHome' => PlonkFilter::getPostValue('coordinator'),
+                'content' => $jsonArray
             );
 
             LagreeformDB::updateErasmusStudent('forms', $formMot, 'formId = "' . $this->formid . '"');
@@ -1296,7 +1313,12 @@ class LagreeformController extends PlonkController {
             }
             $status = $prev;
         } else {
-            $descrip = "Learning Angreement is denied by home.";
+            $testArray = $_POST;
+            $newArray = array_slice($testArray, 0, count($_POST) - 2);
+
+            $jsonArray = json_encode($newArray);
+            
+            $descrip = "Learning Agreement is denied by home.";
 
             if ($prev == 2) {
                 $status = 0;
@@ -1309,7 +1331,8 @@ class LagreeformController extends PlonkController {
             }
             $formArray = array(
                 'action' => 0,
-                'motivationHome' => PlonkFilter::getPostValue('coordinator')
+                'motivationHome' => PlonkFilter::getPostValue('coordinator'),
+                'content' => $jsonArray
             );
 
             $values = array('action' => $status);
@@ -1341,7 +1364,7 @@ class LagreeformController extends PlonkController {
         if ($success == "denied") {
             PlonkWebsite::redirect('index.php?module=office&view=office');
         }
-        if ($success !== '0') {
+        if ($success != '0') {
             PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
         } else {
             PlonkWebsite::redirect('index.php?module=office&view=office&success=false');
