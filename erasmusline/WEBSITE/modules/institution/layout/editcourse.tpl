@@ -8,7 +8,7 @@
     <span class="req" id="error">{$error}</span><br />
 	<div class="TRdiv">
             <label for="coursecode"><span>Course Code : </span></label>
-            <input class="validate[required,custom[onlyLetterSp]] text-input" 
+            <input class="validate[required,custom[onlyLetterSp]] text-input" disabled="disabled"
             type="text" name="coursecode" id="coursecode" value="{$courseCode|htmlentities}"/>
             <span class="req" id="msgCourseCode">{$msgCourseCode|htmlentities}</span>	
 	</div>
@@ -45,7 +45,8 @@
 </fieldset>
         <div class="TRdiv">
         <input type="hidden" name="option" id="option" value="editcourse"></input>    
-        <input type="hidden" name="hiddenid" id="hiddenid" value="{$hid|htmlentities}"></input>          
+        <input type="hidden" name="hiddenid" id="hiddenid" value="{$hid|htmlentities}"></input>  
+        <input type="hidden" name="hiddenccode" id="hiddenccode" value="{$ccode|htmlentities}"></input>         
 		<input type="hidden" name="formAction" id="formAddCourse" value="doSubmit"></input>
 		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"></input>
 	</div>    
