@@ -73,6 +73,7 @@ var eis = {
 		jQuery.getScript('core/js/eis/jquery.tmpl.min.js');
 		jQuery.getScript('core/js/eis/jquery.form.rpcpost.js');
 		jQuery.getScript('core/js/eis/jquery.simplemodal.js');
+		jQuery.getScript('core/js/eis/jquery.printElement.min.js');
 		jQuery.getScript('https://www.google.com/jsapi');
 
 		jQuery.getScript('https://www.google.com/uds/api/visualization/1.0/c044e0de584c55447c5597e76d372bc1/default,corechart.I.js');
@@ -883,7 +884,6 @@ var eis = {
 				
 			}
 		    
-
 	},
 	
 	removeTBItem : function(elm,id,type){
@@ -1006,8 +1006,19 @@ var eis = {
 		
 		var description = [desc_op,desc_vals];
 		return description;
-	}
+	},
 	
+	printScenario : function(){
+		var table = jQuery('#resultTable');
+		if(table.length>0){
+			table.printElement({
+				pageTitle:'Print Result Table',
+				leaveOpen:true,
+	            printMode:'popup',
+	            overrideElementCSS:['core/css/stats.print.css']
+			});
+		}
+	}
 };
 
 
