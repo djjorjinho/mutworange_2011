@@ -6,10 +6,12 @@ set_include_path($ipath.":".realpath(dirname(__FILE__)."${sep}..${sep}..${sep}")
 require_once('library/eis/ODB.php');
 require_once('library/eis/Crypt.php');
 require_once('library/eis/Util.php');
+require_once('library/eis/JSONConfig.php');
 require_once('library/curl.php');
 class PartnershipController extends PlonkController {
 	private $crypt;
 	private $db;
+	private $bgsend;
 	private static $debug=false;
     protected $views = array('partnership','receive','test');
 
@@ -22,6 +24,7 @@ class PartnershipController extends PlonkController {
     public function __construct(){
     	$this->crypt = new Crypt();
     	$this->db = ODB::getInstance();
+    	$this->bgsend = JSONConfig::load(dirname(__FILE__),'bgsend');
     }
     
     public function showTest(){
@@ -30,8 +33,7 @@ class PartnershipController extends PlonkController {
     		array(
     			"hello" => 'Daniel!'
     		),true);
-    
-    	
+
     }
     
     public function sendInstitution($intitutionId,$method,$params,$bgprocess=false){
@@ -76,9 +78,9 @@ class PartnershipController extends PlonkController {
     		$sep = DIRECTORY_SEPARATOR;
     		$script = dirname(__FILE__)."${sep}bgsend.php";
     		$args = '--url="'.$url.'" --payload="'.$encrypted.'"';
-    		
     		if(preg_match("/WIN/", PHP_OS)){
-    			$cmd="start /B php.exe ${script} ${args}";
+    			$exe = $this->bgsend['win_php'];
+    			$cmd='start /B '.$exe.' '.$script.' '.$args;
     			Util::log("CMD: ".$cmd);
     			pclose(popen($cmd, "r"));
     		}else{

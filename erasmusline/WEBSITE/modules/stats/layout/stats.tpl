@@ -77,6 +77,7 @@
 				<button class="eis_hand" title="Run Scenario" onclick="eis.runScenarioButton();">Run</button>
 				<button class="eis_hand" title="Swap items between Column and Rows" onclick="eis.swapColumnsRows();">Swap</button>
 				<button class="eis_hand" title="Export Scenario result to CSV" onclick="eis.exportScenario();">Export</button>
+				<button class="eis_hand" title="Print Scenario result table" onclick="eis.printScenario();">Print</button>
 				<button class="eis_hand" title="Display Scenario Graph if available" onclick="eis.showGraph();">Graph</button>
 				
 				<select id="chart_select" name="Charts" title="Chart Select">
@@ -113,7 +114,8 @@
 			
 		
 		<div class="presentation_div border_eis">
-			<div id="resultTableDiv"></div><div id="chart_div"></div>
+			<div id="resultTableDiv"></div>
+			<div id="chart_div"></div>
 		</div>
 
 
