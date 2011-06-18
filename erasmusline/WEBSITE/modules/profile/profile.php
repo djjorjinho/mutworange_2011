@@ -33,43 +33,65 @@ class ProfileController extends PlonkController {
      */
     private function mainTplAssigns($pageTitle) {
         // Assign main properties
-        $this->mainTpl->assign('pageJava', '<link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css" /><script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
-<script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>        
-<script type="text/javascript">
-           jQuery(document).ready(function(){
-           // binds form submission and fields to the validation engine
-           jQuery("#register").validationEngine();
-       });</script>
-       <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>');
+        $this->mainTpl->assign('pageJava', '');
         $this->mainTpl->assign('breadcrumb', '');
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '
-            <script type="text/javascript">
-			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-			document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
+            <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
+                <link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css" />
+                
+                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
+                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>        
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                    // binds form submission and fields to the validation engine
+                    jQuery("#register").validationEngine();
+                });</script>
+                
+                <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
+		<!-- jsProgressBarHandler prerequisites : prototype.js -->
+	<script type="text/javascript" src="./core/js/progress/js/prototype/prototype.js"></script>
+
+	<!-- jsProgressBarHandler core -->
+	<script type="text/javascript" src="./core/js/progress/js/bramus/jsProgressBarHandler.js"></script>
+<script type="text/javascript">
+				document.observe("dom:loaded", function() {
+
+					
+
+					// second manual example : multicolor (and take all other default paramters)
+					manualPB2 = new JS_BRAMUS.jsProgressBar(
+								$("elementMain"),
+								{$progress},
+								{
+
+									barImage	: Array(
+										"./core/js/progress/images/bramus/percentImage_back4.png",
+										"./core/js/progress/images/bramus/percentImage_back3.png",
+										"./core/js/progress/images/bramus/percentImage_back2.png",
+										"./core/js/progress/images/bramus/percentImage_back1.png"
+									),
+
+									onTick : function(pbObj) {
+
+										switch(pbObj.getPercentage()) {
+
+											case 98:
+												alert("Hey, we\'re at 98!");
+											break;
+
+											case 100:
+												alert("Progressbar full at 100% ... maybe do a redirect or sth like that here?");
+											break;
+
+										}
+
+										return true;
+									}
+								}
+							);
+				}, false);
 			</script>
-			<script type="text/javascript">
-			try {
-			var pageTracker = _gat._getTracker("UA-1120774-3");
-			pageTracker._trackPageview();
-			} catch(err) {}
-		</script>
-		<script type="text/javascript" src="http://t.wits.sg/misc/js/jQuery/jquery.js"></script>
-		<script type="text/javascript" src="./core/js/progressbar/js/jquery.progressbar.js"></script>
-		<script type="text/javascript">
-
-			$(document).ready(function() {
-				$("#pb1").progressBar({$progress});
-			});
-
-
-		</script>
-                <style type="text/css">
-			table tr { vertical-align: top; }
-			table td { padding: 3px; }
-			div.contentblock { padding-bottom: 25px; }	
-		</style>
                 ');
     }
 
@@ -158,6 +180,9 @@ class ProfileController extends PlonkController {
                     else
                         $this->erasmusLevel = 40;
                 }
+                else {
+                    $this->erasmusLevel = 90;
+                }
             }
 
             $this->mainTpl->assign('progress', $this->erasmusLevel);
@@ -187,15 +212,15 @@ class ProfileController extends PlonkController {
 
         // Main Layout
         // Logged or not logged, that is the question...
+
+        $this->checkLogged();
         if(PlonkFilter::getGetValue('student') != null) {
             $this->id = PlonkFilter::getGetValue('student');
         }
         else {
             $this->id = PlonkSession::get('id');
         }
-
-
-        $this->checkLogged();
+        
         $this->mainTplAssigns('Profile');
 
         // assign menu active state
@@ -349,9 +374,12 @@ class ProfileController extends PlonkController {
 
     public function checkLogged() {
         //Plonk::dump(PlonkSession::get('id').'hgdjdh');
+        
         if (!PlonkSession::exists('id')) {
+            //Plonk::dump('qqsdf');
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
+            
             if (PlonkSession::get('id') === 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else {

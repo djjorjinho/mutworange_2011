@@ -55,12 +55,13 @@
             <input class="validate[required, custom[integer]] text-input" type="text" name="months" id="months" value="{$months|htmlentities}"/>
             <span class="req" id="msgMonths">{$msgMonths|htmlentities}</span>	
     </div>
-    <div class="TRdiv">
-        <label for="reason"><span>Reason: </span></label><br />
-        <input checked="checked" type="radio" name="reason"  value="exams">Exams<br />
-        <input type="radio" name="reason" value="work">Work<br />
-        <input type="radio" name="reason" value="other">Other<br />
-    </div>
+     <div class="radioResidences">
+                <div class="radioResidence">
+        <label for="reason"><span>Reason: </span></label>
+        Exams<input checked="checked" type="radio" name="reason"  value="exams" />
+        Work<input type="radio" name="reason" value="work" />
+        Other<input type="radio" name="reason" value="other" />
+    </div></div>
      <div class="TRdiv">
         <label for="notes"><span>Notes:  </span></label>
          <textarea class="validate[textarea] text-input" type="text" rows="5" cols="35" name="notes" id="notes" >{$notes|htmlentities}</textarea>
@@ -84,6 +85,7 @@
                 <label for="print">Print dit formulier af</label>
                 <input type="button" value="Print" onclick="printpage();" />
             </div>
+            {option:oNotFilled}
             <div class="TRdiv">
                 <label for="printed"><span>Attach signed Mobility Extension Period</span></label>
                 <input type="file" class="multi" maxlength="1" accept="pdf" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
@@ -92,19 +94,21 @@
         <input type="hidden" name="formAction" id="formExtend" value="doExtend" />
 	<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
     </div>
+            {/option:oNotFilled}
 </fieldset>
             {/option:oStudent}
 
             {option:oHost}
     <fieldset>
         <legend>Host institution - Send to home (if approved)</legend>
-       <div class="TRdiv">
+        <div class="radioResidences">
+                <div class="radioResidence">
         <label for="accepted"><span>Decision: </span></label><br />
-        <input type="radio" name="accepted" value="1">Exams<br />
-        <input type="radio" name="accepted" value="0">Work<br />
-    </div>
+        Approved<input type="radio" name="acceptedHost" value="1">
+        Denied<input type="radio" name="acceptedHost" value="0">
+    </div></div>
       <div class="TRdiv">
-        <label for="acceptedReason"><span>Motivation:  </span></label>
+        <label for="acceptedReason"><span>Motivation: </span></label>
          <textarea class="validate[textarea] text-input" type="text" rows="5" cols="35" name="coordinator" id="coordinator" ></textarea>	
     </div>
 <div class="TRdiv">
@@ -133,11 +137,12 @@
         {option:oOffice}
     <fieldset>
         <legend>Home institution - Send to host</legend>
-       <div class="TRdiv">
-        <label for="accepted"><span>Decision: </span></label><br />
-        <input type="radio" name="accepted" value="1">Exams<br />
-        <input type="radio" name="accepted" value="0">Work<br />
-    </div>
+        <div class="radioResidences">
+                <div class="radioResidence">
+        <label for="accepted"><span>Decision: </span></label>
+        Approved<input type="radio" name="acceptedHome" value="1">
+        Denied<input type="radio" name="acceptedHome" value="0">
+    </div></div>
       <div class="TRdiv">
         <label for="acceptedReason"><span>Motivation:  </span></label>
          <textarea class="validate[textarea] text-input" type="text" rows="5" cols="35" name="coordinator" id="coordinator" ></textarea>	
@@ -152,7 +157,7 @@
               }
             </script>
             <div class="TRdiv">
-                <label for="print">Print dit formulier af</label>
+                <label for="print">Print this form</label>
                 <input type="button" value="Print" onclick="printpage();" />
             </div>
             <div class="TRdiv">

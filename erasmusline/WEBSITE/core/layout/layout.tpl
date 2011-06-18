@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
+    
+    
 
     {$pageMeta}
     {$pageJava}
@@ -98,7 +100,7 @@
 {option:oStudent}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=profile&amp;view=ownprofile" title="View progress on profile">Progess</a></li>
+    <li><span id="elementMain">[ Loading Progress Bar ]</span></li>
     <li class="level2"><a href="index.php?module=profile&amp;view=edit" title="Edit profile">Edit profile</a></li>
 </ul>
 </div>

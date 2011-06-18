@@ -31,12 +31,7 @@
 {option:oStudent}
 <div id="progress">
 <p>Your current Erasmus progress<p>
-<table>
-    <tr>
-        <td></td>
-        <td><span class="progressBar" id="pb1"></span></td>
-    </tr>
-</table>
+    <span id="elemendt6">[ Loading Progress Bar ]</span>
 </div>
 {/option:oStudent}
 
