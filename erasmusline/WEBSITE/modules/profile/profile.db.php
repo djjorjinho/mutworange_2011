@@ -94,5 +94,16 @@ class ProfileDB {
 
         $true = $db->update($table, $values, $where);
     }
+    
+    public static function getForms($id) {
+        $id = $id;
+
+        $db = PlonkWebsite::getDB();
+
+        $forms = $db->retrieve('SELECT type, date, module, view, formId FROM forms inner join erasmusLevel on forms.erasmusLevelId = erasmusLevel.levelId WHERE studentId ="' . $db->escape($id).'"');
+
+        //Plonk::dump($forms);
+        return $forms;
+    }
 
 }

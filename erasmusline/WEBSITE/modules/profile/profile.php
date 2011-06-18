@@ -23,7 +23,6 @@ class ProfileController extends PlonkController {
     protected $actions = array('edit'
     );
     private $id, $erasmusLevel;
-    
     protected $fields = array();
     protected $errors = array();
 
@@ -77,103 +76,130 @@ class ProfileController extends PlonkController {
     public function showOwnprofile() {
         $this->showProfile();
 
-        $erasmus = ProfileDB::getErasmusById($this->id);
-        //Plonk::dump($erasmus);
-        if (!empty($erasmus)) {
-            $this->pageTpl->assign('start', $erasmus['startDate']);
-            $this->pageTpl->assign('end', $erasmus['endDate']);
-        } else {
-            $this->pageTpl->assign('start', '');
-            $this->pageTpl->assign('end', '');
-        }
-
-        $home = ProfileDB::getHome($this->id);
-        if (!empty($home)) {
-            $this->pageTpl->assign('home', $home['instName']);
-            $this->pageTpl->assign('hCooordinator', $home['familyName'] . ' ' . $home['firstName']);
-        } else {
-            $this->pageTpl->assign('home', '');
-            $this->pageTpl->assign('hCooordinator', '');
-        }
-
-        $host = ProfileDB::getHost($this->id);
-        if (!empty($host)) {
-            $this->pageTpl->assign('destination', $host['instName']);
-            $this->pageTpl->assign('dCoordinator', $host['familyName'] . ' ' . $host['firstName']);
-        } else {
-            $this->pageTpl->assign('destination', '');
-            $this->pageTpl->assign('dCoordinator', '');
-        }
-
-        $study = ProfileDB::getStudy($this->id);
-        if (!empty($study)) {
-            $this->pageTpl->assign('study', $study['educationName']);
-        } else {
-            $this->pageTpl->assign('study', '');
-        }
-
-        $this->pageTpl->assign('profile', './files/' . $this->id . '/profile.jpg');
-
-        $courses = ProfileDB::getCourses($this->id);
-
-        if (!empty($courses)) {
-            $this->pageTpl->setIteration('iCourses');
-            $i = 0;
-            foreach ($courses as $course) {
-                $this->pageTpl->assignIteration('course', $course['courseName']);
-                $this->pageTpl->assignIteration('ects', $course['ectsCredits']);
-                $i += $course['ectsCredits'];
-                $this->pageTpl->refillIteration();
+        if (PlonkSession::get('userLevel') == "Student") {
+            $erasmus = ProfileDB::getErasmusById($this->id);
+            //Plonk::dump($erasmus);
+            if (!empty($erasmus)) {
+                $this->pageTpl->assign('start', $erasmus['startDate']);
+                $this->pageTpl->assign('end', $erasmus['endDate']);
+            } else {
+                $this->pageTpl->assign('start', '');
+                $this->pageTpl->assign('end', '');
             }
-            $this->pageTpl->parseIteration();
-            $this->pageTpl->assign('total', $i);
-        } else {
-            $this->pageTpl->assign('total', '');
-        }
 
-        $erasmuslevel = ProfileDB::getErasmusById($this->id);
-        
-        if (!empty($erasmuslevel)) {
-            if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
-                if ($erasmuslevel['action'] == 2)
-                    $this->erasmusLevel = 5;
-                if ($erasmuslevel['action'] == 1)
-                    $this->erasmusLevel = 10;
+            $home = ProfileDB::getHome($this->id);
+            if (!empty($home)) {
+                $this->pageTpl->assign('home', $home['instName']);
+                $this->pageTpl->assign('hCooordinator', $home['familyName'] . ' ' . $home['firstName']);
+            } else {
+                $this->pageTpl->assign('home', '');
+                $this->pageTpl->assign('hCooordinator', '');
             }
-            if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
-                if ($erasmuslevel['action'] == 22)
-                    $this->erasmusLevel = 15;
-                if ($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
-                    $this->erasmusLevel = 25;
-                if ($erasmuslevel['action'] == 11)
-                    $this->erasmusLevel = 40;
-                else
-                    $this->erasmusLevel = 10;
+
+            $host = ProfileDB::getHost($this->id);
+            if (!empty($host)) {
+                $this->pageTpl->assign('destination', $host['instName']);
+                $this->pageTpl->assign('dCoordinator', $host['familyName'] . ' ' . $host['firstName']);
+            } else {
+                $this->pageTpl->assign('destination', '');
+                $this->pageTpl->assign('dCoordinator', '');
             }
-            if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
-                if ($erasmuslevel['action'] == 1)
-                    $this->erasmusLevel = 50;
-                if ($erasmuslevel['action'] == 2)
-                    $this->erasmusLevel = 45;
-                else
-                    $this->erasmusLevel = 40;
+
+            $study = ProfileDB::getStudy($this->id);
+            if (!empty($study)) {
+                $this->pageTpl->assign('study', $study['educationName']);
+            } else {
+                $this->pageTpl->assign('study', '');
+            }
+
+            $this->pageTpl->assign('profile', './files/' . $this->id . '/profile.jpg');
+
+            $courses = ProfileDB::getCourses($this->id);
+
+            if (!empty($courses)) {
+                $this->pageTpl->setIteration('iCourses');
+                $i = 0;
+                foreach ($courses as $course) {
+                    $this->pageTpl->assignIteration('course', $course['courseName']);
+                    $this->pageTpl->assignIteration('ects', $course['ectsCredits']);
+                    $i += $course['ectsCredits'];
+                    $this->pageTpl->refillIteration();
+                }
+                $this->pageTpl->parseIteration();
+                $this->pageTpl->assign('total', $i);
+            } else {
+                $this->pageTpl->assign('total', '');
+            }
+
+            $erasmuslevel = ProfileDB::getErasmusById($this->id);
+
+            if (!empty($erasmuslevel)) {
+                if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
+                    if ($erasmuslevel['action'] == 2)
+                        $this->erasmusLevel = 5;
+                    if ($erasmuslevel['action'] == 1)
+                        $this->erasmusLevel = 10;
+                }
+                if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
+                    if ($erasmuslevel['action'] == 22)
+                        $this->erasmusLevel = 15;
+                    if ($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
+                        $this->erasmusLevel = 25;
+                    if ($erasmuslevel['action'] == 11)
+                        $this->erasmusLevel = 40;
+                    else
+                        $this->erasmusLevel = 10;
+                }
+                if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
+                    if ($erasmuslevel['action'] == 1)
+                        $this->erasmusLevel = 50;
+                    if ($erasmuslevel['action'] == 2)
+                        $this->erasmusLevel = 45;
+                    else
+                        $this->erasmusLevel = 40;
+                }
+            }
+
+            $this->mainTpl->assign('progress', $this->erasmusLevel);
+        }
+        else {
+            $forms = ProfileDB::getForms($this->id);
+            
+            $this->pageTpl->assign('profile', './files/' . $this->id . '/profile.jpg');
+
+            if (!empty($forms)) {
+                $this->pageTpl->setIteration('iForms');
+
+                foreach ($forms as $form) {
+
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' ' . '<a href="index.php?module=' . $form['module'] . '&amp;view=' . $form['view'] . '&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->refillIteration('iForms');
+                }
+
+                $this->pageTpl->parseIteration('iForms');
+            } else {
+                $this->pageTpl->assignOption('noForms');
             }
         }
-
-        $this->mainTpl->assign('progress', $this->erasmusLevel);
     }
 
     public function showProfile() {
 
         // Main Layout
         // Logged or not logged, that is the question...
+        if(PlonkFilter::getGetValue('student') != null) {
+            $this->id = PlonkFilter::getGetValue('student');
+        }
+        else {
+            $this->id = PlonkSession::get('id');
+        }
+
 
         $this->checkLogged();
         $this->mainTplAssigns('Profile');
 
         // assign menu active state
         $this->mainTpl->assignOption('oNavProfile');
-        $this->id = PlonkSession::get('id');
         $info = ProfileDB::getItemsById($this->id);
         $erasmuslevel = ProfileDB::getErasmusById($this->id);
 
@@ -274,7 +300,7 @@ class ProfileController extends PlonkController {
                 'origin' => 0
             );
 
-            ProfileDB::updateUser('users', $values, 'email = "'.PlonkSession::get('id').'"');
+            ProfileDB::updateUser('users', $values, 'email = "' . PlonkSession::get('id') . '"');
 
             if (!empty($_FILES['pic'])) {
                 //Plonk::dump($_FILES);
@@ -287,8 +313,8 @@ class ProfileController extends PlonkController {
 
     private function upload() {
 
-        if(!PlonkDirectory::exists("files/".PlonkSession::get('id'))) {
-        mkdir("files/" . PlonkSession::get('id') . '/', 0777);
+        if (!PlonkDirectory::exists("files/" . PlonkSession::get('id'))) {
+            mkdir("files/" . PlonkSession::get('id') . '/', 0777);
         }
         $uploaddir = "files/" . PlonkSession::get('id') . "/";
 
@@ -331,6 +357,8 @@ class ProfileController extends PlonkController {
             } else {
                 if (PlonkSession::get('userLevel') == "Student") {
                     $this->pageTpl->assignOption('oStudent');
+                } else {
+                    $this->pageTpl->assignOption('oOthers');
                 }
             }
         }

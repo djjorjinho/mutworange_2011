@@ -358,6 +358,7 @@
                 <textarea class="validate[required],custom[onlyLetterNumber] text-input" type="text" name="coordinator" id="coordinator" cols="50" rows="5"></textarea>	
             </div>
 
+            {option:oHost}
             <div class="TRdiv">
                 <label for="hostDepCoor"><span>Departamental coordinator's signature</span></label>
                 <select name="hostDepCoor" >
@@ -366,6 +367,7 @@
                {/iteration:iDepCoor}
             </select>
             </div>
+            {/option:oHost}
 
             <div class="TRdiv">
                 <label for="signDepSignDate"><span>Date: </span></label>

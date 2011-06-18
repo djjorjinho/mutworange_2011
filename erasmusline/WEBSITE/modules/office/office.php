@@ -12,7 +12,8 @@ class OfficeController extends PlonkController {
         'applics',
         'agreements',
         'reapplics',
-        'changes'
+        'changes',
+        'extends'
     );
     protected $id;
     /**
@@ -42,7 +43,10 @@ class OfficeController extends PlonkController {
             else {
                 $this->pageTpl->assign('message', 'No notifications.');
             }
-        }      
+        }
+        else {
+            $this->pageTpl->assign('message', '');
+        }
     }
     
     public function showAgreements() {
@@ -66,7 +70,7 @@ class OfficeController extends PlonkController {
         foreach ($agrees as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=".$student['formId']);
 
@@ -100,7 +104,7 @@ class OfficeController extends PlonkController {
         foreach ($changes as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=".$student['formId']);
 
@@ -136,7 +140,7 @@ class OfficeController extends PlonkController {
         foreach ($applics as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
 
@@ -147,6 +151,39 @@ class OfficeController extends PlonkController {
 
         // parse the iteration
         $this->pageTpl->parseIteration('iApplics'); // alternative: $tpl->parseIteration();
+    }
+    
+    public function showExtends() {
+        $this->checkLogged();
+
+        // assign vars in our main layout tpl
+        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('siteTitle', 'Application forms');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=extend" title="Extend Mobility Period">Extend Mobility Period</a>');
+        $this->mainTpl->assign('pageJava', '');
+
+        // gets info of all the users
+        $id = OfficeDB::getIdLevel("Extend Mobility Period");
+        $extends = OfficeDB::getForms('Extend Mobility Period');
+        
+        // assign iterations: overlopen van de gevonden users
+        $this->pageTpl->setIteration('iExtends');
+
+        // loops through all the users (except for the user with id 1 = admin) and assigns the values
+        foreach ($extends as $student) {
+            if ($student['email'] != 'admin') {
+                $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$student['email']);
+                $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
+                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
+
+                // refill the iteration (mandatory!)
+                $this->pageTpl->refillIteration('iExtends');
+            }
+        }
+
+        // parse the iteration
+        $this->pageTpl->parseIteration('iExtends'); // alternative: $tpl->parseIteration();
     }
 
     public function checkLogged() {

@@ -89,7 +89,23 @@
 
 </fieldset>
 {/option:oStudent}
-
+    
+{option:oOthers}
+    
+    
+    <fieldset>
+        <legend><h3>Forms the student filled in</h3></legend>
+        
+        {option:noForms}
+<p>Student didn't fill in any forms yet</p>
+{/option:noForms}
+    <ul>
+{iteration:iForms}
+{$form}
+{/iteration:iForms}
+    </ul>
+</fieldset>
+    {/option:oOthers}
 </div>
 
 
