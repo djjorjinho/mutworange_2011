@@ -28,12 +28,6 @@
             Userlevel: {$userLevel}
         </li>
     </ul>
-{option:oStudent}
-<div id="progress">
-<p>Your current Erasmus progress<p>
-    <span id="elemendt6">[ Loading Progress Bar ]</span>
-</div>
-{/option:oStudent}
 
 </fieldset>
 

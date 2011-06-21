@@ -49,49 +49,7 @@ class ProfileController extends PlonkController {
                 });</script>
                 
                 <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
-		<!-- jsProgressBarHandler prerequisites : prototype.js -->
-	<script type="text/javascript" src="./core/js/progress/js/prototype/prototype.js"></script>
-
-	<!-- jsProgressBarHandler core -->
-	<script type="text/javascript" src="./core/js/progress/js/bramus/jsProgressBarHandler.js"></script>
-<script type="text/javascript">
-				document.observe("dom:loaded", function() {
-
-					
-
-					// second manual example : multicolor (and take all other default paramters)
-					manualPB2 = new JS_BRAMUS.jsProgressBar(
-								$("elementMain"),
-								{$progress},
-								{
-
-									barImage	: Array(
-										"./core/js/progress/images/bramus/percentImage_back4.png",
-										"./core/js/progress/images/bramus/percentImage_back3.png",
-										"./core/js/progress/images/bramus/percentImage_back2.png",
-										"./core/js/progress/images/bramus/percentImage_back1.png"
-									),
-
-									onTick : function(pbObj) {
-
-										switch(pbObj.getPercentage()) {
-
-											case 98:
-												alert("Hey, we\'re at 98!");
-											break;
-
-											case 100:
-												alert("Progressbar full at 100% ... maybe do a redirect or sth like that here?");
-											break;
-
-										}
-
-										return true;
-									}
-								}
-							);
-				}, false);
-			</script>
+		
                 ');
     }
 
@@ -152,40 +110,6 @@ class ProfileController extends PlonkController {
             } else {
                 $this->pageTpl->assign('total', '');
             }
-
-            $erasmuslevel = ProfileDB::getErasmusById($this->id);
-
-            if (!empty($erasmuslevel)) {
-                if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
-                    if ($erasmuslevel['action'] == 2)
-                        $this->erasmusLevel = 5;
-                    if ($erasmuslevel['action'] == 1)
-                        $this->erasmusLevel = 10;
-                }
-                if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
-                    if ($erasmuslevel['action'] == 22)
-                        $this->erasmusLevel = 15;
-                    if ($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
-                        $this->erasmusLevel = 25;
-                    if ($erasmuslevel['action'] == 11)
-                        $this->erasmusLevel = 40;
-                    else
-                        $this->erasmusLevel = 10;
-                }
-                if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
-                    if ($erasmuslevel['action'] == 1)
-                        $this->erasmusLevel = 50;
-                    if ($erasmuslevel['action'] == 2)
-                        $this->erasmusLevel = 45;
-                    else
-                        $this->erasmusLevel = 40;
-                }
-                else {
-                    $this->erasmusLevel = 90;
-                }
-            }
-
-            $this->mainTpl->assign('progress', $this->erasmusLevel);
         }
         else {
             $forms = ProfileDB::getForms($this->id);

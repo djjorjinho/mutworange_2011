@@ -71,7 +71,7 @@
 	</div>
         <div class="TRdiv">
             <label for="postalCode"><span>Postal Code:</span></label>
-            <input class="validate[required,maxSize[4]] text-input" type="text" name="postalCode" id="postalCode" value="{$postalCode|htmlentities}"/>
+            <input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" name="postalCode" id="postalCode" value="{$postalCode|htmlentities}"/>
             <span class="req" id="msgPostalCode">{$msgPostalCode|htmlentities}</span>	
 	</div>
         <div class="TRdiv">
