@@ -15,6 +15,20 @@ class Functions {
         }
         return $string;
     }
+    
+    public static function createPassword() {
+        $chars = "abcdefghijkmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        srand((double) microtime() * 1000000);
+        $i = 0;
+        $string = '';
+        while ($i <= 9) {
+            $num = rand() % 59;
+            $tmp = substr($chars, $num, 1);
+            $string = $string . $tmp;
+            $i++;
+        }
+        return $string;
+    }
 
 
 }

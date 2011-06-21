@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
+    <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
         {$pageMeta}
     {$pageJava}
+    {option:oStudent}
     <!-- jsProgressBarHandler prerequisites : prototype.js -->
 	<script type="text/javascript" src="./core/js/progress/js/prototype/prototype.js"></script>
 
@@ -56,6 +58,7 @@
 							);
 				}, false);
 			</script>
+        {/option:oStudent}
     
   </head>
   
@@ -78,6 +81,7 @@
 {/option:oStudent}
 {option:oLogged}
 		<a href="index.php?module=stats" class="{$tabEis}" title="Executive Information System">EIS</a>
+                <a href="index.php?module=residence&amp;view=overview" class="{$tabEis}" title="Rent">Rent</a>
       	<a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
         <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
         <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
