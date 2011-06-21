@@ -34,7 +34,7 @@ class InfoController extends PlonkController {
     private function mainTplAssigns() {
         // Assign main properties
         $this->mainTpl->assign('siteTitle', 'Info');
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('breadcrumb','');
         $this->mainTpl->assign('pageJava','');
     }

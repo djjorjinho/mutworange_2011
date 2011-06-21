@@ -88,7 +88,7 @@ class LoginController extends PlonkController {
     private function mainTplAssigns($pageTitle) {
         // Assign main properties
         $this->mainTpl->assign('siteTitle', $pageTitle);
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('breadcrumb', '');
         $this->mainTpl->assign('pageJava', '');
     }

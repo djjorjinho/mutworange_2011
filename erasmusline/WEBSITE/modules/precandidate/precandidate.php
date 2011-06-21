@@ -33,7 +33,7 @@ class PrecandidateController extends PlonkController {
         $this->mainTpl->assign('siteTitle', 'Precandidate');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/precandidate.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=userhome" title="Home">Home</a><a href="index.php?module=precandidate&amp;view=precandidate&amp;form='.$this->formid.'" title="Precandidate">Precanddiate</a>');
     }
 

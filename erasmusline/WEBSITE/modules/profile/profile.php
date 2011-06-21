@@ -33,7 +33,7 @@ class ProfileController extends PlonkController {
      */
     private function mainTplAssigns($pageTitle) {
         // Assign main properties
-        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('pageJava', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('breadcrumb', '');
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '

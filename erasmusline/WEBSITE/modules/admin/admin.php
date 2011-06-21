@@ -52,7 +52,7 @@ class AdminController extends PlonkController {
         $this->checkLogged();
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Admin page');
         $this->mainTpl->assign('pageJava','');
         $this->mainTpl->assign('breadcrumb','');

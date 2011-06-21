@@ -288,6 +288,8 @@ class ResidenceController extends PlonkController {
                 'institutionId' => INST_EMAIL
             );
             ResidenceDB::insert('residence', $values);
+            $id = ResidenceDB::getResidenceById($id);
+            PlonkWebsite::redirect("index.php?module=residence&view=detail&id=".$id['residendeId']);
         }
     }
 

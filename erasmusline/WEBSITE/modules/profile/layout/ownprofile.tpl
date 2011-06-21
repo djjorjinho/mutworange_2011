@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDiv">
     <h3>Profile of {$fName} {$faName}</h3>
     

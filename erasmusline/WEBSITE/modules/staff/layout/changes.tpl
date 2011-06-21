@@ -1,4 +1,4 @@
-    <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDiv">
     <fieldset>
         

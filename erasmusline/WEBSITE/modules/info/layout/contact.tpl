@@ -1,8 +1,7 @@
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 
 <div class="mainDiv">
     <fieldset id="leftInfo">
-    <legend><h3>Other info</h3></legend>
+    <legend>Other info</legend>
     <ul class="info">
         <li><a href="index.php?module=info&amp;view=erasmus">About Erasmus</a></li>
         <li><a href="index.php?module=info&amp;view=erasmusLine">About the application</a></li>
