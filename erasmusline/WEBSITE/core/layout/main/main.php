@@ -77,7 +77,7 @@ class MainController extends PlonkController {
 
                 if (strtolower($email) === 'admin') {
                     PlonkSession::set('id', 0);
-                    
+                    PlonkSession::set('userLevel', "plom");
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                     
                 } else {

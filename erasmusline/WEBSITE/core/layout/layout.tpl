@@ -71,26 +71,22 @@
         
       </div>
       <div id="nav-main">
-{option:oAdmin}
-           <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}" title="Admin">Admin</a>
-{/option:oAdmin}
+          <a href="index.php?module=info&amp;view=info" class="{$tabInfo}" title="Info">Info</a>
+
+{option:oStudent}
+          <a href="index.php?module=course_matching&amp;view=course_matching" class="{$tabInfo}" title="Course matching">Match</a>
+{/option:oStudent}
 {option:oLogged}
-		<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
+		<a href="index.php?module=stats" class="{$tabEis}" title="Executive Information System">EIS</a>
       	<a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
         <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
-        <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}" title="Residences" >Residences</a>
+        <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
 {/option:oLogged}
 {option:oNotLogged}
-	<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>
-{/option:oNotLogged}
-      <a href="index.php?module=info&amp;view=info" class="{$tabInfo}" title="Info">Info</a>      
-{option:oLogged}
-      <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
-{/option:oLogged}
-{option:oNotLogged}
       <a href="index.php?module=login&amp;view=login" title="Login">Login</a>
 {/option:oNotLogged}
+           
       </div>
     </div>
     <div id="main">
@@ -103,10 +99,9 @@
 {option:oAdmin}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=admin&amp;view=students" title="Students">Students</a></li>
     <li class="level2"><a href="index.php?module=admin&amp;view=staff" title="Staff">Staff</a></li>
     <li class="level2"><a href="index.php?module=register&amp;view=register" title="Add staff member">Add staff member</a></li>
-    <li class="level2"><a href="index.php?module=institutions" title="Institution management">Institution management</a></li>
+    <li class="level2"><a href="index.php?module=institution" title="Institution management">Institution management</a></li>
 </ul>
 </div>
 {/option:oAdmin}

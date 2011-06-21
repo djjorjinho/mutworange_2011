@@ -34,7 +34,7 @@
 {option:oStudent}
 <fieldset>
 <legend><h3>Erasmusinfo</h3></legend>
-<h3>Period</h3>
+<p><strong>Period</strong></p>
 <ul>
 <li>
     Start date: {$start}
@@ -44,7 +44,7 @@
 </li>
 </ul>
 
-<h3>Where from - where to</h3>
+<p><strong>Where from - where to</strong></p>
 <ul>
 <li>
     Home institution: {$home}
@@ -60,7 +60,7 @@
 </li>
 </ul>
 
-<h3>What?</h3>
+<p><strong>What?</strong></p>
 <ul>
 <li>
    Education: {$study}
