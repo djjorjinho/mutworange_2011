@@ -263,7 +263,8 @@ class ResidenceController extends PlonkController {
                     'postalCode' => htmlentities(PlonkFilter::getPostValue('postalCode')),
                     'tel' => htmlentities(PlonkFilter::getPostValue('telephone')),
                     'mobilePhone' => htmlentities(PlonkFilter::getPostValue('mobilePhone')),
-                    'country' => htmlentities(PlonkFilter::getPostValue('countryOwner'))
+                    'country' => htmlentities(PlonkFilter::getPostValue('countryOwner')),
+                    'institutionId' => INST_EMAIL
                 );
 
                 ResidenceDB::insert('owner', $values);
@@ -283,7 +284,8 @@ class ResidenceController extends PlonkController {
                 'ownerId' => htmlentities(PlonkFilter::getPostValue('email')),
                 'country' => htmlentities(PlonkFilter::getPostValue('countryResidence')),
                 'available' => 1,
-                'description' => htmlentities(PlonkFilter::getPostValue('description'))
+                'description' => htmlentities(PlonkFilter::getPostValue('description')),
+                'institutionId' => INST_EMAIL
             );
             ResidenceDB::insert('residence', $values);
         }

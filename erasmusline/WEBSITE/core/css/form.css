@@ -18,10 +18,8 @@ fieldset {
 legend {
     margin-left:30px;
     padding:10px;
-}
-
-legend h3 {
     color: #ff6d06;
+    font-size:12px;
 }
 
  .TRdiv input, select, textarea{
