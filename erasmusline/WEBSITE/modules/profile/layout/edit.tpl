@@ -68,10 +68,12 @@
         <label for="cv"><span>Profile picture:</span></label>
         <input type="file" class="multi" maxlength="1" accept="jpg" id="signImg" name="pic[]" /><span id="errRegPicture"></span>
     </div>
-</fieldset>
-        <div class="TRdiv">               
+    
+    <div class="TRdiv">               
 		<input type="hidden" name="formAction" id="formRegister" value="doEdit" />
 		<input class="button" name="btnSend" id="btnSend" type="submit" value="Submit"/>
-	</div>    
+	</div> 
+</fieldset>
+           
 </form>
 </div>

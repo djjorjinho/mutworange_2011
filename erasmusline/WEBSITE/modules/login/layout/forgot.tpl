@@ -4,7 +4,7 @@
 {$errorMsg}
 <form action="" method="post" enctype="multipart/form-data">
                 <fieldset>  
-                    <legend><h3>Forgot your password</h3></legend>
+                    <legend>Forgot your password</legend>
                 <div class="TRdiv">
 			<label for="Email"><span>Email</span></label>
 			<input class="field" type="text" name="Email" />

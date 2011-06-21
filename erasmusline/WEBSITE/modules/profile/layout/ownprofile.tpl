@@ -3,7 +3,7 @@
     <h3>Profile of {$fName} {$faName}</h3>
     
 <fieldset>
-    <legend><h3>General Information</h3></legend>
+    <legend>General Information</legend>
     <img id="profile" src="{$profile}" alt="profile" height="200" width="200" />
 <ul class="personalInfo">
         <li>
@@ -33,7 +33,7 @@
 
 {option:oStudent}
 <fieldset>
-<legend><h3>Erasmusinfo</h3></legend>
+<legend>Erasmusinfo</legend>
 <p><strong>Period</strong></p>
 <ul>
 <li>

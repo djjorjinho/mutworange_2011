@@ -4,7 +4,7 @@
 <p>Here you can edit the selected course</p>
 <form action="" method="post" enctype="multipart/form-data" id="addCourse">	
 <fieldset>
-    <legend><h3>Edit course</h3></legend>     
+    <legend>Edit course</legend>     
     <span class="req" id="error">{$error}</span><br />
 	<div class="TRdiv">
             <label for="coursecode"><span>Course Code : </span></label>
