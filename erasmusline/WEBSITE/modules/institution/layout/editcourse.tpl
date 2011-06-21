@@ -1,16 +1,15 @@
-<h2>Admin panel</h2>
-<p>Here you can edit the selected course</p>
 
 <div class="mainDiv">
+<h3>Admin panel</h3>
+<p>Here you can edit the selected course</p>
 <form action="" method="post" enctype="multipart/form-data" id="addCourse">	
 <fieldset>
-    <legend>New course form</legend>     
+    <legend>Edit course</legend>     
     <span class="req" id="error">{$error}</span><br />
 	<div class="TRdiv">
             <label for="coursecode"><span>Course Code : </span></label>
             <input class="validate[required,custom[onlyLetterSp]] text-input" disabled="disabled"
-            type="text" name="coursecode" id="coursecode" value="{$courseCode|htmlentities}"/>
-            <span class="req" id="msgCourseCode">{$msgCourseCode|htmlentities}</span>	
+            type="text" name="coursecode" id="coursecode" value="{$courseCode|htmlentities}"/>           
 	</div>
         <div class="TRdiv">
             <label for="coursename"><span>Course Name : </span></label>

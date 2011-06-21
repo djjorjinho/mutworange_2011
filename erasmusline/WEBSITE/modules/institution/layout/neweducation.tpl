@@ -1,7 +1,8 @@
-<h2>Admin panel</h2>
-<p>Here you can add a new education</p>
+
 
 <div class="mainDiv">
+<h3>Admin panel</h3>
+<p>Here you can add a new education</p>
 	<form action="" method="post" enctype="multipart/form-data"
 		id="addEducation">
 		<fieldset>
