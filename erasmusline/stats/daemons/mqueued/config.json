@@ -1,0 +1,19 @@
+{
+    "daemonconfig" : {
+		"appName" : "mqueued",
+		"logVerbosity" : 7
+	},
+    "serverconfig" : {
+		"sockFile" : "/tmp/erasmusline/mqueued/mqueued.sock",
+		"serverIP" : "0.0.0.0",
+		"serverPort" : "8116"
+    },
+    "dbconfig" : {
+		"host": "localhost",
+		"user":"erasmusline",
+		"password":"orange",
+		"port":"3306",
+		"schema":"erasmusline",
+		"debug" : true
+    }
+}

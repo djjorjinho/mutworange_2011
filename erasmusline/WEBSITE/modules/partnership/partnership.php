@@ -250,6 +250,8 @@ class PartnershipController extends PlonkController {
 		$educations_t = $this->educations_t;
 		$courses_t = $this->courses_t;
 		$study_t = $this->study_t;
+		$owner_t = $this->owner_t;
+		$residence_t = $this->residence_t;
 		
 		$eduTrans = array(); // education id's dictionary
 		
@@ -304,6 +306,18 @@ class PartnershipController extends PlonkController {
 			$id = $db->insert($item, $courses_t);
 			return $id;
 		}, $courses);
+		
+		$residence = $params['residenceData'];
+		$owner = $params['ownerData'];
+		
+		unset($residence['ownerId']);
+		unset($residence['residenceId']);
+		unset($owner['ownerId']);
+		
+		$oid = $db->insert($owner,$owner_t);
+		$residence['ownerId'] = $oid;
+		
+		$rid = $db->insert($residence,$residence_t);
 		
 		$db->commitTransaction();
 		
@@ -463,24 +477,5 @@ class PartnershipController extends PlonkController {
 		return array('OK'=>true,'num'=>$num);
 	}
 	
-	function newResidence($params){
-		$db = $this->db;
-		$owner_t = $this->owner_t;
-		$residence_t = $this->residence_t;
-		
-		$residence = $params['residenceData'];
-		$owner = $params['ownerData'];
-		
-		unset($residence['ownerId']);
-		unset($residence['residenceId']);
-		unset($owner['ownerId']);
-		
-		$oid = $db->insert($owner,$owner_t);
-		$residence['ownerId'] = $oid;
-		
-		$id = $db->insert($residence,$residence_t);
-		
-		return array('OK'=>true,'id'=>$id);
-	}
 }
 ?>
