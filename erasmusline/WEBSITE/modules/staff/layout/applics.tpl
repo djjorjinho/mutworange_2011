@@ -1,7 +1,7 @@
 
 <div class="mainDiv">
     <fieldset>
-    <legend><h3>Pending Student Application Forms</h3></legend>
+    <legend>Pending Student Application Forms</legend>
 
 <table id="staffTable">
         <tr>

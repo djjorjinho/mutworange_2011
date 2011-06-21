@@ -1,6 +1,6 @@
 <div class="mainDiv">
     <fieldset>
-        <legend><h3>Retried Student Application Forms and Learning Agreements</h3></legend>
+        <legend>Retried Student Application Forms and Learning Agreements</legend>
         
 <table border="1" cellspacing="0">
         <tr>
