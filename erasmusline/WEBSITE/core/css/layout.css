@@ -108,9 +108,14 @@ a:hover {
     float: left;
     width: 275px;
     background: url(../css/images/bg_subnavi.png);
-    border-left: 3px double #6A7787;
+/*    border-left: 3px double #6A7787;
     border-top: 3px double #6A7787;
-    border-bottom: 3px double #6A7787;
+    border-bottom: 3px double #6A7787;*/
+    border:1px solid #998c86;    
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;    
+    margin-top:15px;
 }
 #subnav a{
     text-decoration: none;
@@ -121,6 +126,7 @@ a:hover {
 }
 #subnav ul {
     list-style: none;
+    margin-left: -25px;
 }
 #subnav li{
     font-size: 16px;
