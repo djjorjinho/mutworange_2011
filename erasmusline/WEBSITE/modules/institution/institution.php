@@ -341,9 +341,9 @@ class InstitutionController extends PlonkController {
         	/*$params = array(
         	 'instData' => array_shift(InstitutionDB::getInstData()),
         	 'courseData' => InstitutionDB::getCourseInfo(),
-        	 'educationData' => InstitutionDB::getEducationInfo(),
-        	 'ownerData' => InstitutionDB::
-        	 'residenceData' => InstitutioDB::
+        	 'educationData' => InstitutionDB::getEducastionInfo(),
+        	 'ownerData' => InstitutionDB::getOwnerInfo(),
+        	 'residenceData' => InstitutionDB::getResidenceInfo(),
         	 );
         	 $obj = new PartnershipController();
 

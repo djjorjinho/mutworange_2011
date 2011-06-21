@@ -5,17 +5,37 @@
  */
 
 class InstitutionDB {
-	/**
-	 * Gets all the info of all the users
-	 *
-	 * @return array
-	 */
+
 	public static function getCourseInfo()
 	{
 		// create db instance
 		$db = PlonkWebsite::getDB();
 
 		$coursesInfo = $db->retrieve("SELECT * FROM coursespereducperinst
+		WHERE institutionId = '".INST_EMAIL."'");
+
+		return $coursesInfo;
+
+	}
+
+	public static function getResidenceInfo()
+	{
+		// create db instance
+		$db = PlonkWebsite::getDB();
+
+		$coursesInfo = $db->retrieve("SELECT * FROM residence
+		WHERE institutionId = '".INST_EMAIL."'");
+
+		return $coursesInfo;
+
+	}
+
+	public static function getOwnerInfo()
+	{
+		// create db instance
+		$db = PlonkWebsite::getDB();
+
+		$coursesInfo = $db->retrieve("SELECT * FROM owner
 		WHERE institutionId = '".INST_EMAIL."'");
 
 		return $coursesInfo;
@@ -42,7 +62,7 @@ class InstitutionDB {
 		// create db instance
 		$db = PlonkWebsite::getDB();
 
-		$instInfo = $db->retrieve("SELECT * FROM institutions 
+		$instInfo = $db->retrieve("SELECT * FROM institutions
 		WHERE instEmail = '".INST_EMAIL."'");
 
 		return $instInfo;
@@ -50,7 +70,7 @@ class InstitutionDB {
 	}
 
 	public static function insertDB($table, $values) {
-		
+
 		// create db instance
 		$db = PlonkWebsite::getDB();
 
