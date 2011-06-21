@@ -114,35 +114,47 @@
 		//HOME Student list
 		if($_POST["maine"] == "home") {
 			$str = '<form name="input" action="'.submitExams().'" method="post">';
-			$items = $edb->getColumnAsArray("SELECT users_email FROM `users`, `erasmusstudent` 
+			$items = $edb->getColumnAsArray("SELECT users_email FROM `users`, `erasmusstudent`, `homecoursestoerasmus` 
 											WHERE `users`.`email` = `erasmusstudent`.`homeCoordinatorId` AND 
-											`users`.`email` = \"".$_SESSION['id']."\"");
+											`users`.`email` = \"".$_SESSION['id']."\" AND
+											`erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId` AND
+											`homecoursestoerasmus`.`isRequested` = 1 AND
+											homecoursestoerasmus.homeanswer IS NULL");
 			if(!$items) {
-				$str = "There are no students on Erasmus from this university.<br />";
+				$str .= "There are no students on Erasmus from this university that requested to take their home exams.<br />";
+				$str .= '<input type="submit" name="" value=" Back " /></form>';
+				$this->pageTpl->assign('exams', $examStr.$str);
 			} else {
 				for($i = 0; $i < count($items); $i++){
 					$str .= '&emsp;<input type="radio" name="sexam" value="'.$items[$i].'" /> '.getOurStudentInfo($items[$i], $edb).' <br />';
 				}
+				$str .= '<input type="submit" name="studentHome" value=" View " /></form>';
+				$this->pageTpl->assign('exams', $examStr.$str);
 			}
 			
-			$str .= '<input type="submit" name="studentHome" value=" View " /></form>';
-			$this->pageTpl->assign('exams', $examStr.$str);
+			
 		} else if ($_POST["maine"] == "host") {
 			//HOST Student list
 			$str = '<form name="input" action="'.submitExams().'" method="post">';
-			$items = $edb->getColumnAsArray("SELECT users_email FROM `users`, `erasmusstudent` 
+			$items = $edb->getColumnAsArray("SELECT users_email FROM `users`, `erasmusstudent`, `homecoursestoerasmus`
 											WHERE `users`.`email` = `erasmusstudent`.`hostCoordinatorId` AND 
-											`users`.`email` = \"".$_SESSION['id']."\"");
+											`users`.`email` = \"".$_SESSION['id']."\" AND
+											`erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId` AND
+											`homecoursestoerasmus`.`isRequested` = 1 AND
+											homecoursestoerasmus.hostanswer IS NULL");
 			if(!$items) {
-				$str = "There are no students on Erasmus to this university.<br />";
+				$str .= "There are no students on Erasmus to this university that requested to take their home exams.<br />";
+				$str .= '<input type="submit" name="" value=" Back " /></form>';
+				$this->pageTpl->assign('exams', $examStr.$str);
 			} else {
 				for($i = 0; $i < count($items); $i++){
 					$str .= '&emsp;<input type="radio" name="sexam" value="'.$items[$i].'" /> '.getForeignStudentInfo($items[$i], $edb).' <br />';
 				}
+				$str .= '<input type="submit" name="studentHost" value=" View " /></form>';
+				$this->pageTpl->assign('exams', $examStr.$str);
 			}
 			
-			$str .= '<input type="submit" name="studentHost" value=" View " /></form>';
-			$this->pageTpl->assign('exams', $examStr.$str);
+			
 		} else if ($_POST["maine"] == "hostA") {
 			//HOST Student approved list
 			$str = '<form name="input" action="'.submitExams().'" method="post">Approved students on Erasmus in our university:<br />';
@@ -157,7 +169,7 @@
 											AND `homecoursestoerasmus`.`hostanswer` = 1 
 											");
 			if(!$items) {
-				$str = "There are no students on Erasmus to this university.<br />";
+				$str .= "None<br />";
 			} else {
 				for($i = 0; $i < count($items); $i++){
 					$str .= '&emsp; '.getForeignStudentInfo($items[$i]['users_email'], $edb).' <br />';
@@ -181,7 +193,7 @@
 											AND `homecoursestoerasmus`.`hostanswer` = 1 
 											");
 			if(!$items) {
-				$str = "There are no students on Erasmus from this university.<br />";
+				$str .= "None<br />";
 			} else {
 				for($i = 0; $i < count($items); $i++){
 					$str .= '&emsp; '.getOurStudentInfo($items[$i]['users_email'], $edb).' <br />';
