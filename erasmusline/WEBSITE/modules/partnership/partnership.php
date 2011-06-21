@@ -19,7 +19,10 @@ class PartnershipController extends PlonkController {
 	private $educations_t = 'education';
 	private $courses_t = 'coursespereducperinst';
 	private $study_t = 'educationperinstitute';
-    
+    private $owner_t = 'owner';
+    private $residence_t = 'residence';
+	
+	
     
     public function __construct(){
     	$this->crypt = new Crypt();
@@ -460,5 +463,24 @@ class PartnershipController extends PlonkController {
 		return array('OK'=>true,'num'=>$num);
 	}
 	
+	function newResidence($params){
+		$db = $this->db;
+		$owner_t = $this->owner_t;
+		$residence_t = $this->residence_t;
+		
+		$residence = $params['residenceData'];
+		$owner = $params['ownerData'];
+		
+		unset($residence['ownerId']);
+		unset($residence['residenceId']);
+		unset($owner['ownerId']);
+		
+		$oid = $db->insert($owner,$owner_t);
+		$residence['ownerId'] = $oid;
+		
+		$id = $db->insert($residence,$residence_t);
+		
+		return array('OK'=>true,'id'=>$id);
+	}
 }
 ?>
