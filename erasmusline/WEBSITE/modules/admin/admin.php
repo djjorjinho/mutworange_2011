@@ -27,21 +27,21 @@ class AdminController extends PlonkController {
     );
     
     public function doAdd() {
-        PlonkWebsite::redirect("index.php?module=register&view=register");
+        PlonkWebsite::redirect("index.php?module=register&amp;view=register");
     }
 
     public function checkLogged() {
         if (!PlonkSession::exists('id')) {
             
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&amp;' . PlonkWebsite::$viewKey . '=home');
         } else {
             //Plonk::dump('test');
             if (PlonkSession::get('id') === 0) {
                 $this->id = PlonkSession::get('id');
             } else if (PlonkSession::get('userLevel') == 'Student') {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&amp;' . PlonkWebsite::$viewKey . '=userhome');
             } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&amp;' . PlonkWebsite::$viewKey . '=staff');
             }
         }
     }
@@ -79,7 +79,7 @@ class AdminController extends PlonkController {
 
             if ($staf['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $staf['firstName'] . ' ' . $staf['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$staf['email']);
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&amp;' . PlonkWebsite::$viewKey . '=ownprofile&amp;student='.$staf['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $staf['userId'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('i', $staf['userId']);
 
@@ -99,7 +99,7 @@ class AdminController extends PlonkController {
     public function doLogout() {
         PlonkSession::destroy();
 
-        PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+        PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=home&amp;' . PlonkWebsite::$viewKey . '=home');
     }
 
     public function doInfox() {

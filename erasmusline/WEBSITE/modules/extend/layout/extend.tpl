@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDiv">
 <form action="" method="post" enctype="multipart/form-data" id="extend" name="extend">
     {option:oDenied}
@@ -26,7 +26,7 @@
     {/option:oPending}
 <fieldset>
     {$pageJava}
-    <legend><h3>Student Information</h3></legend> 
+    <legend>Student Information</legend> 
 
             <p>Family name: {$familyName}</p>
             <p>First name: {$firstName}</p>
@@ -39,7 +39,7 @@
     <p>End date: {$endDate}</p>
             </fieldset>
     <fieldset>
-        <legend><h3>Extend Erasmus period</h3></legend>
+        <legend>Extend Erasmus period</legend>
      <div class="TRdiv">
             <label for="from"><span>From: </span></label>
             <input class="validate[required, custom[date]] text-input" type="text" id="from" name="from" id="from" value="{$from|htmlentities}"/>

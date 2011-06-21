@@ -74,7 +74,7 @@ class ExtendController extends PlonkController {
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('pageJava', '');
         $this->mainTpl->assign('siteTitle', 'Extend Mobility Period');
-        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=userhome" title="Home">Home</a><a href="index.php?module=extend&amp;view=extend&form=' . $this->formid . '" title="Extend Mobility Period">Extend Mobility Period</a>');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=userhome" title="Home">Home</a><a href="index.php?module=extend&amp;view=extend&amp;form=' . $this->formid . '" title="Extend Mobility Period">Extend Mobility Period</a>');
 
         $this->pageTpl->assign('from', date('Y-m-d'));
         $this->pageTpl->assign('until', date('Y-m-d'));
@@ -82,10 +82,10 @@ class ExtendController extends PlonkController {
 
     private function checklogged() {
         if (!PlonkSession::exists('id')) {
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&amp;' . PlonkWebsite::$viewKey . '=home');
         } else {
             if (PlonkSession::get('id') === 0) {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&amp;' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 $erasmus = ExtendDB::getErasmusInfo(PlonkSession::get('id'));
                 $this->pageTpl->assignOption('oStudent');
@@ -100,7 +100,7 @@ class ExtendController extends PlonkController {
                     $this->pageTpl->assignOption('oOffice');
                 }
             } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&amp;' . PlonkWebsite::$viewKey . '=staff');
             }
         }
     }
@@ -194,11 +194,11 @@ class ExtendController extends PlonkController {
             ExtendDB::insertValues('forms', $valuess);
             ExtendDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
 
-            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+            PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&amp;' . PlonkWebsite::$viewKey . '=userhome');
         }
 
         //Plonk::dump($this->languages.$this->works);
-        //PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=lagreeform&' . PlonkWebsite::$viewKey . '=applicform&l='.$this->languages.'&w='.$this->works);
+        //PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=lagreeform&amp;' . PlonkWebsite::$viewKey . '=applicform&amp;l='.$this->languages.'&w='.$this->works);
     }
 
     public function doTohome() {
@@ -290,12 +290,12 @@ class ExtendController extends PlonkController {
 
         //Plonk::dump($success);
         if ($success == "denied") {
-            PlonkWebsite::redirect('index.php?module=office&view=office');
+            PlonkWebsite::redirect('index.php?module=office&amp;view=office');
         }
         if ($success != '0') {
-            PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
+            PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=true');
         } else {
-            PlonkWebsite::redirect('index.php?module=office&view=office&success=false');
+            PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=false');
         }
     }
 
@@ -391,9 +391,9 @@ class ExtendController extends PlonkController {
             }
 
             if ($success !== '0') {
-                PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
+                PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=true');
             } else {
-                PlonkWebsite::redirect('index.php?module=office&view=office&success=false');
+                PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=false');
             }
         } catch (Exception $e) {
             Plonk::dump('failed');
