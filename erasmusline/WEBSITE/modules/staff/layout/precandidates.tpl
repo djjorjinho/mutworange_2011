@@ -2,7 +2,7 @@
 <div class="mainDiv">
     <fieldset>
         
-    <legend><h3>Pending Precandidates</h3></legend>
+    <legend>Pending Precandidates</legend>
 <table id="staffTable" >
         <tr>
             <th>
