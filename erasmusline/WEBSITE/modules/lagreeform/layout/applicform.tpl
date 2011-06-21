@@ -306,12 +306,13 @@
                 <span class="req" id="msgYEducation">{$msgYEducation|htmlentities}</span>
             </div>
 
-            <div class="TRdiv">
+             <div class="radioResidences">
+                <div class="radioResidence">
                 <label for="abroad"><span>Have you already been studying abroad?: </span></label>
-                <span>Yes</span><input class="validate[required] radio" type="radio" {$abroadYes} name="abroad" value="Yes" id="eena"  />
-                                       <span>No</span><input class="validate[required] radio" type="radio" {$abroadNo} name="abroad" value="No" id="nula"  />
+                Yes<input class="validate[required] radio" type="radio" {$abroadYes} name="abroad" value="Yes" id="eena"  />
+                No<input class="validate[required] radio" type="radio" {$abroadNo} name="abroad" value="No" id="nula"  />
                                        <span class="req" id="msgSex">{$msgAbroad|htmlentities}</span>
-            </div>
+            </div></div>
 
             <div class="TRdiv">
                 <label for="whichInst"><span>At which Institution</span></label>
@@ -347,11 +348,12 @@
             <p>We hereby acknowledge receipt of the application, the proposed learning agreement and the candidate’s Transcript of records.
             </p>
 
-            <div class="TRdiv">
+             <div class="radioResidences">
+                <div class="radioResidence">
                 <label for="accepted">The above mentioned student is: </label>
-                <span>Provisionally accepted at our institution</span><input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
-                <span>Not accepted at our institution</span><input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
-            </div>
+                Accepted<input class="validate[required] radio" type="radio" name="accepted" value="1" id="1" />
+                Not accepted<input type="radio" class="validate[required] radio" name="accepted" value="0" id="0"  />
+            </div></div>
 
             <div class="TRdiv">
                 <label for="coordinator">Motivation</label>

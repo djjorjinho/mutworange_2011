@@ -64,7 +64,7 @@
        /**
         * Office coordinator
         */
-              define('INST_EMAIL', 'info@kaalst.be');
+              define('INST_EMAIL', 'info@kahosl.be');
 
        /**
         * Academic Year

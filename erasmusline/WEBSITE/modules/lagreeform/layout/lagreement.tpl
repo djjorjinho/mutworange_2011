@@ -129,11 +129,12 @@
             <p><strong>We confirm that this proposed programme of study/learning agreement is approved.</strong></p>
 
             
-            <div class="TRdiv">
+             <div class="radioResidences">
+                <div class="radioResidence">
                 <label for="acceptedHome">The Learning Agreement is: </label>
-                <span>Accepted</span><input class="validate[required] radio" type="radio" name="acceptedHome" value="1" id="1" />
-                <span>Not accepted</span><input type="radio" class="validate[required] radio" name="acceptedHome" value="0" id="0"  />
-            </div>
+                Accepted<input class="validate[required] radio" type="radio" name="acceptedHome" value="1" id="1" />
+               Not accepted<input type="radio" class="validate[required] radio" name="acceptedHome" value="0" id="0"  />
+            </div></div>
             
             <div class="TRdiv">
                 <label for="signDepSignSend"><span>Departamental coordinator's signature</span></label>
@@ -162,11 +163,12 @@
             <legend>Receiving Institution - Confirmation</legend>
             <p><strong>We confirm that this proposed programme of study/learning agreement is approved.</strong></p>
 
-            <div class="TRdiv">
+             <div class="radioResidences">
+                <div class="radioResidence">
                 <label for="acceptedHost">The Learning Agreement is: </label>
-                <span>Accepted</span><input class="validate[required] radio" type="radio" name="acceptedHost" value="1" id="1" />
-                <span>Not accepted</span><input type="radio" class="validate[required] radio" name="acceptedHost" value="0" id="0"  />
-            </div>
+                Accepted<input class="validate[required] radio" type="radio" name="acceptedHost" value="1" id="1" />
+                Not accepted<input type="radio" class="validate[required] radio" name="acceptedHost" value="0" id="0"  />
+            </div></div>
             <div class="TRdiv">
                 <label for="signDepSignRec"><span>Departamental coordinator's signature</span></label>
             </div>
@@ -194,7 +196,7 @@
               }
             </script>
             <div class="TRdiv">
-                <label for="print">Print dit formulier af</label>
+                <label for="print">Print this form</label>
                 <input type="button" value="Print" onclick="printpage();" />
             </div>
 

@@ -1,5 +1,7 @@
 <?php
 
+require_once "./modules/infox/infox.php";
+
 class ExtendController extends PlonkController {
 
     protected $views = array(
@@ -14,7 +16,6 @@ class ExtendController extends PlonkController {
     protected $errors = array();
     protected $rules = array();
     protected $fields = array();
-    
     protected $userid;
     protected $formid;
 
@@ -25,10 +26,10 @@ class ExtendController extends PlonkController {
             $this->filledExtend();
         } else {
             $this->userid = PlonkSession::get('id');
-            $this->pageTpl->assignOption('oNotFilled');
             $this->fillVariables();
+            $this->pageTpl->assignOption('oNotFilled');
         }
-        
+
         $this->checklogged();
         $this->mainTplAssigns();
         $this->fillUser();
@@ -38,7 +39,7 @@ class ExtendController extends PlonkController {
         $erasmusLevel = ExtendDB::getIdLevel($status['statusOfErasmus']);
         $erasmusLevel2 = ExtendDB::getIdLevel('Extend Mobility Period');
     }
-    
+
     public function filledExtend() {
         $this->pageTpl->assignOption('oFilled');
 
@@ -50,15 +51,17 @@ class ExtendController extends PlonkController {
         if ($formAction['action'] == 1) {
             $this->pageTpl->assignOption('oApproved');
             $this->pageTpl->assign('motivationHost', $formAction['motivationHost']);
+             $this->pageTpl->assign('motivationHome', $formAction['motivationHome']);
             $this->pageTpl->assign('returndExtend', '<a href="./files/' . $this->userid . '/' . $this->formid . '.pdf" title="Application Form">Student Application Form.pdf</a>');
         } else if ($formAction['action'] == 0) {
             $this->pageTpl->assignOption('oDenied');
-            $this->pageTpl->assign('motivationHost', $formAction['motivationHost']);
+            $this->pageTpl->assign('motivationHome', $formAction['motivationHome']);
+             $this->pageTpl->assign('motivationHost', $formAction['motivationHost']);
             $this->pageTpl->assign('returndExtend', '<a href="./files/' . $this->userid . '/' . $this->formid . '.pdf" title="Application Form">Student Application Form.pdf</a>');
         } else {
             $this->pageTpl->assignOption('oPending');
         }
-        
+
         foreach ($jsonArray as $key => $value) {
             $this->pageTpl->assign($key, $value);
             $this->pageTpl->assign('msg' . ucfirst($key), '');
@@ -181,7 +184,7 @@ class ExtendController extends PlonkController {
                 'eventDescrip' => 'Filled in Extend Mobility Period',
                 'readIt' => 0
             );
-            
+
             $er = array(
                 'statusOfErasmus' => 'Extend Mobility Period',
                 'action' => 2
@@ -189,7 +192,7 @@ class ExtendController extends PlonkController {
 
             ExtendDB::insertValues('studentsEvents', $valueEvent);
             ExtendDB::insertValues('forms', $valuess);
-            ExtendDB::updateErasmusStudent('erasmusStudent',$er, 'users_email = "'.PlonkSession::get('id').'"');       
+            ExtendDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
 
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
         }
@@ -221,7 +224,7 @@ class ExtendController extends PlonkController {
                 'motivationHost' => PlonkFilter::getPostValue('coordinator'),
                 'content' => $jsonArray,
             );
-            
+
             ExtendDB::updateErasmusStudent('forms', $formMot, 'formId = "' . $this->formid . '"');
             $form = ExtendDB::getForm($this->formid);
 
@@ -238,13 +241,12 @@ class ExtendController extends PlonkController {
                 $tables = array('forms');
                 $data = array($form);
                 $idInst = $erasmus['homeInstitutionId'];
-                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
-
+                //$success = $b->dataTransfer($methods, $tables, $data, $idInst);
                 //Plonk::dump($_FILES);
                 if (!empty($_FILES['pic']['tmp_name'][0])) {
 
                     $this->upload($this->formid . '.pdf');
-                    $b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
+                    //$b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
                 }
             } catch (Exception $e) {
                 Plonk::dump('failed');
@@ -265,13 +267,13 @@ class ExtendController extends PlonkController {
 
             $values = array('action' => 0);
 
-            LagreeformDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid . '"');
-            LagreeformDB::updateErasmusStudent('forms', $formArray, 'formId = "' . $this->formid . '"');
+            ExtendDB::updateErasmusStudent('erasmusstudent', $values, 'users_email = "' . $this->userid . '"');
+            ExtendDB::updateErasmusStudent('forms', $formArray, 'formId = "' . $this->formid . '"');
 
             $success = "denied";
         }
 
-        $erasmusLevel = LagreeformDB::getErasmusLevelId('Extend Mobility Period');
+        $erasmusLevel = ExtendDB::getErasmusLevelId('Extend Mobility Period');
 
         $valueEvent = array(
             'reader' => 'Student',
@@ -284,7 +286,7 @@ class ExtendController extends PlonkController {
             'readIt' => 0
         );
 
-        LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
+        ExtendDB::insertValues('studentsEvents', $valueEvent);
 
         //Plonk::dump($success);
         if ($success == "denied") {
@@ -304,15 +306,22 @@ class ExtendController extends PlonkController {
         $formArray;
         $descrip = "";
         $status;
+
+        $testArray = $_POST;
+        $newArray = array_slice($testArray, 0, count($_POST) - 2);
+
+        $jsonArray = json_encode($newArray);
+
         if (PlonkFilter::getPostValue('acceptedHome') == 1) {
             $descrip = "Extend Mobility Period is approved by home";
             $status = 1;
             $formArray = array(
                 'action' => 1,
                 'motivationHost' => PlonkFilter::getPostValue('coordinator'),
-                'formId' => $this->formid
+                'formId' => $this->formid,
+                'content' => $jsonArray
             );
-            $extend =  array(
+            $extend = array(
                 'endDate' => PlonkFilter::getPostValue('until')
             );
             ExtendDB::updateErasmusStudent('erasmusstudent', $extend, 'users_email = "' . $this->userid . '"');
@@ -321,8 +330,9 @@ class ExtendController extends PlonkController {
             $status = 0;
             $formArray = array(
                 'action' => 0,
-                'motivationHost' => PlonkFilter::getPostValue('coordinator'),
-                'formId' => $this->formid
+                'motivationHome' => PlonkFilter::getPostValue('coordinator'),
+                'formId' => $this->formid,
+                'content' => $jsonArray
             );
         }
 
@@ -345,7 +355,7 @@ class ExtendController extends PlonkController {
         ExtendDB::updateErasmusStudent('forms', $formArray, 'formId = "' . $this->formid . '"');
         ExtendDB::insertValues('studentsEvents', $valueEvent);
 
-        $erasmus = LagreeformDB::getErasmusInfo($this->userid);
+        $erasmus = ExtendDB::getErasmusInfo($this->userid);
 
         try {
 
@@ -372,12 +382,12 @@ class ExtendController extends PlonkController {
             $tables = array('studentsEvents', 'erasmusstudent', 'forms');
             $data = array($event, $er, $form);
             $idInst = $erasmus['hostInstitutionId'];
-            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            //$success = $b->dataTransfer($methods, $tables, $data, $idInst);
 
             if (!empty($_FILES['pic']['tmp_name'][0])) {
 
                 $this->upload($this->formid . '.pdf');
-                $b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
+                //$b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
             }
 
             if ($success !== '0') {
@@ -389,7 +399,7 @@ class ExtendController extends PlonkController {
             Plonk::dump('failed');
         }
     }
-    
+
     private function upload($fileName) {
         $uploaddir = "files/" . $this->userid . "";
 

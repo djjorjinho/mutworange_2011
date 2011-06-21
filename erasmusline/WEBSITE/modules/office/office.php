@@ -175,7 +175,7 @@ class OfficeController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=extend&view=extend&form=".$student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iExtends');
