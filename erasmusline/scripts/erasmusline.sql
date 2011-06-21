@@ -164,7 +164,7 @@ DROP TABLE IF EXISTS `erasmuslevel`;
 CREATE TABLE IF NOT EXISTS `erasmuslevel` (
   `levelId` int(11) NOT NULL AUTO_INCREMENT,
   `levelName` varchar(45) DEFAULT NULL,
-  `levelDescrip` text,
+  `deadline` date DEFAULT NULL,
   `module` varchar(45) DEFAULT NULL,
   `view` varchar(45) DEFAULT NULL,
   `next` varchar(45) DEFAULT NULL,
@@ -172,15 +172,15 @@ CREATE TABLE IF NOT EXISTS `erasmuslevel` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
--- Gegevens worden uitgevoerd voor tabel `erasmuslevel`
+-- Dumping data for table `erasmuslevel`
 --
 
-INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `levelDescrip`, `module`, `view`, `next`) VALUES
-(6, 'Precandidate', NULL, 'precandidate', 'precandidate', 'Student Application and Learning Agreement'),
-(8, 'Student Application and Learning Agreement', NULL, 'lagreeform', 'applicform', 'Offical Erasmus Contract'),
-(9, 'Offical Erasmus Contract', NULL, 'preleave', 'contract', 'Accomodation Registration Form'),
-(10, 'Accomodation Registration Form', NULL, 'accomodation', 'accomodation', 'Certificate Of Arrival'),
-(11, 'Certificate Of Arrival', NULL, 'abroadstay', 'certarrival', 'Change to Learning Agreement'),
+INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `deadline`, `module`, `view`, `next`) VALUES
+(6, 'Precandidate', '2011-05-25', 'precandidate', 'precandidate', 'Student Application and Learning Agreement'),
+(8, 'Student Application and Learning Agreement', '2011-06-10', 'lagreeform', 'applicform', 'Offical Erasmus Contract'),
+(9, 'Offical Erasmus Contract', '2011-06-20', 'preleave', 'contract', 'Accomodation Registration Form'),
+(10, 'Accomodation Registration Form', '2011-06-22', 'accomodation', 'accomodation', 'Certificate Of Arrival'),
+(11, 'Certificate Of Arrival', '2011-06-30', 'abroadstay', 'certarrival', 'Change to Learning Agreement'),
 (12, 'Redo Student Application Form', NULL, 'lagreeform', 'applicform', NULL),
 (13, 'Redo Learning Agreement', NULL, 'lagreeform', 'lagreement', NULL);
 
@@ -207,7 +207,8 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
   `homeCoordinatorId` varchar(100) DEFAULT NULL,
   `homeInstitutionId` varchar(100) DEFAULT NULL,
   `hostInstitutionId` varchar(100) DEFAULT NULL,
-  `studentId` int(11) NOT NULL,
+  `studentId` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`userId`),
   UNIQUE KEY `users_email_UNIQUE` (`users_email`),
   KEY `fk_ErasmusInfoPerStudent_Institutions_has_Study1` (`educationPerInstId`),
   KEY `fk_erasmusstudent_users1` (`users_email`),
@@ -221,11 +222,11 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
 -- Gegevens worden uitgevoerd voor tabel `erasmusstudent`
 --
 
-INSERT INTO `erasmusstudent` (`users_email`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`, `action`, `hostCoordinatorId`, `homeCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`, `studentId`) VALUES
-('stephane.polet@kahosl.be', '2011-06-17', '2011-06-18', 8, 'Student Application and Learning Agreement', '1', '1)swethchl.pdf,,', 5, 'sdfsq', 'Yes', 22, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 0),
-('sportlife52@hotmail.com', '2011-06-12', '2011-06-14', 8, 'Student Application and Learning Agreement', '1', ',,', 2, 'sdfsdf', 'No', 11, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 0),
-('nathanva89@hotmail.com', '2011-06-14', '2011-06-16', 8, 'Student Application and Learning Agreement', '1', ',Integratie Oefening.pdf,', 5, 'sdfsdf', 'Yes', 11, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 0),
-('testing@gmail.com', '2011-06-16', '2011-06-29', 8, 'Student Application and Learning Agreement', '1', ',,', 3, 'qsdf', 'Yes', 22, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 0);
+INSERT INTO `erasmusstudent` (`users_email`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`, `action`, `hostCoordinatorId`, `homeCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`) VALUES
+('stephane.polet@kahosl.be', '2011-06-17', '2011-06-18', 8, 'Student Application and Learning Agreement', '1', '1)swethchl.pdf,,', 5, 'sdfsq', 'Yes', 22, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be'),
+('sportlife52@hotmail.com', '2011-06-12', '2011-06-14', 8, 'Student Application and Learning Agreement', '1', ',,', 2, 'sdfsdf', 'No', 11, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be'),
+('nathanva89@hotmail.com', '2011-06-14', '2011-06-16', 8, 'Student Application and Learning Agreement', '1', ',Integratie Oefening.pdf,', 5, 'sdfsdf', 'Yes', 11, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be'),
+('testing@gmail.com', '2011-06-16', '2011-06-29', 8, 'Student Application and Learning Agreement', '1', ',,', 3, 'qsdf', 'Yes', 22, NULL, 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be');
 
 -- --------------------------------------------------------
 
