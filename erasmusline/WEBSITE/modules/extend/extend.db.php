@@ -44,6 +44,97 @@ class ExtendDB {
 
         return $education;
     }
+    
+    public static function getStudentById($id) {
+        // get DB instance
+        $db = PlonkWebsite::getDB();
+
+        // query DB
+        $items = $db->retrieveOne('select * from users as u inner join country as c on u.country = c.Code where email = "' . $db->escape($id).'"');
+
+        // return the result
+        return $items;
+    }
+    
+    public static function getStudentByForm($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select studentId from forms where formId = '".$id."'");
+        
+        return $student['studentId'];
+    }
+    
+    public static function getInfoUser($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select * from users where email = '".$id."'");
+        
+        return $student;
+    }
+    
+    public static function getErasmusInfo($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select * from erasmusStudent where users_email = '".$id."'");
+        
+        return $student;
+    }
+    
+     public static function updateErasmusStudent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
+    
+    public static function getForm($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $form = $db->retrieveOne("select * from forms where formId = '".$id."'");
+        
+        return $form;
+    }
+    
+    public static function getIdLevel($level) {
+        $db = PlonkWebsite::getDB();
+
+        $id = $db->retrieveOne('select levelId from erasmusLevel where levelName = "' . $db->escape($level) . '"');
+
+        return $id;
+    }
+    
+    public static function insertValues($table, $values) {
+        $db = PlonkWebsite::getDB();
+
+        $insertId = $db->insert($table, $values);
+
+        return $insertId;
+    }
+    
+    public static function getJson($id, $type) {
+        $db = PlonkWebsite::getDB();
+
+        $string = $db->retrieveOne("select content from forms where formId ='" . $db->escape($id) . "' AND type = '".$db->escape($type)."'");
+        
+        return $string;
+    }
+    
+    public static function getStudentStatus($id) {
+        $db = PlonkWebsite::getDB();
+
+        $status = $db->retrieveOne("select statusOfErasmus, action from erasmusStudent where users_email ='" . $db->escape($id) . "'");
+
+        return $status;
+    }
+    
+    public static function getErasmusLevelId($name) {
+        $db = PlonkWebsite::getDB();
+
+        $id = $db->retrieveOne("select * from erasmuslevel where levelName = '" . $name . "'");
+
+        return $id;
+    }
+    
+    
 
 }
 

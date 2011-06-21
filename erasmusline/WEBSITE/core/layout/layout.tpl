@@ -71,11 +71,13 @@
 {option:oOffice}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=office&amp;view=precandidates">Show Precandidate Forms</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=applics">Show Student Application Forms</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=agreements">Show Learning Agreements</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=changes">Show Change of Learning Agreements</a></li>
-    <li class="level2"><a href="index.php?module=office&amp;view=applics">Students</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=precandidates" title="Show Precandidate Forms">Show Precandidate Forms</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=applics" title="Show Student Application Forms">Show Student Application Forms</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=agreements" title="Show Learning Agreements">Show Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=changes" title="Show Change of Learning Agreements">Show Change of Learning Agreements</a></li>
+    <li class="level2"><a href="index.php?module=trrec&amp;view=select" title="Show Transcript of Records">Show Transcript of Records</a></li>
+    <li class="level2"><a href="index.php?module=abroad_stay&amp;view=select" title="Show Certificates">Show Certificates</a></li>
+    <li class="level2"><a href="index.php?module=office&amp;view=extends" title="Show Extend Mobility Period">Show Extend Mobility Period</a></li>
 </ul>
 </div>
 {/option:oOffice}
@@ -89,7 +91,6 @@
     <li class="level2"><a href="index.php?module=staff&amp;view=changes" title="Show Change of Learning Agreements">Show Change of Learning Agreements</a></li>
     <li class="level2"><a href="index.php?module=trrec&amp;view=select">Show Transcript of Records</a></li>
     <li class="level2"><a href="index.php?module=abroad_stay&amp;view=select">Show Certificates</a></li>
-    <li class="level2"><a href="index.php?module=staff&amp;view=applics" title="Students">Students</a></li>
 </ul>
 </div>
 {/option:oCoor}
@@ -97,7 +98,7 @@
 {option:oStudent}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="#" title="Progress">Progess</a></li>
+    <li class="level2"><a href="index.php?module=profile&amp;view=ownprofile" title="View progress on profile">Progess</a></li>
     <li class="level2"><a href="index.php?module=profile&amp;view=edit" title="Edit profile">Edit profile</a></li>
 </ul>
 </div>
