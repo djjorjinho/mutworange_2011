@@ -30,7 +30,7 @@ class LoginController extends PlonkController {
             $user = LoginDB::getUserByEmail($email);
 
             if (!empty($user)) {
-                $password = Functions::createRandomString();
+                $password = Functions::createPassword();
                 $this->sendMail($email,$password);
                 $values = array('password'=>md5($password));
                 LoginDB::updatePassword($values,$email);
