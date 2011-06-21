@@ -80,8 +80,8 @@ class acom_regDB {
          public static function SubmitTranscript($form, $name,$_POST) {
 
         $db = PlonkWebsite::getDB();
-        $homeInst = $db->retrieve("SELECT ers.hostInstitutionId FROM erasmusstudent as ers where ers.users_email =(
-            SELECT ers.homeCoordinatorId FROM erasmusstudent as ers where ers.users_email='" . $db->escape($name) . "') ");
+        $homeInst = $db->retrieve("SELECT ers.hostInstitutionId FROM erasmusstudent as ers 
+            where ers.users_email ='".$db->escape($name)."' ");
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->SMTPAuth = true;
@@ -103,8 +103,9 @@ class acom_regDB {
         } else {
             unset($_POST['formAction'], $_POST['postForm']);
         $formTable = json_encode($_POST);
+        $formId=  Functions::createRandomString();
         $date = date("y-m-d");
-        $query2 = "INSERT INTO forms (type,date,content,studentId,erasmusLevelId) VALUES( 'Accomodation Register','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($name) . "','10') ";
+        $query2 = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES ( '".$db->escape($formId)."', 'Accomodation Register','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($name) . "','10') ";
         $db->execute($query2);
         if (isset($_POST['startDate'])){
         $query1 = "UPDATE residence SET 

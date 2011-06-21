@@ -159,9 +159,10 @@ class learnagr_chDB {
             return $mail->ErrorInfo;
         } else {
                        
-                    $formTable = json_encode($post);
+        $formTable = json_encode($post);
+        $formId=  Functions::createRandomString();
         $date = date("y-m-d");
-        $query = "INSERT INTO forms (type,date,content,studentId,erasmusLevelId) VALUES( 'Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
+        $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '".$db->escape($formId)."','Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
         $db->execute($query);
         return '1';
 
