@@ -422,8 +422,14 @@ class PartnershipController extends PlonkController {
 		$education = $params;
 		$instId = $education['institutionId'];
 		
+		/*$education = $db->getOne("select * from ${educations_t} ".
+				"where educationName ='$education[educationName]'");*/
+		
 		$education = $db->getOne("select * from ${educations_t} ".
-				"where educationName ='$education[educationName]'");
+				"inner join	educationperinstitute on education.educationId = 
+				educationperinstitute.studyId where 
+				education.educationName ='$education[educationName]' and 
+				educationperinstitute.institutionId = '$instId'");
 		
 		$c = $db->getOne("select count(*) as cnt from $courses_t".
 							" where educationId='$education[educationId]'");
