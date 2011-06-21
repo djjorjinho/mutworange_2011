@@ -6,7 +6,7 @@
 	<form action="" method="post" enctype="multipart/form-data"
 		id="addEducation">
 		<fieldset>
-			<legend>New education form</legend>
+			<legend><h3>New education form</h3></legend>
 			<span class="req" id="error">{$error}</span><br />
 			<div class="TRdiv">
 				<label for="educationname"><span>Education Name : </span> </label> <input

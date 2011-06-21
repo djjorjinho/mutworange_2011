@@ -6,7 +6,7 @@
 	<form action="" method="post" enctype="multipart/form-data"
 		id="editInstitution">
 		<fieldset>
-			<legend>Edit Institution form</legend>
+			<legend><h3>Edit Institution form</h3></legend>
 			<span class="req" id="error">{$error}</span><br />
 			<div class="TRdiv">
 				<label for="coursecode"><span>Institution Email : </span> </label> <input
