@@ -201,7 +201,7 @@ class Teardown_finishController extends PlonkController {
 
     public function mainTplAssigns() {
         $this->mainTpl->assign('siteTitle', 'Evaluation');
-        $this->mainTpl->assign("pageMeta", '');
+        $this->mainTpl->assign("pageMeta", '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
 
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/evaluation.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));

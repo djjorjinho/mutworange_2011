@@ -1,4 +1,4 @@
-    <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDIv">
 <h3>Pending Change of Learning Agreements</h3>
 <fieldset>

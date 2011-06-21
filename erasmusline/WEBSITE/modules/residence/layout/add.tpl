@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDiv">
     <h2> Add Residences </h2>
     <form action="" method="post" enctype="multipart/form-data" id="add" name="add">	
@@ -79,7 +79,7 @@
             </div>
             <div class="TRdiv">
                 <label for="postalCodeResidence"><span>Postal Code</span></label>
-                <input class="validate[required,maxSize[4]] text-input" type="text" name="postalCodeResidence" id="postalCodeResidence" value="{$postalCodeResidence|htmlentities}"/>
+                <input class="validate[required,custom[onlyLetterNumber]] text-input" type="text" name="postalCodeResidence" id="postalCodeResidence" value="{$postalCodeResidence|htmlentities}"/>
                 <span class="req" id="msgPostalCodeResidence">{$msgPostalCodeResidence|htmlentities}</span>	
             </div>
             <div class="TRdiv">

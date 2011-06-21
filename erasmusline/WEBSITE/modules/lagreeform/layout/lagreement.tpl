@@ -1,5 +1,4 @@
 <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
     <h2>Learning agreement</h2>
     

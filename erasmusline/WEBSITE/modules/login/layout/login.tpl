@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDiv">
 {$errorMsg}
 <form action="" method="post" enctype="multipart/form-data">

@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./core/css/form.css" type="text/css" />
+
 <div class="mainDiv">
     <h3>Edit personal info</h3>
 <form action="" method="post" enctype="multipart/form-data" id="register">	

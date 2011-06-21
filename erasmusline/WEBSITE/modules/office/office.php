@@ -32,7 +32,7 @@ class OfficeController extends PlonkController {
         $this->mainTpl->assign('pageMeta', '');
         $this->mainTpl->assign('siteTitle', 'Office coordinator');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a>');
-        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('pageJava', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         if(PlonkFilter::getGetValue('success') != null) {
             if(PlonkFilter::getGetValue('success') == 'true') {
                 $this->pageTpl->assign('message', 'Info was sent succesfull');
@@ -55,7 +55,7 @@ class OfficeController extends PlonkController {
 
         $this->checkLogged();
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=agreements" title="Learning Agreements">Learning Agreements</a>');
         $this->mainTpl->assign('pageJava', '');
@@ -89,7 +89,7 @@ class OfficeController extends PlonkController {
 
         $this->checkLogged();
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Change of Learning Agreements');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=changes" title="Change of Learning Agreements">Change of Learning Agreements</a>');
         $this->mainTpl->assign('pageJava', '');

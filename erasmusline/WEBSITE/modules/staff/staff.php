@@ -33,7 +33,7 @@ class StaffController extends PlonkController {
         $this->checkLogged();
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Staff');
         $this->mainTpl->assign('pageJava','');
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a>');
@@ -81,7 +81,7 @@ class StaffController extends PlonkController {
 
         $this->checkLogged();
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
         $this->mainTpl->assign('pageJava','');
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=agreements" title="Learning Agreements">Learning Agreements</a>');
@@ -115,7 +115,7 @@ class StaffController extends PlonkController {
 
         $this->checkLogged();
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Change of Learning Agreements');
         $this->mainTpl->assign('pageJava','');
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=changes" title="Change of Learning Agreements">Change of Learning Agreements</a>');
@@ -150,7 +150,7 @@ class StaffController extends PlonkController {
         $this->checkLogged();
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Application forms');
         $this->mainTpl->assign('pageJava','');
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=applics" title="Student Application Forms">Student Application Forms</a>');
