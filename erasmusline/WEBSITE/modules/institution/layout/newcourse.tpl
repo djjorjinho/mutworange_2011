@@ -1,10 +1,11 @@
-<h2>Admin panel</h2>
-<p>Here you can add a new course</p>
+
 
 <div class="mainDiv">
+<h3>Admin panel</h3>
+<p>Here you can add a new course</p>
 <form action="" method="post" enctype="multipart/form-data" id="addCourse">	
 <fieldset>
-    <legend>New course form</legend>     
+    <legend><h3>New course form</h3></legend>     
     <span class="req" id="error">{$error}</span><br />
 	<div class="TRdiv">
             <label for="coursecode"><span>Course Code : </span></label>

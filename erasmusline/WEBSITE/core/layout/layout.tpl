@@ -10,9 +10,52 @@
     <link rel="stylesheet" href="./core/css/reset.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/screen.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="./core/css/print.css" type="text/css" media="print"/>
-
-    {$pageMeta}
+        {$pageMeta}
     {$pageJava}
+    <!-- jsProgressBarHandler prerequisites : prototype.js -->
+	<script type="text/javascript" src="./core/js/progress/js/prototype/prototype.js"></script>
+
+	<!-- jsProgressBarHandler core -->
+	<script type="text/javascript" src="./core/js/progress/js/bramus/jsProgressBarHandler.js"></script>
+<script type="text/javascript">
+    
+				document.observe("dom:loaded", function() {
+
+					
+
+					// second manual example : multicolor (and take all other default paramters)
+					manualPB2 = new JS_BRAMUS.jsProgressBar(
+								$("elementMain"),
+								{$progress},
+								{
+
+									barImage	: Array(
+										"./core/js/progress/images/bramus/percentImage_back4.png",
+										"./core/js/progress/images/bramus/percentImage_back3.png",
+										"./core/js/progress/images/bramus/percentImage_back2.png",
+										"./core/js/progress/images/bramus/percentImage_back1.png"
+									),
+
+									onTick : function(pbObj) {
+
+										switch(pbObj.getPercentage()) {
+
+											case 98:
+												alert("Hey, we\'re at 98!");
+											break;
+
+											case 100:
+												alert("Progressbar full at 100% ... maybe do a redirect or sth like that here?");
+											break;
+
+										}
+
+										return true;
+									}
+								}
+							);
+				}, false);
+			</script>
     
   </head>
   
@@ -28,26 +71,22 @@
         
       </div>
       <div id="nav-main">
-{option:oAdmin}
-           <a href="index.php?module=admin&amp;view=admin" class="{$tabHome}" title="Admin">Admin</a>
-{/option:oAdmin}
+          <a href="index.php?module=info&amp;view=info" class="{$tabInfo}" title="Info">Info</a>
+
+{option:oStudent}
+          <a href="index.php?module=course_matching&amp;view=course_matching" class="{$tabInfo}" title="Course matching">Match</a>
+{/option:oStudent}
 {option:oLogged}
-		<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
+		<a href="index.php?module=stats" class="{$tabEis}" title="Executive Information System">EIS</a>
       	<a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
         <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
-        <a href="index.php?module=residence&amp;view=overview" class="{$tabResidence}" title="Residences" >Residences</a>
+        <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
 {/option:oLogged}
 {option:oNotLogged}
-	<a href="index.php?module=stats" class="{$tabHome}" title="Executive Information System">EIS</a>
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>
-{/option:oNotLogged}
-      <a href="index.php?module=info&amp;view=info" class="{$tabInfo}" title="Info">Info</a>      
-{option:oLogged}
-      <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
-{/option:oLogged}
-{option:oNotLogged}
       <a href="index.php?module=login&amp;view=login" title="Login">Login</a>
 {/option:oNotLogged}
+           
       </div>
     </div>
     <div id="main">
@@ -60,10 +99,9 @@
 {option:oAdmin}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=admin&amp;view=toconfirm" title="Users to be confirmed">Users to be confirmed</a></li>
-    <li class="level2"><a href="index.php?module=admin&amp;view=students" title="Students">Students</a></li>
     <li class="level2"><a href="index.php?module=admin&amp;view=staff" title="Staff">Staff</a></li>
     <li class="level2"><a href="index.php?module=register&amp;view=register" title="Add staff member">Add staff member</a></li>
+    <li class="level2"><a href="index.php?module=institution" title="Institution management">Institution management</a></li>
 </ul>
 </div>
 {/option:oAdmin}
@@ -98,11 +136,13 @@
 {option:oStudent}
 <div id="subnav">
 <ul>
-    <li class="level2"><a href="index.php?module=profile&amp;view=ownprofile" title="View progress on profile">Progess</a></li>
+    <li><span id="elementMain">[ Loading Progress Bar ]</span></li>
     <li class="level2"><a href="index.php?module=profile&amp;view=edit" title="Edit profile">Edit profile</a></li>
 </ul>
 </div>
 {/option:oStudent}
+
+
 <!-- END SUBNAVBAR -->
       
       <div id="footer" class="info">

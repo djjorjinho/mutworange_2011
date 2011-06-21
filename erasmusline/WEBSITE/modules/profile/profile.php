@@ -33,43 +33,23 @@ class ProfileController extends PlonkController {
      */
     private function mainTplAssigns($pageTitle) {
         // Assign main properties
-        $this->mainTpl->assign('pageJava', '<link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css" /><script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
-<script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
-<script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>        
-<script type="text/javascript">
-           jQuery(document).ready(function(){
-           // binds form submission and fields to the validation engine
-           jQuery("#register").validationEngine();
-       });</script>
-       <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>');
+        $this->mainTpl->assign('pageJava', '');
         $this->mainTpl->assign('breadcrumb', '');
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '
-            <script type="text/javascript">
-			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-			document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));
-			</script>
-			<script type="text/javascript">
-			try {
-			var pageTracker = _gat._getTracker("UA-1120774-3");
-			pageTracker._trackPageview();
-			} catch(err) {}
-		</script>
-		<script type="text/javascript" src="http://t.wits.sg/misc/js/jQuery/jquery.js"></script>
-		<script type="text/javascript" src="./core/js/progressbar/js/jquery.progressbar.js"></script>
-		<script type="text/javascript">
-
-			$(document).ready(function() {
-				$("#pb1").progressBar({$progress});
-			});
-
-
-		</script>
-                <style type="text/css">
-			table tr { vertical-align: top; }
-			table td { padding: 3px; }
-			div.contentblock { padding-bottom: 25px; }	
-		</style>
+            <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
+                <link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css" />
+                
+                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
+                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>        
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+                    // binds form submission and fields to the validation engine
+                    jQuery("#register").validationEngine();
+                });</script>
+                
+                <script type="text/javascript" src="./core/js/jquery/jquery.MultiFile.js"></script>
+		
                 ');
     }
 
@@ -130,41 +110,9 @@ class ProfileController extends PlonkController {
             } else {
                 $this->pageTpl->assign('total', '');
             }
-
-            $erasmuslevel = ProfileDB::getErasmusById($this->id);
-
-            if (!empty($erasmuslevel)) {
-                if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
-                    if ($erasmuslevel['action'] == 2)
-                        $this->erasmusLevel = 5;
-                    if ($erasmuslevel['action'] == 1)
-                        $this->erasmusLevel = 10;
-                }
-                if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
-                    if ($erasmuslevel['action'] == 22)
-                        $this->erasmusLevel = 15;
-                    if ($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
-                        $this->erasmusLevel = 25;
-                    if ($erasmuslevel['action'] == 11)
-                        $this->erasmusLevel = 40;
-                    else
-                        $this->erasmusLevel = 10;
-                }
-                if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
-                    if ($erasmuslevel['action'] == 1)
-                        $this->erasmusLevel = 50;
-                    if ($erasmuslevel['action'] == 2)
-                        $this->erasmusLevel = 45;
-                    else
-                        $this->erasmusLevel = 40;
-                }
-            }
-
-            $this->mainTpl->assign('progress', $this->erasmusLevel);
-        }
-        else {
+        } else {
             $forms = ProfileDB::getForms($this->id);
-            
+
             $this->pageTpl->assign('profile', './files/' . $this->id . '/profile.jpg');
 
             if (!empty($forms)) {
@@ -187,15 +135,15 @@ class ProfileController extends PlonkController {
 
         // Main Layout
         // Logged or not logged, that is the question...
-        if(PlonkFilter::getGetValue('student') != null) {
+
+        $this->checkLogged();
+
+        if (PlonkFilter::getGetValue('student') != null) {
             $this->id = PlonkFilter::getGetValue('student');
-        }
-        else {
+        } else {
             $this->id = PlonkSession::get('id');
         }
 
-
-        $this->checkLogged();
         $this->mainTplAssigns('Profile');
 
         // assign menu active state
@@ -349,17 +297,17 @@ class ProfileController extends PlonkController {
 
     public function checkLogged() {
         //Plonk::dump(PlonkSession::get('id').'hgdjdh');
+
+        
         if (!PlonkSession::exists('id')) {
+            //Plonk::dump('qqsdf');
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            if (PlonkSession::get('id') === 0) {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-            } else {
-                if (PlonkSession::get('userLevel') == "Student") {
-                    $this->pageTpl->assignOption('oStudent');
-                } else {
-                    $this->pageTpl->assignOption('oOthers');
-                }
+            if (PlonkSession::get('userLevel') == "Student") {
+                $this->pageTpl->assignOption('oStudent');
+            }
+            else if (PlonkSession::get('userLevel') != 'plom') {
+                $this->pageTpl->assignOption('oOthers');
             }
         }
     }

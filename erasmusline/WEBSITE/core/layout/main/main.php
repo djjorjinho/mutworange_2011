@@ -4,10 +4,54 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-class MainController extends PlonkController {
 
+include './modules/profile/profile.db.php';
+
+class MainController extends PlonkController {
+    
     public function assignMain() {
         MainController::checkLogged();
+        $this->mainTpl->assign('progress', 90);
+    }
+    
+    private function fillProgress() {
+        $id;
+        if(PlonkSession::exists('id')) {
+            $id = PlonkSession::get('id');
+        }
+        $erasmuslevel = ProfileDB::getErasmusById($id);
+        $erasmusLevel;
+        
+            if (!empty($erasmuslevel)) {
+                if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
+                    if ($erasmuslevel['action'] == 2)
+                        $erasmusLevel = 5;
+                    if ($erasmuslevel['action'] == 1)
+                        $erasmusLevel = 10;
+                }
+                if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
+                    if ($erasmuslevel['action'] == 22)
+                        $erasmusLevel = 15;
+                    if ($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
+                        $erasmusLevel = 25;
+                    if ($erasmuslevel['action'] == 11)
+                        $erasmusLevel = 40;
+                    else
+                        $this->erasmusLevel = 10;
+                }
+                if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
+                    if ($erasmuslevel['action'] == 1)
+                        $erasmusLevel = 50;
+                    if ($erasmuslevel['action'] == 2)
+                        $erasmusLevel = 45;
+                    else
+                        $erasmusLevel = 40;
+                }
+                else {
+                    $erasmusLevel = 90;
+                }
+            }
+            return $erasmusLevel;
     }
 
     public function doFunction($action) {
@@ -33,7 +77,7 @@ class MainController extends PlonkController {
 
                 if (strtolower($email) === 'admin') {
                     PlonkSession::set('id', 0);
-                    
+                    PlonkSession::set('userLevel', "plom");
                     PlonkWebsite::redirect('index.php?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                     
                 } else {
@@ -93,6 +137,7 @@ class MainController extends PlonkController {
         session_id();
         if (PlonkSession::exists('id')) {
             $this->mainTpl->assignOption('oLogged');
+            
             if (PlonkSession::get('id') === 0) {
                 $this->mainTpl->assignOption('oAdmin');
             } else if (PlonkSession::get('userLevel') == 'Student') {

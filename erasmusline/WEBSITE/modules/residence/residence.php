@@ -18,7 +18,7 @@ class ResidenceController extends PlonkController {
     protected $errors = array();
     protected $rules = array();
     public function doAcom() {
-        PlonkWebsite::redirect("index.php?module=acom_reg&view=acom_reg&residenceId=" . PlonkFilter::getGetValue('id'));
+        PlonkWebsite::redirect("index.php?module=acom_reg&view=acom_reg&institutionId=" . PlonkFilter::getGetValue('id'));
     }
     public function doAddlink() {
         PlonkWebsite::redirect("index.php?module=residence&view=add");
@@ -27,7 +27,7 @@ class ResidenceController extends PlonkController {
     public function showDetail() {
         $this->checklogged();
         $erasmuslevel = ResidenceDB::getErasmusLevel(PlonkSession::get('id'));
-        if ($erasmuslevel['levelName'] == "Accomodation Registration Form") {
+        if ($erasmuslevel['levelName'] == "Student Application and Learning Agreement") {
             $this->pageTpl->assignOption('oReservation');
         }
         $this->mainTplAssigns();

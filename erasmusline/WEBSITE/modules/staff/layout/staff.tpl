@@ -3,7 +3,7 @@
     <h3>Welcome Erasmus Coordinator</h3>
 
     <fieldset>
-        <legend>Your forms</legend>
+        <legend><h3>Your forms</h3></legend>
     <ul>
     <li class="level2"><a href="index.php?module=staff&amp;view=precandidates" title="Show Precandidate Forms">Show Precandidate Forms</a></li>
     <li class="level2"><a href="index.php?module=staff&amp;view=applics" title="Show Student Application Forms">Show Student Application Forms</a></li>
@@ -15,7 +15,7 @@
 </ul>
 </fieldset>
     <fieldset>
-    <legend>Manage exams </legend>
+    <legend><h3>Manage exams</h3></legend>
     <div class="radioExams">
 {$exams}
         </div>
