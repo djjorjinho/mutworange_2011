@@ -89,7 +89,7 @@ class RegisterController extends PlonkController {
         $this->rules[] = "required,street,Street + NR = required";
         $this->rules[] = "required,city,City is required";
         $this->rules[] = "required,postalCode,Postal Code is required";
-        $this->rules[] = "digits_only,postalCode,Only digits allowed in Postal Code";
+        $this->rules[] = "is_alpha,postalCode,Only digits allowed in Postal Code";
         $this->rules[] = "required,nationality,Choose a country";
         $this->rules[] = "required,password2,Password 2 required";
         $this->rules[] = "required,birthDate,Date wrong format";

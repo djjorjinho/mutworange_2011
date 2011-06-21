@@ -10,9 +10,8 @@ class StaffDB {
     public static function getForms($formtype, $coordinator) {
         // create db instance
         $db = PlonkWebsite::getDB();
-
         // retrieve info from table gebruikers
-        $pres = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE forms.type = '".$formtype."' AND forms.action = 2 AND (erasmusStudent.hostCoordinatorId = '".$coordinator."' OR erasmusStudent.homeCoordinatorId = '".$coordinator.'"');
+        $pres = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE forms.type = '".$formtype."' AND forms.action = 2 AND (erasmusStudent.hostCoordinatorId = '".$coordinator."' OR erasmusStudent.homeCoordinatorId = '".$coordinator."')");
 
         return $pres;
     }
@@ -22,7 +21,7 @@ class StaffDB {
         $db = PlonkWebsite::getDB();
 
         // retrieve info from table gebruikers
-        $lagrees = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE (forms.type = 'Learning Agreement') AND (forms.action = 2) AND (erasmusStudent.homeCoordinatorId = '".$coordinator."' OR erasmusStudent.hostCoordinatorId = '".$coordinator.'"');
+        $lagrees = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE (forms.type = 'Learning Agreement') AND (forms.action = 2) AND (erasmusStudent.homeCoordinatorId = '".$coordinator."' OR erasmusStudent.hostCoordinatorId = '".$coordinator."')");
         
         //Plonk::dump("SELECT * FROM users inner join studentsEvents on users.email = studentsEvents.studentId WHERE studentsEvents.action == 2 OR studentsEvents.action == 12 OR studentsEvents.action == 22 AND studentsEvents.erasmusLevelId = ".$id['levelId']);
         return $lagrees;
@@ -34,7 +33,7 @@ class StaffDB {
         $db = PlonkWebsite::getDB();
 
         // retrieve info from table gebruikers
-        $applics = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email WHERE (forms.type = 'Student Application Form') AND (forms.action = 2) AND (erasmusStudent.homeCoordinatorId = '".$coordinator."' OR erasmusStudent.hostCoordinatorId = '".$coordinator.'"');
+        $applics = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE (forms.type = 'Student Application Form') AND (forms.action = 2) AND (erasmusStudent.homeCoordinatorId = '".$coordinator."' OR erasmusStudent.hostCoordinatorId = '".$coordinator."')");
         
         //Plonk::dump($applics);
         //Plonk::dump("SELECT * FROM users inner join studentsEvents on users.email = studentsEvents.studentId WHERE studentsEvents.action == 2 OR studentsEvents.action == 12 OR studentsEvents.action == 22 AND studentsEvents.erasmusLevelId = ".$id['levelId']);

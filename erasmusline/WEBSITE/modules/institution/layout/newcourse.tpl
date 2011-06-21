@@ -1,7 +1,8 @@
-<h2>Admin panel</h2>
-<p>Here you can add a new course</p>
+
 
 <div class="mainDiv">
+<h3>Admin panel</h3>
+<p>Here you can add a new course</p>
 <form action="" method="post" enctype="multipart/form-data" id="addCourse">	
 <fieldset>
     <legend>New course form</legend>     
