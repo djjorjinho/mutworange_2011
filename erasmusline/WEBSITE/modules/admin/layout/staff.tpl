@@ -2,7 +2,7 @@
 <div class="mainDiv">
     <h3>Admin Homepage</h3>
     <fieldset>
-    <legend>Staff Members</legend>
+    <legend><h3>Staff Members</h3></legend>
     <table border="1" cellspacing="0">
         <tr>
             <th>
@@ -11,7 +11,6 @@
             <th>
                 Delete
             </th>
-            <th>Password</th>
         </tr>
 		{iteration:iStaff}
         <tr>
@@ -22,7 +21,6 @@
                 <a href="{$deleteUrl}" class="delete" title="Delete">Delete</a>
 				
             </td>
-            <td><a href="{$passUrl}" class = "Send" title="Send password">Send password</a></td>
         </tr>
 		{/iteration:iStaff}
     </table>

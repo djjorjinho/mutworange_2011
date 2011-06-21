@@ -110,10 +110,9 @@ class ProfileController extends PlonkController {
             } else {
                 $this->pageTpl->assign('total', '');
             }
-        }
-        else {
+        } else {
             $forms = ProfileDB::getForms($this->id);
-            
+
             $this->pageTpl->assign('profile', './files/' . $this->id . '/profile.jpg');
 
             if (!empty($forms)) {
@@ -138,13 +137,13 @@ class ProfileController extends PlonkController {
         // Logged or not logged, that is the question...
 
         $this->checkLogged();
-        if(PlonkFilter::getGetValue('student') != null) {
+
+        if (PlonkFilter::getGetValue('student') != null) {
             $this->id = PlonkFilter::getGetValue('student');
-        }
-        else {
+        } else {
             $this->id = PlonkSession::get('id');
         }
-        
+
         $this->mainTplAssigns('Profile');
 
         // assign menu active state
@@ -298,20 +297,17 @@ class ProfileController extends PlonkController {
 
     public function checkLogged() {
         //Plonk::dump(PlonkSession::get('id').'hgdjdh');
+
         
         if (!PlonkSession::exists('id')) {
             //Plonk::dump('qqsdf');
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            
-            if (PlonkSession::get('id') === 0) {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-            } else {
-                if (PlonkSession::get('userLevel') == "Student") {
-                    $this->pageTpl->assignOption('oStudent');
-                } else {
-                    $this->pageTpl->assignOption('oOthers');
-                }
+            if (PlonkSession::get('userLevel') == "Student") {
+                $this->pageTpl->assignOption('oStudent');
+            }
+            else if (PlonkSession::get('userLevel') != 'plom') {
+                $this->pageTpl->assignOption('oOthers');
             }
         }
     }

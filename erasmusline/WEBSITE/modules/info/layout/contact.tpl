@@ -2,7 +2,7 @@
 
 <div class="mainDiv">
     <fieldset id="leftInfo">
-    <legend>Other info</legend>
+    <legend><h3>Other info</h3></legend>
     <ul class="info">
         <li><a href="index.php?module=info&amp;view=erasmus">About Erasmus</a></li>
         <li><a href="index.php?module=info&amp;view=erasmusLine">About the application</a></li>

@@ -1,7 +1,7 @@
     <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
-    <h3>Pending Student Application Forms</h3>
     <fieldset>
+    <legend><h3>Pending Student Application Forms</h3></legend>
 
 <table id="staffTable">
         <tr>

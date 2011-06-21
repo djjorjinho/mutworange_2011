@@ -3,11 +3,12 @@
 {$errorMsg}
 <form action="" method="post" enctype="multipart/form-data">
                 <fieldset>  
-                    <legend>Login</legend>
+                    <legend><h3>Login</h3></legend>
                 <div class="TRdiv">
 			<label for="Email"><span>Email</span></label>
 			<input class="field" type="text" name="Email" />
                         <span class="req">*</span>
+                        <p class="password"><a href="index.php?module=login&amp;view=forgot">Forgot your password</a></p>
                 </div>
                 <div class="TRdiv">
 			<label for="password"><span>Password</span></label>

@@ -7,18 +7,77 @@ class LoginController extends PlonkController {
      * @var array
      */
     protected $views = array(
-        'login', 'logout'
+        'login', 'logout', 'forgot'
     );
     /**
      * The actions allowed for this module
      * @var array
      */
     protected $actions = array(
-        'login'
+        'login', 'password'
     );
 
     public function showLogout() {
         MainController::logout();
+    }
+
+    public function doPassword() {
+        if (PlonkFilter::getPostValue('Email') == '') {
+            PlonkWebsite::redirect('index.php?module=login&view=forgot&error=1');
+        } else {
+
+            $email = PlonkFilter::getPostValue('Email');
+            $user = LoginDB::getUserByEmail($email);
+
+            if (!empty($user)) {
+                $password = Functions::createRandomString();
+                $this->sendMail($email,$password);
+                $values = array('password'=>md5($password));
+                LoginDB::updatePassword($values,$email);
+                PlonkWebsite::redirect('index.php?module=login&view=forgot&error=2');
+            } else {
+                PlonkWebsite::redirect('index.php?module=login&view=forgot&error=1');
+            }
+        }
+    }
+    public function sendMail($email,$password) {
+        $mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
+        $mail->IsSMTP(); // telling the class to use SMTP
+
+        $htmlBody = '<html>
+                    <h3>Your new password</h3>
+                    <p>Your new password is: '. $password . '</p>
+                    </html>';
+        try {
+            $body = $htmlBody;
+            $mail->Host = MAIL_SMTP; // SMTP server
+            $mail->SMTPDebug = 2;
+            $mail->IsHTML(true);
+            $mail->AddAddress($email);
+            $mail->SetFrom(MAIL_SENDER, 'ErasmusLine');
+            $mail->Subject = MAIL_SUBJECT . ': Password reset';
+            $mail->Port = 25;
+            //$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
+            $mail->MsgHTML($body);
+            $mail->Send();
+        } catch (phpmailerException $e) {
+            // $e->errorMessage(); //Pretty error messages from PHPMailer
+        } catch (Exception $e) {
+            //echo $e->getMessage(); //Boring error messages from anything else!
+        }
+    
+    }
+
+    public function showForgot() {
+        if (PlonkFilter::getGetValue('error') === '1') {
+            $this->pageTpl->assign('errorMsg', 'Wrong Email');
+        }  
+        else if (PlonkFilter::getGetValue('error') === '2') {
+            $this->pageTpl->assign('errorMsg', 'Your new password has been sent to your emailaddress!');
+        } else {
+            $this->pageTpl->assign('errorMsg', '');
+        }
+        $this->mainTplAssigns('Forgot your password');
     }
 
     /**
@@ -30,8 +89,8 @@ class LoginController extends PlonkController {
         // Assign main properties
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('breadcrumb','');
-        $this->mainTpl->assign('pageJava','');
+        $this->mainTpl->assign('breadcrumb', '');
+        $this->mainTpl->assign('pageJava', '');
     }
 
     public function showLogin() {
@@ -41,17 +100,15 @@ class LoginController extends PlonkController {
 
         if (PlonkFilter::getGetValue('error') === '1') {
             $this->pageTpl->assign('errorMsg', 'Username or password is incorrect');
-        }
-        else if (PlonkFilter::getGetValue('error') === '2') {
+        } else if (PlonkFilter::getGetValue('error') === '2') {
             $this->pageTpl->assign('errorMsg', 'We couldn\'t find you. Is it possible you don\'t have an <a href="index.php?module=register&view=register" title="Create account">account</a> yet?');
-        }
-        else {
-            $this->pageTpl->assign('errorMsg','');
+        } else {
+            $this->pageTpl->assign('errorMsg', '');
         }
     }
 
     public function doLogin() {
-        
+
         MainController::Login();
     }
 

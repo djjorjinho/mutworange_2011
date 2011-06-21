@@ -13,7 +13,6 @@ class AdminController extends PlonkController {
      */
     protected $views = array(
         'admin',
-        'students',
         'staff'
     );
     /**
@@ -32,7 +31,6 @@ class AdminController extends PlonkController {
     }
 
     public function checkLogged() {
-        //Plonk::dump(PlonkSession::get('id').'hgdjdh');
         if (!PlonkSession::exists('id')) {
             
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
@@ -60,46 +58,6 @@ class AdminController extends PlonkController {
         $this->mainTpl->assign('breadcrumb','');
     }
 
-    public function showStudents() {
-
-        // Main Layout
-        // Logged or not logged, that is the question...
-
-        $this->checkLogged();
-
-        // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
-        $this->mainTpl->assign('siteTitle', 'Overview students');
-        $this->mainTpl->assign('breadcrumb','');
-        $this->mainTpl->assign('pageJava','');
-
-
-        $this->pageTpl->assignOption('oAdmin');
-
-        // gets info of all the users
-        $students = AdminDB::getStudentInfo();
-
-        // assign iterations: overlopen van de gevonden users
-        $this->pageTpl->setIteration('iStudents');
-
-        // loops through all the users (except for the user with id 1 = admin) and assigns the values
-        foreach ($students as $student) {
-            if ($student['email'] != 'admin') {
-                $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
-                $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $student['userId'] . '/profile.jpg');
-
-                // refill the iteration (mandatory!)
-                $this->pageTpl->refillIteration('iStudents');
-            }
-        }
-
-        // parse the iteration
-        $this->pageTpl->parseIteration('iStudents'); // alternative: $tpl->parseIteration();
-
-        $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-    }
-
     public function showStaff() {
         $this->checkLogged();
 
@@ -121,7 +79,7 @@ class AdminController extends PlonkController {
 
             if ($staf['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $staf['firstName'] . ' ' . $staf['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=profile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&student='.$staf['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'users/' . $staf['userId'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('i', $staf['userId']);
 
