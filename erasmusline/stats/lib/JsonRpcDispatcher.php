@@ -64,7 +64,8 @@ class JsonRpcDispatcher{
 				# false fails, if you need to return false,
 				# wrap it in a json object
 				
-				return $this->jsonError("FUNC_NOT_AVAILABLE",0,$json['id']);
+				return $this->jsonError("FUNC_NOT_AVAILABLE",0,$json['id'],
+											$result);
 				
 			}else{
 				$json_result = $this->jsonResult($result,$json['id']);
