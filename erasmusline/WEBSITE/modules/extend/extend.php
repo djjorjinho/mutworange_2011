@@ -382,12 +382,12 @@ class ExtendController extends PlonkController {
             $tables = array('studentsEvents', 'erasmusstudent', 'forms');
             $data = array($event, $er, $form);
             $idInst = $erasmus['hostInstitutionId'];
-            //$success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
 
             if (!empty($_FILES['pic']['tmp_name'][0])) {
 
                 $this->upload($this->formid . '.pdf');
-                //$b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
+                $b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
             }
 
             if ($success !== '0') {

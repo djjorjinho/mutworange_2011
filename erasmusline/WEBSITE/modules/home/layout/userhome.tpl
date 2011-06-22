@@ -11,6 +11,18 @@
  <fieldset>
     <legend>What is the next step in your Eramus process</legend>
 <ul>{$next}</ul>
+
+{option:oAbroad}
+<ul>
+    {$abroad}
+</ul>
+{/option:oAbroad}
+
+{option:oEmergency}
+<p><strong>It's important for your stay in an other country that you have a European Emergency Card.<br />Please go the following link to apply for an Emergeny Card.</strong></p>
+<p><a href="https://www.ehic.org.uk/Internet/startApplication.do" title="Emergeny Card">www.ehic.org.uk</a></p>
+{/option:oEmergency}
+
 </fieldset>
 <fieldset>
 <legend>Forms that you already filled in</legend>

@@ -109,11 +109,16 @@ class HomeController extends PlonkController {
                     }
                     $this->pageTpl->assign('status', $action);
                     if ($latestEvent['levelName'] == "Certificate Of Arrival") {
-                        $this->pageTpl->assign('next', '<li><a href="index.php?module=learnagr_ch&amp;view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
-                        <li><a href="index.php?module=mobility&amp;view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
+                        $this->pageTpl->assign('next', 'See below for a list of possible actions you can perform.');
+                        $this->pageTpl->assignOption('oAbroad');
+                        $this->fillActions($statusStudent['statusOfErasmus'], $statusStudent['action']);
                     } else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
                         $this->pageTpl->assign('next', "<li>Your Precandidate has been denied. Sorry</li>");
-                    } else {
+                    }
+                    else if($latestEvent['levelName'] == 'Evaluation Questionaire') {
+                        $this->pageTpl->assign('nex', 'You have finished your Erasmusproces. :)');
+                    }
+                    else {
                         if ($action == "Pending") {
                             $this->pageTpl->assign('next', 'Waiting for confirmation of ' . $latestEvent['levelName']);
                         } else {
@@ -142,6 +147,7 @@ class HomeController extends PlonkController {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is approved, Learning Agreement is approved.');
                     $this->pageTpl->assign('next', '<a href="index.php?module=acom_reg&amp;view=acom_reg" title="Fill in Accomodation registration form">Fill in Accomodation registration form</a>');
+                    $this->pageTpl->assignOption('oEmergency');
                 } else if ($statusStudent['action'] == 12) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application Form is approved, Learning Agreement is pending.');
@@ -208,6 +214,20 @@ class HomeController extends PlonkController {
             $this->pageTpl->parseIteration('iEvents');
         }
     }
+    
+    private function fillActions($status, $action) {
+        if($status == 'Change of Learning Agreement' && $action == 2) {
+             $this->pageTpl->assign('abroad','<li>Wait for confirmation of Change of Learning Agreement</li>');
+        }
+        else if($status == 'Extend Mobility Period' && action == 2) {
+            $this->pageTpl->assign('abroad', '<li>Wait for confirmation of Extend Mobility Period</li>');
+        }
+        else {
+            $this->pageTpl->assign('abroad', '<li><a href="index.php?module=learnagr_ch&amp;view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
+                        <li><a href="index.php?module=mobility&amp;view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
+        }
+    }
+        
 
     public function showNotify() {
         $array = array(
