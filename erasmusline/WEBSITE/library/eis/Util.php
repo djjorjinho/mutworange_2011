@@ -42,7 +42,7 @@ class Util{
     	$path = realpath(dirname(__FILE__)."${sep}..${sep}..")."${sep}error.log";
     	//throw new Exception("PATH: ".$path);
     	if(!file_exists($path)){
-    		file_put_contents($path,"");
+    		file_put_contents($path,"test");
     	}
 
     	$trace = debug_backtrace();

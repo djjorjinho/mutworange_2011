@@ -167,6 +167,7 @@ class PartnershipController extends PlonkController {
     }
     
     function ping($params){
+    	Util::log("PING!!!");
     	return array("Hi"=>$params['hello']);
     }
     
