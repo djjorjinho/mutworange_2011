@@ -1,10 +1,8 @@
-       .suggestionsBox, .suggestionsBox2, .suggestionsBox3 {
+       .suggestionsBox, .suggestionsBox2, .suggestionsBox3, .suggestionBox {
 		position: relative;
-		left: 30px;
-		margin: 10px 0px 0px 0px;
-		width: 350px;
-                padding-left:20px;
-                padding-right: 20px;
+		left: 0px;
+		margin: 0px 0px 0px 0px;
+		width: auto;
 		background-color: #212427;
 		-moz-border-radius: 7px;
 		-webkit-border-radius: 7px;
@@ -12,18 +10,18 @@
 		color: #fff;
 	}
 	
-	.suggestionList, .suggestionList2, .suggestionList3 {
+	.suggestionList, .suggestionList2, .suggestionList3, .suggestionList {
 		margin: 0px;
 		padding: 0px;
 	}
 	
-	.suggestionList li, .suggestionList2 li, .suggestionList3 li {
+	.suggestionList li, .suggestionList2 li, .suggestionList3 li, .suggestionList li {
 		
 		margin: 0px 0px 3px 0px;
 		padding: 3px;
 		cursor: pointer;
 	}
 	
-	.suggestionList li:hover, .suggestionList2 li:hover, .suggestionList3 li:hover {
+	.suggestionList li:hover, .suggestionList2 li:hover, .suggestionList3 li:hover, .suggestionList li:hover {
 		background-color: #659CD8;
         }

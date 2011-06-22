@@ -252,8 +252,8 @@ class LagreeformController extends PlonkController {
             }
             $this->pageTpl->assignIteration('row', '<tr>
 	                        <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code' . $i . '" name="code' . $i . '" value="' . $this->fields["code" . $i] . '" /></td>
-	                        <td><input onkeyup="lookup(' . $i . ',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /><div class="suggestionsBox' . $i . '" id="suggestions' . $i . '" style="display: none;">
-			<div class="suggestionList' . $i . '" id="autoSuggestionsList' . $i . '">
+	                        <td><input onkeyup="lookup(' . $i . ',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /><div class="suggestionsBox' . $i . ' suggestionsBox" id="suggestions' . $i . '" style="display: none;">
+			<div class="suggestionList' . $i . ' suggestionList" id="autoSuggestionsList' . $i . '">
 				&nbsp;
 	                </div>
 		</div></td>
@@ -693,7 +693,7 @@ class LagreeformController extends PlonkController {
         $rules[] = "letters_only,instrLanguage,Please enter only letters";
         $rules[] = "letters_only,diplome,Please only enter letters";
         $rules[] = "digits_only,yEducation, Please enter only digits";
-        $rules[] = "letters_only,whichInst,Please only enter letters";
+        $rules[] = "textarea,whichInst,Please only enter letters";
 
         $this->works = $_POST['workCount'];
         $this->languages = $_POST['languageCount'];
@@ -728,7 +728,6 @@ class LagreeformController extends PlonkController {
         // if there were errors, re-populate the form fields
         if (!empty($this->errors)) {
             $this->fields = $_POST;
-            Plonk::dump($this->errors);
         } else {
             $homeCoor = LagreeformDB::getIdUsers(htmlentities(PlonkFilter::getPostValue('sendDepCoorMail')));
             $homeInst = LagreeformDB::getIdInst(htmlentities(PlonkFilter::getPostValue('sendInstName')));
@@ -738,7 +737,6 @@ class LagreeformController extends PlonkController {
 
             if (empty($homeCoor) || empty($hostInst) || empty($homeInst) || empty($education)) {
                 $this->fields = $_POST;
-                Plonk::dump('stage2');
             } else {
 
                 $prevStat = LagreeformDB::getStudentStatus($this->userid);
