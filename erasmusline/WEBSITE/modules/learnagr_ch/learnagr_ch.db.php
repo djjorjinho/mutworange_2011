@@ -6,8 +6,8 @@
  */
 
 class learnagr_chDB {
-
     /* Gets Student Info (DONE) */
+
     public static function getStInfo($stId) {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("
@@ -17,9 +17,9 @@ class learnagr_chDB {
                 where u.email='" . $db->escape($stId) . "'");
         return $stInfo;
     }
-    
-    
+
     /* Gets Student Succeed Courses (DONE) */
+
     public static function getSucceedCourses($stId) {
         $db = PlonkWebsite::getDB();
         $stInfo = $db->retrieve("
@@ -94,13 +94,12 @@ class learnagr_chDB {
         SELECT scale from institutions where instEmail=(
         select hostInstitutionId from erasmusstudent as ers where ers.users_email='" . $db->escape($student) . "')
          ");
-        
+
         $query = "
                DELETE FROM grades
                WHERE studentId='" . $db->escape($student) . "'
                and (localGrade IS NULL OR localGrade<'".(int) $scale[0]['scale']."')";
         $db->execute($query);
-
     }
 
     public static function courseAdd($courseId, $student) {
@@ -130,44 +129,147 @@ class learnagr_chDB {
         }
     }
 
-    
-
     //Sends Email (changes done)
-     public static function SubmitTranscript($form, $post) {
-    $student=  PlonkSession::get('id');
+    public static function SubmitTranscript($post) {
         $db = PlonkWebsite::getDB();
-        $homeCoorMail = $db->retrieve("SELECT u.email FROM users as u where u.email =(
-            SELECT ers.homeCoordinatorId FROM erasmusstudent as ers where ers.users_email='" . $db->escape($student) . "') ");
 
-        $mail = new PHPMailer();
-        $mail->IsSMTP();
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = "tls";
-        $mail->Host = "smtp.gmail.com";
-        $mail->Port = 587;
-        $mail->Username = "erasmusline@gmail.com";
-        $mail->Password = "stvakis1";
-        $mail->SetFrom('stvakis@gmail.com', 'Erasmus Line');
-        $mail->FromName = "Erasmus Line";
-        $mail->AddAddress($homeCoorMail[0]['email']);
-        $mail->Subject = "Learning Agreement Change";
-        $mail->Body = $form;
-        $mail->IsHTML(true);
-        $mail->SMTPDebug = false;
-        $mail->do_debug = 0;
-        if (!$mail->Send()) {
-            return $mail->ErrorInfo;
-        } else {
-                       
-        $formTable = json_encode($post);
-        $formId=  Functions::createRandomString();
-        $date = date("y-m-d");
-        $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '".$db->escape($formId)."','Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
-        $db->execute($query);
-        return '1';
-
-        }
+            $formTable = json_encode($post);
+            $formId = Functions::createRandomString();
+            $student=  PlonkSession::get('id');
+            $date = date("y-m-d");
+            $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '" . $db->escape($formId) . "','Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
+            $db->execute($query);
+            
     }
+
+    public static function checkRecords() {
+        $db = PlonkWebsite::getDB();
+        $stId = PlonkSession::get('id');
+        $stName = $db->retrieve("
+                select f.date,f.action,f.formId,u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                join forms as f on f.studentId=ers.users_email
+                where f.erasmusLevelId=13
+                and f.studentId='".$db->escape($stId)."'
+                ORDER BY f.date DESC");
+        return $stName;
+    }
+    
+    public static function getForms() {
+        $db = PlonkWebsite::getDB();
+        $cordId = PlonkSession::get('id');
+        $stName = $db->retrieve("
+                select f.formId,u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                join forms as f on f.studentId=ers.users_email
+                where (ers.hostCoordinatorId='$cordId' OR ers.homeCoordinatorId='$cordId')
+                AND f.erasmusLevelId=13
+                AND f.action=2
+                AND (f.motivationHome is NULL or f.motivationHost is NULL)
+                ORDER BY u.familyName ASC ");
+        return $stName;
+    }
+
+    public static function getForm($id) {
+        $db = PlonkWebsite::getDB();
+        $cordId = PlonkSession::get('id');
+        $stName = $db->retrieve("
+                select f.content,u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                join forms as f on f.studentId=ers.users_email
+                where (ers.hostCoordinatorId='$cordId' OR ers.homeCoordinatorId='$cordId')
+                AND f.erasmusLevelId=13
+                AND f.action=2
+                AND (f.motivationHome is NULL or f.motivationHost is NULL)
+                AND f.formId='" . $db->escape($id) . "'
+                ORDER BY u.familyName ASC ");
+        return $stName;
+    }
+    
+        public static function getFormSTUDENT($id) {
+        $db = PlonkWebsite::getDB();
+        $stId = PlonkSession::get('id');
+        $stName = $db->retrieve("
+                select f.content,u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                join forms as f on f.studentId=ers.users_email
+                where f.studentId='".$db->escape($stId)."'
+                AND f.erasmusLevelId=13
+                AND f.formId='" . $db->escape($id) . "'
+                ORDER BY u.familyName ASC ");
+        return $stName;
+    }
+    public static function getFormtoW($id) {
+        $db = PlonkWebsite::getDB();
+        $cordId = PlonkSession::get('id');
+        $stName = $db->retrieve("
+                select f.content,u.email,u.userId,u.firstName,u.familyName from users as u
+                join erasmusstudent as ers on u.email=ers.users_email
+                join forms as f on f.studentId=ers.users_email
+                where (ers.hostCoordinatorId='$cordId' OR ers.homeCoordinatorId='$cordId')
+                AND f.erasmusLevelId=13
+                AND f.action=0
+                AND (f.motivationHome=1 AND f.motivationHost=1)
+                AND f.formId='" . $db->escape($id) . "'");
+        return $stName;
+    }
+    public static function getCourse($id) {
+        $db = PlonkWebsite::getDB();
+        $cordId = PlonkSession::get('id');
+        $course = $db->retrieve("
+                select * from coursespereducperinst as c
+                where courseId='" . $db->escape($id) . "'");
+        return $course;
+    }
+
+    public static function submitCoor($f) {
+        $db = PlonkWebsite::getDB();
+        $cordId = PlonkSession::get('id');
+        $stName = $db->retrieve("
+                select ers.homeCoordinatorId, ers.hostCoordinatorId, ers.users_email from erasmusstudent as ers
+                join forms as f on f.studentId=ers.users_email
+                where (ers.hostCoordinatorId='$cordId' OR ers.homeCoordinatorId='$cordId')
+                AND f.erasmusLevelId=13
+                AND (f.motivationHome is NULL or f.motivationHost is NULL)
+                AND f.formId='" . $db->escape($f) . "'");
+        if ($stName[0]['homeCoordinatorId'] == $cordId) {
+            $query = "UPDATE forms SET 
+                motivationHome='" . $db->escape($_POST['mot']) . "'     
+                WHERE formId='" . $db->escape($f) . "'
+                            ";
+
+            $db->execute($query);
+        }
+        if ($stName[0]['hostCoordinatorId'] == $cordId) {
+            $query = "UPDATE forms SET 
+                motivationHost='" . $db->escape($_POST['mot']) . "'     
+                WHERE formId='" . $db->escape($f) . "'
+                            ";
+            $db->execute($query);
+        }
+        
+        $stName2 = $db->retrieve("
+                select motivationHost,motivationHome from forms as f
+                WHERE f.erasmusLevelId=13
+                AND f.formId='" . $db->escape($f) . "'");
+        
+        if (($stName2[0]['motivationHost']=='1') && ($stName2[0]['motivationHome']=='1')){
+            $query = "UPDATE forms SET 
+                action=0
+                WHERE formId='" . $db->escape($f) . "'
+                            ";
+            $db->execute($query);
+            return '1';
+        } else if (($stName2[0]['motivationHost']=='2') || ($stName2[0]['motivationHome']=='2')){
+            $query = "UPDATE forms SET 
+                action=1
+                WHERE formId='" . $db->escape($f) . "'
+                            ";
+            $db->execute($query);
+        }
+        
+    }
+
 }
 
 ?>
