@@ -11,6 +11,13 @@
  <fieldset>
     <legend>What is the next step in your Eramus process</legend>
 <ul>{$next}</ul>
+
+{option:oAbroad}
+<ul>
+    {$abroad}
+</ul>
+{/option:oAbroad}
+
 </fieldset>
 <fieldset>
 <legend>Forms that you already filled in</legend>

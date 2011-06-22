@@ -37,6 +37,13 @@ class ResidenceDB {
         
         return $residence;
     }
+    public static function getMaxId() {
+        $db = PlonkWebsite::getDB();
+        
+        $id = $db->retrieveOne("select MAX(residenceId) from residence");
+        
+        return $id;
+    }
     
     public static function getOwnerByResidence($id) {
         $db = PlonkWebsite::getDB();
