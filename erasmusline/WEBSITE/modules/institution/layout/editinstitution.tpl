@@ -10,7 +10,7 @@
 			<span class="req" id="error">{$error}</span><br />
 			<div class="TRdiv">
 				<label for="coursecode"><span>Institution Email : </span> </label> <input
-					class="validate[required,custom[onlyLetterSp]] text-input"
+					class="text-input"
 					disabled="disabled" type="text" name="institutionEmail" id="institutionEmail"
 					value="{$institutionEmail|htmlentities}" />
 			</div>
@@ -24,7 +24,7 @@
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Street Number : </span>
 				</label> <input
-					class="validate[required,custom[onlyLetterSp]] text-input"
+					class="validate[required] text-input"
 					type="text" name="institutionStrNr" id="institutionStrNr"
 					value="{$institutionStrNr|htmlentities}" /> <span class="req"
 					id="msgInstitutionStrNr">{$msgInstitutionStrNr|htmlentities}</span>
@@ -39,7 +39,7 @@
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Postal Code : </span>
 				</label> <input
-					class="validate[required,custom[onlyLetterSp]] text-input"
+					class="validate[required] text-input"
 					type="text" name="institutionPostalCode" id="institutionPostalCode"
 					value="{$institutionPostalCode|htmlentities}" /> <span class="req"
 					id="msgInstitutionPostalCode">{$msgInstitutionPostalCode|htmlentities}</span>
@@ -53,14 +53,14 @@
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Tel : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionTel" id="institutionTel"
 					value="{$institutionTel|htmlentities}" /> <span class="req"
 					id="msgInstitutionTel">{$msgInstitutionTel|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Fax : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionFax" id="institutionFax"
 					value="{$institutionFax|htmlentities}" /> <span class="req"
 					id="msgInstitutionFax">{$msgInstitutionFax|htmlentities}</span>
@@ -68,57 +68,57 @@
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Description : </span>
 				</label> <input
-					class="validate[required,custom[onlyLetterSp]] text-input"
+					class="validate[required] text-input"
 					type="text" name="institutionDesc" id="institutionDesc"
 					value="{$institutionDesc|htmlentities}" /> <span class="req"
 					id="msgInstitutionDesc">{$msgInstitutionDesc|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Website : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required] text-input"
 					type="text" name="institutionWeb" id="institutionWeb"
 					value="{$institutionWeb|htmlentities}" /> <span class="req"
 					id="msgInstitutionWeb">{$msgInstitutionWeb|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Type : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionType" id="institutionType"
 					value="{$institutionType|htmlentities}" /> <span class="req"
 					id="msgInstitutionType">{$msgInstitutionType|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Url : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required] text-input"
 					type="text" name="institutionUrl" id="institutionUrl"
 					value="{$institutionUrl|htmlentities}" /> <span class="req"
 					id="msgInstitutionUrl">{$msgInstitutionUrl|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
-				<label for="institutionname"><span>Institution Grades Scale? : </span>
+				<label for="institutionname"><span>Institution Grade : </span>
 				</label> <input
-					class="validate[required,custom[onlyLetterSp]] text-input"
+					class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionScale" id="institutionScale"
 					value="{$institutionScale|htmlentities}" /> <span class="req"
 					id="msgInstitutionScale">{$msgInstitutionScale|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Digital : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionDigital" id="institutionDigital"
 					value="{$institutionDigital|htmlentities}" /> <span class="req"
 					id="msgInstitutionDigital">{$msgInstitutionDigital|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution iBan : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionIban" id="institutionIban"
 					value="{$institutionIban|htmlentities}" /> <span class="req"
 					id="msgInstitutionIban">{$msgInstitutionIban|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Bic : </span> </label>
-				<input class="validate[required,custom[onlyLetterSp]] text-input"
+				<input class="validate[required,custom[onlyNumberSp]] text-input"
 					type="text" name="institutionBic" id="institutionBic"
 					value="{$institutionBic|htmlentities}" /> <span class="req"
 					id="msgInstitutionBic">{$msgInstitutionBic|htmlentities}</span>
@@ -126,10 +126,10 @@
 
 		</fieldset>
 		<div class="TRdiv">
-			<input type="hidden" name="option" id="option" value="editeducation"></input>
+			<input type="hidden" name="option" id="option" value="editinstitution"></input>
 			<input type="hidden" name="hiddenid" id="hiddenid"
 				value="{$hid|htmlentities}"></input> <input type="hidden"
-				name="formAction" id="formAddEducation" value="doSubmit"></input> <input
+				name="formAction" id="formEditInstitution" value="doSubmit"></input> <input
 				class="button" name="btnSend" id="btnSend" type="submit"
 				value="Submit"></input>
 		</div>

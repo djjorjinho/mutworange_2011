@@ -393,7 +393,7 @@ class InstitutionController extends PlonkController {
         	$this->pageTpl->assign('institutionFax',$inst_data['instFax']);
         	$this->pageTpl->assign('institutionDesc',$inst_data['instDescription']);
         	$this->pageTpl->assign('institutionWeb',$inst_data['instWebsite']);
-        	$this->pageTpl->assign('institutionType',$inst_data['treaineeOrStudy']);
+        	$this->pageTpl->assign('institutionType',$inst_data['traineeOrStudy']);
         	$this->pageTpl->assign('institutionUrl',$inst_data['url']);
         	$this->pageTpl->assign('institutionScale',$inst_data['scale']);
         	$this->pageTpl->assign('institutionDigital',$inst_data['digital']);
@@ -664,20 +664,32 @@ class InstitutionController extends PlonkController {
         			 } else {*/
 
         			$values = array(
-        						'instEmail' => INST_EMAIL,
-	                			'educationName' => $_POST["educationname"],
+        					'instName' => $_POST['institutionName'],
+	                		'instStreetNr' => $_POST['institutionStrNr'],
+        					'instCity' => $_POST['institutionCity'],
+        					'instPostalCode' => $_POST['institutionPostalCode'],
+        					'instCountry' => $_POST['institutionCountry'],
+        					'instTel' => $_POST['institutionTel'],
+        					'instFax' => $_POST['institutionFax'],
+        					'instDescription' => $_POST['institutionDesc'],
+			       			'instWebsite' => $_POST['institutionWeb'],
+        					'traineeOrStudy' => $_POST['institutionType'],
+        					'url' => $_POST['institutionUrl'],
+        					'scale' => $_POST['institutionScale'],
+        					'digital' => $_POST['institutionDigital'],
+        			        'iBan' => $_POST['institutionIban'],
+        			        'bic' => $_POST['institutionBic'],
         			);
-        			InstitutionDB::update('education', $values);
-        			$values2 = array(
-				                'Description' => $_POST["educationdesc"],
-        			);
-        			$where = "institutionId = '" . INST_EMAIL . "' AND
-        					studyId ='".$_POST["hiddenid"]."'";
-        			InstitutionDB::update('educationperinstitute',
-        			$values2, $where);
+        			 
+        			 
+        			$where = "instEmail = '" . INST_EMAIL . "'";
+        			InstitutionDB::update('institutions',
+        			$values, $where);
+        			
+        			$this->institutionLoop('partnership:updateInstitution', $values);
+        			
         			PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
-        			PlonkWebsite::$moduleKey . '=institution&' .
-        			PlonkWebsite::$viewKey . '=educations');
+        			PlonkWebsite::$moduleKey . '=institution&');
 
         			break;
         		case 'newpartner':
@@ -688,12 +700,12 @@ class InstitutionController extends PlonkController {
 		        	 'ownerData' => InstitutionDB::getOwnerInfo(),
 		        	 'residenceData' => InstitutionDB::getResidenceInfo(),
         			);
-        			
+        			 
         			$temp = array_shift(InstitutionDB::getInstData());
-        			$country_temp = 
-        				array_shift(InstitutionDB::getCountry($temp['instCountry']));
+        			$country_temp =
+        			array_shift(InstitutionDB::getCountry($temp['instCountry']));
         			$params['Name'] = $country_temp['Name'];
-        			
+        			 
         			$obj = new PartnershipController();
 
         			try{
