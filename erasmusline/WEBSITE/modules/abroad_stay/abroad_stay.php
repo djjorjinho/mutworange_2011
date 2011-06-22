@@ -4,6 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once "./modules/infox/infox.php";
 
 class abroad_stayController extends PlonkController {
 
@@ -422,8 +423,29 @@ class abroad_stayController extends PlonkController {
             $this->mail->assign('header', 'Certificate Of Departure');
             $this->mail->assign('form', 'Departure Date');
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['endDate'] . '</div>');
-            
-            $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
+
+            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
+            if ($return == '1') {
+                abroad_stayDB::PostForm($_POST);
+                $this->confirm($post, FALSE);
+            } else {
+                $this->errors = '<div class="errorPHP"><p>There was an Error Sending Cerificate of Departure</p><p>' . $return . '</p></div>';
+                $this->position = 'showCertificates';
+                $this->student = $post['User'];
+            }
+        } elseif (!$flag) {
+
+            $this->mail->assign('header', 'Certificate of Stay');
+            $this->mail->assign('form', 'Staying Period');
+            $query = abroad_stayDB::checkRecords($post['User'], 'endDate');
+            $query2 = abroad_stayDB::checkRecords($post['User'], 'startDate');
+            $this->mail->assign('field', '<div class="TRdiv">From : ' . $query2[0]['startDate'] . '</div>
+                        <div class="TRdiv">To : ' . $query[0]['endDate'] . '</div>');
+
+            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
+            if ($return == '1') {
+                $this->errors = '<div class="SuccessPHP"><p>Certificate of Stay SuccessFully Send</p></div>';
+                $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
             $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
 
             $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
@@ -471,33 +493,12 @@ class abroad_stayController extends PlonkController {
             } catch (Exception $e) {
                 
             }
-
-            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
-            if ($return == '1') {
-                abroad_stayDB::PostForm($_POST);
-                $this->confirm($post, FALSE);
-            } else {
-                $this->errors = '<div class="errorPHP"><p>There was an Error Sending Cerificate of Departure</p><p>' . $return . '</p></div>';
-                $this->position = 'showCertificates';
-                $this->student = $post['User'];
-            }
-        } elseif (!$flag) {
-
-            $this->mail->assign('header', 'Certificate of Stay');
-            $this->mail->assign('form', 'Staying Period');
-            $query = abroad_stayDB::checkRecords($post['User'], 'endDate');
-            $query2 = abroad_stayDB::checkRecords($post['User'], 'startDate');
-            $this->mail->assign('field', '<div class="TRdiv">From : ' . $query2[0]['startDate'] . '</div>
-                        <div class="TRdiv">To : ' . $query[0]['endDate'] . '</div>');
-
-            $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
-            if ($return == '1') {
-                $this->errors = '<div class="SuccessPHP"><p>Certificate of Stay SuccessFully Send</p></div>';
             } else {
                 $this->errors = '<div class="errorPHP"><p>There was an Error Sending Certificate of Stay</p><p>' . $return . '</p></div>';
                 $this->position = 'showCertificates';
                 $this->form = '3';
                 $this->student = $post['User'];
+                
             }
         }
     }
