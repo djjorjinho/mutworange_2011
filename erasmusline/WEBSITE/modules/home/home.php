@@ -93,8 +93,11 @@ class HomeController extends PlonkController {
         if (!empty($statusStudent)) {
 
             if ($statusStudent['statusOfErasmus'] != "Student Application and Learning Agreement") {
-                if (!empty($latestEvent)) {
+                if (!empty($latestEvent) && $latestEvent['next'] != 'abroadstay') {
                     $next = HomeDB::getNext($latestEvent['next']);
+                }
+                else {
+                    $next['next'] = "abroadstay";
                 }
 
                 if (!empty($latestEvent)) {
