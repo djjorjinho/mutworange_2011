@@ -52,8 +52,9 @@ class TCPSocketSource extends LooPHP_EventSource{
 					$this->_socket_array[(int)$client_resource] = $client_resource;
 				} else {
 					$obj = $this->callback_obj;
-					$event_loop->addEvent( function() use ( $read_resource,$obj, $event_loop) {
-						
+					$event_loop->addEvent( 
+					function() use ( $read_resource,$obj, $event_loop) {
+						try{
 						$packed_len = stream_get_contents($read_resource, 4); 
 						//The first 4 bytes contain our N-packed length
 						$hdr = unpack('Nlen', $packed_len);
@@ -68,6 +69,7 @@ class TCPSocketSource extends LooPHP_EventSource{
 						stream_socket_sendto($read_resource,$send_data);
 						
 						fclose( $read_resource );
+						}catch(Exception $e){}
 					}, 0 );
 					unset( $this->_socket_array[(int)$read_resource] );
 				}

@@ -16,7 +16,8 @@ class StaffController extends PlonkController {
         'applics',
         'precandidates',
         'agreements',
-        'changes'
+        'changes',
+        'notify'
     );
     protected $id;
     /**
@@ -34,13 +35,26 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Staff');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a>');
-		
-		//Add Exams modul
-		require_once './modules/exams/exams.php';
+        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=staff&view=staff" title="Home">Home</a>');
+
+        //Add Exams modul
+        require_once './modules/exams/exams.php';
+
+        $events = StaffDB::getEvents(PlonkSession::get('id'));
+
+        if (!empty($events)) {
+            $this->pageTpl->setIteration('iEvents');
+
+            foreach ($events as $event) {
+                $this->pageTpl->assignIteration('event', '<li class="events">' . $event['timestamp'] . ' - ' . $event['eventDescrip'] . '  :  <a href="index.php?module=home&amp;view=notify&amp;event=' . $event['eventId'] . '" title="read" >OK</a></li>');
+                $this->pageTpl->refillIteration('iEvents');
+            }
+
+            $this->pageTpl->parseIteration('iEvents');
+        }
     }
-    
+
     public function showPrecandidates() {
         // Main Layout
         // Logged or not logged, that is the question...
@@ -49,11 +63,11 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Precandidates');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=precandidates" title="Precandidates">Precandidates</a>');
-        
+        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=precandidates" title="Precandidates">Precandidates</a>');
+
         // gets info of all the users
-        $pres = StaffDB::getPrecandidates('Precandidate',  PlonkSession::get('id'));
+        $pres = StaffDB::getPrecandidates('Precandidate', PlonkSession::get('id'));
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iPres');
 
@@ -63,7 +77,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=precandidate&view=precandidate&form=".$student['formId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=precandidate&view=precandidate&form=" . $student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iPres');
@@ -73,7 +87,7 @@ class StaffController extends PlonkController {
         // parse the iteration
         $this->pageTpl->parseIteration('iPres'); // alternative: $tpl->parseIteration();
     }
-    
+
     public function showAgreements() {
         // Main Layout
         // Logged or not logged, that is the question...
@@ -82,8 +96,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Learning Agreements');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=agreements" title="Learning Agreements">Learning Agreements</a>');
+        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=agreements" title="Learning Agreements">Learning Agreements</a>');
 
         // gets info of all the users
         $agrees = StaffDB::getLagree(PlonkSession::get('id'));
@@ -97,7 +111,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=".$student['formId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=" . $student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iAgreements');
@@ -107,7 +121,7 @@ class StaffController extends PlonkController {
         // parse the iteration
         $this->pageTpl->parseIteration('iAgreements'); // alternative: $tpl->parseIteration();
     }
-    
+
     public function showChanges() {
         // Main Layout
         // Logged or not logged, that is the question...
@@ -116,8 +130,8 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Change of Learning Agreements');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=changes" title="Change of Learning Agreements">Change of Learning Agreements</a>');
+        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=changes" title="Change of Learning Agreements">Change of Learning Agreements</a>');
 
         // gets info of all the users
         $changes = StaffDB::getForms('Change Of Learning Agreement', PlonkSession::get('id'));
@@ -131,7 +145,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=".$student['formId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=" . $student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iChanges');
@@ -151,13 +165,13 @@ class StaffController extends PlonkController {
         // assign vars in our main layout tpl
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Application forms');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=applics" title="Student Application Forms">Student Application Forms</a>');
+        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=applics" title="Student Application Forms">Student Application Forms</a>');
 
         // gets info of all the users
         $id = StaffDB::getIdLevel("Student Application and Learning Agreement");
         $applics = StaffDB::getApplics(PlonkSession::get('id'));
-        
+
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iApplics');
 
@@ -167,7 +181,7 @@ class StaffController extends PlonkController {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
                 $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
-                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=".$student['formId']);
+                $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=" . $student['formId']);
 
                 // refill the iteration (mandatory!)
                 $this->pageTpl->refillIteration('iApplics');
@@ -177,13 +191,27 @@ class StaffController extends PlonkController {
         // parse the iteration
         $this->pageTpl->parseIteration('iApplics'); // alternative: $tpl->parseIteration();
     }
+    
+    public function showNotify() {
+        $array = array(
+            'readIt' => 1
+        );
+
+        $id = PlonkFilter::getGetValue('event');
+
+        if ($id != null) {
+            HomeDB::updateEvent('studentsEvents', $array, 'eventId = ' . $id);
+        }
+
+        PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
+    }
 
     public function checkLogged() {
         //Plonk::dump(PlonkSession::get('id').'hgdjdh');
         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            
+
             if (PlonkSession::get('id') === 0) {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
@@ -192,6 +220,6 @@ class StaffController extends PlonkController {
                 $this->id = PlonkSession::get('id');
             }
         }
-    }  
+    }
 
 }

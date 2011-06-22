@@ -378,7 +378,7 @@ class abroad_stayController extends PlonkController {
             $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Arrival');
 
             $valueEvent = array(
-                'reader' => 'Home Coordinator',
+                'reader' => $infoStudent['homeCoordinatorId'],
                 'timestamp' => date("Y-m-d"),
                 'motivation' => '',
                 'studentId' => $post['User'],
@@ -388,23 +388,9 @@ class abroad_stayController extends PlonkController {
                 'readIt' => 0
             );
 
-            $er = array(
-                'statusOfErasmus' => 'Certificate Of Arrival',
-                'action' => 2
-            );
-
-            abroad_stayDB::insertValues('studentsEvents', $valueEvent);
-            abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
-
             $erasmus = abroad_stayDB::getErasmusInfo($post['User']);
 
             try {
-
-                $er = array(
-                    'table' => 'erasmusstudent',
-                    'data' => array('action' => $erasmus['action'], 'users_email' => $erasmus['users_email'], 'statusOfErasmus' => $erasmus['statusOfErasmus']),
-                    'emailField' => 'users_email'
-                );
 
                 $event = array(
                     'table' => 'studentsEvents',
@@ -413,9 +399,9 @@ class abroad_stayController extends PlonkController {
 
                 $b = new InfoxController;
 
-                $methods = array('forms:insertInDb', 'forms:toDb');
-                $tables = array('studentsEvents', 'erasmusstudent');
-                $data = array($event, $er);
+                $methods = array('forms:insertInDb');
+                $tables = array('studentsEvents');
+                $data = array($event);
                 $idInst = $erasmus['homeInstitutionId'];
                 $success = $b->dataTransfer($methods, $tables, $data, $idInst);
             } catch (Exception $e) {

@@ -67,6 +67,14 @@ class StaffDB {
             return $eventInfo;
         }
         
+        public static function getEvents($id) {
+        $db = PlonkWebsite::getDB();
+
+        $events = $db->retrieve("select * from studentsEvents where reader = '".$id."' AND readIt = 0");
+
+        return $events;
+    }
+        
         
      
 
