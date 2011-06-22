@@ -131,7 +131,7 @@ class LagreeformController extends PlonkController {
         // Logged or not logged, that is the question...
         $inputs = array('signDate', 'signDepSignDate', 'signInstSignDate', 'signDepSignDate2', 'signInstSignDate2', 'sign', 'signDepSign', 'signInstSign', 'signDepSign2', 'signInstSign2');
 
-        //$this->checkLogged();
+        $this->checkLogged();
 
         if (PlonkFilter::getGetValue('error') != null) {
             if (PlonkFilter::getGetValue('error') == 1) {
@@ -204,7 +204,6 @@ class LagreeformController extends PlonkController {
 			}
 		} // lookup
 		function fill(id, course, code, ects) {
-                alert(id);
 			jQuery(\'#title\'+id).val(course);
 	                jQuery(\'#code\'+id).val(code);
 	                jQuery(\'#ects\'+id).val(ects);
@@ -253,8 +252,8 @@ class LagreeformController extends PlonkController {
             }
             $this->pageTpl->assignIteration('row', '<tr>
 	                        <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code' . $i . '" name="code' . $i . '" value="' . $this->fields["code" . $i] . '" /></td>
-	                        <td><input onkeyup="lookup(' . $i . ',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /><div class="suggestionsBox' . $i . '" id="suggestions' . $i . '" style="display: none;">
-			<div class="suggestionList' . $i . '" id="autoSuggestionsList' . $i . '">
+	                        <td><input onkeyup="lookup(' . $i . ',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /><div class="suggestionsBox' . $i . ' suggestionsBox" id="suggestions' . $i . '" style="display: none;">
+			<div class="suggestionList' . $i . ' suggestionList" id="autoSuggestionsList' . $i . '">
 				&nbsp;
 	                </div>
 		</div></td>
