@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="./core/css/form.css" type="text/css" />
 <div class="mainDiv">
-    <h2 class="homepage">Welcome to your home page, {$user}</h2>
+    <h3>Welcome to your home page, {$user}</h3>
 <fieldset>
 <legend>Your current status</legend>
 
@@ -24,14 +24,14 @@
 {/iteration:iForms}
     </ul>
 </fieldset>
-    <fieldset>
-        <legend>Take exams in your home university</legend>
-        <div class="TRdiv">
-{$exams}
-        </div>
-        </fieldset>
-    <fieldset>
-        <legend>Notifications of your latest events</legend>
+
+<fieldset>
+	<legend>Take exams in your home university</legend>       
+	{$exams}      
+</fieldset>
+
+<fieldset>
+    <legend>Notifications of your latest events</legend>
 <ul>
 {iteration:iEvents}
 {$event}
