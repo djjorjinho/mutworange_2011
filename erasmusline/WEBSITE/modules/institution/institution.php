@@ -24,7 +24,8 @@ class InstitutionController extends PlonkController {
 		'editcourse',
 		'editeducation',
 		'editinstitution',
-		'newpartner'
+		'newpartner',
+		'partnererror'
 		);
 		/**
 		 * The actions allowed for this module
@@ -84,10 +85,8 @@ class InstitutionController extends PlonkController {
 
         	foreach ($instDatas as $instData) {
         		$this->pageTpl->assign('instname', $instData['instName']);
-        		$this->pageTpl->assign('editUrl', $_SERVER['PHP_SELF']
-        		. '?' . PlonkWebsite::$moduleKey . '=institution&' .
-        		PlonkWebsite::$viewKey . '=action&t=i&a=e');
-        		//TODO: Inst Email, to send or not to send thats the question
+
+
         	}
         }
 
@@ -111,6 +110,19 @@ class InstitutionController extends PlonkController {
         		}
         	}
 
+        }
+
+        public function showPartnererror(){
+        	$this->mainTpl->assign('pageJava', '');
+        	$this->mainTpl->assign('breadcrumb', '');
+        	// Main Layout
+        	// Logged or not logged, that is the question...
+        	$this->checkLogged();
+
+        	// assign vars in our main layout tpl
+        	$this->mainTpl->assign('pageMeta', '<link rel="stylesheet"
+        	href="./core/css/form.css" type="text/css" />');
+        	$this->mainTpl->assign('siteTitle', 'Admin page');
         }
 
         public function showCourses() {
@@ -227,10 +239,10 @@ class InstitutionController extends PlonkController {
 
         				/**
         				 * TODO: creat a check for courses using it first
-        				 * and then allowing the delete
+        				 * and then allowing the delete if nones associated
         				 *
         				 */
-
+        				 
         				$data = array_shift(InstitutionDB::select('education',
         				'educationId = '.$id));
         				$name = $data['educationName'];
@@ -268,7 +280,7 @@ class InstitutionController extends PlonkController {
         			if($type=='i'){
         				PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
         				PlonkWebsite::$moduleKey . '=institution&' .
-        				PlonkWebsite::$viewKey . '=editinstitution&id='.$id);
+        				PlonkWebsite::$viewKey . '=editinstitution');
         			}
         			break;
         		default:
@@ -533,14 +545,6 @@ class InstitutionController extends PlonkController {
         			 $this->fields = $_POST;
         			 } else {*/
 
-
-        			/**
-        			 * TODO: since they are shared, make a selection
-        			 * of the list of this inst, and if name equals then
-        			 * add that id, else add new entry
-        			 */
-
-
         			$educations = InstitutionDB::getEducationInfo();
         			$res = true;
         			$id;
@@ -680,14 +684,29 @@ class InstitutionController extends PlonkController {
         			$params = array(
 		        	 'instData' => array_shift(InstitutionDB::getInstData()),
 		        	 'courseData' => InstitutionDB::getCourseInfo(),
-		        	 'educationData' => InstitutionDB::getEducastionInfo(),
+		        	 'educationData' => InstitutionDB::getEducationInfo(),
 		        	 'ownerData' => InstitutionDB::getOwnerInfo(),
 		        	 'residenceData' => InstitutionDB::getResidenceInfo(),
         			);
+        			
+        			$temp = array_shift(InstitutionDB::getInstData());
+        			$country_temp = 
+        				array_shift(InstitutionDB::getCountry($temp['instCountry']));
+        			$params['Name'] = $country_temp['Name'];
+        			
         			$obj = new PartnershipController();
 
-        			$obj->send($_POST['url'], 'partnership:newInstitution', $params);
+        			try{
+        				Util::log($obj->send($_POST['url'], 'partnership:newInstitution', $params));
+        			}
+        			catch (Exception $e){
+        				PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
+        				PlonkWebsite::$moduleKey . '=institution&' .
+        				PlonkWebsite::$viewKey . '=partnererror');
+        			}
 
+        			PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' .
+        			PlonkWebsite::$moduleKey . '=institution&');
         			break;
         		default:
         			break;

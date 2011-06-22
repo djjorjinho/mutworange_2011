@@ -5,7 +5,7 @@
 <h3>Admin panel</h3>
 <p>Here you can edit the selected education</p>
 	<form action="" method="post" enctype="multipart/form-data"
-		id="addEducation">
+		id="editEducation">
 		<fieldset>
 			<legend>Edit education</legend>
 			<span class="req" id="error">{$error}</span><br />
@@ -38,6 +38,6 @@
 <script type="text/javascript">
            jQuery(document).ready(function(){
            // binds form submission and fields to the validation engine
-           jQuery("#addEducation").validationEngine();
+           jQuery("#editEducation").validationEngine();
        });
 </script>

@@ -23,10 +23,10 @@ class InstitutionDB {
 		// create db instance
 		$db = PlonkWebsite::getDB();
 
-		$coursesInfo = $db->retrieve("SELECT * FROM residence
+		$residenceInfo = $db->retrieve("SELECT * FROM residence
 		WHERE institutionId = '".INST_EMAIL."'");
 
-		return $coursesInfo;
+		return $residenceInfo;
 
 	}
 
@@ -35,12 +35,25 @@ class InstitutionDB {
 		// create db instance
 		$db = PlonkWebsite::getDB();
 
-		$coursesInfo = $db->retrieve("SELECT * FROM owner
+		$ownerInfo = $db->retrieve("SELECT * FROM owner
 		WHERE institutionId = '".INST_EMAIL."'");
 
-		return $coursesInfo;
+		return $ownerInfo;
 
 	}
+	
+	public static function getCountry($code)
+	{
+		// create db instance
+		$db = PlonkWebsite::getDB();
+
+		$countryInfo = $db->retrieve("SELECT * FROM country
+		WHERE Code = '".$code."'");
+
+		return $countryInfo;
+
+	}
+	
 
 
 	public static function getEducationInfo()
