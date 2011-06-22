@@ -144,7 +144,11 @@ class learnagr_chDB {
                and erasmusLevelId=13";
         $db->execute($query);
         
-        $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '" . $db->escape($formId) . "','Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
+        $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '" . $db->escape($formId) . "','Change Learning Agreement','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
+        $db->execute($query);
+        $query = "UPDATE erasmusstudent
+SET action=2, statusOfErasmus='Change of Learning Agreement'
+where users_email='" . $db->escape($student) . "' ";
         $db->execute($query);
     }
 
@@ -234,7 +238,7 @@ class learnagr_chDB {
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
         $stName = $db->retrieve("
-                select ers.homeCoordinatorId, ers.hostCoordinatorId, ers.users_email from erasmusstudent as ers
+                select ers.hostInstitutionId,ers.homeInstitutionId,ers.homeCoordinatorId, ers.hostCoordinatorId, ers.users_email from erasmusstudent as ers
                 join forms as f on f.studentId=ers.users_email
                 where (ers.hostCoordinatorId='$cordId' OR ers.homeCoordinatorId='$cordId')
                 AND f.erasmusLevelId=13
@@ -250,7 +254,7 @@ class learnagr_chDB {
                             ";
 
             $db->execute($query);
-            learnagr_chDB::sendInfox('hostInstitutionId');
+            learnagr_chDB::sendInfox($stName[0]['hostInstitutionId'],'2',$stName[0]['users_email']);
         }
 
         if ($stName[0]['hostCoordinatorId'] == $cordId) {
@@ -259,25 +263,30 @@ class learnagr_chDB {
                 WHERE formId='" . $db->escape($f) . "'
                             ";
             $db->execute($query);
-            learnagr_chDB::sendInfox('homeInstitutionId');
+            learnagr_chDB::sendInfox($stName[0]['homeInstitutionId'],'2',$stName[0]['users_email']);
         }
 
         $stName2 = $db->retrieve("
                 select motivationHost,motivationHome from forms as f
                 WHERE f.erasmusLevelId=13
                 AND f.formId='" . $db->escape($f) . "'");
-
-        if (($stName2[0]['motivationHost'] == '1') && ($stName2[0]['motivationHome'] == '1')) {
+        if (($stName2[0]['motivationHost'] == '1') && ($stName2[0]['motivationHome'] == 1)) {
+            
             $query = "UPDATE forms SET 
                 action=1
                 WHERE formId='" . $db->escape($f) . "'
                             ";
             $db->execute($query);
             if ($stName[0]['hostCoordinatorId'] == $cordId) {
-                learnagr_chDB::sendInfox('homeInstitutionId');
+                learnagr_chDB::sendInfox($stName[0]['homeInstitutionId'],1,$stName[0]['users_email']);
             } else {
-                learnagr_chDB::sendInfox('hostInstitutionId');
+                learnagr_chDB::sendInfox($stName[0]['hostInstitutionId'],1,$stName[0]['users_email']);
             }
+
+        $query = "UPDATE erasmusstudent
+SET action=1, statusOfErasmus='Change of Learning Agreement'
+where users_email='" . $stName[0]['users_email'] . "' ";
+        $db->execute($query);
             return '1';
         } else if (($stName2[0]['motivationHost'] == '2') || ($stName2[0]['motivationHome'] == '2')) {
             $query = "UPDATE forms SET 
@@ -286,10 +295,14 @@ class learnagr_chDB {
                             ";
             $db->execute($query);
             if ($stName[0]['hostCoordinatorId'] == $cordId) {
-                learnagr_chDB::sendInfox('homeInstitutionId');
+                learnagr_chDB::sendInfox($stName[0]['homeInstitutionId'],0,$stName[0]['users_email']);
             } else {
-                learnagr_chDB::sendInfox('hostInstitutionId');
+                learnagr_chDB::sendInfox($stName[0]['hostInstitutionId'],0,$stName[0]['users_email']);
             }
+                    $query = "UPDATE erasmusstudent
+SET action=0, statusOfErasmus='Change of Learning Agreement'
+where users_email='" . $stName[0]['users_email'] . "' ";
+        $db->execute($query);
         }
     }
 
@@ -307,15 +320,15 @@ class learnagr_chDB {
         return $form;
     }
 
-    public function sendInfox($where) {
+    public function sendInfox($where,$value,$userEmail) {
         $form = learnagr_chDB::getFormLOL($_POST['form']);
-
         try {
 
 
             $er = array(
                 'table' => 'erasmusstudent',
-                'data' => array('statusOfErasmus' => 'Change of Learning Agreement'),
+                'data' => array('statusOfErasmus' => 'Change of Learning Agreement','action'=>$value,
+                    'users_email'=>$userEmail),
                 'emailField' => 'users_email'
             );
             $form = array(
@@ -323,13 +336,12 @@ class learnagr_chDB {
                 'data' => $form,
                 'emailField' => 'formId'
             );
-
             $b = new InfoxController;
             //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
             $methods = array('forms:toDb', 'forms:toDb');
             $tables = array('erasmusstudent', 'forms');
             $data = array($er, $form);
-            $idInst = $erasmus['hostInstitutionId'];
+            $idInst = $where;
             $success = $b->dataTransfer($methods, $tables, $data, $idInst);
         } catch (Exception $e) {
             Plonk::dump('failed');

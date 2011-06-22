@@ -373,9 +373,9 @@ class abroad_stayController extends PlonkController {
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['startDate'] . '</div>');
 
             $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
-            $infoInst = abroad_stayDB::getInstInfo($infoStudent['hostInstitutionId']);
+            $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
 
-            $erasmusLevelId = abroad_stayDB::getIdlevel('Certificate Of Arrival');
+            $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Arrival');
 
             $valueEvent = array(
                 'reader' => 'Home Coordinator',
