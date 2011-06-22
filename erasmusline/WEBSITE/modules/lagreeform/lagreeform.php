@@ -131,7 +131,7 @@ class LagreeformController extends PlonkController {
         // Logged or not logged, that is the question...
         $inputs = array('signDate', 'signDepSignDate', 'signInstSignDate', 'signDepSignDate2', 'signInstSignDate2', 'sign', 'signDepSign', 'signInstSign', 'signDepSign2', 'signInstSign2');
 
-        $this->checkLogged();
+        //$this->checkLogged();
 
         if (PlonkFilter::getGetValue('error') != null) {
             if (PlonkFilter::getGetValue('error') == 1) {
@@ -204,6 +204,7 @@ class LagreeformController extends PlonkController {
 			}
 		} // lookup
 		function fill(id, course, code, ects) {
+                alert(id);
 			jQuery(\'#title\'+id).val(course);
 	                jQuery(\'#code\'+id).val(code);
 	                jQuery(\'#ects\'+id).val(ects);
@@ -693,7 +694,7 @@ class LagreeformController extends PlonkController {
         $rules[] = "letters_only,instrLanguage,Please enter only letters";
         $rules[] = "letters_only,diplome,Please only enter letters";
         $rules[] = "digits_only,yEducation, Please enter only digits";
-        $rules[] = "letters_only,whichInst,Please only enter letters";
+        $rules[] = "textarea,whichInst,Please only enter letters";
 
         $this->works = $_POST['workCount'];
         $this->languages = $_POST['languageCount'];
@@ -728,7 +729,6 @@ class LagreeformController extends PlonkController {
         // if there were errors, re-populate the form fields
         if (!empty($this->errors)) {
             $this->fields = $_POST;
-            Plonk::dump($this->errors);
         } else {
             $homeCoor = LagreeformDB::getIdUsers(htmlentities(PlonkFilter::getPostValue('sendDepCoorMail')));
             $homeInst = LagreeformDB::getIdInst(htmlentities(PlonkFilter::getPostValue('sendInstName')));
@@ -738,7 +738,6 @@ class LagreeformController extends PlonkController {
 
             if (empty($homeCoor) || empty($hostInst) || empty($homeInst) || empty($education)) {
                 $this->fields = $_POST;
-                Plonk::dump('stage2');
             } else {
 
                 $prevStat = LagreeformDB::getStudentStatus($this->userid);

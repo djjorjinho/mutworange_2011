@@ -83,10 +83,15 @@
 {option:oLogged}
 		<a href="index.php?module=stats" class="{$tabEis}" title="Executive Information System">EIS</a>
                 
-      	<a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
+      	
         <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>
         <a href="index.php?module=login&amp;view=logout" title="Logout">Logout</a>
 {/option:oLogged}
+        
+{option:oProfile}
+        <a href="index.php?module=profile&amp;view=ownprofile" title="Profile">Profile</a>
+{/option:oProfile}
+        
 {option:oNotLogged}
       <a href="index.php?module=home&amp;view=home" title="home">Home</a>
       <a href="index.php?module=login&amp;view=login" title="Login">Login</a>
