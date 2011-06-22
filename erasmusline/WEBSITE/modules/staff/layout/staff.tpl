@@ -21,4 +21,13 @@
         </div>
     </fieldset>
     
+    <fieldset>
+    <legend>Notifications of your latest events</legend>
+<ul>
+{iteration:iEvents}
+{$event}
+{/iteration:iEvents}
+    </ul>
+</fieldset>	
+    
 </div>    

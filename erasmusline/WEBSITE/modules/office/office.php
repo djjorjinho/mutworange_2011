@@ -124,7 +124,7 @@ class OfficeController extends PlonkController {
         $this->checkLogged();
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Application forms');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=applics" title="Student Application Forms">Student Application Forms</a>');
         $this->mainTpl->assign('pageJava', '');
@@ -157,7 +157,7 @@ class OfficeController extends PlonkController {
         $this->checkLogged();
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Application forms');
         $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=office&view=office" title="Office page">International Office</a><a href="index.php?module=office&view=extend" title="Extend Mobility Period">Extend Mobility Period</a>');
         $this->mainTpl->assign('pageJava', '');
