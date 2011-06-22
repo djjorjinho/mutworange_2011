@@ -173,30 +173,29 @@ class ResidenceController extends PlonkController {
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/residence.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true) . '<script type="text/javascript">
 	                function lookup(inputString) {
-                        alert("qskjf");
 			if(inputString.length == 0) {
 				// Hide the suggestion box.
-				$(\'#suggestions\').hide();
+				jQuery(\'#suggestions\').hide();
 			} else {
-				$.post("modules/residence/rpc.php", {queryString: ""+inputString+""}, function(data){
+				jQuery.post("modules/residence/rpc.php", {queryString: ""+inputString+""}, function(data){
 
 					if(data.length >0) {
-						$(\'#suggestions\').show();
-						$(\'#autoSuggestionsList\').html(data);
+						jQuery(\'#suggestions\').show();
+						jQuery(\'#autoSuggestionsList\').html(data);
 					}
 				});
 			}
 		} // lookup
 		function fill(familyName, firstName, email, streetNr,city,postalCode,telephone,mobilePhone) {
-			$(\'#familyName\').val(familyName);
-	                $(\'#firstName\').val(firstName);
-	                $(\'#email\').val(email);
-                         $(\'#streetNr\').val(streetNr);
-                          $(\'#city\').val(city);
-                           $(\'#postalCode\').val(postalCode);
-                            $(\'#telephone\').val(telephone);
-                             $(\'#mobilePhone\').val(mobilePhone);
-			setTimeout("$(\'#suggestions\').hide();", 200);
+			jQuery(\'#familyName\').val(familyName);
+	                jQuery(\'#firstName\').val(firstName);
+	                jQuery(\'#email\').val(email);
+                         jQuery(\'#streetNr\').val(streetNr);
+                          jQuery(\'#city\').val(city);
+                           jQuery(\'#postalCode\').val(postalCode);
+                            jQuery(\'#telephone\').val(telephone);
+                             jQuery(\'#mobilePhone\').val(mobilePhone);
+			setTimeout("jQuery(\'#suggestions\').hide();", 200);
 
 		}</script>');
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');

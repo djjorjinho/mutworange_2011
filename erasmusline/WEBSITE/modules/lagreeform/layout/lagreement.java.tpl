@@ -7,23 +7,23 @@
                 <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>
                 <link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>
                     <script>
-	$(function() {
-		$( "#signDate" ).datepicker();
+	jQuery(function() {
+		jQuery( "#signDate" ).datepicker();
 	});
-        $(function() {
-		$( "#signDepSignDate" ).datepicker();
+        jQuery(function() {
+		jQuery( "#signDepSignDate" ).datepicker();
 	});
-        $(function() {
-		$( "#signInstSignDate" ).datepicker();
+        jQuery(function() {
+		jQuery( "#signInstSignDate" ).datepicker();
 	});
-        $(function() {
-		$( "#signDepSignDate2" ).datepicker();
+        jQuery(function() {
+		jQuery( "#signDepSignDate2" ).datepicker();
 	});
-        $(function() {
-		$( "#signInstSignDate2" ).datepicker();
+        jQuery(function() {
+		jQuery( "#signInstSignDate2" ).datepicker();
 	});
-        $(function() {
-		$( "#date" ).datepicker();
+        jQuery(function() {
+		jQuery( "#date" ).datepicker();
 	});
 
 	</script>
@@ -35,30 +35,30 @@
                 </script>
 
                 <script>
-                jQuery(function($){
-                   $("#signDasdfte").mask("9999-99-99");
-                   $("#date").mask("9999-99-99");
-                   $("#signDepSignDate").mask("9999-99-99");
-                   $("#signInstSignDate").mask("9999-99-99");
-                   $("#signDepSignDate2").mask("9999-99-99");
-                   $("#signInstSignDate2").mask("9999-99-99");
+                jQuery(function(jQuery){
+                   jQuery("#signDasdfte").mask("9999-99-99");
+                   jQuery("#date").mask("9999-99-99");
+                   jQuery("#signDepSignDate").mask("9999-99-99");
+                   jQuery("#signInstSignDate").mask("9999-99-99");
+                   jQuery("#signDepSignDate2").mask("9999-99-99");
+                   jQuery("#signInstSignDate2").mask("9999-99-99");
                 })
                 </script>
                 
                 <script type="text/javascript">
-             $(document).ready(function(){
-                var i = $('#coursesTable tr').length-3;;
-                $('#addCourse').click(function(){
+             jQuery(document).ready(function(){
+                var i = jQuery('#coursesTable tr').length-3;;
+                jQuery('#addCourse').click(function(){
                     i++;
-                    $('#courseCount').val(i);
-                    $('#coursesTable > tbody:last').append('<tr> <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code'+i+'" name="code'+i+'" /></td><td><input onkeyup="lookup('+i+',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title'+i+'" name="title'+i+'" /><div class="suggestionsBox'+i+'" id="suggestions'+i+'" style="display: none;"><div class="suggestionList'+i+'" id="autoSuggestionsList'+i+'">&nbsp;</div></div></td><td><input class="validate[required,custom[onlyNumberSp]]" type="text" id="ects'+i+'" name="ects'+i+'" /></td><td><span class="req">*</span></td></tr>');});
-                $('#remCourse').click(function(){
+                    jQuery('#courseCount').val(i);
+                    jQuery('#coursesTable > tbody:last').append('<tr> <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code'+i+'" name="code'+i+'" /></td><td><input onkeyup="lookup('+i+',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title'+i+'" name="title'+i+'" /><div class="suggestionsBox'+i+'" id="suggestions'+i+'" style="display: none;"><div class="suggestionList'+i+'" id="autoSuggestionsList'+i+'">&nbsp;</div></div></td><td><input class="validate[required,custom[onlyNumberSp]]" type="text" id="ects'+i+'" name="ects'+i+'" /></td><td><span class="req">*</span></td></tr>');});
+                jQuery('#remCourse').click(function(){
                     
-                    if ($('#coursesTable tr').length > 2)
+                    if (jQuery('#coursesTable tr').length > 2)
                     {
                         i--;
-                        $('#courseCount').val(i);
-                        $('#coursesTable tr:last').remove();
+                        jQuery('#courseCount').val(i);
+                        jQuery('#coursesTable tr:last').remove();
                         
                     }
                 });
