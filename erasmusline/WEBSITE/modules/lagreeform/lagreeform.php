@@ -1225,7 +1225,7 @@ class LagreeformController extends PlonkController {
 
             $b = new InfoxController;
             //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
-            $methods = array('forms::toDb', 'forms::toDb', 'forms:toDb', 'forms:toDb', 'forms:toDb');
+            $methods = array('forms:toDb', 'forms:toDb', 'forms:toDb', 'forms:toDb', 'forms:toDb');
             $tables = array('users', 'users', 'users', 'erasmusstudent', 'forms');
             $data = array($office, $coor, $us, $er, $form);
             $idInst = $erasmus['hostInstitutionId'];
