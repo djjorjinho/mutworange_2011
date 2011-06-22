@@ -50,7 +50,7 @@ class abroad_stayController extends PlonkController {
         $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->pageTpl->assign('errorString', $this->errors);
         $this->pageTpl->assign('back', 'index.php?module=abroad_stay&view=select');
-
+        $this->mainTpl->assign('breadcrumb', '');
 
 
         /* First Step : Show Select User */
@@ -187,6 +187,7 @@ class abroad_stayController extends PlonkController {
         $this->pageTpl->assign('view', 'Sended Certificates');
         $this->pageTpl->assignOption('showSelectAboardUser');
         $this->mainTpl->assign('siteTitle', "Select Student");
+        $this->mainTpl->assign('breadcrumb', '');
 
 
 
