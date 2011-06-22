@@ -371,7 +371,7 @@ class InstitutionController extends PlonkController {
         }
 
         public function showEditinstitution() {
-
+			$this->mainTpl->assign('pageJava', '');
         	$this->mainTpl->assign('breadcrumb', '');
         	// Logged or not logged, that is the question...
         	$this->checkLogged();

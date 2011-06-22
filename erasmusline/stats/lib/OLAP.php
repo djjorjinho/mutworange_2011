@@ -107,8 +107,14 @@ class OLAP{
 		$table = $this->tablefyResult($result,$params['columns'],
 								$params['rows'],$cube);
 		
+		if(empty($table)){
+			$table = array(
+					_message => 'EMPTY_RESULT'
+			);
+		}
+		
 		//store result in cache and resturn
-		$this->cache->store($cache_key, $table,120);
+		$this->cache->store($cache_key, $table,220);
 		return $table;
 	}
 	

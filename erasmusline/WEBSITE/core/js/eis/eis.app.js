@@ -542,11 +542,17 @@ var eis = {
 		delete eis.scenario.filters['_hash'];
 		eis.rpcCall("runScenario",eis.scenario,
 		function(result){
-				eis.simpleHtmlTable(result);
+				if(result._message=='EMPTY_RESULT'){
+					jAlert("The chosen Scenario has an empty result");
+				}else{
+					eis.simpleHtmlTable(result);
+				}
+				
 				jQuery.unblockUI();
 			}, 
 		function(error){
 			log(error);
+			
 			jQuery.unblockUI();
 		},false);
 		
