@@ -49,7 +49,6 @@ class acom_regController extends PlonkController {
             <link type="text/css" rel="stylesheet" href="./core/css/Style.css"/>');
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
-
         $this->pageTpl->assign('errorString', $this->error);
         $this->error = '';
 
