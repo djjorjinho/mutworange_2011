@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Genereertijd: 22 Jun 2011 om 16:56
+-- Genereertijd: 22 Jun 2011 om 23:56
 -- Serverversie: 5.5.8
 -- PHP-Versie: 5.3.5
 
@@ -70,10 +70,13 @@ CREATE TABLE IF NOT EXISTS `country` (
 
 INSERT INTO `country` (`Code`, `Name`) VALUES
 ('BEL', 'Belgium'),
+('BGR', 'Bulgary'),
 ('DEU', 'Germany'),
 ('ESP', 'Spain'),
 ('IRL', 'Ireland'),
-('POR', 'Portugal');
+('ISL', 'Island'),
+('POR', 'Portugal'),
+('TUR', 'Turkey');
 
 -- --------------------------------------------------------
 
@@ -184,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `erasmuslevel` (
 INSERT INTO `erasmuslevel` (`levelId`, `levelName`, `deadline`, `module`, `view`, `next`) VALUES
 (6, 'Precandidate', '2011-05-25', 'precandidate', 'precandidate', 'Student Application and Learning Agreement'),
 (8, 'Student Application and Learning Agreement', '2011-06-10', 'lagreeform', 'applicform', 'Offical Erasmus Contract'),
-(10, 'Accomodation Registration Form', '2011-06-22', 'acom_reg', 'acom_reg', 'Certificate Of Arrival'),
+(10, 'Accomodation Registration Form', '2011-06-22', 'acom_reg', 'acom_reg', 'abroadstay'),
 (11, 'Certificate Of Arrival', '2011-06-30', 'abroadstay', 'certarrival', 'abroadstay'),
 (13, 'Change of Learning Agreement', NULL, 'learnagr_ch', 'learnagrch', 'abroadstay'),
 (15, 'Extend Mobility Period', NULL, 'extend', 'extend', 'abroadstay'),
@@ -223,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
   KEY `fk_erasmusstudent_users3` (`homeCoordinatorId`),
   KEY `fk_erasmusstudent_institutions1` (`homeInstitutionId`),
   KEY `fk_erasmusstudent_institutions2` (`hostInstitutionId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `erasmusstudent`
@@ -231,7 +234,8 @@ CREATE TABLE IF NOT EXISTS `erasmusstudent` (
 
 INSERT INTO `erasmusstudent` (`users_email`, `startDate`, `endDate`, `educationPerInstId`, `statusOfErasmus`, `traineeOrStudy`, `uploadedWhat`, `ectsCredits`, `mothertongue`, `beenAbroad`, `action`, `hostCoordinatorId`, `homeCoordinatorId`, `homeInstitutionId`, `hostInstitutionId`, `studentId`) VALUES
 ('nathanva89@hotmail.com', '2011-06-23', '2011-06-25', 9, 'Student Application and Learning Agreement', '1', 'Transcript.pdf,v0vPGKn82HaAD9ebimdnhPsoGLc1Ehbu.pdf,cr7wf0abcjEWeX34s63wRGabvuT22HVi.pdf', 5, 'Dutch', 'Yes', 22, 'luk.schoofs@kahosl.be', 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kahosl.be', 5),
-('stephane.polet@kahosl.be', '2011-06-23', '2011-06-25', 9, 'Student Application and Learning Agreement', '1', 'Transcript.pdf,,', 15, 'Dutch', 'Yes', 11, 'luk.schoofs@kahosl.be', 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 6);
+('stephane.polet@kahosl.be', '2011-06-23', '2011-06-25', 9, 'Certificate Of Departure', '1', 'Transcript.pdf,,', 15, 'Dutch', 'Yes', 2, 'luk.schoofs@kahosl.be', 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 6),
+('sam.missiaen@kahosl.be', '2011-06-24', '2011-06-30', 9, 'Certificate Of Departure', '1', 'Transcript.pdf,,', 15, 'Dutch', 'No', 1, 'luk.schoofs@kahosl.be', 'nathan.vanassche@kahosl.be', 'info@kahosl.be', 'info@kaalst.be', 7);
 
 -- --------------------------------------------------------
 
@@ -260,11 +264,16 @@ CREATE TABLE IF NOT EXISTS `forms` (
 --
 
 INSERT INTO `forms` (`formId`, `type`, `date`, `content`, `erasmusLevelId`, `studentId`, `action`, `motivationHome`, `motivationHost`) VALUES
+('1V5nsTnPHWSUwfyXVvkaJRDhGytvOPIz', 'Precandidate', '2011-06-22', '{"familyName":"Missiaen","firstName":"Sam","email":"sam.missiaen@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Clementinalaan","tel":"091456328","mobilePhone":"0478456123","study":"ICT","choice1":"Spain","choice2":"Portugal","choice3":"Spain","traineeOrStudy":"Study","cribb":"Yes","cribRent":"Yes","scolarship":"Yes","motivation":"I just want to go on Erasmus"}', 6, 'sam.missiaen@kahosl.be', 1, 'Spain is Approved', NULL),
+('1ybW355zeKS03tx7N00KVr2Oo6wirVT0', 'Student Application Form', '2011-06-22', '{"acaYear":"2010-2011","study":"Electronica","sendInstName":"KAHO Sint-Lieven","sendInstAddress":"Gebroeders Desmetstraat - 9000 - Ghent - Belgium","sendDepCoorName":"Van Assche Nathan","sendDepCoorTel":"092524678","sendDepCoorMail":"nathan.vanassche@kahosl.be","sendInstCoorName":"Lopez Daniel","sendInstCoorTel":"34567890","sendInstCoorMail":"office@kahosl.be","fName":"Sam","faName":"Missiaen","dateBirth":"1989-02-24","sex":"Male","nation":"Belgium","birthPlace":"Brugge","cAddress":"Clementinalaan - 9000 Gent","daateValid":"2012-05-05","cTel":"091456328","pAddress":"","pTel":"","mail":"sam.missiaen@kahosl.be","recInstitut":"KAHO Aalst","coountry":"Belgium","daateFrom":"2011-06-24","daateUntill":"2011-07-30","duration":"5","ectsPoints":"15","motivation":"Want to go on Erasmus","motherTongue":"Dutch","instrLanguage":"Dutch","language0":"French","studyThis0":"0","knowledgeThis0":"1","extraPrep0":"0","type0":"Job","firm0":"Job","date0":"2011","country0":"Belgium","diplome":"ICT","yEducation":"3","whichInst":"KAHO","accepted":"1","coordinator":"Approved","hostDepCoor":"luk.schoofs@kahosl.be","signDepSignDate":"2011-06-24","signInstSignDate":"2011-06-24"}', 8, 'sam.missiaen@kahosl.be', 1, NULL, 'Approved'),
 ('CzbULxEWJCa4qPTIVbNnLxW6yhyoI4W5', 'Learning Agreement', '2011-06-22', '{"courseCount":"-1","code0":"ENG","title0":"English","ects0":"3","signDate":"2011-06-23"}', 8, 'nathanva89@hotmail.com', 2, NULL, NULL),
+('HokHyshVDuLxCvFUbOcE9xjhXFqvaU3r', 'Accomodation Register', '2011-06-22', '{"sel":"I confirm that I dont want to make a reservation for a student room"}', 10, 'sam.missiaen@kahosl.be', 2, NULL, NULL),
+('iVBrEARaNqrVUBEIrc23kX7MEOHBTcei', 'Learning Agreement', '2011-06-22', '{"courseCount":"","code0":"ENG","title0":"English","ects0":"3","code1":"FRE","title1":"French","ects1":"4","signDate":"","acceptedHome":"1","signDepSignDateSend":"2011-06-25","signInstSignDateSend":"2011-06-25","signDepSignDateRec":"","signInstSignDateRec":"","coordinator":"Approved"}', 8, 'sam.missiaen@kahosl.be', 1, 'Approved', 'Approved by host'),
 ('JKfuChId0I9mn3PxIKe8efPyACHnx4rD', 'Student Application Form', '2011-06-22', '{"acaYear":"2010-2011","study":"Electronica","sendInstName":"KAHO Sint-Lieven","sendInstAddress":"Gebroeders Desmetstraat - 9000 - Ghent - Belgium","sendDepCoorName":"Van Assche Nathan","sendDepCoorTel":"092524678","sendDepCoorMail":"nathan.vanassche@kahosl.be","sendInstCoorName":"Lopez Daniel","sendInstCoorTel":"34567890","sendInstCoorMail":"office@kahosl.be","fName":"Nathan","faName":"Van Assche","dateBirth":"1989-01-24","sex":"Male","nation":"Belgium","birthPlace":"Ghent","cAddress":"Grote Elsdries 9 - 9090 Melle","daateValid":"2011-07-05","cTel":"092527865","pAddress":"","pTel":"","mail":"nathanva89@hotmail.com","recInstitut":"KAHO Sint-Lieven","coountry":"Belgium","daateFrom":"2011-06-23","daateUntill":"2011-06-25","duration":"5","ectsPoints":"5","motivation":"Just wanted to go on Erasmus","motherTongue":"Dutch","instrLanguage":"Dutch","language0":"Frencht","studyThis0":"0","knowledgeThis0":"0","extraPrep0":"0","type0":"ICT","firm0":"Job","date0":"2011","country0":"Belgium","diplome":"ICT","yEducation":"3","whichInst":"KAHO","accepted":"1","coordinator":"Accepted","hostDepCoor":"luk.schoofs@kahosl.be","signDepSignDate":"2011-06-23","signInstSignDate":"2011-06-23"}', 8, 'nathanva89@hotmail.com', 1, NULL, 'Accepted'),
 ('Np4VEjE9cWzMtQDk7vnI5My04h0SDgO4', 'Learning Agreement', '2011-06-22', '{"courseCount":"","code0":"ENG","title0":"English","ects0":"3","signDate":"","acceptedHome":"1","signDepSignDateSend":"","signInstSignDateSend":"","acceptedHost":"1","signDepSignDateRec":"","signInstSignDateRec":"","coordinator":"Come on!"}', 8, 'stephane.polet@kahosl.be', 1, 'Come on!', 'Approved'),
 ('O6IXeSWeC27TNjTpPCeoqo2Wq92djDJm', 'Precandidate', '2011-06-22', '{"familyName":"Polet","firstName":"Stephane","email":"stephane.polet@kahosl.be","instName":"KAHO Sint-Lieven","streetNr":"Veldstraat","tel":"09258741","mobilePhone":"047896541","study":"ICT","choice1":"Portugal","choice2":"Spain","choice3":"Ireland","traineeOrStudy":"Study","cribb":"Yes","cribRent":"Yes","scolarship":"Yes","motivation":"Erasmus"}', 6, 'stephane.polet@kahosl.be', 1, 'Bob', NULL),
 ('TqvFUXnWWAHuUDu2dLMVpI0suJw4akrO', 'Student Application Form', '2011-06-22', '{"acaYear":"2010-2011","study":"Electronica","sendInstName":"KAHO Sint-Lieven","sendInstAddress":"Gebroeders Desmetstraat - 9000 - Ghent - Belgium","sendDepCoorName":"Van Assche Nathan","sendDepCoorTel":"092524678","sendDepCoorMail":"nathan.vanassche@kahosl.be","sendInstCoorName":"Lopez Daniel","sendInstCoorTel":"34567890","sendInstCoorMail":"office@kahosl.be","fName":"Stephane","faName":"Polet","dateBirth":"1989-01-24","sex":"Male","nation":"Belgium","birthPlace":"Ghent","cAddress":"Veldstraat - 9000 Ghent","daateValid":"2011-07-24","cTel":"09258741","pAddress":"","pTel":"","mail":"stephane.polet@kahosl.be","recInstitut":"KAHO Aalst","coountry":"Belgium","daateFrom":"2011-06-23","daateUntill":"2011-06-25","duration":"6","ectsPoints":"15","motivation":"Erasmus","motherTongue":"Dutch","instrLanguage":"Dutch","language0":"French","studyThis0":"0","knowledgeThis0":"0","extraPrep0":"0","type0":"ICT","firm0":"Job","date0":"2011","country0":"Belgium","diplome":"ICT","yEducation":"3","whichInst":"KAHO","accepted":"1","coordinator":"Bob","hostDepCoor":"luk.schoofs@kahosl.be","signDepSignDate":"2011-06-23","signInstSignDate":"2011-06-23"}', 8, 'stephane.polet@kahosl.be', 1, NULL, 'Bob'),
+('TrmwwSQcTQbdWwVwWqRAs9v4anUT3u9A', 'Extend Mobility Period', '2011-06-22', '{"from":"2011-06-24","until":"2011-06-30","months":"6","reason":"exams","notes":"Extend","acceptedHome":"1","coordinator":"Approved"}', 15, 'sam.missiaen@kahosl.be', 1, NULL, 'Approved'),
 ('zVmTi3GiduytVmoEghOz6N8Lg4ExpFQD', 'Precandidate', '2011-06-22', '{"familyName":"Van Assche","firstName":"Nathan","email":"nathanva89@hotmail.com","instName":"KAHO Aalst","streetNr":"Grote Elsdries 9","tel":"092527865","mobilePhone":"0473569854","study":"ICT","choice1":"Germany","choice2":"Spain","choice3":"Ireland","traineeOrStudy":"Study","cribb":"Yes","cribRent":"Yes","scolarship":"Yes","motivation":"Just want to go on Erasmus"}', 6, 'nathanva89@hotmail.com', 1, 'This student can go to Germany', NULL);
 
 -- --------------------------------------------------------
@@ -290,6 +299,8 @@ CREATE TABLE IF NOT EXISTS `grades` (
 --
 
 INSERT INTO `grades` (`courseId`, `localGrade`, `ectsGrade`, `courseDuration`, `studentId`) VALUES
+(11, NULL, NULL, NULL, 'sam.missiaen@kahosl.be'),
+(12, NULL, NULL, NULL, 'sam.missiaen@kahosl.be'),
 (12, NULL, NULL, NULL, 'stephane.polet@kahosl.be');
 
 -- --------------------------------------------------------
@@ -373,12 +384,20 @@ CREATE TABLE IF NOT EXISTS `leasing` (
   PRIMARY KEY (`rentalId`),
   KEY `fk_Lodging_Residents1` (`residentId`),
   KEY `fk_leasing_erasmusstudent1` (`studentId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `leasing`
 --
 
+INSERT INTO `leasing` (`rentalId`, `outboundUser`, `Subleased`, `startDate`, `endDate`, `inboundUser`, `residentId`, `studentId`) VALUES
+(1, NULL, 0, '2011-06-25', '2011-07-24', NULL, 3, 'sam.missiaen@kahosl.be'),
+(2, NULL, 0, '2011-06-25', '2011-07-24', NULL, 3, 'sam.missiaen@kahosl.be'),
+(3, NULL, 0, '2011-06-25', '2011-07-24', NULL, 3, 'sam.missiaen@kahosl.be'),
+(4, NULL, 0, '2011-06-25', '2011-07-24', NULL, 3, 'sam.missiaen@kahosl.be'),
+(5, NULL, 0, '2011-06-25', '2011-08-06', NULL, 2, 'sam.missiaen@kahosl.be'),
+(6, NULL, 0, '2011-06-30', '2011-07-30', NULL, 4, 'sam.missiaen@kahosl.be'),
+(7, NULL, 0, '2011-06-30', '2011-07-31', NULL, 3, 'sam.missiaen@kahosl.be');
 
 -- --------------------------------------------------------
 
@@ -450,7 +469,7 @@ CREATE TABLE IF NOT EXISTS `residence` (
 
 INSERT INTO `residence` (`residenceId`, `price`, `streetNr`, `city`, `postalCode`, `country`, `kitchen`, `bathroom`, `water`, `internet`, `beds`, `description`, `available`, `television`, `ownerId`, `elektricity`, `institutionId`) VALUES
 (2, 400, 'Veldstraat', 'Gent', '9000', 'BEL', 1, 1, 1, 1, 4, 'Ghent', 1, 1, 'nathanva89@hotmail.com', 1, 'info@kaalst.be'),
-(3, 400, 'Veldstraat 1', 'Ghent', '9000', 'BEL', 1, 1, 1, 1, 4, 'Veldstraat Ghent', 1, 1, 'nathanva89@hotmail.com', 1, 'info@kaalst.be'),
+(3, 400, 'Veldstraat 1', 'Ghent', '9000', 'BEL', 1, 1, 1, 1, 4, 'Veldstraat Ghent', 0, 1, 'nathanva89@hotmail.com', 1, 'info@kaalst.be'),
 (4, 475, 'Korenmarkt 1', 'Ghent', '9000', 'BEL', 1, 1, 1, 1, 4, 'Korenmarkt', 1, 1, 'stephane.polet@kahosl.be', 1, 'info@kaalst.be'),
 (5, 800, 'Rua De Boavista', 'Porto', '8200', 'POR', 1, 1, 1, 1, 6, 'Porto', 1, 1, 'daniel.lopez@gmail.com', 1, 'info@kaalst.be');
 
@@ -474,7 +493,7 @@ CREATE TABLE IF NOT EXISTS `studentsevents` (
   PRIMARY KEY (`eventId`),
   KEY `fk_studentEvents_erasmusLevel1` (`erasmusLevelId`),
   KEY `fk_studentsevents_erasmusstudent1` (`studentId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=190 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=218 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `studentsevents`
@@ -490,7 +509,21 @@ INSERT INTO `studentsevents` (`eventId`, `reader`, `timestamp`, `motivation`, `r
 (168, 'Student', '2011-06-22', '', 0, 30, 8, 'Filled in Student Application Form', 'stephane.polet@kahosl.be'),
 (169, 'Student', '2011-06-22', '', 0, 22, 8, 'Filled in Learning Agreement', 'stephane.polet@kahosl.be'),
 (187, 'Student', '2011-06-22', '', 0, 99, 8, 'Student Application sent to host institution.', 'stephane.polet@kahosl.be'),
-(189, 'Student', '2011-06-22', 'Come on!', 0, 12, 8, 'Learning Agreement approved by home institute and sent to host.', 'stephane.polet@kahosl.be');
+(189, 'Student', '2011-06-22', 'Come on!', 0, 12, 8, 'Learning Agreement approved by home institute and sent to host.', 'stephane.polet@kahosl.be'),
+(190, 'Student', '2011-06-22', '', 0, 2, 6, 'Filled in Precandidate.', 'sam.missiaen@kahosl.be'),
+(191, 'Student', '2011-06-22', 'Spain is Approved', 0, 1, 6, 'Precandidate approved', 'sam.missiaen@kahosl.be'),
+(192, 'Student', '2011-06-22', '', 0, 30, 8, 'Filled in Student Application Form', 'sam.missiaen@kahosl.be'),
+(193, 'Student', '2011-06-22', '', 0, 22, 8, 'Filled in Learning Agreement', 'sam.missiaen@kahosl.be'),
+(194, 'Student', '2011-06-22', '', 0, 99, 8, 'Student Application sent to host institution.', 'sam.missiaen@kahosl.be'),
+(200, 'Student', '2011-06-22', 'Approved', 0, 12, 8, 'Learning Agreement approved by home institute and sent to host.', 'sam.missiaen@kahosl.be'),
+(205, 'Student', '2011-06-22', '', 0, 2, 10, 'Filled in Accomodation Registration Form and sent it to the owner.', 'sam.missiaen@kahosl.be'),
+(206, 'Student', '2011-06-22', '', 0, 2, 10, 'Filled in Accomodation Registration Form but you didn''t want a room.', 'sam.missiaen@kahosl.be'),
+(207, 'Student', '2011-06-22', '', 0, 2, 15, 'Filled in Extend Mobility Period', 'sam.missiaen@kahosl.be'),
+(211, 'Student', '2011-06-22', 'Approved', 0, 1, 15, 'Extend Mobility Period is approved by home', 'sam.missiaen@kahosl.be'),
+(212, 'Student', '2011-06-22', '', 0, 2, 15, 'Filled in Extend Mobility Period', 'sam.missiaen@kahosl.be'),
+(214, 'Student', '2011-06-22', 'Approved', 0, 0, 15, 'Mobility Extension Period is accepted by host and sent to home.', 'sam.missiaen@kahosl.be'),
+(215, 'Student', '2011-06-22', 'Approved', 0, 1, 15, 'Extend Mobility Period is approved by home', 'sam.missiaen@kahosl.be'),
+(217, '', '2011-06-22', '', 0, 1, 16, 'Sam Missiaen is arrived at KAHO Aalst', 'sam.missiaen@kahosl.be');
 
 -- --------------------------------------------------------
 
@@ -524,7 +557,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `fk_Users_Country1` (`country`),
   KEY `fk_users_institutions1` (`institutionId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `users`
@@ -537,7 +570,9 @@ INSERT INTO `users` (`email`, `familyName`, `firstName`, `password`, `birthDate`
 ('hostoffice@erasmus.com', 'Polet', 'Stephane', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-12-12', 'Ghent', 1, '09268546', '04746546', '12333333', 'Grote Elsdries 9', 'ghent', '9000', 'ESP', 'International Relations Office Staff', 2, 'GEPPXhzfCKe5BLWeaEuzkN1q957fXKKb', 'info@kaalst.be', 0, 4),
 ('nathanva89@hotmail.com', 'Van Assche', 'Nathan', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-01-24', 'Ghent', 1, '092527865', '0473569854', NULL, 'Grote Elsdries 9', 'Melle', '9090', 'BEL', 'Student', 2, 'cQbFj9eatvQQMgfKPSRRAs7uctorfsAo', 'info@kaalst.be', 0, 9),
 ('stephane.polet@kahosl.be', 'Polet', 'Stephane', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-01-24', 'Ghent', 1, '09258741', '047896541', NULL, 'Veldstraat', 'Ghent', '9000', 'BEL', 'Student', 2, 'V9B9OnJuPJqkTjXB32t1oBSjxD67eIQ4', 'info@kahosl.be', 0, 10),
-('luk.schoofs@kahosl.be', 'Schoofs', 'Luc', '4c3b6c7517e9f780744f6582f2d36fb6', '2011-06-25', 'Ghent', 1, '091478596', '0478591464', NULL, 'Gebroeders Desmetstraat', 'Gent', '9000', 'BEL', 'Erasmus Coordinator', 2, 'sdfsdfsdf', 'info@kaalst.be', 1, 11);
+('luk.schoofs@kahosl.be', 'Schoofs', 'Luc', '4c3b6c7517e9f780744f6582f2d36fb6', '2011-06-25', 'Ghent', 1, '091478596', '0478591464', NULL, 'Gebroeders Desmetstraat', 'Gent', '9000', 'BEL', 'Erasmus Coordinator', 2, 'sdfsdfsdf', 'info@kaalst.be', 1, 11),
+('jonas.moens@kahosl.be', 'Moens', 'Jonas', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-01-24', 'Ghent', 1, '092521452', '0473456789', NULL, 'Korenmarkt', 'Ghent', '9000', 'BEL', 'Student', 1, '69fm839SqJ92HaVC5xcQwQQK1aakqaQe', 'info@kahosl.be', 0, 12),
+('sam.missiaen@kahosl.be', 'Missiaen', 'Sam', '4c3b6c7517e9f780744f6582f2d36fb6', '1989-02-24', 'Brugge', 1, '091456328', '0478456123', NULL, 'Clementinalaan', 'Gent', '9000', 'BEL', 'Student', 2, 'y28edouSD1XmjTpRDi6pRFjXUQVxkroJ', 'info@kahosl.be', 0, 13);
 
 --
 -- Beperkingen voor gedumpte tabellen
