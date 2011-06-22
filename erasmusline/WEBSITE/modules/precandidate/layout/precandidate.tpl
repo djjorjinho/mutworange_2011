@@ -165,7 +165,7 @@
       <div class="TRdiv">
         <label for="cv"><span>Upload your CV here :</span></label>
         <input type="file" class="multi" maxlength="1" accept="pdf" id="cv" name="pic[]" /><span id="errRegPicture"></span>
-        <p>We strongly advice you to use the <a href="http://europass.cedefop.europa.eu/europass/home/vernav/Europass+Documents/Europass+CV.csp" title="CV">European CV</a> and save it as a PDF.</p>
+        <p class="password">We strongly advice you to use the <a href="http://europass.cedefop.europa.eu/europass/home/vernav/Europass+Documents/Europass+CV.csp" title="CV">European CV</a> and save it as a PDF.</p>
     </div>
 </fieldset>
 <fieldset>

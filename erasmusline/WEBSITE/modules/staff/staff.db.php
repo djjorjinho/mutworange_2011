@@ -16,6 +16,15 @@ class StaffDB {
         return $pres;
     }
     
+    public static function getPrecandidates($formtype) {
+        // create db instance
+        $db = PlonkWebsite::getDB();
+        // retrieve info from table gebruikers
+        $pres = $db->retrieve("SELECT * FROM forms inner join users on forms.studentId = users.email inner join erasmusStudent on users.email = erasmusStudent.users_email WHERE forms.type = '".$formtype."' AND forms.action = 2");
+
+        return $pres;
+    }
+    
     public static function getLagree($coordinator) {
         // create db instance
         $db = PlonkWebsite::getDB();

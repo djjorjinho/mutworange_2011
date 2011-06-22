@@ -16,7 +16,6 @@ class StaffController extends PlonkController {
         'applics',
         'precandidates',
         'agreements',
-        'reapplics',
         'changes'
     );
     protected $id;
@@ -54,7 +53,7 @@ class StaffController extends PlonkController {
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=precandidates" title="Precandidates">Precandidates</a>');
         
         // gets info of all the users
-        $pres = StaffDB::getForms('Precandidate',  PlonkSession::get('id'));
+        $pres = StaffDB::getPrecandidates('Precandidate',  PlonkSession::get('id'));
         // assign iterations: overlopen van de gevonden users
         $this->pageTpl->setIteration('iPres');
 

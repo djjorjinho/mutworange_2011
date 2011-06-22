@@ -368,21 +368,23 @@ class abroad_stayController extends PlonkController {
         $this->mail = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/cert_ar.tpl');
         $this->getDBdata($post['User'], 'mail');
         if (isset($post['startDate'])) {
-            $this->mail->assign('header', 'Certificate Of Arrrival');
+            $this->mail->assign('header', 'Certificate Of Arrival');
             $this->mail->assign('form', 'Start Date');
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['startDate'] . '</div>');
 
             $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
             $infoInst = abroad_stayDB::getInstInfo($infoStudent['hostInstitutionId']);
-            
+
+            $erasmusLevelId = abroad_stayDB::getIdlevel('Certificate Of Arrival');
+
             $valueEvent = array(
                 'reader' => 'Home Coordinator',
                 'timestamp' => date("Y-m-d"),
                 'motivation' => '',
-                'studentId' => PlonkSession::get('id'),
+                'studentId' => $post['User'],
                 'action' => 2,
                 'erasmusLevelId' => $erasmusLevel['levelId'],
-                'eventDescrip' => $infoStudent[0]['firstName'].' '. $infoStudent[0]['familyName'].' is arrived at '.$infoInst[0]['instName'],
+                'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
                 'readIt' => 0
             );
 
@@ -390,49 +392,36 @@ class abroad_stayController extends PlonkController {
                 'statusOfErasmus' => 'Certificate Of Arrival',
                 'action' => 2
             );
-            
 
-            ExtendDB::insertValues('studentsEvents', $valueEvent);
-            ExtendDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
-            
-            $erasmus =abroad_stayDB::getStudentInfo($post['User']);
+            abroad_stayDB::insertValues('studentsEvents', $valueEvent);
+            abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
 
-        try {
+            $erasmus = abroad_stayDB::getErasmusInfo($post['User']);
 
-            $er = array(
-                'table' => 'erasmusstudent',
-                'data' => array('action' => $erasmus['action'], 'users_email' => $erasmus['users_email']),
-                'emailField' => 'users_email'
-            );
+            try {
 
-            $event = array(
-                'table' => 'studentsEvents',
-                'data' => $valueEvent
-            );
+                $er = array(
+                    'table' => 'erasmusstudent',
+                    'data' => array('action' => $erasmus['action'], 'users_email' => $erasmus['users_email'], 'statusOfErasmus' => $erasmus['statusOfErasmus']),
+                    'emailField' => 'users_email'
+                );
 
-            $b = new InfoxController;
+                $event = array(
+                    'table' => 'studentsEvents',
+                    'data' => $valueEvent
+                );
 
-            $methods = array('forms:insertInDb', 'forms:toDb');
-            $tables = array('studentsEvents', 'erasmusstudent');
-            $data = array($event, $er);
-            $idInst = $infoStudent['homeInstitutionId'];
-            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+                $b = new InfoxController;
 
-            if (!empty($_FILES['pic']['tmp_name'][0])) {
-
-                $this->upload($this->formid . '.pdf');
-                $b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
+                $methods = array('forms:insertInDb', 'forms:toDb');
+                $tables = array('studentsEvents', 'erasmusstudent');
+                $data = array($event, $er);
+                $idInst = $erasmus['homeInstitutionId'];
+                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            } catch (Exception $e) {
+                
             }
 
-            if ($success !== '0') {
-                PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=true');
-            } else {
-                PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=false');
-            }
-        } catch (Exception $e) {
-            Plonk::dump('failed');
-        }
-        
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
                 abroad_stayDB::PostForm($_POST);
@@ -447,7 +436,7 @@ class abroad_stayController extends PlonkController {
             $this->mail->assign('header', 'Certificate Of Departure');
             $this->mail->assign('form', 'Departure Date');
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['endDate'] . '</div>');
-            
+
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
                 abroad_stayDB::PostForm($_POST);
