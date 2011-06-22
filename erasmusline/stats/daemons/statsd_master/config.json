@@ -1,7 +1,7 @@
 {
     "daemonconfig" : {
 		"appName" : "statsd_master",
-		"logVerbosity" : 7
+		"logVerbosity" : 6
 	},
     "serverconfig" : {
 		"sockFile" : "/tmp/erasmusline/statsd_master/statsd_master.sock",
