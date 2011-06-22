@@ -29,8 +29,10 @@ class ResidenceController extends PlonkController {
     public function showDetail() {
         $this->checklogged();
         $erasmuslevel = ResidenceDB::getErasmusLevel(PlonkSession::get('id'));
-        if ($erasmuslevel['levelName'] == "Student Application and Learning Agreement") {
-            $this->pageTpl->assignOption('oReservation');
+        if (!empty($erasmusLevel)) {
+            if ($erasmuslevel['levelName'] == "Student Application and Learning Agreement") {
+                $this->pageTpl->assignOption('oReservation');
+            }
         }
         $this->mainTplAssigns();
         if (PlonkFilter::getGetValue('id') == null) {
@@ -98,7 +100,7 @@ class ResidenceController extends PlonkController {
                 $this->pageTpl->assign('error', '');
                 $count = count($residences);
 
-                $perpage = 3;
+                $perpage = 5;
                 $numberofpages = ceil($count / $perpage);
                 if (PlonkFilter::getGetValue('page') != null) {
                     $page = PlonkFilter::getGetValue('page');

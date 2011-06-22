@@ -19,7 +19,7 @@ class RegisterController extends PlonkController {
         'city', 'postalCode', 'nationality'
     );
     protected $actions = array(
-        'submit', 'login','return'
+        'submit', 'login', 'return'
     );
     protected $code;
     protected $id;
@@ -27,6 +27,7 @@ class RegisterController extends PlonkController {
     public function doReturn() {
         PlonkWebsite::redirect("index.php?module=home&view=home");
     }
+
     public function showRegistersucces() {
         $this->checkLogged();
         $this->mainTplAssigns();
@@ -35,16 +36,23 @@ class RegisterController extends PlonkController {
     public function showRegistervalidemail() {
         $this->checkLogged();
         $this->mainTplAssigns();
-        $id = PlonkFilter::getGetValue('id');
-        $string = PlonkFilter::getGetValue('string');
-
-        $user = RegisterDB::getUserById($id);
-        if ($string === $user['verificationCode']) {
-            $this->pageTpl->assignOption('oSuccess');
-            $array['isValidUser'] = 1;
-            RegisterDB::updateUserField($array, 'email = "' . $id . '"');
+        if (PlonkFilter::getGetValue('id') != null && PlonkFilter::getGetValue('string') != null) {
+            $id = PlonkFilter::getGetValue('id');
+            $string = PlonkFilter::getGetValue('string');
+            $user = RegisterDB::getUserById($id);
+            if (!empty($user)) {
+                if ($string === $user['verificationCode']) {
+                    $this->pageTpl->assignOption('oSuccess');
+                    $array['isValidUser'] = 1;
+                    RegisterDB::updateUserField($array, 'email = "' . $id . '"');
+                } else {
+                    $this->pageTpl->assignOption('oNoSuccess');
+                }
+            } else {
+                PlonkWebsite::redirect('index.php?module=home');
+            }
         } else {
-            $this->pageTpl->assignOption('oNoSuccess');
+            PlonkWebsite::redirect('index.php?module=home');
         }
     }
 
@@ -54,7 +62,7 @@ class RegisterController extends PlonkController {
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/register.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
-        $this->mainTpl->assign('breadcrumb','<a href="index.php?module=home&amp;view=home" title="Home">Home</a><a href="index.php?module=register&amp;view=register" title="Register">Register</a>');
+        $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&amp;view=home" title="Home">Home</a><a href="index.php?module=register&amp;view=register" title="Register">Register</a>');
     }
 
     private function fillNationality($nationality = '') {
@@ -96,10 +104,9 @@ class RegisterController extends PlonkController {
     }
 
     public function showRegister() {
-        if(PlonkFilter::getGetValue('error') != null) {
+        if (PlonkFilter::getGetValue('error') != null) {
             $this->pageTpl->assign('error', "Email already used. Please use another valid email address.");
-        }
-        else {
+        } else {
             $this->pageTpl->assign('error', "");
         }
         $this->mainTplAssigns();
@@ -118,16 +125,16 @@ class RegisterController extends PlonkController {
                 $this->pageTpl->assign('msg' . ucfirst($value), '*');
                 $this->pageTpl->assign($value, '');
                 $this->pageTpl->assign('sexTrue', 'checked');
-                $this->pageTpl->assign('sexFalse','');
-                $this->pageTpl->assign('selectedNationality','');
+                $this->pageTpl->assign('sexFalse', '');
+                $this->pageTpl->assign('selectedNationality', '');
             } else {
                 if ($value === 'sex') {
                     if ($this->fields[$value] == '1') {
                         $this->pageTpl->assign($value . 'True', 'checked');
-                        $this->pageTpl->assign($value. 'False', '');
+                        $this->pageTpl->assign($value . 'False', '');
                     } else {
                         $this->pageTpl->assign($value . 'False', 'checked');
-                        $this->pageTpl->assign($value. 'True', '');
+                        $this->pageTpl->assign($value . 'True', '');
                     }
                 }
                 if (!array_key_exists($value, $this->errors)) {
@@ -177,9 +184,9 @@ class RegisterController extends PlonkController {
                     $values['userLevel'] = htmlentities(PlonkFilter::getPostValue('userLevel'));
                     $values['isValidUser'] = 2;
                     RegisterDB::insertUser('users', $values);
-                if(!empty($_FILES['pic'])) {
-                    $this->upload();
-                }
+                    if (!empty($_FILES['pic'])) {
+                        $this->upload();
+                    }
                     PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
                 } else {
                     PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
@@ -192,8 +199,8 @@ class RegisterController extends PlonkController {
                 $values['isValidUser'] = 0;
 
                 RegisterDB::insertUser('users', $values);
-                
-                if(!empty($_FILES['pic'])) {
+
+                if (!empty($_FILES['pic'])) {
                     $this->upload();
                 }
 
@@ -262,10 +269,10 @@ class RegisterController extends PlonkController {
         }
         $this->pageTpl->parseIteration('iUserLevel');
     }
-    
+
     private function upload() {
-        
-        mkdir("files/" . PlonkFilter::getPostValue('email') . '/',0777);
+
+        mkdir("files/" . PlonkFilter::getPostValue('email') . '/', 0777);
         $uploaddir = "files/" . PlonkFilter::getPostValue('email') . "/";
 
         foreach ($_FILES["pic"]["error"] as $key => $error) {
