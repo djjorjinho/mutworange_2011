@@ -1193,7 +1193,7 @@ class LagreeformController extends PlonkController {
 
         LagreeformDB::insertStudentEvent('studentsEvents', $valueEvent);
 
-        $homeCoor = LagreeformDB::getUserInfo($erasmus['homeCoordinatorId']);
+        $homeCoor = LagreeformDB::getInfoUser($erasmus['homeCoordinatorId']);
         $office = LagreeformDB::getInstitCoor();
 
         try {
