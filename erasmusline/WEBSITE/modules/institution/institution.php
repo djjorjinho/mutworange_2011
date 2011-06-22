@@ -393,7 +393,7 @@ class InstitutionController extends PlonkController {
         	$this->pageTpl->assign('institutionFax',$inst_data['instFax']);
         	$this->pageTpl->assign('institutionDesc',$inst_data['instDescription']);
         	$this->pageTpl->assign('institutionWeb',$inst_data['instWebsite']);
-        	$this->pageTpl->assign('institutionType',$inst_data['treaineeOrStudy']);
+        	$this->pageTpl->assign('institutionType',$inst_data['traineeOrStudy']);
         	$this->pageTpl->assign('institutionUrl',$inst_data['url']);
         	$this->pageTpl->assign('institutionScale',$inst_data['scale']);
         	$this->pageTpl->assign('institutionDigital',$inst_data['digital']);
