@@ -1,26 +1,32 @@
+<div class="mainDiv">
 {option:oSuccess}
-    <h2>Your email has been succesfully validated.</h2>
+    <h3>Your email has been succesfully validated.</h3>
     
     <form action=" " method="post" enctype="multipart/form-data">
-                <p>
+            <fieldset>
+                <legend>Login</legend>
+                <div class="TRdiv">
 				<label>Email</label>
 				<input class="field" type="text" name="Email" />
-			</p>
+			</div>
 
-			<p>
+			<div class="TRdiv">
 				<label>Password</label>
 				<input class="field" type="password" name="Password"/>
                                 
-			</p>
+			</div>
 
-		<p>
+		<div class="TRdiv">
 			<input type="hidden" name="formAction" id="formLogin" value="mainLogin" />
 			<input class="button" name="btnLogin" id="btnLogin" type="submit" value="Login"/>
-		</p>
+		</div>
+                </fieldset>
                     </form>
 {/option:oSuccess}
 
 {option:oNoSuccess}
-    <h2>Your email couldn't be validated</h2>
+    <h3>Your email couldn't be validated</h3>
 {/option:oNoSuccess}
+    
+    </div>
     
