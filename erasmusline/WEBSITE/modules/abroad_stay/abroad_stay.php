@@ -447,59 +447,59 @@ class abroad_stayController extends PlonkController {
             if ($return == '1') {
                 $this->errors = '<div class="SuccessPHP"><p>Certificate of Stay SuccessFully Send</p></div>';
                 $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
-            $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
+                $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
 
-            $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
+                $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
 
-            $valueEvent = array(
-                'reader' => $infoStudent['homeCoordinatorId'],
-                'timestamp' => date("Y-m-d"),
-                'motivation' => '',
-                'studentId' => $post['User'],
-                'action' => 2,
-                'erasmusLevelId' => $erasmusLevel['levelId'],
-                'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
-                'readIt' => 0
-            );
-            
-            $er = array(
-                'statusOfErasmus' => 'Certificate Of Departure',
-                'action' => 2
-            );
-            
-            abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "'.$post['User'].'"');
-
-            $erasmus = abroad_stayDB::getErasmusInfo($post['User']);
-
-            try {
-
-                $event = array(
-                    'table' => 'studentsEvents',
-                    'data' => $valueEvent
-                );
-                
-                $erasss = array(
-                    'table' => 'erasmusStudent',
-                    'data' => $er,
-                    'emailField' => 'users_email'
+                $valueEvent = array(
+                    'reader' => $infoStudent['homeCoordinatorId'],
+                    'timestamp' => date("Y-m-d"),
+                    'motivation' => '',
+                    'studentId' => $post['User'],
+                    'action' => 2,
+                    'erasmusLevelId' => $erasmusLevel['levelId'],
+                    'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
+                    'readIt' => 0
                 );
 
-                $b = new InfoxController;
+                $er = array(
+                    'statusOfErasmus' => 'Certificate Of Departure',
+                    'action' => 2
+                );
 
-                $methods = array('forms:insertInDb', 'forms:toDb');
-                $tables = array('studentsEvents',  'erasmusStudent');
-                $data = array($event, $erasss);
-                $idInst = $erasmus['homeInstitutionId'];
-                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
-            } catch (Exception $e) {
-                
-            }
+                abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . $post['User'] . '"');
+                abroad_stayDB::insertValues('studentsEvents', $valueEvent);
+
+                $erasmus = abroad_stayDB::getErasmusInfo($post['User']);
+
+                try {
+
+                    $event = array(
+                        'table' => 'studentsEvents',
+                        'data' => $valueEvent
+                    );
+
+                    $erasss = array(
+                        'table' => 'erasmusStudent',
+                        'data' => $er,
+                        'emailField' => 'users_email'
+                    );
+
+                    $b = new InfoxController;
+
+                    $methods = array('forms:insertInDb', 'forms:toDb');
+                    $tables = array('studentsEvents', 'erasmusStudent');
+                    $data = array($event, $erasss);
+                    $idInst = $erasmus['homeInstitutionId'];
+                    $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+                } catch (Exception $e) {
+                    
+                }
             } else {
                 $this->errors = '<div class="errorPHP"><p>There was an Error Sending Certificate of Stay</p><p>' . $return . '</p></div>';
                 $this->position = 'showCertificates';
                 $this->form = '3';
                 $this->student = $post['User'];
-                
             }
         }
     }
