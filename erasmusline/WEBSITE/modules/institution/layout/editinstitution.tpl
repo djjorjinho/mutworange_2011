@@ -111,14 +111,14 @@
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution iBan : </span> </label>
-				<input class="validate[required,custom[onlyNumberSp]] text-input"
+				<input class="validate[required] text-input"
 					type="text" name="institutionIban" id="institutionIban"
 					value="{$institutionIban|htmlentities}" /> <span class="req"
 					id="msgInstitutionIban">{$msgInstitutionIban|htmlentities}</span>
 			</div>
 			<div class="TRdiv">
 				<label for="institutionname"><span>Institution Bic : </span> </label>
-				<input class="validate[required,custom[onlyNumberSp]] text-input"
+				<input class="validate[required] text-input"
 					type="text" name="institutionBic" id="institutionBic"
 					value="{$institutionBic|htmlentities}" /> <span class="req"
 					id="msgInstitutionBic">{$msgInstitutionBic|htmlentities}</span>
