@@ -142,12 +142,16 @@ class MainController extends PlonkController {
                 $this->mainTpl->assignOption('oAdmin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 $this->mainTpl->assignOption('oStudent');
+                $this->mainTpl->assignOption('oProfile');
             } else if (PlonkSession::get('userLevel') == 'Erasmus Coordinator') {
                 $this->mainTpl->assignOption('oCoor');
+                $this->mainTpl->assignOption('oProfile');
             } else if (PlonkSession::get('userLevel') == 'Teaching Staff') {
                 $this->mainTpl->assignOption('oTeacher');
+                $this->mainTpl->assignOption('oProfile');
             } else if (PlonkSession::get('userLevel') == 'International Relations Office Staff') {
                 $this->mainTpl->assignOption('oOffice');
+                $this->mainTpl->assignOption('oProfile');
             } else if (PlonkSession::get('userLevel') == 'Industrial Institution') {
                 $this->mainTpl->assignOption('oIndustrial');
             }
