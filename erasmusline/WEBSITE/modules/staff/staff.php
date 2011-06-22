@@ -48,7 +48,7 @@ class StaffController extends PlonkController {
 
         $this->checkLogged();
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('siteTitle', 'Precandidates');
         $this->mainTpl->assign('pageJava','');
         $this->mainTpl->assign('breadcrumb','<a href="index.php?module=staff&view=staff" title="Home">Home</a><a href="index.php?module=staff&view=precandidates" title="Precandidates">Precandidates</a>');

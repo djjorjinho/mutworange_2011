@@ -11,6 +11,13 @@
  <fieldset>
     <legend>What is the next step in your Eramus process</legend>
 <ul>{$next}</ul>
+
+{option:oAbroad}
+<ul>
+    {$abroad}
+</ul>
+{/option:oAbroad}
+
 </fieldset>
 <fieldset>
 <legend>Forms that you already filled in</legend>
@@ -24,14 +31,14 @@
 {/iteration:iForms}
     </ul>
 </fieldset>
-    <fieldset>
-        <legend>Take exams in your home university</legend>
-        <div class="TRdiv">
-{$exams}
-        </div>
-        </fieldset>
-    <fieldset>
-        <legend>Notifications of your latest events</legend>
+
+<fieldset>
+	<legend>Take exams in your home university</legend>       
+	{$exams}      
+</fieldset>
+
+<fieldset>
+    <legend>Notifications of your latest events</legend>
 <ul>
 {iteration:iEvents}
 {$event}

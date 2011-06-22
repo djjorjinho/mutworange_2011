@@ -24,6 +24,18 @@ class Util{
 	}
 	
 	public static function log($message){
+		self::_log($message,0);
+	}
+	
+	public static function log1($message){
+		self::_log($message,1);
+	}
+	
+	public static function log2($message){
+		self::_log($message,2);
+	}
+	
+	public static function _log($message,$level=0){
     	if(!self::$debug) return;
     	
     	$sep = DIRECTORY_SEPARATOR;
@@ -32,8 +44,7 @@ class Util{
     	if(!file_exists($path)){
     		touch($path);
     	}
-    	
-    	$level=0;
+
     	$trace = debug_backtrace();
     	$file   = basename($trace[$level]['file']);
     	$line   = $trace[$level]['line'];

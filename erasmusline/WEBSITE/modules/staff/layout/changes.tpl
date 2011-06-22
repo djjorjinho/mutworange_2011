@@ -2,7 +2,7 @@
 <div class="mainDiv">
     <fieldset>
         
-    <legend><h3>Pending Changes of Learning Agreements</h3></legend>
+    <legend>Pending Changes of Learning Agreements</legend>
         
 <table id="staffTable" >
         <tr>

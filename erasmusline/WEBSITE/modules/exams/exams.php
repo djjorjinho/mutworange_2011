@@ -16,14 +16,14 @@
 		$aStr = "";
 		
 		if(!isset($_POST["manage"])) {
-			$str = '<form name="input" action="'.submitExams().'" method="post">';
-			$str .= '<input type="submit" name="manage" value=" Manage exams " /></form>';
+			$str = '<p><form name="input" action="'.submitExams().'" method="post">';
+			$str .= '&emsp;<input type="submit" name="manage" value=" Manage exams " /></form></p>';
 			$this->pageTpl->assign('exams', $examStr.$str);
 		} else {
 		
 			$items = $edb->retrieveOne("SELECT `erasmusstudent`.`startDate`, `erasmusstudent`.`endDate`  
 				FROM `users`, `erasmusstudent`
-				WHERE `users`.`userID` = " . $eid .  
+				WHERE `users`.`userId` = " . $eid .  
 				" AND `users`.`email` = `erasmusstudent`.`users_email`");
 			if(!$items || ($items['startDate'] == NULL)) {
 				$this->pageTpl->assign('exams', $examStr.'You are not Erasmus student.');
@@ -39,7 +39,7 @@
 				if(!$items) {
 					$items = $edb->getColumnAsArray("SELECT `erasmusstudent`.`studentId`
 										FROM `coursespereducperinst`, `users`, `erasmusstudent`, `educationperinstitute`, `institutions`
-										WHERE `users`.`userID` = " . $eid .  
+										WHERE `users`.`userId` = " . $eid .  
 										" AND `users`.`email` = `erasmusstudent`.`users_email` 
 										AND `erasmusstudent`.`educationPerInstId` = `educationperinstitute`.`educationPerInstId`
 										AND `educationperinstitute`.`studyId` = `coursespereducperinst`.`educationId`
@@ -47,7 +47,7 @@
 										AND `institutions`.`instEmail` = `coursespereducperinst`.`institutionId`"); 
 					$items2 = $edb->getColumnAsArray("SELECT `coursespereducperinst`.`courseId`
 										FROM `coursespereducperinst`, `users`, `erasmusstudent`, `educationperinstitute`, `institutions`
-										WHERE `users`.`userID` = " . $eid .  
+										WHERE `users`.`userId` = " . $eid .  
 										" AND `users`.`email` = `erasmusstudent`.`users_email` 
 										AND `erasmusstudent`.`educationPerInstId` = `educationperinstitute`.`educationPerInstId`
 										AND `educationperinstitute`.`studyId` = `coursespereducperinst`.`educationId`
@@ -61,7 +61,7 @@
 				//approved
 				$items = $edb->getColumnAsArray("SELECT `coursespereducperinst`.`courseName`  
 										FROM `coursespereducperinst`, `users`, `erasmusstudent`, `homecoursestoerasmus`
-										WHERE `users`.`userID` = " . $eid .  
+										WHERE `users`.`userId` = " . $eid .  
 										" AND `users`.`email` = `erasmusstudent`.`users_email` 
 										AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
 										AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
@@ -78,7 +78,7 @@
 				//NOT approved
 				$items = $edb->getColumnAsArray("SELECT `coursespereducperinst`.`courseName`  
 										FROM `coursespereducperinst`, `users`, `erasmusstudent`, `homecoursestoerasmus`
-										WHERE `users`.`userID` = " . $eid .  
+										WHERE `users`.`userId` = " . $eid .  
 										" AND `users`.`email` = `erasmusstudent`.`users_email` 
 										AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
 										AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
@@ -95,7 +95,7 @@
 				//requested
 				$items = $edb->getColumnAsArray("SELECT `coursespereducperinst`.`courseName`  
 										FROM `coursespereducperinst`, `users`, `erasmusstudent`, `homecoursestoerasmus`
-										WHERE `users`.`userID` = " . $eid .  
+										WHERE `users`.`userId` = " . $eid .  
 										" AND `users`.`email` = `erasmusstudent`.`users_email` 
 										AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
 										AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
@@ -110,19 +110,19 @@
 				//make request
 				$items = $edb->getColumnAsArray("SELECT `coursespereducperinst`.`courseName`  
 										FROM `coursespereducperinst`, `users`, `erasmusstudent`, `homecoursestoerasmus`
-										WHERE `users`.`userID` = " . $eid .  
+										WHERE `users`.`userId` = " . $eid .  
 										" AND `users`.`email` = `erasmusstudent`.`users_email` 
 										AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
 										AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
-										AND `homecoursestoerasmus`.`isRequested` IS NULL
+										AND `homecoursestoerasmus`.`isRequested` = 0
 										AND `homecoursestoerasmus`.`homeanswer` IS NULL
 										AND `homecoursestoerasmus`.`hostanswer` IS NULL ");
 				if($items) {
-					$str = '<form name="input" action="'.submitExams().'" method="post">Make a request to take:<br />';
+					$str = '<form name="input" action="'.submitExams().'" method="post"><p>Make a request to take:</p>';
 					for($i = 0; $i < count($items); $i++) {
-						$str .= '&emsp;<input type="checkbox" name="exam'.$i.'" value="'.$items[$i].'" /> '.$items[$i].' <br />' ;
+						$str .= '<p><input type="checkbox" name="exam'.$i.'" value="'.$items[$i].'" /> '.$items[$i].' </p>' ;
 					}
-					$str .= '<input type="submit" name="manage" value=" Send Request " /></form>';
+					$str .= '&emsp;<input type="submit" name="manage" value=" Send Request " /></form>';
 					
 					//sent requests
 					for($i = 0; $i < count($items); $i++) {
@@ -134,7 +134,7 @@
 				} else {
 					$str = "There are no exams from your home university that you can request to take.";
 				}
-				$this->pageTpl->assign('exams', $examStr.$aStr.$str);
+				$this->pageTpl->assign('exams', "<p>".$examStr.$aStr.$str."</p>");
 			}
 		}
 	} else {
