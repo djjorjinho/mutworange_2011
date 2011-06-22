@@ -327,8 +327,7 @@ class PartnershipController extends PlonkController {
 		$residence_id = array_map(
 		function($item)use($db,$residence_t,&$ownerTrans){
 			unset($item['residenceId']);
-			$oldId = $item['ownerId'];
-			$item['ownerId'] = $ownerTrans[$oldId];
+
 			$id = $db->insert($item,$residence_t);
 			return $id;
 		},$residence);

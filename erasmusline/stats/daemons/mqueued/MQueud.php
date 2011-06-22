@@ -38,10 +38,6 @@ class MQueued extends Server implements JsonRpcI{
 		
 		$this->dispatcher = new JsonRpcDispatcher($this);
 		
-		$this->olap = new OLAP($options['olapconfig']);
-		
-		$this->etl = new ETL($options['etlconfig']);
-		
 		# leave these for last
 		$this->scheduler = new Scheduler(
 						array(),
@@ -107,6 +103,17 @@ class MQueued extends Server implements JsonRpcI{
     }
     
     function runTasks(){
+    	$db = $this->db;
+    	$records = $db->getMany("select * from mqueue where finished=0");
+    	
+    	foreach($records as $item){
+    		try{
+    			
+    		}catch(Exception $e){
+    			
+    		}
+    	}
+    	
     	
     }
     
