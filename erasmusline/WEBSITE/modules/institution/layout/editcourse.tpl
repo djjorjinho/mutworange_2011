@@ -2,7 +2,7 @@
 <div class="mainDiv">
 <h3>Admin panel</h3>
 <p>Here you can edit the selected course</p>
-<form action="" method="post" enctype="multipart/form-data" id="addCourse">	
+<form action="" method="post" enctype="multipart/form-data" id="editCourse">	
 <fieldset>
     <legend>Edit course</legend>     
     <span class="req" id="error">{$error}</span><br />
@@ -58,6 +58,6 @@
         <script type="text/javascript">
            jQuery(document).ready(function(){
            // binds form submission and fields to the validation engine
-           jQuery("#addCourse").validationEngine();
+           jQuery("#editCourse").validationEngine();
        });
 </script> 
