@@ -73,7 +73,7 @@ class LagreeformController extends PlonkController {
     }
 
     private function filledLagreement() {
-        $this->mainTpl->assign('pageMeta', '');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->pageTpl->assignOption('oFilled');
         PlonkFilter::getGetValue('form');
         $json = LagreeformDB::getJson(PlonkFilter::getGetValue('form'), 'Learning Agreement');
@@ -179,7 +179,7 @@ class LagreeformController extends PlonkController {
         }
 
         // assign vars in our main layout tpl
-        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>');
+        $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/><link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
 
 
         $this->mainTpl->assign('home', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
@@ -424,7 +424,7 @@ class LagreeformController extends PlonkController {
             $this->mainTpl->assign('breadcrumb', '<a href="index.php?module=home&view=userhome" title="Home">Home</a><a href="index.php?module=lagreeform&view=applicform&form=' . $this->formid . '" title="Student Application Form">Student Application Form</a>');
 
             $this->filledApplicform();
-            if (PlonkFilter::getGetValue('form') == null) {
+            if (PlonkFilter::getGetValue('form') != null) {
                 $this->mainTpl->assign('pageJava', '');
             }
             return;
