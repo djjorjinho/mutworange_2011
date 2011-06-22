@@ -165,6 +165,7 @@
       <div class="TRdiv">
         <label for="cv"><span>Upload your CV here :</span></label>
         <input type="file" class="multi" maxlength="1" accept="pdf" id="cv" name="pic[]" /><span id="errRegPicture"></span>
+        <p>We strongly advice you to use the <a href="http://europass.cedefop.europa.eu/europass/home/vernav/Europass+Documents/Europass+CV.csp" title="CV">European CV</a> and save it as a PDF.</p>
     </div>
 </fieldset>
 <fieldset>
@@ -184,7 +185,7 @@
 <fieldset>
     <legend>Extra</legend>        
      <div class="TRdiv">
-            <label for="traineeOrStudy"><span>Aanvraag voor: </span></label>
+            <label for="traineeOrStudy"><span>Apply for: </span></label>
             <select name="traineeOrStudy" value="{$traineeOrStudy}" >
                {iteration:iDemand}
                      {$demand}
@@ -194,19 +195,19 @@
     </div>
     <div class="radioResidences">
                 <div class="radioResidence">
-            <label for="cribb"><span>Op kot : </span></label>
+            <label for="cribb"><span>Student accomodation: </span></label>
             Yes<input type="radio" {$cribYes} id="cribYes" name="cribb" value="Yes" class="validate[required] radio"  />
             No<input type="radio" {$cribNo} id="cribNo" name="cribb" value="No" class="validate[required] radio" />
             <span class="req" id="msgCribb">{$msgCribb|htmlentities}</span><br />
     </div>
     <div class="radioResidence">
-            <label for="cribRent"><span>Wens je je kot over te laten tijdens je uitwissling : </span></label>
+            <label for="cribRent"><span>Set available: </span></label>
             Yes<input type="radio" id="rentYes" {$rentYes} name="cribRent" value="Yes" class="validate[required] radio" />
             No<input type="radio" id="rentNo" {$rentNo} name="cribRent" value="No" class="validate[required] radio" />
             <span class="req" id="msgCribRent">{$msgCribRent|htmlentities}</span><br />
     </div>
    <div class="radioResidence">
-            <label for="scolarship"><span>Deelnemen zonder Europese subsidie : </span></label>
+            <label for="scolarship"><span>Grant: </span></label>
             Yes<input type="radio" id="scolYes" {$scolYes} name="scolarship" value="Yes" class="validate[required] radio" />
             No<input type="radio" id="scolNo" {$scolNo} name="scolarship" value="No" class="validate[required] radio" />
             <span class="req" id="msgScolarship">{$msgScolarship|htmlentities}</span>
