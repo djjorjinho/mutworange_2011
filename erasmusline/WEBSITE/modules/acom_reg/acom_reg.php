@@ -149,7 +149,7 @@ class acom_regController extends PlonkController {
         if ($return == '1') {
             $this->position = '3';
             $this->error = '<div class="SuccessPHP"><p>Your Application Was Success</p></div>';
-            $erasmusLevel = ExtendDB::getErasmusLevelId('Accomodation Registration Form');
+            $erasmusLevel = acom_regDB::getErasmusLevelId('Accomodation Registration Form');
             
             $valueEvent = array(
                 'reader' => 'Student',
@@ -167,8 +167,8 @@ class acom_regController extends PlonkController {
                 'action' => 2
             );
 
-            ExtendDB::insertValues('studentsEvents', $valueEvent);
-            ExtendDB::insertValues('erasmusStudent', $er, 'users_email = "'.PlonkSession::get('id').'"');
+            acom_regDB::insertValues('studentsEvents', $valueEvent);
+            acom_regDB::insertValues('erasmusStudent', $er, 'users_email = "'.PlonkSession::get('id').'"');
         } else {
             $this->position = '2no';
             $this->error = '<div class="errorPHP"><p>' . $return . '</p><p>Try Sending it again</p></div>';
@@ -190,7 +190,7 @@ class acom_regController extends PlonkController {
             $this->position = '3';
             $this->error = '<div class="SuccessPHP"><p>Your Application Was Success</p></div>';
             
-            $erasmusLevel = ExtendDB::getErasmusLevelId('Accomodation Registration Form');
+            $erasmusLevel = acom_regDB::getErasmusLevelId('Accomodation Registration Form');
             
             $valueEvent = array(
                 'reader' => 'Student',
@@ -208,8 +208,8 @@ class acom_regController extends PlonkController {
                 'action' => 2
             );
 
-            ExtendDB::insertValues('studentsEvents', $valueEvent);
-            ExtendDB::insertValues('erasmusStudent', $er, 'users_email = "'.PlonkSession::get('id').'"');
+            acom_regDB::insertValues('studentsEvents', $valueEvent);
+            acom_regDB::insertValues('erasmusStudent', $er, 'users_email = "'.PlonkSession::get('id').'"');
             
         } else {
             $this->position = '2yes';
