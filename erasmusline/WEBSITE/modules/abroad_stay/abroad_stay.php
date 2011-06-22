@@ -377,14 +377,14 @@ class abroad_stayController extends PlonkController {
             $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
             $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
 
-            $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Arrival');
+            $erasmusLevel = abroad_stayDB::getErasmusLevelId('Certificate Of Arrival');
 
             $valueEvent = array(
                 'reader' => $infoStudent['homeCoordinatorId'],
                 'timestamp' => date("Y-m-d"),
                 'motivation' => '',
                 'studentId' => $post['User'],
-                'action' => 2,
+                'action' => 1,
                 'erasmusLevelId' => $erasmusLevel['levelId'],
                 'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
                 'readIt' => 0
@@ -449,14 +449,14 @@ class abroad_stayController extends PlonkController {
                 $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
                 $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
 
-                $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
+                $erasmusLevel = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
 
                 $valueEvent = array(
                     'reader' => $infoStudent['homeCoordinatorId'],
                     'timestamp' => date("Y-m-d"),
                     'motivation' => '',
                     'studentId' => $post['User'],
-                    'action' => 2,
+                    'action' => 1,
                     'erasmusLevelId' => $erasmusLevel['levelId'],
                     'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
                     'readIt' => 0
@@ -464,7 +464,7 @@ class abroad_stayController extends PlonkController {
 
                 $er = array(
                     'statusOfErasmus' => 'Certificate Of Departure',
-                    'action' => 2
+                    'action' => 1
                 );
 
                 abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . $post['User'] . '"');
