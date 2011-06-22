@@ -146,7 +146,7 @@ class acom_regController extends PlonkController {
                     );
 
                     acom_regDB::insertValues('studentsEvents', $valueEvent);
-                    acom_regDB::insertValues('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
+                    acom_regDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
                     PlonkWebsite::redirect('index.php?module=home&view=userhome');
                 } else {
                     $this->error = '<div class="errorPHP">Date of Departure should be after Date of Arrival</div>';
@@ -190,7 +190,7 @@ class acom_regController extends PlonkController {
             );
 
             acom_regDB::insertValues('studentsEvents', $valueEvent);
-            acom_regDB::insertValues('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
+            acom_regDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
 
             PlonkWebsite::redirect('index.php?module=home&view=userhome');
         } else {
