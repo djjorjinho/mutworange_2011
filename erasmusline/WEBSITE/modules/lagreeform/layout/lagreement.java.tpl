@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/>
                     <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
                     <script type="text/javascript" src="./core/js/datepicker/js/jquery-ui-1.8.9.custom.min.js"></script>
+                    <script type="text/javascript" src="./core/js/jquery/jquery.maskedinput-1.2.2.min.js"></script>
+                <script type="text/javascript" src="./core/js/jquery/jquery.pstrength-min.1.2.js"></script>
+                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
+                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>
+                <link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>
                     <script>
 	$(function() {
 		$( "#signDate" ).datepicker();
@@ -28,12 +33,6 @@
                     jQuery("#lagreement").validationEngine();
                     });
                 </script>
-
-<script type="text/javascript" src="./core/js/jquery/jquery.maskedinput-1.2.2.min.js"></script>
-                <script type="text/javascript" src="./core/js/jquery/jquery.pstrength-min.1.2.js"></script>
-                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine.js"></script>
-                <script type="text/javascript" src="./core/js/jquery/jquery.validationEngine-en.js"></script>
-                <link rel="stylesheet" href="./core/css/validationEngine.jquery.css" type="text/css"/>
 
                 <script>
                 jQuery(function($){

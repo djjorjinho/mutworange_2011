@@ -173,6 +173,7 @@ class ResidenceController extends PlonkController {
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/residence.java.tpl');
         $this->mainTpl->assign('pageJava', $java->getContent(true) . '<script type="text/javascript">
 	                function lookup(inputString) {
+                        alert("qskjf");
 			if(inputString.length == 0) {
 				// Hide the suggestion box.
 				$(\'#suggestions\').hide();
