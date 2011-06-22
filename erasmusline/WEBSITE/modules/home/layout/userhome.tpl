@@ -24,14 +24,14 @@
 {/iteration:iForms}
     </ul>
 </fieldset>
-    <fieldset>
-        <legend>Take exams in your home university</legend>
-        <div class="TRdiv">
-{$exams}
-        </div>
-        </fieldset>
-    <fieldset>
-        <legend>Notifications of your latest events</legend>
+
+<fieldset>
+	<legend>Take exams in your home university</legend>       
+	{$exams}      
+</fieldset>
+
+<fieldset>
+    <legend>Notifications of your latest events</legend>
 <ul>
 {iteration:iEvents}
 {$event}
