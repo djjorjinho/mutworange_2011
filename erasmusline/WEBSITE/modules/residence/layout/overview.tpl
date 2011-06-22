@@ -25,11 +25,11 @@
     
     {$error}
             
-                    <span class="{$disabledPrevious}">{$linkPrevious}</span>
+                    <span>{$linkPrevious}</span>
                 {iteration:iPagination}
                     {$text}
                 {/iteration:iPagination}                    
-                    <span class="{$disabledNext}">{$linkNext}</span>
+                    <span>{$linkNext}</span>
             {iteration:iResidences}
                     <fieldset>
                     <legend>Residence</legend>
