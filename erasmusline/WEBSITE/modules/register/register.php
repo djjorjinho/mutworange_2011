@@ -231,7 +231,7 @@ class RegisterController extends PlonkController {
             $mail->Port = 25;
             //$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
             $mail->MsgHTML($body);
-            $mail->Send();
+            //$mail->Send();
         } catch (phpmailerException $e) {
             // $e->errorMessage(); //Pretty error messages from PHPMailer
         } catch (Exception $e) {

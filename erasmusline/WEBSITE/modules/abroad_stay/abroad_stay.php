@@ -4,6 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once "./modules/infox/infox.php";
 
 class abroad_stayController extends PlonkController {
 
@@ -49,7 +50,7 @@ class abroad_stayController extends PlonkController {
         $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->pageTpl->assign('errorString', $this->errors);
         $this->pageTpl->assign('back', 'index.php?module=abroad_stay&view=select');
-
+        $this->mainTpl->assign('breadcrumb', '');
 
 
         /* First Step : Show Select User */
@@ -186,6 +187,7 @@ class abroad_stayController extends PlonkController {
         $this->pageTpl->assign('view', 'Sended Certificates');
         $this->pageTpl->assignOption('showSelectAboardUser');
         $this->mainTpl->assign('siteTitle', "Select Student");
+        $this->mainTpl->assign('breadcrumb', '');
 
 
 
@@ -444,11 +446,60 @@ class abroad_stayController extends PlonkController {
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
                 $this->errors = '<div class="SuccessPHP"><p>Certificate of Stay SuccessFully Send</p></div>';
+                $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
+            $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
+
+            $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
+
+            $valueEvent = array(
+                'reader' => $infoStudent['homeCoordinatorId'],
+                'timestamp' => date("Y-m-d"),
+                'motivation' => '',
+                'studentId' => $post['User'],
+                'action' => 2,
+                'erasmusLevelId' => $erasmusLevel['levelId'],
+                'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
+                'readIt' => 0
+            );
+            
+            $er = array(
+                'statusOfErasmus' => 'Certificate Of Departure',
+                'action' => 2
+            );
+            
+            abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "'.$post['User'].'"');
+
+            $erasmus = abroad_stayDB::getErasmusInfo($post['User']);
+
+            try {
+
+                $event = array(
+                    'table' => 'studentsEvents',
+                    'data' => $valueEvent
+                );
+                
+                $erasss = array(
+                    'table' => 'erasmusStudent',
+                    'data' => $er,
+                    'emailField' => 'users_email'
+                );
+
+                $b = new InfoxController;
+
+                $methods = array('forms:insertInDb', 'forms:toDb');
+                $tables = array('studentsEvents',  'erasmusStudent');
+                $data = array($event, $erasss);
+                $idInst = $erasmus['homeInstitutionId'];
+                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            } catch (Exception $e) {
+                
+            }
             } else {
                 $this->errors = '<div class="errorPHP"><p>There was an Error Sending Certificate of Stay</p><p>' . $return . '</p></div>';
                 $this->position = 'showCertificates';
                 $this->form = '3';
                 $this->student = $post['User'];
+                
             }
         }
     }

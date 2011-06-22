@@ -99,9 +99,9 @@ class acom_regDB {
         $mail->IsHTML(true);
         $mail->SMTPDebug = false;
         $mail->do_debug = 0;
-        if (!$mail->Send()) {
-            return $mail->ErrorInfo;
-        } else {
+        //if (!$mail->Send()) {
+          //  return $mail->ErrorInfo;
+        //} else {
             unset($_POST['formAction'], $_POST['postForm']);
             $formTable = json_encode($_POST);
             $formId = Functions::createRandomString();
@@ -124,7 +124,7 @@ class acom_regDB {
                 $db->execute($query2);
             }
             return '1';
-        }
+        //}
     }
     
     public static function insertValues($table, $values) {
