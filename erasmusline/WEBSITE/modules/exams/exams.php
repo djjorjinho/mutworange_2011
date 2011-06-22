@@ -70,7 +70,7 @@ if($items['userLevel'] == "Erasmus Coordinator") {
 					'courseId' => $items2[$i],
 					);
 
-					$methods = array('forms:insertInDb');
+					//$methods = array('forms:insertInDb');
 					$tables = array('homecoursestoerasmus');
 					$data = array($values);
 					$idInst = $institution['hostInstitutionId'];
@@ -163,7 +163,7 @@ if($items['userLevel'] == "Erasmus Coordinator") {
 						);
 
 						$methods = array('forms:insertInDb');
-						$tables = array('homecoursestoerasmus');
+						$tables = array('homecoursestoerasmus, coursespereducperinst');
 						$data = array($values);
 						$idInst = $institution['hostInstitutionId'];
 						//$success = $infox->dataTransfer($methods, $tables, $data, $idInst);*/

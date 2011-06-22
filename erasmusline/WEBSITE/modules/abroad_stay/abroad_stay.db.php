@@ -135,6 +135,36 @@ class abroad_stayDB {
             return '1';
         }
     }
+    
+    public static function getErasmusInfo($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select * from erasmusStudent where users_email = '".$id."'");
+        
+        return $student;
+    }
+    
+    public static function updateErasmusStudent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
+    
+    public static function insertValues($table, $values) {
+        $db = PlonkWebsite::getDB();
+
+        $insertId = $db->insert($table, $values);
+
+        return $insertId;
+    }
+    
+    public static function getErasmusLevelId($name) {
+        $db = PlonkWebsite::getDB();
+
+        $id = $db->retrieveOne("select * from erasmuslevel where levelName = '" . $name . "'");
+
+        return $id;
+    }
 
 }
 

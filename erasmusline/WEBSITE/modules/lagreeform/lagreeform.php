@@ -192,22 +192,22 @@ class LagreeformController extends PlonkController {
 	                var id = id;
 			if(inputString.length == 0) {
 				// Hide the suggestion box.
-				$(\'#suggestions\'+id).hide();
+				jQuery(\'#suggestions\'+id).hide();
 			} else {
-				$.post("modules/lagreeform/rpc4.php", {id: ""+id+"",queryString: ""+inputString+""}, function(data){
+				jQuery.post("modules/lagreeform/rpc4.php", {id: ""+id+"",queryString: ""+inputString+""}, function(data){
 
 					if(data.length >0) {
-						$(\'#suggestions\'+id).show();
-						$(\'#autoSuggestionsList\'+id).html(data);
+						jQuery(\'#suggestions\'+id).show();
+						jQuery(\'#autoSuggestionsList\'+id).html(data);
 					}
 				});
 			}
 		} // lookup
 		function fill(id, course, code, ects) {
-			$(\'#title\'+id).val(course);
-	                $(\'#code\'+id).val(code);
-	                $(\'#ects\'+id).val(ects);
-			setTimeout("$(\'#suggestions" + id + "\').hide();", 200);
+			jQuery(\'#title\'+id).val(course);
+	                jQuery(\'#code\'+id).val(code);
+	                jQuery(\'#ects\'+id).val(ects);
+			setTimeout("jQuery(\'#suggestions" + id + "\').hide();", 200);
 
 		}</script>');
 
@@ -252,8 +252,8 @@ class LagreeformController extends PlonkController {
             }
             $this->pageTpl->assignIteration('row', '<tr>
 	                        <td><input class="validate[required, custom[onlyLetterNumber]]" type="text" id="code' . $i . '" name="code' . $i . '" value="' . $this->fields["code" . $i] . '" /></td>
-	                        <td><input onkeyup="lookup(' . $i . ',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /><div class="suggestionsBox' . $i . '" id="suggestions' . $i . '" style="display: none;">
-			<div class="suggestionList' . $i . '" id="autoSuggestionsList' . $i . '">
+	                        <td><input onkeyup="lookup(' . $i . ',this.value);" onclick="fill();" class="validate[required, custom[onlyLetterNumber]]" type="text" id="title' . $i . '" name="title' . $i . '" value="' . $this->fields["title" . $i] . '" /><div class="suggestionsBox' . $i . ' suggestionsBox" id="suggestions' . $i . '" style="display: none;">
+			<div class="suggestionList' . $i . ' suggestionList" id="autoSuggestionsList' . $i . '">
 				&nbsp;
 	                </div>
 		</div></td>
@@ -309,11 +309,11 @@ class LagreeformController extends PlonkController {
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/js/datepicker/css/ui-lightness/jquery-ui-1.8.9.custom.css" type="text/css" media="screen"/><script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
                     <script type="text/javascript" src="./core/js/datepicker/js/jquery-ui-1.8.9.custom.min.js"></script>
                     <script>
-        $(function() {
-		$( "#signInstSignDate" ).datepicker();
+        jQuery(function() {
+		jQuery( "#signInstSignDate" ).datepicker();
 	});
-        $(function() {
-		$( "#signDepSignDate" ).datepicker();
+        jQuery(function() {
+		jQuery( "#signDepSignDate" ).datepicker();
 	});
 
 
@@ -447,43 +447,43 @@ class LagreeformController extends PlonkController {
 	function lookup2(inputString) {
 		if(inputString.length == 0) {
 			// Hide the suggestion box.
-			$(\'#suggestions2\').hide();
+			jQuery(\'#suggestions2\').hide();
 		} else {
-			$.post("modules/lagreeform/rpc2.php", {queryString: ""+inputString+""}, function(data){
+			jQuery.post("modules/lagreeform/rpc2.php", {queryString: ""+inputString+""}, function(data){
 
 				if(data.length >0) {
-					$(\'#suggestions2\').show();
-					$(\'#autoSuggestionsList2\').html(data);
+					jQuery(\'#suggestions2\').show();
+					jQuery(\'#autoSuggestionsList2\').html(data);
 				}
 			});
 		}
 	} // lookup
 	function fill2(Name,Tel,Email) {
-		$(\'#sendDepCoorName\').val(Name);
-                $(\'#sendDepCoorTel\').val(Tel);
-                $(\'#sendDepCoorMail\').val(Email);
-		setTimeout("$(\'#suggestions2\').hide();", 200);
+		jQuery(\'#sendDepCoorName\').val(Name);
+                jQuery(\'#sendDepCoorTel\').val(Tel);
+                jQuery(\'#sendDepCoorMail\').val(Email);
+		setTimeout("jQuery(\'#suggestions2\').hide();", 200);
 
 	}</script>
         <script type="text/javascript">
 	function lookup3(inputString) {
 		if(inputString.length == 0) {
 			// Hide the suggestion box.
-			$(\'#suggestions3\').hide();
+			jQuery(\'#suggestions3\').hide();
 		} else {
-			$.post("modules/lagreeform/rpc3.php", {queryString: ""+inputString+""}, function(data){
+			jQuery.post("modules/lagreeform/rpc3.php", {queryString: ""+inputString+""}, function(data){
 
 				if(data.length >0) {
-					$(\'#suggestions3\').show();
-					$(\'#autoSuggestionsList3\').html(data);
+					jQuery(\'#suggestions3\').show();
+					jQuery(\'#autoSuggestionsList3\').html(data);
 				}
 			});
 		}
 	} // lookup
 	function fill3(Name,Country) {
-		$(\'#recInstitut\').val(Name);
-                $(\'#coountry\').val(Country);
-		setTimeout("$(\'#suggestions3\').hide();", 200);
+		jQuery(\'#recInstitut\').val(Name);
+                jQuery(\'#coountry\').val(Country);
+		setTimeout("jQuery(\'#suggestions3\').hide();", 200);
 
 	}</script>');
 
@@ -693,7 +693,7 @@ class LagreeformController extends PlonkController {
         $rules[] = "letters_only,instrLanguage,Please enter only letters";
         $rules[] = "letters_only,diplome,Please only enter letters";
         $rules[] = "digits_only,yEducation, Please enter only digits";
-        $rules[] = "letters_only,whichInst,Please only enter letters";
+        $rules[] = "textarea,whichInst,Please only enter letters";
 
         $this->works = $_POST['workCount'];
         $this->languages = $_POST['languageCount'];
@@ -728,7 +728,6 @@ class LagreeformController extends PlonkController {
         // if there were errors, re-populate the form fields
         if (!empty($this->errors)) {
             $this->fields = $_POST;
-            Plonk::dump($this->errors);
         } else {
             $homeCoor = LagreeformDB::getIdUsers(htmlentities(PlonkFilter::getPostValue('sendDepCoorMail')));
             $homeInst = LagreeformDB::getIdInst(htmlentities(PlonkFilter::getPostValue('sendInstName')));
@@ -738,7 +737,6 @@ class LagreeformController extends PlonkController {
 
             if (empty($homeCoor) || empty($hostInst) || empty($homeInst) || empty($education)) {
                 $this->fields = $_POST;
-                Plonk::dump('stage2');
             } else {
 
                 $prevStat = LagreeformDB::getStudentStatus($this->userid);

@@ -396,7 +396,6 @@ class ExtendController extends PlonkController {
                 PlonkWebsite::redirect('index.php?module=office&amp;view=office&amp;success=false');
             }
         } catch (Exception $e) {
-            Plonk::dump('failed');
         }
     }
 
