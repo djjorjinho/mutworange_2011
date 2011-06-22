@@ -36,8 +36,8 @@ class HomeController extends PlonkController {
         // Assign main properties
         $this->mainTpl->assign('siteTitle', $pageTitle);
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
-        $this->mainTpl->assign('pageJava','');
-        $this->mainTpl->assign('breadcrumb','');
+        $this->mainTpl->assign('pageJava', '');
+        $this->mainTpl->assign('breadcrumb', '');
     }
 
     public function showHome() {
@@ -69,10 +69,9 @@ class HomeController extends PlonkController {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 $this->id = PlonkSession::get('id');
-            } else if(PlonkSession::get('userLevel') == 'Erasmus Coordinator') {
+            } else if (PlonkSession::get('userLevel') == 'Erasmus Coordinator') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=staff&' . PlonkWebsite::$viewKey . '=staff');
-            }
-            else {
+            } else {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=office&' . PlonkWebsite::$viewKey . '=office');
             }
         }
@@ -114,11 +113,9 @@ class HomeController extends PlonkController {
                         $this->fillActions($statusStudent['statusOfErasmus'], $statusStudent['action']);
                     } else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
                         $this->pageTpl->assign('next', "<li>Your Precandidate has been denied. Sorry</li>");
-                    }
-                    else if($latestEvent['levelName'] == 'Evaluation Questionaire') {
+                    } else if ($latestEvent['levelName'] == 'Evaluation Questionaire') {
                         $this->pageTpl->assign('nex', 'You have finished your Erasmusproces. :)');
-                    }
-                    else {
+                    } else {
                         if ($action == "Pending") {
                             $this->pageTpl->assign('next', 'Waiting for confirmation of ' . $latestEvent['levelName']);
                         } else {
@@ -187,9 +184,11 @@ class HomeController extends PlonkController {
                 if ($form['type'] == "Student Application Form") {
                     $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' ' . '<a href="index.php?module=' . $form['module'] . '&amp;view=applicform&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 } else if ($form['type'] == "Learning Agreement") {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' '. '<a href="index.php?module=' . $form['module'] . '&amp;view=lagreement&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' ' . '<a href="index.php?module=' . $form['module'] . '&amp;view=lagreement&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                } else if ($form['type'] == "TranScript Of Records") {
+                    $this->pageTpl->assign('form', 'Check your email for the Transcript of Records');
                 } else {
-                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' '. '<a href="index.php?module=' . $form['module'] . '&amp;view=' . $form['view'] . '&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
+                    $this->pageTpl->assignIteration('form', '<li>' . $form['date'] . ' ' . '<a href="index.php?module=' . $form['module'] . '&amp;view=' . $form['view'] . '&amp;form=' . $form['formId'] . '" title="' . $form['type'] . '">' . $form['type'] . '</a></li>');
                 }$this->pageTpl->refillIteration('iForms');
             }
 
@@ -197,10 +196,10 @@ class HomeController extends PlonkController {
         } else {
             $this->pageTpl->assignOption('noForms');
         }
-		
-		//Add Exams modul
-		require_once './modules/exams/exams.php';
-		
+
+        //Add Exams modul
+        require_once './modules/exams/exams.php';
+
         $events = HomeDB::getEvents($this->id);
 
         if (!empty($events)) {
@@ -214,20 +213,17 @@ class HomeController extends PlonkController {
             $this->pageTpl->parseIteration('iEvents');
         }
     }
-    
+
     private function fillActions($status, $action) {
-        if($status == 'Change of Learning Agreement' && $action == 2) {
-             $this->pageTpl->assign('abroad','<li>Wait for confirmation of Change of Learning Agreement</li>');
-        }
-        else if($status == 'Extend Mobility Period' && action == 2) {
+        if ($status == 'Change of Learning Agreement' && $action == 2) {
+            $this->pageTpl->assign('abroad', '<li>Wait for confirmation of Change of Learning Agreement</li>');
+        } else if ($status == 'Extend Mobility Period' && action == 2) {
             $this->pageTpl->assign('abroad', '<li>Wait for confirmation of Extend Mobility Period</li>');
-        }
-        else {
+        } else {
             $this->pageTpl->assign('abroad', '<li><a href="index.php?module=learnagr_ch&amp;view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
                         <li><a href="index.php?module=mobility&amp;view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
         }
     }
-        
 
     public function showNotify() {
         $array = array(
@@ -242,11 +238,10 @@ class HomeController extends PlonkController {
 
         PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
     }
-    
+
     public function doRegister() {
         PlonkWebsite::redirect('index.php?module=register&view=register');
     }
-    
 
 }
 

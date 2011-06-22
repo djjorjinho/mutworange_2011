@@ -40,7 +40,7 @@ class MainController extends PlonkController {
                 if ($erasmuslevel['action'] == 11)
                     $erasmusLevel = 40;
                 else
-                    $this->erasmusLevel = 10;
+                    $erasmusLevel = 10;
             }
             else if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
                 if ($erasmuslevel['action'] == 1)

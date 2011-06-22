@@ -274,7 +274,7 @@ class LagreeformDB {
     public static function getCoordinators() {
         $db = PlonkWebsite::getDB();
         
-        $coordinators = $db->retrieve('select email, firstName, familyName from users where userLevel == "Erasmus Coordinator" AND institutionId == "'.INST_EMAIL.'"');
+        $coordinators = $db->retrieve('select email, firstName, familyName from users where userLevel = "Erasmus Coordinator" AND institutionId = "'.INST_EMAIL.'"');
        
         return $coordinators;
     }

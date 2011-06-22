@@ -915,11 +915,13 @@ class LagreeformController extends PlonkController {
         $erasmusLevelId = LagreeformDB::getIdlevel('Student Application and Learning Agreement');
         $this->formid = PlonkFilter::getGetValue('form');
         $this->userid = LagreeformDB::getStudentByForm($this->formid);
+        
         $prevStat = LagreeformDB::getStudentStatus($this->userid);
         $prev = $prevStat['action'];
         $formArray;
         $descrip = "";
         $status;
+        
         if (PlonkFilter::getPostValue('accepted') == 1) {
             $descrip = "Student Application Form is approved";
             if ($prev == 21) {
@@ -1008,7 +1010,6 @@ class LagreeformController extends PlonkController {
                 'data' => $formArray,
                 'emailField' => 'formId'
             );
-
             $b = new InfoxController;
 
             $methods = array('forms:insertInDb', 'forms:toDb', 'forms:toDb');
@@ -1022,8 +1023,7 @@ class LagreeformController extends PlonkController {
                 $this->upload($this->formid . '.pdf');
                 $b->fileTransfer('forms:saveFile', 'files/' . $this->userid . '/' . $this->formid . '.pdf', $idInst, $this->userid);
             }
-
-            //Plonk::dump($success);
+            
             if ($success !== '0') {
                 PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
             } else {
@@ -1295,10 +1295,10 @@ class LagreeformController extends PlonkController {
                 $b = new InfoxController;
                 //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
                 $methods = array('forms:toDb', 'forms:toDb', 'forms:toDb');
-                $tables = array('users', 'erasmusstudent', 'forms');
+                $tables = array('users', 'erasmusStudent', 'forms');
                 $data = array($us, $er, $form);
                 $idInst = $erasmus['hostInstitutionId'];
-                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+                $b->dataTransfer($methods, $tables, $data, $idInst);
 
                 //Plonk::dump($_FILES);
                 if (!empty($_FILES['pic']['tmp_name'][0])) {
@@ -1333,6 +1333,7 @@ class LagreeformController extends PlonkController {
                 'content' => $jsonArray
             );
 
+            Plonk::dump($status);
             $values = array('action' => $status);
 
             LagreeformDB::deleteCourses('grades', 'studentId = "' . $this->userid . '"');
