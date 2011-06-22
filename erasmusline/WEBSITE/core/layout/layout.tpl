@@ -75,13 +75,13 @@
       </div>
       <div id="nav-main">
           <a href="index.php?module=info&amp;view=info" class="{$tabInfo}" title="Info">Info</a>
-
+		
+		<a href="index.php?module=stats" class="{$tabEis}" title="Executive Information System">EIS</a>
 {option:oStudent}
           <a href="index.php?module=course_matching&amp;view=course_matching" class="{$tabInfo}" title="Course matching">Match</a>
           <a href="index.php?module=residence&amp;view=overview" class="{$tabEis}" title="Rent">Rent</a>
 {/option:oStudent}
 {option:oLogged}
-		<a href="index.php?module=stats" class="{$tabEis}" title="Executive Information System">EIS</a>
                 
       	
         <a href="index.php?module=home&amp;view=userhome" class="{$tabHome}" title="Home">Home</a>

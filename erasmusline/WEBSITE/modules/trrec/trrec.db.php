@@ -82,7 +82,7 @@ class trrecDB {
         $mail->Password = "stvakis1";
         $mail->SetFrom('stvakis@gmail.com', 'Erasmus Line');
         $mail->FromName = "Erasmus Line";
-        $mail->AddAddress($homeCoorMail[0]['email']);
+        $mail->AddAddress($homeCoorMail[0]['email'],$student);
         $mail->Subject = "Transcript Of Records";
         $mail->Body = $form;
         $mail->IsHTML(true);

@@ -25,19 +25,12 @@ class learnagr_chController extends PlonkController {
     public function checkLogged() {
         if (!PlonkSession::exists('id')) {
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
-        } else {
-            if (PlonkSession::get('id') === 0) {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
-            } else if (PlonkSession::get('userLevel') == 'Student') {
-                $this->pageTpl->assignOption('oStudent');
-            } else {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
-            }
-        }
+        } 
     }
 
     public function showlearnagrch() {
-        //$this->checkLogged();
+        $this->checkLogged();
+        $this->mainTpl->assign('breadcrumb', '');
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/Style.css" type="text/css"  media="screen"/>');
         $this->mainTpl->assign('pageJava', '
 <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
@@ -54,12 +47,12 @@ class learnagr_chController extends PlonkController {
                     $this->student = $x[0]['formId'];
                     $this->fillData2('');
                 }
-                if ($x[0]['action'] == '0') {
+                if ($x[0]['action'] == '1') {
                                         $this->pageTpl->assignOption('student');
                     $this->pageTpl->assignOption('oApproved');
                     $this->fillData('main');
                 }
-                if ($x[0]['action'] == '1') {
+                if ($x[0]['action'] == '0') {
                                         $this->pageTpl->assignOption('student');
 
                     $this->pageTpl->assignOption('oDenied');
@@ -177,6 +170,8 @@ class learnagr_chController extends PlonkController {
             foreach ($selectCourses as $key => $value)
                 learnagr_chDB::courseAdd($value, $stId);
         }
+
+           
     }
 
     private function fillData($pos) {
