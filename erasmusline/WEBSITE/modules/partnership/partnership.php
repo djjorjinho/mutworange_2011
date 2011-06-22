@@ -21,6 +21,7 @@ class PartnershipController extends PlonkController {
 	private $study_t = 'educationperinstitute';
     private $owner_t = 'owner';
     private $residence_t = 'residence';
+    private $country_t = 'country';
 	
 	
     
@@ -157,7 +158,7 @@ class PartnershipController extends PlonkController {
 	    	$this->output($encrypted);
 	    	
     	}catch(Exception $e){
-    		Util::log("Exception on (${module}:${method}): ".$e->getMessage()
+    		Util::log1("Exception on (${module}:${method}): ".$e->getMessage()
     							."\n");
     		$out = $this->crypt->encrypt($this->jsonError($e->getMessage(),
     						"${module}:${method}"));
@@ -166,6 +167,7 @@ class PartnershipController extends PlonkController {
     }
     
     function ping($params){
+    	Util::log("PING!!!");
     	return array("Hi"=>$params['hello']);
     }
     
@@ -252,6 +254,7 @@ class PartnershipController extends PlonkController {
 		$study_t = $this->study_t;
 		$owner_t = $this->owner_t;
 		$residence_t = $this->residence_t;
+		$country_t = $this->country_t;
 		
 		$eduTrans = array(); // education id's dictionary
 		$ownerTrans = array(); // owner id's dictionary
@@ -274,9 +277,29 @@ class PartnershipController extends PlonkController {
 			throw new Exception("INST_EXISTS");
 		}
 		
+		// insert country
+		$country = $institution['instCountry'];
+		$c = $db->getOne("select count(Code) as cnt from $country_t ".
+					" where Code='$country'");
+		
+		if($c['cnt']==0){
+			$db->insert(array('Code'=>$country,'Name'=>$params['Name']), 
+								$country_t);
+		}
+		
 		// insert institution
 		unset($institution['instId']);
 		$instId = $db->insert($institution, $institution_t);
+		
+		// insert country
+		$country = $institution['instCountry'];
+		$c = $db->getOne("select count(Code) as cnt from country ".
+					" where Code='$country'");
+		
+		if($c['cnt']==0){
+			$db->insert(array('Code'=>$country,'Name'=>$params['Name']), 
+								$institution_t);
+		}
 		
 		// insert educations by order and return new id's array by order
 		$educations_id = array_map(
@@ -327,8 +350,7 @@ class PartnershipController extends PlonkController {
 		$residence_id = array_map(
 		function($item)use($db,$residence_t,&$ownerTrans){
 			unset($item['residenceId']);
-			$oldId = $item['ownerId'];
-			$item['ownerId'] = $ownerTrans[$oldId];
+
 			$id = $db->insert($item,$residence_t);
 			return $id;
 		},$residence);
