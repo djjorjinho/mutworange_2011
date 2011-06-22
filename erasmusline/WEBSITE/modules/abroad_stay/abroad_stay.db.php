@@ -129,7 +129,8 @@ class abroad_stayDB {
         $mail->IsHTML(true);
         $mail->SMTPDebug = false;
         $mail->do_debug = 0;
-        if (!$mail->Send()) {
+        //$succes = $mail->Send();
+        if (!$succes) {
             return $mail->ErrorInfo;
         } else {
             return '1';

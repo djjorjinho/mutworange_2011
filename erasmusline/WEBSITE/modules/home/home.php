@@ -224,11 +224,11 @@ class HomeController extends PlonkController {
     private function fillActions($status, $action) {
         if ($status == 'Change of Learning Agreement' && $action == 2) {
             $this->pageTpl->assign('abroad', '<li>Wait for confirmation of Change of Learning Agreement</li>');
-        } else if ($status == 'Extend Mobility Period' && action == 2) {
+        } else if ($status == 'Extend Mobility Period' && $action == 2) {
             $this->pageTpl->assign('abroad', '<li>Wait for confirmation of Extend Mobility Period</li>');
         } else {
             $this->pageTpl->assign('abroad', '<li><a href="index.php?module=learnagr_ch&amp;view=learnagrch" title="Change Learn Agreement">Change Learning Agreement</a></li>
-                        <li><a href="index.php?module=mobility&amp;view=mobility" title="Mobility Extension Period">Mobility Extension Period</a></li>');
+                        <li><a href="index.php?module=extend&amp;view=extend" title="Mobility Extension Period">Mobility Extension Period</a></li>');
         }
     }
 

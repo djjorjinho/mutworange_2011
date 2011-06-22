@@ -422,6 +422,55 @@ class abroad_stayController extends PlonkController {
             $this->mail->assign('header', 'Certificate Of Departure');
             $this->mail->assign('form', 'Departure Date');
             $this->mail->assign('field', '<div class="TRdiv">Date : ' . $post['endDate'] . '</div>');
+            
+            $infoStudent = abroad_stayDB::getStudentInfo($post['User']);
+            $infoInst = abroad_stayDB::getInstInfo($infoStudent[0]['hostInstitutionId']);
+
+            $erasmusLevelId = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
+
+            $valueEvent = array(
+                'reader' => $infoStudent['homeCoordinatorId'],
+                'timestamp' => date("Y-m-d"),
+                'motivation' => '',
+                'studentId' => $post['User'],
+                'action' => 2,
+                'erasmusLevelId' => $erasmusLevel['levelId'],
+                'eventDescrip' => $infoStudent[0]['firstName'] . ' ' . $infoStudent[0]['familyName'] . ' is arrived at ' . $infoInst[0]['instName'],
+                'readIt' => 0
+            );
+            
+            $er = array(
+                'statusOfErasmus' => 'Certificate Of Departure',
+                'action' => 2
+            );
+            
+            abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "'.$post['User'].'"');
+
+            $erasmus = abroad_stayDB::getErasmusInfo($post['User']);
+
+            try {
+
+                $event = array(
+                    'table' => 'studentsEvents',
+                    'data' => $valueEvent
+                );
+                
+                $erasss = array(
+                    'table' => 'erasmusStudent',
+                    'data' => $er,
+                    'emailField' => 'users_email'
+                );
+
+                $b = new InfoxController;
+
+                $methods = array('forms:insertInDb', 'forms:toDb');
+                $tables = array('studentsEvents',  'erasmusStudent');
+                $data = array($event, $erasss);
+                $idInst = $erasmus['homeInstitutionId'];
+                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            } catch (Exception $e) {
+                
+            }
 
             $return = abroad_stayDB::SubmitTranscript($this->mail->getContent(), $post['User']);
             if ($return == '1') {
