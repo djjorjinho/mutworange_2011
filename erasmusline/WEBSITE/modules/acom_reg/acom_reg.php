@@ -168,6 +168,28 @@ class acom_regController extends PlonkController {
         if ($return == '1') {
             $this->position = '3';
             $this->error = '<div class="SuccessPHP"><p>Your Application Was Success</p></div>';
+            
+            $erasmusLevel = ExtendDB::getErasmusLevelId('Accomodation Registration Form');
+            
+            $valueEvent = array(
+                'reader' => 'Student',
+                'timestamp' => date("Y-m-d"),
+                'motivation' => '',
+                'studentId' => PlonkSession::get('id'),
+                'action' => 2,
+                'erasmusLevelId' => $erasmusLevel['levelId'],
+                'eventDescrip' => 'Filled in Accomodation Registration Form and sent it to the owner.',
+                'readIt' => 0
+            );
+
+            $er = array(
+                'statusOfErasmus' => 'Accomodation Registration Form',
+                'action' => 2
+            );
+
+            ExtendDB::insertValues('studentsEvents', $valueEvent);
+            ExtendDB::insertValues('erasmusStudent', $er, 'users_email = "'.PlonkSession::get('id').'"');
+            
         } else {
             $this->position = '2yes';
             $this->error = '<div class="errorPHP"><p>' . $return . '</p><p>Try Sending it again</p></div>';

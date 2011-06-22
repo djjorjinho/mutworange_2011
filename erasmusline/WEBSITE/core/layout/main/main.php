@@ -28,30 +28,36 @@ class MainController extends PlonkController {
             
             if ($erasmuslevel['statusOfErasmus'] == 'Precandidate') {
                 if ($erasmuslevel['action'] == 2)
-                    $erasmusLevel = 5;
-                if ($erasmuslevel['action'] == 1)
                     $erasmusLevel = 10;
+                if ($erasmuslevel['action'] == 1)
+                    $erasmusLevel = 20;
             }
             else if ($erasmuslevel['statusOfErasmus'] == 'Student Application and Learning Agreement') {
                 if ($erasmuslevel['action'] == 22)
-                    $erasmusLevel = 15;
+                    $erasmusLevel = 30;
                 if ($erasmuslevel['action'] == 21 || $erasmuslevel['action'] == 12 || $erasmuslevel['action'] == 10 || $erasmuslevel['action'] == 1)
-                    $erasmusLevel = 25;
-                if ($erasmuslevel['action'] == 11)
                     $erasmusLevel = 40;
+                if ($erasmuslevel['action'] == 11)
+                    $erasmusLevel = 50;
                 else
-                    $erasmusLevel = 10;
+                    $erasmusLevel = 20;
             }
             else if ($erasmuslevel['statusOfErasmus'] == 'Accomodation Registration Form') {
-                if ($erasmuslevel['action'] == 1)
-                    $erasmusLevel = 50;
-                if ($erasmuslevel['action'] == 2)
-                    $erasmusLevel = 45;
-                else
-                    $erasmusLevel = 40;
+                
+                    $erasmusLevel = 60;
             }
+            else if($erasmuslevel['statusOfErasmus'] == 'Certificate of Arrival') {
+                $erasmusLevel = 70;
+            }
+            else if($erasmuslevel['statusOfErasmus'] == 'Certficate of Departure') {
+                $erasmuslevel = 90;
+            }
+            else if($erasmuslevel['statusOfErasmus'] == "Evaluation Questionaire") {
+                $erasmuslevel = 100;
+            }
+            
             else {
-                $erasmusLevel = 90;
+                $erasmusLevel = 75;
             }
         }
         return $erasmusLevel;
