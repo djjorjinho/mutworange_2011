@@ -22,7 +22,7 @@ class MainController extends PlonkController {
             $id = PlonkSession::get('id');
         }
         $erasmuslevel = ProfileDB::getErasmusById($id);
-        $erasmusLevel;
+        $erasmusLevel = 0;
 
         if (!empty($erasmuslevel)) {
             
