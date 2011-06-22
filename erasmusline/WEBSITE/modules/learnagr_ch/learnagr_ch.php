@@ -54,12 +54,12 @@ class learnagr_chController extends PlonkController {
                     $this->student = $x[0]['formId'];
                     $this->fillData2('');
                 }
-                if ($x[0]['action'] == '0') {
+                if ($x[0]['action'] == '1') {
                                         $this->pageTpl->assignOption('student');
                     $this->pageTpl->assignOption('oApproved');
                     $this->fillData('main');
                 }
-                if ($x[0]['action'] == '1') {
+                if ($x[0]['action'] == '0') {
                                         $this->pageTpl->assignOption('student');
 
                     $this->pageTpl->assignOption('oDenied');
@@ -177,6 +177,8 @@ class learnagr_chController extends PlonkController {
             foreach ($selectCourses as $key => $value)
                 learnagr_chDB::courseAdd($value, $stId);
         }
+
+           
     }
 
     private function fillData($pos) {

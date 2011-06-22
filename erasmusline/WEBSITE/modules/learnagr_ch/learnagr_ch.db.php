@@ -4,6 +4,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once "./modules/infox/infox.php";
 
 class learnagr_chDB {
     /* Gets Student Info (DONE) */
@@ -98,7 +99,7 @@ class learnagr_chDB {
         $query = "
                DELETE FROM grades
                WHERE studentId='" . $db->escape($student) . "'
-               and (localGrade IS NULL OR localGrade<'".(int) $scale[0]['scale']."')";
+               and (localGrade IS NULL OR localGrade<'" . (int) $scale[0]['scale'] . "')";
         $db->execute($query);
     }
 
@@ -132,14 +133,19 @@ class learnagr_chDB {
     //Sends Email (changes done)
     public static function SubmitTranscript($post) {
         $db = PlonkWebsite::getDB();
-
-            $formTable = json_encode($post);
-            $formId = Functions::createRandomString();
-            $student=  PlonkSession::get('id');
-            $date = date("y-m-d");
-            $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '" . $db->escape($formId) . "','Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
-            $db->execute($query);
-            
+        
+        $formTable = json_encode($post);
+        $formId = Functions::createRandomString();
+        $student = PlonkSession::get('id');
+        $date = date("y-m-d");
+        $query = "
+               DELETE FROM forms
+               WHERE studentId='" . $db->escape($student) . "'
+               and erasmusLevelId=13";
+        $db->execute($query);
+        
+        $query = "INSERT INTO forms (formId,type,date,content,studentId,erasmusLevelId) VALUES( '" . $db->escape($formId) . "','Learning Agreement Change','" . $db->escape($date) . "','" . $db->escape($formTable) . "','" . $db->escape($student) . "','13') ";
+        $db->execute($query);
     }
 
     public static function checkRecords() {
@@ -150,11 +156,11 @@ class learnagr_chDB {
                 join erasmusstudent as ers on u.email=ers.users_email
                 join forms as f on f.studentId=ers.users_email
                 where f.erasmusLevelId=13
-                and f.studentId='".$db->escape($stId)."'
+                and f.studentId='" . $db->escape($stId) . "'
                 ORDER BY f.date DESC");
         return $stName;
     }
-    
+
     public static function getForms() {
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
@@ -185,20 +191,21 @@ class learnagr_chDB {
                 ORDER BY u.familyName ASC ");
         return $stName;
     }
-    
-        public static function getFormSTUDENT($id) {
+
+    public static function getFormSTUDENT($id) {
         $db = PlonkWebsite::getDB();
         $stId = PlonkSession::get('id');
         $stName = $db->retrieve("
                 select f.content,u.email,u.userId,u.firstName,u.familyName from users as u
                 join erasmusstudent as ers on u.email=ers.users_email
                 join forms as f on f.studentId=ers.users_email
-                where f.studentId='".$db->escape($stId)."'
+                where f.studentId='" . $db->escape($stId) . "'
                 AND f.erasmusLevelId=13
                 AND f.formId='" . $db->escape($id) . "'
                 ORDER BY u.familyName ASC ");
         return $stName;
     }
+
     public static function getFormtoW($id) {
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
@@ -208,11 +215,12 @@ class learnagr_chDB {
                 join forms as f on f.studentId=ers.users_email
                 where (ers.hostCoordinatorId='$cordId' OR ers.homeCoordinatorId='$cordId')
                 AND f.erasmusLevelId=13
-                AND f.action=0
+                AND f.action=1
                 AND (f.motivationHome=1 AND f.motivationHost=1)
                 AND f.formId='" . $db->escape($id) . "'");
         return $stName;
     }
+
     public static function getCourse($id) {
         $db = PlonkWebsite::getDB();
         $cordId = PlonkSession::get('id');
@@ -232,6 +240,9 @@ class learnagr_chDB {
                 AND f.erasmusLevelId=13
                 AND (f.motivationHome is NULL or f.motivationHost is NULL)
                 AND f.formId='" . $db->escape($f) . "'");
+
+        
+        
         if ($stName[0]['homeCoordinatorId'] == $cordId) {
             $query = "UPDATE forms SET 
                 motivationHome='" . $db->escape($_POST['mot']) . "'     
@@ -239,35 +250,90 @@ class learnagr_chDB {
                             ";
 
             $db->execute($query);
+            learnagr_chDB::sendInfox('hostInstitutionId');
         }
+
         if ($stName[0]['hostCoordinatorId'] == $cordId) {
             $query = "UPDATE forms SET 
                 motivationHost='" . $db->escape($_POST['mot']) . "'     
                 WHERE formId='" . $db->escape($f) . "'
                             ";
             $db->execute($query);
+            learnagr_chDB::sendInfox('homeInstitutionId');
         }
-        
+
         $stName2 = $db->retrieve("
                 select motivationHost,motivationHome from forms as f
                 WHERE f.erasmusLevelId=13
                 AND f.formId='" . $db->escape($f) . "'");
-        
-        if (($stName2[0]['motivationHost']=='1') && ($stName2[0]['motivationHome']=='1')){
-            $query = "UPDATE forms SET 
-                action=0
-                WHERE formId='" . $db->escape($f) . "'
-                            ";
-            $db->execute($query);
-            return '1';
-        } else if (($stName2[0]['motivationHost']=='2') || ($stName2[0]['motivationHome']=='2')){
+
+        if (($stName2[0]['motivationHost'] == '1') && ($stName2[0]['motivationHome'] == '1')) {
             $query = "UPDATE forms SET 
                 action=1
                 WHERE formId='" . $db->escape($f) . "'
                             ";
             $db->execute($query);
+            if ($stName[0]['hostCoordinatorId'] == $cordId) {
+                learnagr_chDB::sendInfox('homeInstitutionId');
+            } else {
+                learnagr_chDB::sendInfox('hostInstitutionId');
+            }
+            return '1';
+        } else if (($stName2[0]['motivationHost'] == '2') || ($stName2[0]['motivationHome'] == '2')) {
+            $query = "UPDATE forms SET 
+                action=0
+                WHERE formId='" . $db->escape($f) . "'
+                            ";
+            $db->execute($query);
+            if ($stName[0]['hostCoordinatorId'] == $cordId) {
+                learnagr_chDB::sendInfox('homeInstitutionId');
+            } else {
+                learnagr_chDB::sendInfox('hostInstitutionId');
+            }
         }
-        
+    }
+
+    public static function updateErasmusStudent($table, $values, $where) {
+        $db = PlonkWebsite::getDB();
+
+        $true = $db->update($table, $values, $where);
+    }
+
+    public static function getFormLOL($id) {
+        $db = PlonkWebsite::getDB();
+
+        $form = $db->retrieveOne("select * from forms where formId = '" . $id . "'");
+
+        return $form;
+    }
+
+    public function sendInfox($where) {
+        $form = learnagr_chDB::getFormLOL($_POST['form']);
+
+        try {
+
+
+            $er = array(
+                'table' => 'erasmusstudent',
+                'data' => array('statusOfErasmus' => 'Change of Learning Agreement'),
+                'emailField' => 'users_email'
+            );
+            $form = array(
+                'table' => 'forms',
+                'data' => $form,
+                'emailField' => 'formId'
+            );
+
+            $b = new InfoxController;
+            //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
+            $methods = array('forms:toDb', 'forms:toDb');
+            $tables = array('erasmusstudent', 'forms');
+            $data = array($er, $form);
+            $idInst = $erasmus['hostInstitutionId'];
+            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+        } catch (Exception $e) {
+            Plonk::dump('failed');
+        }
     }
 
 }
