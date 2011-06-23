@@ -110,16 +110,14 @@ class HomeController extends PlonkController {
                         $action = "Denied";
                     }
                     $this->pageTpl->assign('status', $action);
-                    if (!empty($next['next'])) {
-                        if ($next['next'] == "abroadstay") {
-                            $this->pageTpl->assign('next', 'See below for a list of possible actions you can perform.');
-                            $this->pageTpl->assignOption('oAbroad');
-                            $this->fillActions($statusStudent['statusOfErasmus'], $statusStudent['action']);
-                        }
+                    if (empty($next)) {
+                        $this->pageTpl->assign('next', 'You have finished your Erasmusproces. :)');
+                    } else if ($next['next'] == "abroadstay") {
+                        $this->pageTpl->assign('next', 'See below for a list of possible actions you can perform.');
+                        $this->pageTpl->assignOption('oAbroad');
+                        $this->fillActions($statusStudent['statusOfErasmus'], $statusStudent['action']);
                     } else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
                         $this->pageTpl->assign('next', "<li>Your Precandidate has been denied. Sorry</li>");
-                    } else if ($latestEvent['levelName'] == 'Evaluation Questionaire') {
-                        $this->pageTpl->assign('next', 'You have finished your Erasmusproces. :)');
                     } else {
                         if ($action == "Pending") {
                             $this->pageTpl->assign('next', 'Waiting for confirmation of ' . $latestEvent['levelName']);

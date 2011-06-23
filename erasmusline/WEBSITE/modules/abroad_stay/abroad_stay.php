@@ -464,7 +464,8 @@ class abroad_stayController extends PlonkController {
 
                 $er = array(
                     'statusOfErasmus' => 'Certificate Of Departure',
-                    'action' => 1
+                    'action' => 1,
+                    'users_email' => $post['User']
                 );
 
                 abroad_stayDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . $post['User'] . '"');
@@ -475,12 +476,12 @@ class abroad_stayController extends PlonkController {
                 try {
 
                     $event = array(
-                        'table' => 'studentsEvents',
+                        'table' => 'studentsevents',
                         'data' => $valueEvent
                     );
 
                     $erasss = array(
-                        'table' => 'erasmusStudent',
+                        'table' => 'erasmusstudent',
                         'data' => $er,
                         'emailField' => 'users_email'
                     );
@@ -488,7 +489,7 @@ class abroad_stayController extends PlonkController {
                     $b = new InfoxController;
 
                     $methods = array('forms:insertInDb', 'forms:toDb');
-                    $tables = array('studentsEvents', 'erasmusStudent');
+                    $tables = array('studentsevents', 'erasmusstudent');
                     $data = array($event, $erasss);
                     $idInst = $erasmus['homeInstitutionId'];
                     $success = $b->dataTransfer($methods, $tables, $data, $idInst);

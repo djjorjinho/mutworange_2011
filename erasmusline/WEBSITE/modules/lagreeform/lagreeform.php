@@ -1229,7 +1229,7 @@ class LagreeformController extends PlonkController {
             $tables = array('users', 'users', 'users', 'erasmusstudent', 'forms');
             $data = array($office, $coor, $us, $er, $form);
             $idInst = $erasmus['hostInstitutionId'];
-            $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            $b->dataTransfer($methods, $tables, $data, $idInst);
             if ($success !== '0') {
                 PlonkWebsite::redirect('index.php?module=office&view=office&success=true');
             } else {

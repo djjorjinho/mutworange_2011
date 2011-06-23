@@ -25,7 +25,7 @@
     </div>
     {/option:oPending}
 <fieldset>
-    {$pageJava}
+
     <legend>Student Information</legend> 
 
             <p>Family name: {$familyName}</p>

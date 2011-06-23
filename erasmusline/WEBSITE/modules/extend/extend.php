@@ -30,7 +30,7 @@ class ExtendController extends PlonkController {
             $this->pageTpl->assignOption('oNotFilled');
         }
 
-        //$this->checklogged();
+        $this->checklogged();
         $this->mainTplAssigns();
         $this->fillUser();
 
@@ -317,7 +317,7 @@ class ExtendController extends PlonkController {
             $status = 1;
             $formArray = array(
                 'action' => 1,
-                'motivationHost' => PlonkFilter::getPostValue('coordinator'),
+                'motivationHome' => PlonkFilter::getPostValue('coordinator'),
                 'formId' => $this->formid,
                 'content' => $jsonArray
             );
