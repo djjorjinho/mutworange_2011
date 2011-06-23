@@ -1333,7 +1333,6 @@ class LagreeformController extends PlonkController {
                 'content' => $jsonArray
             );
 
-            Plonk::dump($status);
             $values = array('action' => $status);
 
             LagreeformDB::deleteCourses('grades', 'studentId = "' . $this->userid . '"');

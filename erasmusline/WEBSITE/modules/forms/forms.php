@@ -57,5 +57,50 @@ class FormsController extends PlonkController {
 
         $msg = move_uploaded_file($tmp_name, $uploadfile);
     }
+	
+	public function addToDb($params) {
+        $edb = new FormsDB();
+        if (isset($_REQUEST['json'])) {
+            $obj = json_decode($params, true);
+            
+			$table = $obj['table'];
+			$data = array(
+				'erasmusId' => (int)$obj['data']['erasmusId'],
+				'courseId' => (int)$obj['data']['courseId']
+				);
+
+            $edb->insertBelgium($table, $data);
+            
+        }
+    }
+	
+	public function updateExamsToDb($params) {
+        $edb = new FormsDB();
+        if (isset($_REQUEST['json'])) {
+            $obj = json_decode($params, true);
+            
+			$table = $obj['table'];
+			$data =	$obj['data'];
+			
+            $edb->updateBelgium($table, array('isRequested' => '1'), "`coursespereducperinst`.`courseName` = \"" . $data . "\" 
+												AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`");          
+        }
+    }
+	
+	public function updateToDb($params) {
+		
+        $edb = PlonkWebsite::getDB();
+        if (isset($_REQUEST['json'])) {
+            $obj = json_decode($params, true);
+            
+			$table = $obj['table'];
+			$data = array(
+				'set' => $obj['data']['set'],
+				'where' => $obj['data']['where']
+				);
+			
+            $edb->execute("UPDATE " . $table . " SET " . $data['set'] . " WHERE " . $data['where']);          
+        }
+    }
 
 }
