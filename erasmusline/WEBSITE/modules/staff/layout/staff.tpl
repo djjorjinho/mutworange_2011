@@ -11,7 +11,6 @@
     <li class="level2"><a href="index.php?module=staff&amp;view=changes" title="Show Change of Learning Agreements">Show Change of Learning Agreements</a></li>
     <li class="level2"><a href="index.php?module=trrec&amp;view=select">Show Transcript of Records</a></li>
     <li class="level2"><a href="index.php?module=abroad_stay&amp;view=select">Show Certificates</a></li>
-    <li class="level2"><a href="index.php?module=staff&amp;view=applics" title="Students">Students</a></li>
 </ul>
 </fieldset>
     <fieldset>

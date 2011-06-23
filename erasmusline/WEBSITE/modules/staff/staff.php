@@ -75,7 +75,7 @@ class StaffController extends PlonkController {
         foreach ($pres as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&amp;student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=precandidate&view=precandidate&form=" . $student['formId']);
 
@@ -109,7 +109,7 @@ class StaffController extends PlonkController {
         foreach ($agrees as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&amp;student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=lagreement&form=" . $student['formId']);
 
@@ -143,7 +143,7 @@ class StaffController extends PlonkController {
         foreach ($changes as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&amp;student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=learnagr_ch&view=learnagrch&form=" . $student['formId']);
 
@@ -179,7 +179,7 @@ class StaffController extends PlonkController {
         foreach ($applics as $student) {
             if ($student['email'] != 'admin') {
                 $this->pageTpl->assignIteration('name', $student['firstName'] . ' ' . $student['familyName']);
-                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile');
+                $this->pageTpl->assignIteration('hrefProfile', $_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=profile&' . PlonkWebsite::$viewKey . '=ownprofile&amp;student='.$student['email']);
                 $this->pageTpl->assignIteration('hrefPhoto', 'files/' . $student['email'] . '/profile.jpg');
                 $this->pageTpl->assignIteration('url', "index.php?module=lagreeform&view=applicform&form=" . $student['formId']);
 

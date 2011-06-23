@@ -29,16 +29,16 @@ class abroad_stayController extends PlonkController {
 
     public function checkLogged() {
         if (!PlonkSession::exists('id')) {
-
             PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
         } else {
-            //Plonk::dump('test');
+            
             if (PlonkSession::get('id') === 0) {
-                $this->id = PlonkSession::get('id');
+                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=admin&' . PlonkWebsite::$viewKey . '=admin');
             } else if (PlonkSession::get('userLevel') == 'Student') {
                 PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=userhome');
-            } else if (PlonkSession::get('userLevel') != 'Erasmus Coordinator') {
-                PlonkWebsite::redirect($_SERVER['PHP_SELF'] . '?' . PlonkWebsite::$moduleKey . '=home&' . PlonkWebsite::$viewKey . '=home');
+            } else {
+                $this->id = PlonkSession::get('id');
+                
             }
         }
     }
