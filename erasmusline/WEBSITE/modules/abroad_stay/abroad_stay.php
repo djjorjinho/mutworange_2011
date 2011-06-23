@@ -380,7 +380,7 @@ class abroad_stayController extends PlonkController {
             $erasmusLevel = abroad_stayDB::getErasmusLevelId('Certificate Of Arrival');
 
             $valueEvent = array(
-                'reader' => $infoStudent['homeCoordinatorId'],
+                'reader' => $infoStudent[0]['homeCoordinatorId'],
                 'timestamp' => date("Y-m-d"),
                 'motivation' => '',
                 'studentId' => $post['User'],
@@ -452,7 +452,7 @@ class abroad_stayController extends PlonkController {
                 $erasmusLevel = abroad_stayDB::getErasmusLevelId('Certificate Of Departure');
 
                 $valueEvent = array(
-                    'reader' => $infoStudent['homeCoordinatorId'],
+                    'reader' => $infoStudent[0]['homeCoordinatorId'],
                     'timestamp' => date("Y-m-d"),
                     'motivation' => '',
                     'studentId' => $post['User'],

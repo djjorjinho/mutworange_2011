@@ -358,7 +358,7 @@ class Teardown_finishController extends PlonkController {
             'content' => $jsonArray,
             'studentId' => PlonkSession::get('id'),
             'erasmusLevelId' => $erasmusLevel['levelId'],
-            'action' => 2
+            'action' => 1
         );
 
 
@@ -367,7 +367,7 @@ class Teardown_finishController extends PlonkController {
             'timestamp' => date("Y-m-d"),
             'motivation' => '',
             'studentId' => PlonkSession::get('id'),
-            'action' => 30,
+            'action' => 1,
             'erasmusLevelId' => $erasmusLevel['levelId'],
             'eventDescrip' => 'Filled in Student Evaluation Questionaire',
             'readIt' => 0
@@ -375,7 +375,7 @@ class Teardown_finishController extends PlonkController {
         
         $erasmusStudent = array(
             'statusOfErasmus' => "Evaluation Questionaire",
-            'action' => 2
+            'action' => 1
         );
 
         Teardown_finishDB::insertStudentEvent('studentsEvents', $valueEvent);
