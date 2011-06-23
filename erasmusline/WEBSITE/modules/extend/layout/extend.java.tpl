@@ -5,7 +5,7 @@
 	jQuery(function() {
 		jQuery( "#from" ).datepicker();
 	});
-        $(function() {
+        jQuery(function() {
 		jQuery( "#until" ).datepicker();
 	});
  </script>

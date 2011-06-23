@@ -70,7 +70,7 @@ class ExtendController extends PlonkController {
 
     private function mainTplAssigns() {
         $java = new PlonkTemplate(PATH_MODULES . '/' . MODULE . '/layout/extend.java.tpl');
-        $this->pageTpl->assign('pageJava', $java->getContent(true));
+        $this->mainTpl->assign('pageJava', $java->getContent(true));
         $this->mainTpl->assign('pageMeta', '<link rel="stylesheet" href="./core/css/form.css" type="text/css" />');
         $this->mainTpl->assign('pageJava', '');
         $this->mainTpl->assign('siteTitle', 'Extend Mobility Period');
