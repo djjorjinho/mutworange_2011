@@ -30,7 +30,7 @@ class ExtendController extends PlonkController {
             $this->pageTpl->assignOption('oNotFilled');
         }
 
-        $this->checklogged();
+        //$this->checklogged();
         $this->mainTplAssigns();
         $this->fillUser();
 

@@ -95,8 +95,7 @@ class HomeController extends PlonkController {
             if ($statusStudent['statusOfErasmus'] != "Student Application and Learning Agreement") {
                 if (!empty($latestEvent) && $latestEvent['next'] != 'abroadstay') {
                     $next = HomeDB::getNext($latestEvent['next']);
-                }
-                else {
+                } else {
                     $next['next'] = "abroadstay";
                 }
 
@@ -111,17 +110,17 @@ class HomeController extends PlonkController {
                         $action = "Denied";
                     }
                     $this->pageTpl->assign('status', $action);
-                    if ($next['next'] == "abroadstay") {
-                        $this->pageTpl->assign('next', 'See below for a list of possible actions you can perform.');
-                        $this->pageTpl->assignOption('oAbroad');
-                        $this->fillActions($statusStudent['statusOfErasmus'], $statusStudent['action']);
+                    if (!empty($next['next'])) {
+                        if ($next['next'] == "abroadstay") {
+                            $this->pageTpl->assign('next', 'See below for a list of possible actions you can perform.');
+                            $this->pageTpl->assignOption('oAbroad');
+                            $this->fillActions($statusStudent['statusOfErasmus'], $statusStudent['action']);
+                        }
                     } else if ($latestEvent['levelName'] == "Precandidate" && $action == "Denied") {
                         $this->pageTpl->assign('next', "<li>Your Precandidate has been denied. Sorry</li>");
                     } else if ($latestEvent['levelName'] == 'Evaluation Questionaire') {
                         $this->pageTpl->assign('next', 'You have finished your Erasmusproces. :)');
-                    }
-                    
-                    else {
+                    } else {
                         if ($action == "Pending") {
                             $this->pageTpl->assign('next', 'Waiting for confirmation of ' . $latestEvent['levelName']);
                         } else {
@@ -129,8 +128,7 @@ class HomeController extends PlonkController {
                         }
                     }
                 }
-            } 
-            else {
+            } else {
                 if ($statusStudent['action'] == 0) {
                     $this->pageTpl->assign('action', 'Filled in Student Application Form and Learning Agreement.');
                     $this->pageTpl->assign('status', 'Student Application is denied. Learning Agreement is denied');

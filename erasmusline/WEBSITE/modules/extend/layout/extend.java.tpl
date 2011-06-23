@@ -2,11 +2,11 @@
                     <script type="text/javascript" src="./core/js/jquery/jquery-1.5.js"></script>
                     <script type="text/javascript" src="./core/js/datepicker/js/jquery-ui-1.8.9.custom.min.js"></script>
                     <script>
-	$(function() {
-		$( "#from" ).datepicker();
+	jQuery(function() {
+		jQuery( "#from" ).datepicker();
 	});
         $(function() {
-		$( "#until" ).datepicker();
+		jQuery( "#until" ).datepicker();
 	});
  </script>
         <script type="text/javascript" src="core/js/jquery/jquery.validationEngine.js"></script>

@@ -50,10 +50,10 @@ class MainController extends PlonkController {
                 $erasmusLevel = 70;
             }
             else if($erasmuslevel['statusOfErasmus'] == 'Certficate of Departure') {
-                $erasmuslevel = 90;
+                $erasmusLevel = 90;
             }
             else if($erasmuslevel['statusOfErasmus'] == "Evaluation Questionaire") {
-                $erasmuslevel = 100;
+                $erasmusLevel = 100;
             }
             
             else {

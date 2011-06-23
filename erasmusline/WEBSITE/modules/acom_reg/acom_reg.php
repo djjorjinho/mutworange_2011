@@ -151,7 +151,7 @@ class acom_regController extends PlonkController {
                     acom_regDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
                     
                 try {
-                	$erasmus = acom_regDB::getErasmusInfo($this->userid);
+                	$erasmus = acom_regDB::getErasmusInfo(PlonkSession::get('id'));
                 	
                 $form = array(
                     'table' => 'erasmusStudent',
