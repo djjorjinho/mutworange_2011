@@ -148,6 +148,14 @@ class acom_regDB {
 
         return $id;
     }
+    
+public static function getErasmusInfo($id) {
+        $db = PlonkWebsite::getDB();
+        
+        $student = $db->retrieveOne("select * from erasmusStudent where users_email = '".$id."'");
+        
+        return $student;
+    }
 
 }
 

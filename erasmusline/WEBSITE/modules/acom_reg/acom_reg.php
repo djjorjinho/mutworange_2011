@@ -147,6 +147,27 @@ class acom_regController extends PlonkController {
 
                     acom_regDB::insertValues('studentsEvents', $valueEvent);
                     acom_regDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
+                    
+                try {
+                	$erasmus = acom_regDB::getErasmusInfo($this->userid);
+                	
+                $form = array(
+                    'table' => 'erasmusStudent',
+                    'data' => $er,
+                    'emailField' => 'users_email'
+                );
+
+                $b = new InfoxController;
+                //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
+                $methods = array('forms:toDb');
+                $tables = array('erasmusStudent');
+                $data = array($form);
+                $idInst = $erasmus['hostInstitutionId'];
+                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            } catch (Exception $e) {
+                Plonk::dump('failed');
+            }
+                    
                     PlonkWebsite::redirect('index.php?module=home&view=userhome');
                 } else {
                     $this->error = '<div class="errorPHP">Date of Departure should be after Date of Arrival</div>';
@@ -192,6 +213,26 @@ class acom_regController extends PlonkController {
             acom_regDB::insertValues('studentsEvents', $valueEvent);
             acom_regDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
 
+        try {
+                	$erasmus = acom_regDB::getErasmusInfo($this->userid);
+                	
+                $form = array(
+                    'table' => 'erasmusStudent',
+                    'data' => $er,
+                    'emailField' => 'users_email'
+                );
+
+                $b = new InfoxController;
+                //$b->TransferBelgium($jsonStringUser, $hostInst['instId']);
+                $methods = array('forms:toDb');
+                $tables = array('erasmusStudent');
+                $data = array($form);
+                $idInst = $erasmus['homeInstitutionId'];
+                $success = $b->dataTransfer($methods, $tables, $data, $idInst);
+            } catch (Exception $e) {
+                Plonk::dump('failed');
+            }
+            
             PlonkWebsite::redirect('index.php?module=home&view=userhome');
         } else {
             $this->position = '2no';

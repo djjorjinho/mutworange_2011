@@ -374,7 +374,6 @@ class InfoxController extends PlonkController {
                 }
             }
             
-            print_r(curl::getResult());
         } else {
             Plonk::dump('Arrays not same length');
         }
