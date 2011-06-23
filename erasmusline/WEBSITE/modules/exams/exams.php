@@ -1,6 +1,7 @@
 <?php
 
 require_once "./modules/infox/infox.php";
+require_once('library/eis/Util.php');
 
 $today = date("Y-m-d");
 $edb = PlonkWebsite::getDB();
@@ -19,10 +20,12 @@ if($items['userLevel'] == "Erasmus Coordinator") {
 	$aStr = "";
 
 	if(!isset($_POST["manage"])) {
+		
 		$str = '<p><form name="input" action="'.submitExams().'" method="post">';
 		$str .= '&emsp;<input type="submit" name="manage" value=" Manage exams " /></form></p>';
 		$this->pageTpl->assign('exams', $examStr.$str);
 	} else {
+		
 
 		$items = $edb->retrieveOne("SELECT `erasmusstudent`.`startDate`, `erasmusstudent`.`endDate`
 				FROM `users`, `erasmusstudent`
@@ -59,23 +62,20 @@ if($items['userLevel'] == "Erasmus Coordinator") {
 				for($i = 0; $i < count($items); $i++) {
 					$edb->execute("INSERT INTO `homecoursestoerasmus` (`erasmusId`, `courseId`) VALUES (" . $items[$i] . ", " . $items2[$i] . ")");
 
-					$infox = new InfoxController;
-
-					$institution = $edb->retrieveOne("select * from  erasmusstudent as e
-            		inner join institutions as i on e.hostInstitutionId = i.instEmail 
-            		where e.studentId = " . $items[$i]);
-
+					$infox = new InfoxController();
+					
+					$institution = $edb->retrieveOne("SELECT * 
+											FROM erasmusstudent
+											WHERE users_email = \"" . $_SESSION['id'] . "\"" );
 					$values = array(
 					'erasmusId' => $items[$i],
-					'courseId' => $items2[$i],
+					'courseId' => $items2[$i]
 					);
-
-					//$methods = array('forms:insertInDb');
-					$tables = array('homecoursestoerasmus');
+					$methods = array('forms:addToDb');
+					$table = array('homecoursestoerasmus');
 					$data = array($values);
-					$idInst = $institution['hostInstitutionId'];
-					//$success = $infox->dataTransfer($methods, $tables, $data, $idInst);
-
+					$idInst = $institution['hostInstitutionId'];					
+					$infox->dataTransfer($methods, $table, $data, $idInst);
 				}
 			}
 
@@ -144,29 +144,26 @@ if($items['userLevel'] == "Erasmus Coordinator") {
 					$str .= '<p><input type="checkbox" name="exam'.$i.'" value="'.$items[$i].'" /> '.$items[$i].' </p>' ;
 				}
 				$str .= '&emsp;<input type="submit" name="manage" value=" Send Request " /></form>';
-					
+				
 				//sent requests
 				for($i = 0; $i < count($items); $i++) {
 					if(isset($_POST["exam".$i])) {
-						$str .= "The request to take the exam of ".$_POST["exam".$i]." was sended!<br />";
+						$str = "";
+						$aStr .= "The request to take the exam of ".$_POST["exam".$i]." was sent!<br />";
 						$edb->update("homecoursestoerasmus, coursespereducperinst", array('isRequested' => '1'), "`coursespereducperinst`.`courseName` = \"" . $_POST["exam".$i] . "\" AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`");
 
-						/*$infox = new InfoxController;
+						$infox = new InfoxController();
 
-						$institution = $edb->retrieveOne("select * from  erasmusstudent as e
-            			inner join institutions as i on e.hostInstitutionId = i.instEmail 
-            			where e.studentId = " . $items[$i]);
-
-						$values = array(
-						'erasmusId' => $items[$i],
-						'courseId' => $items2[$i],
-						);
-
-						$methods = array('forms:insertInDb');
-						$tables = array('homecoursestoerasmus, coursespereducperinst');
-						$data = array($values);
-						$idInst = $institution['hostInstitutionId'];
-						//$success = $infox->dataTransfer($methods, $tables, $data, $idInst);*/
+						$institution = $edb->retrieveOne("SELECT * 
+												FROM erasmusstudent
+												WHERE users_email = \"" . $_SESSION['id'] . "\"" );
+						
+						
+						$methods = array('forms:updateExamsToDb');
+						$table = array('homecoursestoerasmus, coursespereducperinst');
+						$data = array($_POST["exam".$i]);
+						$idInst = $institution['hostInstitutionId'];					
+						$infox->dataTransfer($methods, $table, $data, $idInst);
 
 					}
 				}
