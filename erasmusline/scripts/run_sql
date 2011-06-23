@@ -7,6 +7,6 @@ echo "drop database if exists erasmusline; create database erasmusline;" | mysql
 
 echo "erasmusline.sql:"
 mysql -uerasmusline -porange erasmusline < erasmusline.sql
-echo "mqueue.sql:"
-mysql -uerasmusline -porange erasmusline < mqueue.sql
+#echo "mqueue.sql:"
+#mysql -uerasmusline -porange erasmusline < mqueue.sql
 echo ""
