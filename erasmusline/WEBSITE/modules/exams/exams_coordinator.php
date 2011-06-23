@@ -119,7 +119,7 @@
 											`users`.`email` = \"".$_SESSION['id']."\" AND
 											`erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId` AND
 											`homecoursestoerasmus`.`isRequested` = 1 AND
-											homecoursestoerasmus.homeanswer IS NULL");
+											homecoursestoerasmus.homeanswer IS NULL GROUP BY users_email");
 			if(!$items) {
 				$str .= "There are no students on Erasmus from this university that requested to take their home exams.<br />";
 				$str .= '<input type="submit" name="" value=" Back " /></form>';
@@ -141,7 +141,7 @@
 											`users`.`email` = \"".$_SESSION['id']."\" AND
 											`erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId` AND
 											`homecoursestoerasmus`.`isRequested` = 1 AND
-											homecoursestoerasmus.hostanswer IS NULL");
+											homecoursestoerasmus.hostanswer IS NULL GROUP BY users_email");
 			if(!$items) {
 				$str .= "There are no students on Erasmus to this university that requested to take their home exams.<br />";
 				$str .= '<input type="submit" name="" value=" Back " /></form>';
@@ -171,8 +171,12 @@
 			if(!$items) {
 				$str .= "None<br />";
 			} else {
+				$tmpSt = "";
 				for($i = 0; $i < count($items); $i++){
-					$str .= '&emsp; '.getForeignStudentInfo($items[$i]['users_email'], $edb).' <br />';
+					if($tmpSt != $items[$i]['users_email']) {
+						$tmpSt = $items[$i]['users_email'];
+						$str .= '&emsp; '.getForeignStudentInfo($items[$i]['users_email'], $edb).' <br />';
+					} 
 					$str .= '&emsp;&emsp;&emsp;&bull;'.$items[$i]['courseName'].' <br />';
 				}
 			}
@@ -195,8 +199,12 @@
 			if(!$items) {
 				$str .= "None<br />";
 			} else {
+				$tmpSt = "";
 				for($i = 0; $i < count($items); $i++){
-					$str .= '&emsp; '.getOurStudentInfo($items[$i]['users_email'], $edb).' <br />';
+					if($tmpSt != $items[$i]['users_email']) {
+						$tmpSt = $items[$i]['users_email'];
+						$str .= '&emsp; '.getOurStudentInfo($items[$i]['users_email'], $edb).' <br />';
+					}
 					$str .= '&emsp;&emsp;&emsp;&bull;'.$items[$i]['courseName'].' <br />';
 				}
 			}
@@ -239,17 +247,54 @@
 											AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
 											AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
 											AND `coursespereducperinst`.`courseName` = \"".$examName."\"
-											 ");
+											 "); 
+											 
+		$infox = new InfoxController();
+					
+		$institution = $edb->retrieveOne("SELECT * 
+								FROM erasmusstudent
+								WHERE users_email = \"" .$stId. "\"" );
+		$values = array(
+		'set' => "`homecoursestoerasmus`.`hostanswer` = " . $a ,
+		'where' => "\"".$stId."\" = `erasmusstudent`.`users_email` 
+					AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
+					AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
+					AND `coursespereducperinst`.`courseName` = \"".$examName."\""
+		);
+		$methods = array('forms:updateToDb');
+		$table = array('`coursespereducperinst`, `homecoursestoerasmus`, `erasmusstudent`');
+		$data = array($values);
+		$idInst = $institution['homeInstitutionId'];					
+		$infox->dataTransfer($methods, $table, $data, $idInst);
 	}
 	
 	function setAnswerHome($examName, $stId, $a, $edb) {
+	
 		$edb->execute("UPDATE `coursespereducperinst`, `homecoursestoerasmus`, `erasmusstudent`
 											SET `homecoursestoerasmus`.`homeanswer` = ".$a."
 											WHERE \"".$stId."\" = `erasmusstudent`.`users_email` 
 											AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
 											AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
 											AND `coursespereducperinst`.`courseName` = \"".$examName."\"
-											 ");
+											 "); 
+											 
+		$infox = new InfoxController();
+					
+		$institution = $edb->retrieveOne("SELECT * 
+								FROM erasmusstudent
+								WHERE users_email = \"" . $stId . "\"" );
+		$values = array(
+		'set' => "`homecoursestoerasmus`.`homeanswer` = " . $a ,
+		'where' => "\"".$stId."\" = `erasmusstudent`.`users_email` 
+					AND `erasmusstudent`.`studentId` = `homecoursestoerasmus`.`erasmusId`
+					AND `homecoursestoerasmus`.`courseId` = `coursespereducperinst`.`courseId`
+					AND `coursespereducperinst`.`courseName` = \"".$examName."\""
+		);
+		$methods = array('forms:updateToDb');
+		$table = array('`coursespereducperinst`, `homecoursestoerasmus`, `erasmusstudent`');
+		$data = array($values);
+		$idInst = $institution['hostInstitutionId'];					
+		$infox->dataTransfer($methods, $table, $data, $idInst);
 	}
 	
 ?>
