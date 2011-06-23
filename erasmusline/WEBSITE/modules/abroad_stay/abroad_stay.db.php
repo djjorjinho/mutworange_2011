@@ -130,12 +130,12 @@ class abroad_stayDB {
         $mail->SMTPDebug = false;
         $mail->do_debug = 0;
         //$succes = $mail->Send();
-        $success = '1';
-        if (!$succes) {
-            return $mail->ErrorInfo;
-        } else {
+        //$success = '1';
+        //if (!$succes) {
+         //   return $mail->ErrorInfo;
+        //} else {
             return '1';
-        }
+       // }
     }
     
     public static function getErasmusInfo($id) {

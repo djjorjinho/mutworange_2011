@@ -4,6 +4,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+require_once "./modules/infox/infox.php";
+
 
 class acom_regController extends PlonkController {
 
@@ -153,7 +155,7 @@ class acom_regController extends PlonkController {
                 	
                 $form = array(
                     'table' => 'erasmusStudent',
-                    'data' => $er,
+                    'data' => $erasmus,
                     'emailField' => 'users_email'
                 );
 
@@ -214,11 +216,11 @@ class acom_regController extends PlonkController {
             acom_regDB::updateErasmusStudent('erasmusStudent', $er, 'users_email = "' . PlonkSession::get('id') . '"');
 
         try {
-                	$erasmus = acom_regDB::getErasmusInfo($this->userid);
+                	$erasmus = acom_regDB::getErasmusInfo(PlonkSession::get('id'));
                 	
                 $form = array(
                     'table' => 'erasmusStudent',
-                    'data' => $er,
+                    'data' => $erasmus,
                     'emailField' => 'users_email'
                 );
 
@@ -227,7 +229,7 @@ class acom_regController extends PlonkController {
                 $methods = array('forms:toDb');
                 $tables = array('erasmusStudent');
                 $data = array($form);
-                $idInst = $erasmus['homeInstitutionId'];
+                $idInst = $erasmus['hostInstitutionId'];
                 $success = $b->dataTransfer($methods, $tables, $data, $idInst);
             } catch (Exception $e) {
                 Plonk::dump('failed');
