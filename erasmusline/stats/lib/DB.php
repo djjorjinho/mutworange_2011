@@ -26,7 +26,7 @@ class DB{
 	 * The constructor reads a json configuration file and stores it in the
 	 * instance var $config
 	 */
-	private function DB($options=null){
+	public function DB($options=null){
 		
 		if(isset($options)){
 			$this->config = $options;
@@ -67,13 +67,13 @@ class DB{
 	 * Connects to the database according to the config data in
 	 * the assoc. array
 	 */
-	function connect(){
+	function connect($newlink=false){
 		if(isset($this->conn)) return true;
 		
 		$config = $this->getConfig();
 		$this->conn = mysql_connect($config['host'].":".$config['port'],
 			$config['user'],
-			$config['password']) or die(mysql_error());
+			$config['password'],$newlink) or die(mysql_error());
 		$ok = mysql_select_db($config['schema'],$this->conn);
 		//print mysql_error();
 		return $ok;

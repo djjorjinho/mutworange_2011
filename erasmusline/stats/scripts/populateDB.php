@@ -6,9 +6,13 @@ set_include_path($ipath.":".dirname(__FILE__)."${sep}..${sep}");
 
 require_once 'lib/DB.php';
 require_once 'lib/TSample.php';
-require_once "lib/CsvToArray.Class.php";
+require_once 'lib/CsvToArray.Class.php';
+require_once 'lib/Thread.php';
+require_once 'lib/pqp/classes/PhpQuickProfiler.php';
 class PopulateDB {
     
+	var $profiler;
+	
     var $dim_tables = array('dim_gender','dim_lodging','dim_mobility',
                             'dim_institution','dim_date','dim_phase',
                             'dim_study');
@@ -100,6 +104,26 @@ class PopulateDB {
                     'semester'=>$semester
                     );
         $this->db->insert($obj,$this->dim_tables[4]);
+        
+        $year='2011';
+        $semester='1';
+        
+
+        $obj = array(
+                    'year'=>$year,
+                    'semester'=>$semester
+                    );
+        $this->db->insert($obj,$this->dim_tables[4]);
+                
+        $year='2011';
+        $semester='2';
+        
+
+        $obj = array(
+                    'year'=>$year,
+                    'semester'=>$semester
+                    );
+        $this->db->insert($obj,$this->dim_tables[4]);
     }
     
     function populate_phase(){
@@ -129,23 +153,34 @@ class PopulateDB {
         $db->execute("alter table $mrg_table engine=MyISAM");
     }
     
-    function populate_efficacy($semester=1){
+    function populate_efficacy($semester=1,$year=2010){
+    	$pid = getmypid();
+
+    	$thread = new Thread("_populate_efficacy", $this);
+		$thread->start($semester,$year);
+
+		return $thread;
+    }
+    
+    function _populate_efficacy($semester=1,$year=2010){
         $rnd = $this->rnd;
-        $db = $this->db;
+        $db = new DB();
+        $db->connect(true);
         $dtb = $this->dim_tables;
         $ftb = $this->fact_tables;
         
         // create a merging table based on template
-        $mrg_table = $ftb[0]."_2010_${semester}s";
+        $mrg_table = $ftb[0]."_${year}_${semester}s";
         $db->execute("create table $mrg_table like $ftb[0]");
         $db->execute("alter table $mrg_table engine=MyISAM");
         $db->execute("alter table $mrg_table disable keys");
                 
-        for($i=0;$i<1000;$i++){
+        for($i=0;$i<160000;$i++){
             $obj=array();
             
             // date
-            $aux = $db->getRandom($dtb[4],"semester=${semester}");
+            $aux = $db->getRandom($dtb[4],"semester=${semester}".
+            								" and year=${year}");
             $obj['dim_date_id'] = $aux['dim_date_id'];
             
             // gender
@@ -176,8 +211,8 @@ class PopulateDB {
             $obj['dim_study_id'] = $aux['dim_study_id'];
             
             // facts
-            $obj['total_applications'] = $rnd->range(5,20);
-            $obj['last_applications'] = $rnd->range(5,20);
+            $obj['total_applications'] = $rnd->range(5,50);
+            $obj['last_applications'] = $rnd->range(5,50);
             $obj['avg_ects'] = $rnd->range(10,15);
             $obj['max_ects'] = $rnd->range(16,20);
             $obj['min_ects'] = $rnd->range(6,9);
@@ -508,6 +543,12 @@ class PopulateDB {
 	}
     
     function run(){
+    	$this->profiler = new PhpQuickProfiler(
+					PhpQuickProfiler::getMicroTime());
+    	
+		Console::logMemory();
+		Console::logSpeed("Populating");
+					
     	$this->checkHotCache();
     	
         // dimension tables
@@ -520,12 +561,24 @@ class PopulateDB {
         $this->populate_study();
         
         // fact tables
-        $this->populate_efficacy(1);
-        $this->populate_efficacy(2);
+        $t1 = $this->populate_efficacy(1,2009);
+        $t2 = $this->populate_efficacy(2,2009);
+        $t3 = $this->populate_efficacy(1,2010);
+        $t4 = $this->populate_efficacy(2,2010);
+        $t5 = $this->populate_efficacy(1,2011);
+        $t6 = $this->populate_efficacy(2,2011);
         
         // ODS
         $this->populate_efficiency_ods();
         //$this->createDummyEfficiencyMRG();
+        
+        while($t1->isAlive()||$t2->isAlive()||$t3->isAlive()||$t4->isAlive()
+        	||$t5->isAlive()||$t6->isAlive()){
+        	sleep(5);
+        }
+        Console::logSpeed("Populating");
+        Console::logMemory();
+        print_r($this->profiler->display());
     }
     
 }
