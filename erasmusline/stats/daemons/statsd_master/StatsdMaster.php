@@ -45,6 +45,8 @@ class StatsdMaster extends Server implements JsonRpcI{
 		$this->olap = new OLAP($options['olapconfig']);
 		
 		$this->etl = new ETL($options['etlconfig']);
+		$this->etl->checkHotCache();
+		$this->etl->loadHotCache();
 		
 		# leave these for last
 		$this->scheduler = new Scheduler(
