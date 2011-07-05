@@ -5,6 +5,7 @@ require_once("lib/Cache.php");
 require_once("lib/jsonpath.php");
 require_once("lib/Pivot.php");
 require_once('lib/JSONConfig.php');
+require_once('lib/pqp/classes/PhpQuickProfiler.php');
 /**
  * 
  * OLAP class to interpret the EIS scenarios into a query for processing and 
@@ -17,6 +18,7 @@ class OLAP{
 	private $config;
 	private $cache;
 	public $rules;
+	private $profiler;
 	
 	function __construct($options){
 		$this->config = $options;
@@ -51,6 +53,10 @@ class OLAP{
 			#print("cache hit!\n");
 			return $result;
 		}
+		$profiler = new PhpQuickProfiler(
+					PhpQuickProfiler::getMicroTime());
+		Console::logSpeed("runScenario: ".$cache_key);
+		Console::logMemory();
 		
 		//process scenario
 		$fields = array();
@@ -100,7 +106,7 @@ class OLAP{
 		if(!empty($groupby)) $sql .= " GROUP BY ".implode(',',$groupby);
 		
 		#print $sql."\n";
-		System_Daemon::debug("QUERY: ".$sql);
+		#System_Daemon::debug("QUERY: ".$sql);
 		
 		$result = $this->db->getMany($sql);
 		
@@ -112,6 +118,17 @@ class OLAP{
 					_message => 'EMPTY_RESULT'
 			);
 		}
+		
+		Console::logSpeed("runScenario: ".$cache_key);
+		Console::logMemory();
+		$log = $profiler->display();
+		System_Daemon::info("Profile for runScenario: ".$cache_key);
+		System_Daemon::info($sql);
+		System_Daemon::info(print_r($log['logs']['console'],true));
+		System_Daemon::info("speedTotals: ".
+									print_r($log['speedTotals'],true));
+		System_Daemon::info("memoryTotals: ".
+									print_r($log['memoryTotals'],true));
 		
 		//store result in cache and resturn
 		$this->cache->store($cache_key, $table,220);

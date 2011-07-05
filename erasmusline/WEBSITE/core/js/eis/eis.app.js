@@ -532,8 +532,10 @@ var eis = {
 	},
 	
 	runScenarioButton : function(){
+		jQuery.blockUI();
 		eis.runScenario();
 		eis.paintHlights(eis.scenario.highlight);
+		jQuery.unblockUI();
 	},
 	
 	runScenario : function(){

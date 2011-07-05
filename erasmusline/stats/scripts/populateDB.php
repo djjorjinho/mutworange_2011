@@ -223,18 +223,7 @@ class PopulateDB {
         // enable indices
         $db->execute("alter table $mrg_table enable keys");
         
-        // uniting merging tables
-        $mrg_tables = $db->getMergedTables($ftb[0]);
-        $db->execute("alter table $ftb[0] UNION=(".
-        									implode(",",$mrg_tables).")");
-        try{
-        // load indices to cache
-        $db->execute("CACHE INDEX ".implode(",",$dtb)." IN hot_cache");
-        $db->execute("LOAD INDEX INTO CACHE ".
-        				implode(",",$dtb)." IGNORE LEAVES");
-        $db->execute("LOAD INDEX INTO CACHE ".
-        				implode(",",$mrg_tables)." IGNORE LEAVES");
-        }catch(Exception $e){}
+        
     }
     
     function populate_efficiency_ods(){
@@ -545,6 +534,7 @@ class PopulateDB {
     function run(){
     	$this->profiler = new PhpQuickProfiler(
 					PhpQuickProfiler::getMicroTime());
+    	$db = $this->db;
     	
 		Console::logMemory();
 		Console::logSpeed("Populating");
@@ -561,6 +551,7 @@ class PopulateDB {
         $this->populate_study();
         
         // fact tables
+        
         $t1 = $this->populate_efficacy(1,2009);
         $t2 = $this->populate_efficacy(2,2009);
         $t3 = $this->populate_efficacy(1,2010);
@@ -568,14 +559,32 @@ class PopulateDB {
         $t5 = $this->populate_efficacy(1,2011);
         $t6 = $this->populate_efficacy(2,2011);
         
+   		while($t1->isAlive()||$t2->isAlive()||$t3->isAlive()||$t4->isAlive()
+        	||$t5->isAlive()||$t6->isAlive()){
+        	sleep(10);
+        }
+        
+        $db = new DB();
+        $db->connect(true);
+        
+    	// uniting merging tables
+        $mrg_tables = $db->getMergedTables($this->fact_tables[0]);
+        $db->execute("alter table ".$this->fact_tables[0]." UNION=(".
+        									implode(",",$mrg_tables).")");
+        try{
+	        // load indices to cache
+	        $db->execute("CACHE INDEX ".implode(",",$this->dim_tables).
+	        							" IN hot_cache");
+	        $db->execute("LOAD INDEX INTO CACHE ".
+	        				implode(",",$this->dim_tables)." IGNORE LEAVES");
+	        $db->execute("LOAD INDEX INTO CACHE ".
+	        				implode(",",$mrg_tables)." IGNORE LEAVES");
+        }catch(Exception $e){}
+        
         // ODS
         $this->populate_efficiency_ods();
         //$this->createDummyEfficiencyMRG();
         
-        while($t1->isAlive()||$t2->isAlive()||$t3->isAlive()||$t4->isAlive()
-        	||$t5->isAlive()||$t6->isAlive()){
-        	sleep(5);
-        }
         Console::logSpeed("Populating");
         Console::logMemory();
         print_r($this->profiler->display());

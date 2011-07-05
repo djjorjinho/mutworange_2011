@@ -22,5 +22,5 @@ send($socket,$msg);
 $received=null;
 receive($socket,$received);
 
-print $received;
+print_r(json_decode($received));
 ?>

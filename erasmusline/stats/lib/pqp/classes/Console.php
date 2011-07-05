@@ -32,7 +32,7 @@ class Console {
 	     LOG MEMORY USAGE OF VARIABLE OR ENTIRE SCRIPT
 	-----------------------------------------------------*/
 	
-	public function logMemory($object = false, $name = 'PHP') {
+	public static function logMemory($object = false, $name = 'PHP') {
 		$memory = memory_get_usage();
 		if($object) $memory = strlen(serialize($object));
 		$logItem = array(
@@ -49,7 +49,7 @@ class Console {
 	     LOG A PHP EXCEPTION OBJECT
 	------------------------------------*/
 	
-	public function logError($exception, $message) {
+	public static function logError($exception, $message) {
 		$logItem = array(
 			"data" => $message,
 			"type" => 'error',
@@ -64,7 +64,7 @@ class Console {
 	     POINT IN TIME SPEED SNAPSHOT
 	-------------------------------------*/
 	
-	public function logSpeed($name = 'Point in Time') {
+	public static function logSpeed($name = 'Point in Time') {
 		$logItem = array(
 			"data" => PhpQuickProfiler::getMicroTime(),
 			"type" => 'speed',
