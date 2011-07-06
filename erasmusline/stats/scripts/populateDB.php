@@ -175,7 +175,7 @@ class PopulateDB {
         $db->execute("alter table $mrg_table engine=MyISAM");
         $db->execute("alter table $mrg_table disable keys");
                 
-        for($i=0;$i<160000;$i++){
+        for($i=0;$i<2000;$i++){
             $obj=array();
             
             // date
@@ -561,7 +561,7 @@ class PopulateDB {
         
    		while($t1->isAlive()||$t2->isAlive()||$t3->isAlive()||$t4->isAlive()
         	||$t5->isAlive()||$t6->isAlive()){
-        	sleep(10);
+        	sleep(5);
         }
         
         $db = new DB();
