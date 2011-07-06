@@ -113,6 +113,7 @@ class ETL{
 		
 		// finished -  merge tables
 		$db->enableKeys($mrg_table);
+		$db->analyze($mrg_table);
 		$this->mergeTables($efficiency_table);
 		$this->setLastODSId($efficiency_ods,$last_id);
 		$this->loadHotCache();

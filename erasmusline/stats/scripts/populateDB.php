@@ -222,7 +222,7 @@ class PopulateDB {
         
         // enable indices
         $db->execute("alter table $mrg_table enable keys");
-        
+        $db->analyze($mrg_table);
         
     }
     

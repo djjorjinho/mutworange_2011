@@ -74,7 +74,7 @@ class OLAP{
 				$having,$limit);
 		
 		$this->processFilters($params,$fields,$tables,$where,$groupby,
-				$having,$limit);
+				$having,$limit,$cube);
 				
 		#print("fields\n");
 		#print_r($fields);
@@ -171,8 +171,10 @@ class OLAP{
 				
 
 				if($table!='dim_institution_host'){
-					$val = "${table} using (${id})";
+					$val = "${table} as ${table}";
+					$wh = "(${cube}.${table}_id = ${table}.${table}_id)";
 					if(!in_array($val,$tables)) array_push($tables,$val);
+					if(!in_array($wh,$where)) array_push($where,$wh);
 				}else{
 					$val = "dim_institution as ${table}";
 					$wh = "(${cube}.dim_institution_host_id = ".
@@ -278,7 +280,7 @@ class OLAP{
 	}
 	
 	private function processFilters(&$params,&$fields,&$tables,&$where,
-				&$groupby,&$having,&$limit){
+				&$groupby,&$having,&$limit,$cube){
 		
 		$filters = $params['filters'];
 		foreach($filters as $filter => $value){
@@ -291,7 +293,8 @@ class OLAP{
 			if(!$this->valueInArray($tables,$field_array[0])){
 				$table = $field_array[0];
 				$id = $table."_id";
-				array_push($tables,"${table} using (${id})");
+				array_push($tables,"${table} as ${table}");
+				array_push($where,"${cube}.${table}_id = ${table}.${table}_id");
 			}
 					
 			$this->processFilterOp($op, $field_array[0].'.'.$field_array[1],

@@ -411,6 +411,11 @@ class DB{
 		if(!isset($table)) throw new Exception("Not a valid table!");
 		$this->execute("alter table $table disable keys");
 	}
+	
+	function analyze($table){
+		if(!isset($table)) throw new Exception("Not a valid table!");
+		$this->execute("analyze table $table");
+	}
 }
 
 ?>
