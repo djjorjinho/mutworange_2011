@@ -2,7 +2,13 @@
 
 
 // config & functions
-require_once './core/includes/config.php';
+if(file_exists('./core/includes/config.inc.php')){
+	require_once './core/includes/config.inc.php';
+}else{
+	require_once './core/includes/config.php';	
+}
+
+
 require_once './core/includes/functions.php';
 
 // Include Plonk & PlonkWebsite

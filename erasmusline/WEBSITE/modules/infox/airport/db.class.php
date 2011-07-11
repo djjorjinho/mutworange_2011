@@ -8,7 +8,12 @@ class DB {
     protected $id;
 
     function DB() {
-        include('../../../core/includes/config.php');
+    	if(file_exists('../../../core/includes/config.inc.php')){
+			include '../../../core/includes/config.inc.php';
+		}else{
+			include '../../../core/includes/config.php';	
+		}
+
         $this->connect = mysql_connect(DB_HOST, DB_USER, DB_PASS);
         $this->db = DB_NAME;
         $this->id = 0;
