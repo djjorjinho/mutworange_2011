@@ -1,0 +1,13 @@
+% include figure macro
+% example:
+% \fig{img/uno-card-game.jpg}{Uno Cards}{uno_cards}{0.5}
+\usepackage{ifthen} 
+\newcommand{\fig}[4]{
+\begin{figure}[h]
+	\begin{center}
+    \includegraphics[scale=#4]{#1}
+    \end{center}
+	\ifthenelse{\isundefined{#2}}{}{\caption{#2}}
+	\ifthenelse{\isundefined{#3}}{}{\label{#3}}
+\end{figure}
+}

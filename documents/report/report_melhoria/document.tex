@@ -1,0 +1,98 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+\usepackage[top=3cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[utf8]{inputenc}  % codificação dos caracteres acentuados
+%\usepackage[T1]{fontenc}       % codificação da fonte (para hifenizar palavras com acentos)
+%\usepackage[portuges]{babel}   % package para a hifenização e labels em pt
+\usepackage{url}               % package para formatar urls
+\usepackage[pdftex]{hyperref}  % package para criar urls no pdf
+\usepackage{multirow}          % package para juntar linhas em tabelas
+\usepackage{graphicx}          % package para inclusão de imagens
+\usepackage{bigstrut}          % package para espaçamento usado pelo multirow
+\usepackage{fancyhdr}          % package para alterar os header
+\usepackage{fancyvrb}         % package para mais estilos de verbatim
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{color}
+%\usepackage{makeidx}
+%\makeindex
+%\usepackage{natbib}
+%urlbst - sacar este style para bibliografia com urls
+
+
+%\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+%\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+%\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt}
+\fancypagestyle{plain}{
+    \fancyhead{}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+\include{macros}
+
+\lstset{numbers=left,breaklines=true}
+\lstset{language=perl,frame=ltrb,framesep=5pt, basicstyle=\small,  keywordstyle=\ttfamily\color{blue}, commentstyle=\color{Green}, stringstyle=\ttfamily, showstringspaces=true}
+
+% COVER
+\begin{document}
+
+\pagestyle{plain}
+\include{cover}
+\frontmatter
+
+\pagestyle{fancy}
+
+\titlepage\ \endtitlepage
+
+\include{acknowledgments}
+
+\include{abstract} %include keywords
+
+% indices
+\tableofcontents
+\listoffigures
+\listoftables
+
+\include{glossary}
+
+\mainmatter
+
+\chapter{Introduction}
+	\section{Project Scope}
+	\section{Project Description}
+		\subsection{Specifications}
+		\subsection{Project Planning}
+	\section{Technology Overview}
+	\section{Project Contributions}
+	\section{Report Structure}
+
+\chapter{Context}
+
+\chapter{Technical Description}
+
+\chapter{Conclusions}
+	\section{Project Outcome}
+	\section{Acomplished Goals}
+	\section{Other Contributions}
+	\section{Final Thoughts}
+
+\backmatter
+
+%GATHER{report.bib}
+\nocite{dpb,mrx05,mrx01}
+\bibliographystyle{plainurl}
+\bibliography{report}
+
+% ADD APENDICES HERE
+\appendix
+
+\chapter{First Appendix}
+\chapter{Second Appendix}
+
+\end{document} 
