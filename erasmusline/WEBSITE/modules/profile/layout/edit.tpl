@@ -36,7 +36,7 @@
             <span class="req" id="msgTel">{$msgTel|htmlentities}</span>	
 	</div>
         <div class="TRdiv">
-            <label for="mobilePhone"<span>Mobile Phone:</span></label>
+            <label for="mobilePhone"><span>Mobile Phone:</span></label>
             <input class="validate[required,custom[onlyNumberSp]] text-input" type="text" name="mobilePhone" id="mobilePhone" value="{$mobilePhone|htmlentities}"/>
             <span class="req" id="msgMobilePhone">{$msgMobilePhone|htmlentities}</span>	
 	</div>
