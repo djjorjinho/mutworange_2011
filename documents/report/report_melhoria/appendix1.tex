@@ -1,1 +1,76 @@
-\chapter{Appendix 1}
+\chapter{Appendix 1: Early Database Deployment Draft}
+Written by P8-STATS team.
+\newline \newline
+Decentralized Idea:\\
+The application is self autonomous and each institution is responsible to
+install and host it. (Example: brain cells implementation?)\\
+
+\noindent What does this imply?
+
+\noindent Every Institution will have their own webpage (that at the beginning
+it’s the one designed by us but we could give the incentive to each one make
+their own interface) and Database.\\
+This way the login problems of the accounts not being centralized are
+nullified.\\
+How it will work:
+
+\fig{img/apx1_deploy.png}{Application Deployment
+throughout Institutions}{img:apx1_deploy}{0.7}
+
+\textbf{A} - Given this implementation, information between Institutions has to
+be shared and we have to decide how we will accomplish this.\\
+
+\textbf{A1} -
+\begin{itemize}
+\item[a)] We can use a repository that controls and keeps track of all Institutions and
+the new ones, therefore the application when installed accesses this repository
+to ‘register itself’ and get the list of all the running ones, after that, an
+alert is generated to all the actives ones so they can update themselves with
+the “new born”.
+\item[b)] Taking into consideration that Institution will need to become partners first
+before exchanging students, if there’s no other reason for a central repository
+we can avoid it and say that they have to agree on partnership first by their
+own communications and if accepted they add each other on the application.
+\end{itemize}
+
+\textbf{A2} - Database mirroring is completely out of question given the huge
+amount of Databases that can exist so the information will be separated,
+therefore we will have o create some kind of communication protocol between Institutions for when
+they need to get info that’s stored on the other side and so on.\\
+
+Pros:
+\begin{itemize}
+\item Account management and ‘power attribution’ simplified since every Institution
+is responsible for them self -Law problems with info also probably solved
+\item Pre-candidate forms being different can also be solved by this (everyone
+is responsible for their own)
+\end{itemize}
+
+Cons:
+\begin{itemize}
+\item Information about the host coordinator, the student that comes from far away,
+stuff like that, needs to be accessed
+\item Database design might be altered because some extra info from receiving
+students might be stored and stuff like that depending on the implementation,
+infox will have to support all the communications about this info 
+\item Harder to update/patch
+\end{itemize}
+
+Problems:
+\begin{itemize}
+  \item The info that isn't stored and needs to be exchanged, how to work around
+  that? Are there any law implications on how they are shared? Can they be temporarily
+stored or they can just be accessed to ‘read only’? 
+\item Some kind of central control will be required if the central repository is to
+be implemented (extra staff/administrators needed).
+\end{itemize}
+
+Possible Solutions:
+\begin{itemize}
+  \item After a process is accepted, a ticket is created between the receiving and
+giving Institution, so when they need info about each other they can use that
+ticket that will block their view only to what’s allowed and as soon the out
+process passes, the ticket expires.
+\item Going with A1 b avoids that, probably the best way to go but still with some
+implications.
+\end{itemize}
