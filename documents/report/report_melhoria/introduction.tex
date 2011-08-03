@@ -183,8 +183,324 @@ time box - according to each country member's perspective.
 \item Report
 \end{itemize}
 
+\ \newline
+\textbf{P8-STATS (Portugal)} 
+\begin{itemize}
+\item Analysis and Requirements gathering	\hfill14/03 – 29/03
+	\begin{itemize}
+	  \item Business Rules
+	  \item Key Performance Indicators
+	  	\begin{itemize}
+	  		\item Measures
+			\item Dimensions
+		\end{itemize}
+	   \item Report
+	\end{itemize}
+\item Data Warehouse		\hfill30/03 – 19/05
+	\begin{itemize}
+		\item Database schema
+		\item Define data sources
+		\item Architecture
+		\begin{itemize}
+		  \item DW ETL / Data refreshment
+		  \item ODS and Metadata structure
+		  \item Indexing Solutions
+		\end{itemize}
+		\item Implementation
+		\begin{itemize}
+		  \item DW ETL / Data refreshment
+		  \item ODS and Metadata structure
+		  \item OLAP module development
+		\end{itemize}
+		\item Deployment
+		\begin{itemize}
+		  \item DW ETL / Data refreshment
+		  \item ODS and Metadata tables
+		  \item Data Marts – Local and Remote DW
+		\end{itemize}
+		\item Report
+	\end{itemize}
+\item EIS Interface	\hfill19/05 – 06/06
+	\begin{itemize}
+	 	\item Architecture
+		\item User Stories
+		\item Implementation
+		\item Deployment
+		\item Report
+	\end{itemize}
+\end{itemize}
+
+\ \newline
+\textbf{ErasmusLine (Orange Team)} 
+\begin{itemize}
+ 	\item Integration		\hfill16/05	– 31/05
+ 	\begin{itemize}
+ 	  \item Integration Tests
+ 	  \item Debugging
+ 	 \end{itemize}
+	\item Final Report		\hfill01/06 – 17/06
+	\begin{itemize}
+	  \item User Manual
+	\end{itemize}
+	\item Presentation	\hfill08/06 – 17/06
+	\begin{itemize}
+	  \item Presentation Notes
+	\end{itemize}
+\end{itemize}
+
 \subsection{Project Meetings}
 
+As agreed on the first presential meetings, the team met initially remotely each
+week on mondays on 18 o'clock according to the UTC-0 time zone. Each meeting
+would last from fifty minutes to two hours if necessary. During the requirements
+gathering and development stages of the project, the topics in each meeting
+discussed by each package members, were the in the following list:
+
+\begin{itemize}
+  \item Report last week's activity 
+	\item Plan next week's activity 
+	\item Express difficulties and problems encountered, but not solve them right
+away
+\end{itemize}
+
+Each package team would prepare in advance what to express in this first part of
+the meeting to keep it short and quickly address issues in the third
+topic. This first part of the meeting lasts twenty minutes and helps the team
+stay updated and motivated with the evolution of the project. 
+
+After each team reported these topics, the whole team would follow-up with
+assigning team members to help solve the expressed problems in the third topic.
+If any other meetings were needed to solve pending issues, the affected members
+would arrange extra meetings during the week.
+
+Initially, each package team would prepare and assume control of the meetings in
+a rotational fashion each week, at least once. This proved to be non-productive
+given that some team members didn't prepare nor had the skills to conduct the
+meetings.
+
+After a democratic vote from the team, it was decided unanimously that
+the P8-STATS (Portugal) team should prepare and manage the meetings as well as
+the Orange team.
+
+The following sub-sections are a description of most of the meetings, including
+the dates where held, as well the participants and discussed topics. All the members
+attended these meetings using the Adobe Connect collaboration platform
+(discussed on page \pageref{aconnect}), from their individual countries and homes.
+
+\subsubsection{Meeting 21/03/2011}
+
+\begin{verbatim}
+Date: 21/03/2011
+Start Hour: 5:05pm UTC
+End Hour: 6:30pm UTC
+
+Attending: Arne Reimer, Pedro Ferreira, Daniel Lopes, Nathan Assche, Stephan
+Polet, Aggeliki Katsiampouri, Mountrakis Stefanos, Thordur Bjornsson, Gudmundur
+Hallgrimsson, Ina Ivanova, Zvezdomir Tsvyatkov
+
+Topics:
+
+* Status report (2-3min per country)
+* Discussion and final decision of meetings and communication protocols
+  (5-10min)
+* Initial presentation of rules of defining future deadlines
+* Suggestions and final remarks (5-10min)
+* Reminder to set the task list until the next meeting (gantt chart)
+* Team discussion about the problems previously presented (5-10min)
+\end{verbatim}
+
+
+\subsubsection{Meeting 28/03/2011}
+
+\begin{verbatim}
+Date: 28/03/2011
+Start Hour: 18:30 UTC
+End Hour: 19:45 UTC
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stephan Polet, Aggeliki Katsiampouri,
+Thordur Bjornsson, Gudmundur Hallgrimsson, Ina Ivanova
+
+Topics:
+1. What has been done
+
+* Germany: Gantt Chart, SQL-File, Forms, Templates
+* Belgium: tutorial, register-page, collecting forms
+* Portugal: business Workflow, statistical indicators, designing data model
+* Greece: designed the needed forms, client validation, server validation
+* Bulgaria: learning plonk and git, creating some more db-tables
+* Iceland: did some test with php and python to integrate it later
+
+2. Discussion
+Germany will present up to Three Layouts until next meeting.
+
+1. Infox
+Germany will try to get some more Information about how to transfer Data.
+Everybody agrres that it has to be done very quickly because Portugal/Belgium
+and Bulgaria needs this infomation for their work.
+
+2. Plonk
+Belgium will try to get some more information about how to implement php-code
+into a template.
+\end{verbatim}
+
+\subsubsection{Meeting 04/04/2011}
+
+\begin{verbatim}
+Date: 04/04/2011
+Start Hour: 17:30 UTC
+End Hour: 19:45 UTC
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stéphane Polet, Mountrakis Stefanos, Ina Ivanova
+
+Topics:
+
+* What have we done this week ( each team ) + problems/questions
+	
+* Database ( discussion )
+
+* Main design: Germany presented 2 layouts
+
+* Signatures 
+	- Each team should ask their international office which forms really need 
+	an official signature and which ones we can skip.
+
+* Pre-candidate forms of all the teams ( and other .. ) + who provides
+internship
+    - We only received the pre-candidate form from Portugal ..
+	- Need internship forms as quickly as possible, because this is an important
+	part of our module.
+
+* Information exchange
+\end{verbatim}
+
+\subsubsection{Meeting 07/04/2011}
+
+\begin{verbatim}
+Date: 07/04/2011 
+Start Hour: 09:00 UTC
+End Hour: 10:00 UTC
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stephan Polet
+
+Topics:
+
+* Discussion back and forth about the DB:
+	a)Adding a Company table;
+	b)The deployment apparently won't affect the DB design;
+	c)Leaning towards not using a central repository (deployment wise).
+		
+\end{verbatim}
+
+\subsubsection{Meeting 25/04/2011}
+
+\begin{verbatim}
+Date: 25/04/2011
+Start Hour: 18:00 UTC
+End Hour: 18:50 UTC
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche,  Aggeliki Katsiampouri, Mountrakis Stefanos,
+
+Topics:
+
+1. What has been done
+2. Plonk installation integration
+3. Assign next week's meeting coordinators
+\end{verbatim}
+
+\subsubsection{Meeting 09/05/2011}
+
+\begin{verbatim}
+Date: 09/05/2011
+Start Hour: 18:00 UTC
+End Hour: 20:00 UTC
+
+
+Attending: Arne Reimer, Arne Lipfert, Pedro Ferreira, Daniel Lopes,
+Nathan Assche, Stéphane Polet, Aggeliki Katsiampouri, Zvezdomir Tsvyatkov
+
+Topics:
+
+* What have we done this week ( each team )  problems/questions
+    
+* Zvezdomir had some problems getting the site online and with the login
+ functionality. We will try to figure out the problem this week.
+
+* Belgium and Germany are going to put 2 applications online in order to start
+ testing the infox module.
+
+* Portugal will coordinate the next meetings. ( vote )
+
+* Greece will finish their forms by wednesday and then push them to GIT.
+\end{verbatim}
+
+\subsubsection{Meeting 16/05/2011}
+
+\begin{verbatim}
+Date: 16/05/2011
+Start Hour: 18:05 UTC
+End Hour: 19:00 UTC
+
+Attending: Pedro Ferreira, Daniel Lopes, Arne Reimer,
+Nathan Assche, Stéphane Polet, Ina Ivanova, Stefanos Mountrakis
+
+Topics:
+
+- What did the team do this past week
+- What does the team plan to do next
+- Any doubts/issues about their package
+- Percentage of work done
+- Creation of campus servers to test application workflow and communication
+- DB, Infox changes succsessful, needs further testing
+- Next meeting to discuss integration issues this week
+\end{verbatim}
+
+\subsubsection{Meeting 23/05/2011}
+
+\begin{verbatim}
+Date: 23/05/2011
+Start Hour: 18:05 UTC
+End Hour: 19:00 UTC
+
+Attending: Pedro Ferreira, Daniel Lopes, Arne Reimer,
+Nathan Assche, Stéphane Polet, Stefanos Mountrakis, Arne Lipfert, Gudmundur Hallgrimsson
+
+Topics:
+
+- What did the team do this past week
+- What does the team plan to do next
+- Any doubts/issues about their package
+- Is the integration going along well?
+- How can we test the application?
+- Given the time we have left, do we have to sacrifice features?
+\end{verbatim}
+
+\subsubsection{Meeting 30/05/2011}
+
+\begin{verbatim}
+Date: 30/05/2011
+Start Hour: 18:05 GMT
+End Hour: 19:00 GMT
+
+Attending: Pedro Ferreira, Daniel Lopes, Arne Reimer, Arne Lipfert, Nathan
+Assche, Stephane Polet, Stefanos Mountrakis, Gudmundur Hallgrimsson, Zvezdomir
+Tsvyatkov, Aggeliki Katsiampouri, Ina Ivanova
+
+Topics:
+- What did the team do this past week
+- What is necessary to do this week:
+     1. Finish code development
+     2. Tie up loose ends
+     3. Gather team members and do a live demo of the running application 
+     	and fix whatever is left
+\end{verbatim}
+
+
 \section{Project Contributions}
+
+
 
 \section{Report Structure}
