@@ -4,4 +4,241 @@
 
 \subsection{Technology Overview}
 
+Before beginning analysis and development of the project's application, the
+Orange team decided from the various technologies  listed in the specifications
+given the necessity of each task that was needed to complete this project.
+During this project, the team relied solely on Open Source Technologies as
+intended by the specifications. These technologies are not abridged by copyleft
+licenses like the Gnu Public License, but some remain GPL-compatible.
+
+In the next sections the technologies used are separated by task context and 
+specifications wise.
+
+\subsubsection{Programming languages}
+
+\paragraph{PHP}
+
+This programming language is a standard language for quickly writing web
+applications.  It is a dynamically typed, interpreted language with garbage
+collection and supports Object Oriented Programming, providing a syntax similar
+to older programming languages like C and Perl.
+
+The project is essentially be written in this programming language, given that
+is the most easy to setup and learn amongst academics.
+
+\paragraph{Plonk}
+
+For basic application workflow, the application uses the Plonk library - a
+subset of the Spoon\footnote{http://www.spoon-library.com/} library - that
+automates functionalities like page routing, session handling and page
+templating.
+
+\paragraph{Python}
+
+The Python programing language is an interpreted, dynamically typed programming
+language with garbage collection, used in the P7-MATCH package for it's use of
+the Natural Language Toolkit.
+
+\paragraph{NLTK}
+
+The Natural Language Toolkit is a Python suite of libraries designed for natural
+language processing, convenient for matching students' courses and equivalents
+between HEI's.
+
+\paragraph{JavaScript}
+
+Javascript is an interpreted, dynamic and weakly typed programming language
+mostly used in client side (Web Browser) scripting. It has some Object Oriented
+support with garbage collection. This project uses javascript to reduce
+server-side load by performing tasks like form validation, generating content,
+Ajax3 calls to the server, etc.
+
+\paragraph{jQuery}
+
+jQuery is a pluggable javascript library that speeds up client-side script
+development by implementing a Domain Specific Language capable of quickly
+processing XHTML DOM elements for various aesthetic purposes. It also provides
+convenient functions prepared for Ajax communication or pre-programmed plugins
+like calendars, color picker windows, etc. 
+
+\subsubsection{Other Languages}
+ 
+\paragraph{XHTML}
+
+This is a markup language used to design websites in similar fashion to regular
+HTML but with stricter rules, and similar functionalities to XML, for example,
+the use of namespaces. 
+
+This project uses XHTML version 1.0 of it's Transitional
+guidelines. Given it's more strict nature a common Web Browser will waste less
+time processing web page content. 
+
+Making a website that will be used by
+thousands of students brings the concern of usability and accessibility. The
+ErasmusLine project's Website will be developed under the guidelines of the Web
+Content Accessibility Guidelines (version 2) and strive for a minimum first
+level of acceptance. 
+
+\paragraph{CSS}
+
+This stylesheet language changes the presentation aesthetic of websites in a non
+intrusive way, this way being able to switch style configuration rapidly without
+touching the markup language files.
+
+\subsubsection{Databases}
+
+\paragraph{MySQL}
+
+A relational database system designed for speed and rapidly building
+content-oriented websites. This technology serves as the persistent data layer
+in the application for various tasks such as the workflow of the Erasmus
+Process, the users and students management, to the Data Warehousing used in the
+P8-STATS package.
+
+\subsubsection{Development Platforms}
+
+\paragraph{SourceForge}
+
+A project hosting website and development platform,
+SourceForge\footnote{http://sourceforge.net/} provides infrastructures for the developers to quickly setup a project and use a varied number of features like
+source code management systems, mailing list systems, forums, project management
+applications, Wiki applications, etc.
+
+\subsubsection{Development Tools}
+
+\paragraph{Git}
+
+A distributed source code management system used to keep track and monitor
+source code versions, allowing the developer to determine release versions,
+track code errors and share application code between other developers
+distributed around the world.
+
+This system saves the code in containers called repositories. Each time a
+developer wishes to save a change made to the code, he commits file changes to
+the local repository. A record of differences is then saved in the repository
+along with a short description of the author. When the user is ready to share
+their code changes with the rest of the team, he pushes those changes to the
+central repository on the SourceForge site, so that other team members can pull
+those changes into their local repositories.
+
+Git was available to the project via SourceForge, which also provided an online
+interface to check out repository activity and provided a RSS feed so that users
+can be notified of recent changes to the code.
+
+During the development of this project the team used the Git repository to keep
+a record of the project planning, meetings reports, user manuals, the project
+presentation and this project report, along with the applications code.
+
+A usage example would consist of the following scenario (using a terminal
+console):
+
+\begin{enumerate}
+  \item In a fresh installation, the developer would start by creating a copy of
+  the SourceForge repository and subsequent directory structure and files, using the following command:
+  \begin{verbatim}
+  	git clone git://mutworange.git.sourceforge.net/gitroot/mutworange
+  \end{verbatim}
+  \item After making changes to the code, the developer would issue a commit:
+  \begin{verbatim}
+  	git commit -a -m “fixed a bug in the X package”
+  \end{verbatim}
+  Those changes would be saved locally.
+  \item After making sure the code changes worked, the developer can share the
+  changes with the team:
+\begin{verbatim}
+git push origin master
+\end{verbatim}
+Those changes would be merged with the central repository
+  \item When new code changed are pushed to the central repository, the user can
+  fetch them using the command:
+\begin{verbatim}
+git pull
+\end{verbatim}
+This fetches the latest changes to the code and merges them with your current
+local work.
+\end{enumerate}
+
+Git also provides code branching functionality, which consists in creating an
+alternate version or path in the application development. Branches are good for
+creating new features on pre-existing code, but these features cannot be merged
+yet with the “master” branch.
+
+Another feature offered by Git is code tagging, enabling to checkout various
+application versions of a branch in a certain context, for example a tag called
+\emph{milestone-1} or \emph{release-1.2} would correspond to a point were code
+development stopped and is ready to be deployed to the servers.
+
+Source code management systems ensure that a team of developers keeps track of
+their work in an effective and efficient way.
+
+\paragraph{Eclipse / NetBeans}
+Integrated Development Environments like NetBeans and Eclipse provide an
+interface for code editing for various programming languages and has a set of
+plugins to integrate other features in the interface, such as integrated Git
+repository management without resorting to terminal commands.
+
+\subsubsection{Other Tools}
+
+\paragraph{Total Validator}
+
+A cross-platform application designed to validate Web Sites
+against established W3C standards. This application not only validates code for
+XHTML but also validates Web Site accessibility guidelines, according to the
+WCAG 2.0 specifications. Has a bare minimum, the Erasmusline application was
+validated against WCAG 2.0 level A, but the application also validates on levels
+AA and AAA where applied.
+
+\paragraph{Delivery}
+
+This application tries to make Javascript files smaller by removing comments,
+spaces and new lines to provide faster downloads by the Web Browsers.
+
+\paragraph{Google Docs}
+
+During the course of this project some team members used Google Docs to write
+technical reports that would later serve to compile into this final report.
+Google Docs allowed the team members to create and edit text documents
+concurrently and in real time with no fear of corrupting the documents. Google
+Docs also supported versioning, which enabled us to see, for example, which team
+member edited which part of the document.
+
+\paragraph{Cacoo}
+
+An online, realtime collaborative drawing tool which various team members can
+use to produce UML diagrams, draw software deployment plans, etc. and was used
+in several points of this project.
+
+\paragraph{MySQL Workbench}
+This tool helps the user design and project databases in a visual way by
+creating Entity Relation models of the tables, specifying relational
+constraints, create and edit indices, creating user roles and permissions,
+default values for tables, etc. and later export those properties to a SQL file
+to be immediately imported to a MySQL server.
+
+
 \subsection{Conventions}
+
+For the sake of usability this projects web-site and database content will be
+using the UTF-8 character set encoding. This was a major concern since some
+Erasmus partners use different alphabets – for example Greek and Turkish - and
+the team had to use a   universal character set that accepted the various
+alphabets existent in the European Continent. 
+
+Other conventions were merely determined for development comprehension of the
+team. While editing code the team member would have to follow a series of
+guidelines to ensure that everyone could understand his code when reading it.
+Some of these conventions were:
+
+\begin{itemize}
+  \item using UpperCamelCase on object class names 
+  \item using lowerCamelCase on class methods
+  \item documenting classes and methods using PHPDoc
+  \item keep the code lines to a 80 character minimum, the excess code would be
+  put in the following lines 
+  \item opening brackets in the first line of the code statement
+  \item everything else must have the default behavior enforced by the IDE, text
+  editor, etc.
+\end{itemize}
+
+These conventions ensured the whole team understood each other and understood
+what was being developed. While developing the Application Interface it was very important when designing the stylesheets not to interfere with the default behavior of the XHTML interface elements. It was agreed that default behavior would be left intact and set additional behavior by conventionally extending these said behaviors. This way it was ensured that when the team members developed in isolation, no necessary code rewrite would be needed.
