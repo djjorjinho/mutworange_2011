@@ -14,16 +14,20 @@
 \usepackage{listings}
 \usepackage{pdfpages}
 \usepackage{nameref}
-
+\usepackage{makeidx}
 %urlbst - sacar este style para bibliografia com urls
 
 \include{macros}
 
 \lstset{numbers=left,breaklines=true}
-\lstset{language=perl,frame=ltrb,framesep=5pt, basicstyle=\small,  keywordstyle=\ttfamily\color{blue}, commentstyle=\color{Green}, stringstyle=\ttfamily, showstringspaces=true}
+\lstset{language=perl,frame=ltrb,framesep=5pt, basicstyle=\small, 
+keywordstyle=\ttfamily\color{blue}, 
+commentstyle=\color{Green}, 
+stringstyle=\ttfamily, showstringspaces=false}
 
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{3}
+\makeindex
 
 \begin{document}
 \includepdfset{pages=-}
@@ -54,7 +58,7 @@
 
 \include{context}
 
-\chapter{Technical Description}
+\include{technical_description}
 
 \include{conclusions}
 
@@ -78,4 +82,6 @@
 \include{appendix6}
 \include{appendix7}
 
+%\addcontentsline{toc}{chapter}{Index}
+%\printindex
 \end{document} 

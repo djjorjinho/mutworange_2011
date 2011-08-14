@@ -2,7 +2,154 @@
 
 \section{Specifications} \label{sec:specs}
 
-\subsection{Technology Overview}
+The MUTW Erasmus site – called ErasmusLine – is a web application
+providing a platform to support Erasmus mobility of students.
+
+All actors involved in Erasmus mobility, including students, Erasmus
+coordinators, International Office and other staff, are granted access to the
+platform. The ErasmusLine platform must provide ways to manage all the Erasmus
+activity of the institution related to students’ mobility. Supporting the
+bureaucratic process accompanying students’ mobility from the application stage
+until the academic recognition includes several tasks, such as:
+
+\begin{itemize}
+  \item Inter-institution process documentation exchange
+  \item Take exams at host institution
+  \item Issue automatic alerts for required actions
+  \item Match learning agreement to students’ requirements, with an automatic
+  course matching facility
+\end{itemize}
+
+Additionally we want to evaluate the performance of institutions and students in
+operating these procedures and Erasmus dynamics in each institution. This
+involves some extra functionality:
+
+\begin{itemize}
+  \item Produce performance statistics
+  \item Provide tools to analyze these statistics.
+\end{itemize}
+
+The ErasmusLine system is composed by four core areas: \emph{business,
+statistics, services} and \emph{configuration}, as depicted in Figure
+\ref{img:cores}. \newline
+
+\fig{img/cores.png}{ErasmusLine Core Areas}{img:cores}{0.7}
+
+The business core is responsible for the workflow of Erasmus exchanges, both for
+outgoing and incoming students. It includes four packages directly related to
+managing the Erasmus processes: “OUT students”, “IN students”, “Exams at host
+institution” and “Course Matching”.
+
+The services core provides a set of services available throughout the
+ErasmusLine system. These services are deployed by the packages “Information
+exchange and security” and “Automatic alerts”.
+
+The configuration core is responsible for assuring that all the required data is
+available and coherent. This core is implemented by the “Configuration” package.
+
+The statistical core - developed by the Portuguese team - is an Executive
+Information System (EIS) designed to provide statistical information to analyze
+the performance of institutions and the interest of students regarding Erasmus
+mobility.
+
+These Core Areas include 8 distinct packages, depicted in Figure
+\ref{img:packages}:
+
+\fig{img/packages.png}{ErasmusLine Package Distribution}{img:packages}{0.7}
+
+\begin{description}
+
+\item[P1-CONFIG]
+This package is responsible for parameter and entity management. All other
+packages will rely on this one to get validated, coherent data required to
+operate the system. User accounts and user profiles are also managed by this
+package.
+
+\item[P2-INFOX]
+This package allows exchanging documents and students’ processes between
+instances of the ErasmusLine application.
+
+\item[P3-ALERT]
+This package generates automatic alerts for pending tasks. These alerts are
+triggered by timeouts associated to requests that are not answered in due time.
+
+\item[P4-OUT]
+This package assists \textbf{outgoing} students, home coordinators and staff in
+the management of the exchange process from pre-candidacy to the conversion of the
+ECTS credit to a local scale.
+
+\item[P5-IN]
+This package assists \textbf{incoming} students, host coordinators and staff in
+the management of the exchange process from application submission to the
+issuing the transcript of records.
+
+\item[P6-EXAM]
+Whenever Erasmus students have mandatory courses, for which there are no
+interchange options in the host institution, they can request to take the exam
+on that course at the host institution.
+
+\item[P7-MATCH]
+This package will perform an automatic matching of courses based on textual
+descriptions offered by the host institution and the student’s needs.
+
+\item[P8-STATS]
+This package deploys an Executive Information System that collects operational
+data and exposes it to users through a set of statistical indicators designed to
+provide ways to evaluate the performance of these processes, to identify
+critical tasks and to evaluate the Erasmus impact and progress in the
+institutions.
+
+\end{description}
+
+\section{P8-STATS Erasmus Statistics}
+This statistics module – an Executive Information System (EIS) – is responsible
+for collecting operational data from ErasmusLine databases and, eventually, from
+some external sources, in order to compute performance statistics that comply
+with the objectives to be controlled. It should also provide an interface that
+exposes these indicators to users and allows them to perform analyses on this
+data without requiring any specific statistical knowledge and yet being able to
+identify potential problems and/or opportunities.
+
+\subsection{Objectives}
+
+The statistics package of ErasmusLine should provide information directed to the
+following objectives:
+
+\begin{description}
+\item[Erasmus efficiency:] focused on the institution ability as an ``Erasmus
+provider'' or ``Erasmus facilitator'' to students. This objective is directed to
+evaluate the institution’s Erasmus profile, i.e., to what extent is the
+institution promoting Erasmus and supporting Erasmus students. (Is the
+institution doing the right things?)
+
+\item[Erasmus efficacy:] focused on the outcomes arising from the institution
+efforts towards Erasmus. This objective is directed to evaluate whether the
+institution is improving its own Erasmus dynamics. (Is the institution doing the
+things right?)
+\end{description}
+
+These objectives should be evaluated by determining \emph{Key Performance
+Indicators}, quantifiable \emph{Measures} and defining various \emph{Dimension}
+from which to analyse the information from several points of view.
+
+\subsection{Deployment Procedure}
+
+As a guideline to design the EIS, a simple procedure is detailed below:
+\begin{enumerate}
+\item Define objectives.
+\item Define indicators for each objective, dimensions (together with their
+ hierarchical structure) and measures. Cross indicators with dimensions and with measures. 
+\item Design the EIS: set the indicators and their sources of information,
+set facts and dimensions, set measures, collect exogenous information, identify
+and specify synchronization procedures (these will be highly dependent on the
+operational database), setup a data model (star/snowflake schema), design
+interface/layout, specify available functionality
+\item Deploy the data model for the EIS
+\item Deploy the synchronization procedures
+\item Deploy the user interface
+\end{enumerate}
+
+\section{Technology Overview}
 
 Before beginning analysis and development of the project's application, the
 Orange team decided from the various technologies  listed in the specifications
@@ -14,9 +161,9 @@ licenses like the Gnu Public License, but some remain GPL-compatible.
 In the next sections the technologies used are separated by task context and 
 specifications wise.
 
-\subsubsection{Programming languages}
+\subsection{Programming languages}
 
-\paragraph{PHP}
+\subsubsection{PHP}
 
 This programming language is a standard language for quickly writing web
 applications.  It is a dynamically typed, interpreted language with garbage
@@ -26,26 +173,26 @@ to older programming languages like C and Perl.
 The project is essentially be written in this programming language, given that
 is the most easy to setup and learn amongst academics.
 
-\paragraph{Plonk}
+\subsubsection{Plonk}
 
 For basic application workflow, the application uses the Plonk library - a
 subset of the Spoon\footnote{http://www.spoon-library.com/} library - that
 automates functionalities like page routing, session handling and page
 templating.
 
-\paragraph{Python}
+\subsubsection{Python}
 
 The Python programing language is an interpreted, dynamically typed programming
 language with garbage collection, used in the P7-MATCH package for it's use of
 the Natural Language Toolkit.
 
-\paragraph{NLTK}
+\subsubsection{NLTK}
 
 The Natural Language Toolkit is a Python suite of libraries designed for natural
 language processing, convenient for matching students' courses and equivalents
 between HEI's.
 
-\paragraph{JavaScript}
+\subsubsection{JavaScript}
 
 Javascript is an interpreted, dynamic and weakly typed programming language
 mostly used in client side (Web Browser) scripting. It has some Object Oriented
@@ -53,7 +200,7 @@ support with garbage collection. This project uses javascript to reduce
 server-side load by performing tasks like form validation, generating content,
 Ajax3 calls to the server, etc.
 
-\paragraph{jQuery}
+\subsubsection{jQuery}
 
 jQuery is a pluggable javascript library that speeds up client-side script
 development by implementing a Domain Specific Language capable of quickly
@@ -61,9 +208,9 @@ processing XHTML DOM elements for various aesthetic purposes. It also provides
 convenient functions prepared for Ajax communication or pre-programmed plugins
 like calendars, color picker windows, etc. 
 
-\subsubsection{Other Languages}
+\subsection{Other Languages}
  
-\paragraph{XHTML}
+\subsubsection{XHTML}
 
 This is a markup language used to design websites in similar fashion to regular
 HTML but with stricter rules, and similar functionalities to XML, for example,
@@ -79,15 +226,15 @@ ErasmusLine project's Website will be developed under the guidelines of the Web
 Content Accessibility Guidelines (version 2) and strive for a minimum first
 level of acceptance. 
 
-\paragraph{CSS}
+\subsubsection{CSS}
 
 This stylesheet language changes the presentation aesthetic of websites in a non
 intrusive way, this way being able to switch style configuration rapidly without
 touching the markup language files.
 
-\subsubsection{Databases}
+\subsection{Databases}
 
-\paragraph{MySQL}
+\subsubsection{MySQL}
 
 A relational database system designed for speed and rapidly building
 content-oriented websites. This technology serves as the persistent data layer
@@ -95,18 +242,18 @@ in the application for various tasks such as the workflow of the Erasmus
 Process, the users and students management, to the Data Warehousing used in the
 P8-STATS package.
 
-\subsubsection{Development Platforms}
+\subsection{Development Platforms}
 
-\paragraph{SourceForge}
+\subsubsection{SourceForge}
 
 A project hosting website and development platform,
 SourceForge\footnote{http://sourceforge.net/} provides infrastructures for the developers to quickly setup a project and use a varied number of features like
 source code management systems, mailing list systems, forums, project management
 applications, Wiki applications, etc.
 
-\subsubsection{Development Tools}
+\subsection{Development Tools}
 
-\paragraph{Git}
+\subsubsection{Git}
 
 A distributed source code management system used to keep track and monitor
 source code versions, allowing the developer to determine release versions,
@@ -132,28 +279,29 @@ presentation and this project report, along with the applications code.
 A usage example would consist of the following scenario (using a terminal
 console):
 
+\lstset{language=bash}
 \begin{enumerate}
   \item In a fresh installation, the developer would start by creating a copy of
   the SourceForge repository and subsequent directory structure and files, using the following command:
-  \begin{verbatim}
-  	git clone git://mutworange.git.sourceforge.net/gitroot/mutworange
-  \end{verbatim}
+  \begin{lstlisting}
+git clone git://mutworange.git.sourceforge.net/gitroot/mutworange/mutworange
+  \end{lstlisting}
   \item After making changes to the code, the developer would issue a commit:
-  \begin{verbatim}
-  	git commit -a -m “fixed a bug in the X package”
-  \end{verbatim}
+  \begin{lstlisting}
+git commit -a -m "fixed a bug in the X package"
+  \end{lstlisting}
   Those changes would be saved locally.
   \item After making sure the code changes worked, the developer can share the
   changes with the team:
-\begin{verbatim}
+	\begin{lstlisting}
 git push origin master
-\end{verbatim}
+	\end{lstlisting}
 Those changes would be merged with the central repository
   \item When new code changed are pushed to the central repository, the user can
   fetch them using the command:
-\begin{verbatim}
+	\begin{lstlisting}
 git pull
-\end{verbatim}
+	\end{lstlisting}
 This fetches the latest changes to the code and merges them with your current
 local work.
 \end{enumerate}
@@ -171,29 +319,29 @@ development stopped and is ready to be deployed to the servers.
 Source code management systems ensure that a team of developers keeps track of
 their work in an effective and efficient way.
 
-\paragraph{Eclipse / NetBeans}
+\subsubsection{Eclipse / NetBeans}
 Integrated Development Environments like NetBeans and Eclipse provide an
 interface for code editing for various programming languages and has a set of
 plugins to integrate other features in the interface, such as integrated Git
 repository management without resorting to terminal commands.
 
-\subsubsection{Other Tools}
+\subsection{Other Tools}
 
-\paragraph{Total Validator}
+\subsubsection{Total Validator}
 
 A cross-platform application designed to validate Web Sites
 against established W3C standards. This application not only validates code for
-XHTML but also validates Web Site accessibility guidelines, according to the
-WCAG 2.0 specifications. Has a bare minimum, the Erasmusline application was
-validated against WCAG 2.0 level A, but the application also validates on levels
-AA and AAA where applied.
+XHTML but also validates Web Site \index{accessibility} guidelines, according to
+the WCAG 2.0 specifications. Has a bare minimum, the Erasmusline application was
+validated against \index{WCAG} 2.0 level A, but the application also validates
+on levels AA and AAA where applied.
 
-\paragraph{Delivery}
+\subsubsection{Delivery}
 
 This application tries to make Javascript files smaller by removing comments,
 spaces and new lines to provide faster downloads by the Web Browsers.
 
-\paragraph{Google Docs}
+\subsubsection{Google Docs}
 
 During the course of this project some team members used Google Docs to write
 technical reports that would later serve to compile into this final report.
@@ -202,13 +350,14 @@ concurrently and in real time with no fear of corrupting the documents. Google
 Docs also supported versioning, which enabled us to see, for example, which team
 member edited which part of the document.
 
-\paragraph{Cacoo}
+\subsubsection{Cacoo}
 
 An online, realtime collaborative drawing tool which various team members can
 use to produce UML diagrams, draw software deployment plans, etc. and was used
 in several points of this project.
 
-\paragraph{MySQL Workbench}
+\subsubsection{MySQL Workbench}
+
 This tool helps the user design and project databases in a visual way by
 creating Entity Relation models of the tables, specifying relational
 constraints, create and edit indices, creating user roles and permissions,
@@ -241,4 +390,9 @@ Some of these conventions were:
 \end{itemize}
 
 These conventions ensured the whole team understood each other and understood
-what was being developed. While developing the Application Interface it was very important when designing the stylesheets not to interfere with the default behavior of the XHTML interface elements. It was agreed that default behavior would be left intact and set additional behavior by conventionally extending these said behaviors. This way it was ensured that when the team members developed in isolation, no necessary code rewrite would be needed.
+what was being developed. While developing the Application Interface it was very
+important when designing the stylesheets not to interfere with the default
+behavior of the XHTML interface elements. It was agreed that default behavior
+would be left intact and set additional behavior by conventionally extending
+these said behaviors. This way it was ensured that when the team members
+developed in isolation, no necessary code rewrite would be needed.
