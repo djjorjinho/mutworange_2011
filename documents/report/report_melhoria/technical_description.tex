@@ -1,0 +1,148 @@
+\chapter{Technical Description} \label{ch:technical}
+
+The P8-STATS package, the integral part of the statistical core developed by the
+Portuguese team consists in developing an Executive Infortmation System,
+integrated in the ErasmusLine ecosystem.
+
+Executive Information Systems (EIS) are Information Systems that access large
+amounts of business related information from various sources - internal and
+external to the organization - and provides decision support tools to the
+organization's senior executives.
+
+These tools allow the executive managers to highlight patterns in the
+business process by analyzing, comparing and determining trends in the provided
+mediums - spreadsheets, graphic charts, pivot tables, reports, etc.
+
+As an example of EIS use, consider the following scenario:
+
+\begin{itemize}
+\item[] Erasmus executive staff and coordinators can do a periodical check on
+student enrollment information, i.e. what countries do they come from and what courses
+are their main choices. Using a web browser, executive memebers can access that
+information in a personalized fashion by presenting subsets of the information -
+views. These views can be "drilled-down" to minute levels of information or
+"rolled-up" to display a broader view.
+\end{itemize}
+
+Since executive users are not necessarily data analysts, the EIS user interface
+must be as simple as possible, but without sacrificing presentation dynamics.
+
+With these criteria in mind, the following key requirements for an EIS where
+identified\cite{eis:psu}:
+
+\begin{itemize}
+  \item Cross Platform
+  \item Ease of Use
+  \item Limited Training
+  \item Quick Response
+  \item Process Large Volumes of Data
+  \item Deployment Through the Web
+  \item Easy Graphical Presentation Options
+  \item Ability to Access Subsets of Data (Drill Down)
+\end{itemize}
+
+\section{Architecture}
+An EIS can be divided into three main levels of architecture\cite{eis:dlbi}, that
+covers the technology used to extract, analyze and visualize information from other data
+sources with a friendly and flexible user interface. The levels discussed in the
+next sections are the following:
+
+\begin{description}
+  \item[Data Management] Data gathering and transformation, it's lifecycle and
+  target storage.
+  \item[Model Management] How the data is transformed and retrieved for
+  analytical purposes.
+  \item[Data Visualization] Which visual tools are used to represent the
+  underlying system architecture.
+\end{description}
+
+
+\section{Data Management}
+
+The Data Management Level deals with the extraction, analysis and processing of
+the internal and external data sources and passes that data through an ETL
+process - Extract, Transform and Load - that organizes and aggregates the data
+into the Data Warehouse. The use of ETL and Data Warehouses can be more
+efficient to the EIS due to it's data treatment and Warehouse database model
+schemata.
+
+In this project's context, the sole Data Source for the Data Management level is
+the main Erasmusline database that provides information for 
+\begin{itemize}
+	\item The Students
+	\item The Higher Education Institutions
+	\item The lectured Courses
+	\item Student Forms
+	\item Exams
+\end{itemize}
+
+It is this data that will pass through the ETL stage.
+
+\subsection{ETL process}
+
+The ETL process parses the data and performs these possible
+operations\cite{wiki:etl}:
+\begin{itemize}
+  \item Translation into database compatible rows / columns
+  \item Translate code values
+  \item Remove / Add / Translate code values
+  \item Change data encoding
+  \item Unify string value variations - i.e. 'Mr','Mister'; '1','One'; etc.
+  \item Sorting values
+  \item Data validation
+  \item Summarize data
+  \item Join data from various sources
+  \item Generating surrogate keys
+\end{itemize}
+
+Also, ETL processes can make use of temporary database tables for intermediate
+processing, called Operational Data Stores (ODS). These tables hold historical
+data that can me mined for statistical information to be included in the Data
+Warehouse.
+
+For the P8-STATS package, the ETL process will be executed either by an event
+trigger - saving data in the ODS’s when a certain workflow phase is reached -
+and periodically - part of the data refreshment process to aggregate new
+information to the Data Warehouse.
+
+\subsubsection{Data Refreshment}
+This phase of the ETL process is comprised of design choices, like data
+structures, techniques to update and optimize the flow of information from the
+data sources to the Data Warehouse and update cycle.
+
+Based on the statistical overview document of the Erasmus Program of 2010 – in
+the Annexes – it was verified that with the large volume of students mobility,
+having a completely centralized database wouldn't be viable in terms of database
+synchronization and efficiency - 198523 students got mobilized by 2747
+Institutions in the academic year 2008/2009.
+
+The process begins with the loading of information from the Operational Data
+Stores.
+
+\paragraph{Loading}
+The information sent to the ETL component will be fetched from the application
+data sources while other subsets of information are already stored in the ODS’s
+or Metadata tables - these hold information previously gathered by the business
+requisites - which is going to be processed by the ETL component and integrated
+into the Data Warehouse.
+
+To aggregate and integrate data to be viewed in the EIS, an update cycle for the
+Data Warehouse must be determined. The information models that need to be
+gathered over time are noted in the following table:  
+
+\tab{img/refresh_cycle.png}{EIS update cycle for the Data Refreshment
+phase}{tab:refresh_cycle}{0.7}
+
+After the Process Efficiency data is integrated into the Institution’s local
+Data Mart - a local database, part of the Data Warehouse - the Efficacy process
+gathers the data from the various Institution’s Data Marts and additional data
+to aggregate and integrate new data into the central Data Mart.
+
+More on this discussion in the Deployment section, page
+\pageref{sec:deployment} of this report.
+
+\subsection{Data Warehouse}
+
+\subsubsection{MySQL and Merge Tables}
+
+

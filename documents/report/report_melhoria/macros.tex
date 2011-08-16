@@ -11,3 +11,21 @@
 	\ifthenelse{\isundefined{#3}}{}{\label{#3}}
 \end{figure}
 }
+
+\newcommand{\tab}[4]{
+\begin{table}[h]
+	\begin{center}
+    \includegraphics[scale=#4]{#1}
+    \end{center}
+	\ifthenelse{\isundefined{#2}}{}{\caption{#2}}
+	\ifthenelse{\isundefined{#3}}{}{\label{#3}}
+\end{table}
+}
+
+\makeatletter
+\renewcommand\paragraph{%
+   \@startsection{paragraph}{4}{0mm}%
+      {-\baselineskip}%
+      {.5\baselineskip}%
+      {\normalfont\normalsize\bfseries}}
+\makeatother
