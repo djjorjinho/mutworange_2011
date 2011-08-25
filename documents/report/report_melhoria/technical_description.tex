@@ -197,7 +197,7 @@ normal form - since it doesn't need the overhead of looking up additinal tables
 in the OLAP module.
 
 The following analysis breakdown in the next section describes which data can be
-mined given the project Specifications and the Erasmusline business information,
+mined given the project Specifications and the ErasmusLine business information,
 and what Key Performance Indicators can be obtained, measured and stored in the
 Data Warehouse.
 
@@ -252,10 +252,20 @@ application database.
 \tab{img/tab_dimensions.png}{The Dimension Classification, their levels of
 detail and examples}{tab:dimensions}{0.7}
 
-%TODO
+\newpage
+To match which Dimension would be present on each KPI, Table \ref{tab:kpi_dim}
+shows their relations.
 
 \tab{img/tab_kpi_dim.png}{Cross reference between KPI's and
 Dimensions}{tab:kpi_dim}{0.7}
+
+With these tables into account it was possible to determine the Data Warehouse
+Database schema illustrated in Figure \ref{img:dw_schema}.
+
+Additional analysis was made to make the database schema scalable and perform
+well under high server loads. The following section explains the choices of
+the underlying database architecture given the system's constraints and
+possibilities.
 
 \subsubsection{MySQL and Merge Tables}\label{ssec:mysql_merge}
 
