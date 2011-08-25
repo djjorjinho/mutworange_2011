@@ -269,4 +269,264 @@ possibilities.
 
 \subsubsection{MySQL and Merge Tables}\label{ssec:mysql_merge}
 
+MySQL is a RDBMS server that provides storage of information with relational
+traits, that supports multiple databases and database engines, multiple users
+and threaded access. It is an open source solution and currently the most
+popular relational database for small and medium sized projects. For the
+P8-STATS package, the stable release MySQL 5.1 was used because it is a
+generally available release and can be installed and found in any mainstream
+Operating System today.
 
+The P8-STATS package requires fast access and processing times with low
+overhead, in order to serve the client as fast as possible given that the amount
+of data in the Data Warehouse will grow exponentially every semester (in a good
+scenario). The Data Refreshment phase needs to be executed quickly and in the
+background so as to allow users to continue using the EIS without any downtime.
+
+For the Dimension tables, it was decided to use the MyISAM database engine,
+since up to the 5.1 release offers a fair relation between data consistency and
+throughput, although consistency could require some configuration on the
+underlying OS. The kind of data that is being housed is not extremely critical
+that needs to be kept history logs or support for transactions so MyISAM
+satisfies this module's objectives.
+
+The Fact tables use the MERGE\_MyISAM database engine, allowing the System's
+Data Refreshment phase to partition the data by refreshment period (Year or
+Semester) and keep it in separate tables. The main MERGE table houses the union
+of all the partition tables and their indices thus achieving better performance
+in some scenarios\cite{dw:mysql:boss}, for example, querying data from a single
+semester, which will be a common task in the EIS. Table partitioning also allows
+the databases physical files to be moved to separate disks, allowing better
+performance by, for example, having the first semester table file in a
+\emph{SSD} disk with a \emph{btrfs} file system partition.
+
+The tables’ indices can also be preloaded to cache on demand, after the
+Refreshment process is done, to avoid loading indices on database query
+time\cite{dw:mysql:boss}.
+
+\section{Model Management}
+
+\subsection{OLAP}
+
+Online Analytical Processing is a set of techniques applied to the Data
+Warehouse to summarize and visualize business information in a multidimensional
+perspective across multiple dimensions. Since the Data Warehouse is designed to
+use a multidimensional data model, information is organized in Data Cubes and
+thus enabling the EIS users to gain more insight into the data by performing
+these operations:
+
+\begin{itemize}
+  \item Facts aggregation
+  \item Slice and Dice across multiple Dimensions
+  \item Drill-Down and Roll-Up the data from one hierarchy to another
+\end{itemize}
+
+Here are some examples of OLAP in action in an Accounting
+context\cite{site:lbi}:
+
+\begin{itemize}
+  \item Comparison of sales (fact) of a product (dimension) over years
+  (dimension) in the same region (dimension).
+  \item How may members (fact) have opened a savings account (dimension), in USA
+  branch (dimension), over a period (dimension)?
+  \item How many mortgage loans (fact) have been approved in fixed mortgage
+  (dimension) or Adjustable Rate Mortgage (dimension) in New York City
+  (dimension), over a period (dimension)?
+  \item What is the total sales value (fact) of a particular product (dimension)
+  in a particular grocery store (dimension), over a period (dimension)?
+  \item What is the amount spent (fact) for a particular product promotion
+  (dimension) in a particular branch (dimension) or in a particular city
+  (dimension), over a period (dimension)?
+\end{itemize}
+
+\subsection{Data Mining}
+
+Data mining tools are especially appropriate for large and complex sets of data.
+Through statistical or modeling techniques, data mining tools make it possible
+to discover hidden trends or rules that are implicit in a large database.
+
+Data mining tools can be applied to data from data warehouses or relational
+databases. Data discovered by these tools must be validated and verified to
+become operational data that can be used in the decision process.
+
+
+\section{Data Visualization}
+
+\subsection{The EIS Web Interface}
+
+As previously mentioned, the user interface should be flexible and intuitive
+enough for users without previous skills to select the indicators they want and
+operate filters by several dimensions and metrics - this operation can be called
+a "scenario". These "scenarios" can be saved and edited for later used by the
+user.
+
+\subsubsection{Features}
+
+Each scenario configuration can include the following features:
+
+\begin{itemize}
+  \item Select OLAP cubes - the Objectives - for performance monitoring
+  \item Generate pivot tables
+  \begin{itemize}
+    \item Selecting Dimensions for columns and rows
+    \item Selecting measures for columns and rows
+    \item “Drill-Down” data by displaying aggregated information for a member of
+    a Dimension
+	\item “Roll-Up” data by displaying aggregated information from ‘All’ members
+	in a Dimension
+	\item Swap Columns / Rows content
+	\item Filter Dimensions by Value Type
+	\item Highlight Dimensions with a different color, depending on Column / Row
+	location
+	\item Scenario Management
+	\begin{itemize}
+	  \item Create a new scenario
+	  \item Save a scenario
+	  \item Load a previous scenario
+	 \end{itemize}
+	 \item Export results
+	 \begin{itemize}
+	   \item Spreadsheet
+	   \item Text file
+	   \item Image files
+	  \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+The after-development version of the interface can be seen in Figure
+\ref{img:eis_ui}.
+
+\fig{img/eis_ui.png}{The EIS interface after development}{img:eis_ui}{0.7}
+
+\subsubsection{Pivot Tables}
+
+PivotTables are interactive tables that can summarize large amounts of data,
+using a structure and method of calculation that can be specified by the user.
+It is a data analysis tool that summarizes a series of records in a concise
+tabular format. They transform a raw data base, which has no reading, into a
+table with multiple dynamic analysis data\cite{blog:proiete}.
+
+They are quite common to find in spreadsheet applications beacause they are a
+powerfull tool of analysis. In the next section we will focus on the User
+Experience on creating and manipulating Pivot Tables.
+
+
+\subsection{EIS Interface Usage}
+
+%TODO
+
+\section{Package Deployment}\label{sec:deployment}
+
+\fig{img/eis_deploy.png}{Data Flow between Erasmusline, the slave and master
+STATS daemon}{img:deployment}{0.7}
+
+\subsection{UNIX Daemons}
+
+Unix Daemons are processes that run the background, performing all sorts of
+tasks and intercommunicating with other applications if needed.
+
+The Daemons developed in PHP for the P8-STATS package generally do the following
+tasks:
+
+\begin{itemize}
+  \item Periodically executes the ETL process, according to determined
+  refreshment cycles.
+  \item Communicate with the ErasmusLine application - for example saving ODS
+  information
+  \item Save user’s EIS scenarios
+  \item Load EIS scenarios and perform OLAP operations on the Data Warehouse
+  \item Cache EIS query results, product of OLAP operations
+  \item Request data from other daemons - for example retrieve Efficacy data from
+the central Data Mart
+\end{itemize}
+
+Every ErasmusLine installation has a Slave Daemon to perform these tasks. A
+Master Daemon is deployed with the central Data Mart - that could be on the
+Slave Daemon’s machine - and can be reached by configuring a simple settings
+file in JSON format and setting the Master’s IP address. All daemons support
+BSD socket and TCP-IP socket communication, supported by the PHP socket API.
+BSD sockets allow less overhead in local inter-process communications
+since it doesn't rely on the TCP-IP layers stack. Remote communications rely
+only on TCP-IP sockets.
+
+\subsection{Server Communication}
+
+%TODO
+
+\subsection{ETL / Data Refreshment Communication}
+Each server has a scheduling module that triggers server tasks to be executed
+from time to time or at a specific date.
+
+At the end of each semester the Slave Servers trigger the data refreshment task
+which in turn runs in the background and gathers new data from the ODS tables to
+be integrated into the Data Warehouse and it's corresponding Data Marts.
+
+The Master Server however needs to communicate with every running Slave Server
+to check for new aggregated data to be integrated to it's Data Mart. The Slave
+Servers periodically check for the Master Server's location and gives it their
+location. The Master Server in turn saves their locations in the database. When
+the time comes to refresh the Master Server's Data Mart, it calls every saved
+Slave Server and asks them for the aggregated data with extra information
+relevant to other Key Performance Indicators. After saving that data in the
+local ODS tables, the Master Server triggers it's own data refreshment task and
+integrates the new data into the Data Warehouse.
+
+
+\section{Development Process}
+
+The P8-STATS team began by analyzing the Objectives and Key Performance
+Indicators based on the business rules imposed by the Erasmusline application
+workflow and the working version of the application's database. This implied
+studying the basic functionality of a Data Warehouse and it's implementation in
+the MySQL RDBMS.
+
+The team began to prototype a database schema in a star fashion – as proposed in
+the analyzed Data Warehousing guidelines – and make a few test queries on high
+volumes of fact records with dummy data. Analyzing the limitations of MySQL and
+it's table engines, BTREE type indices was the only type available when using
+MyISAM table engine.
+
+Another specification assumed, was that the user will normally consult sub-sets
+of data, usually by academic date. The advantages of implementing the fact
+tables using the Merge Table Engine - available in MySQL – were analyzed, and
+concluded that partitioning the data by year or semester would provide better
+performance not only in queries – the SQL optimizer would only fetch a certain
+partition, given that the user will usually analyze recent data - but also in
+the ETL and Data refreshment process, allowing to avoid locking and rebuilding a
+fact table's indices while aggregating new data. Also in the consulted
+literature, implementing index cache size alterations and creating a separate
+index cache pool for the Dimension tables would provide additional performance.
+By loading the indices beforehand to hot cache these would stay in resident in
+memory to provide a path to the corresponding Merge Table partitions. 
+
+Given that the Efficacy data is to accessed by students in every institution and
+assuming that the data itself is an aggregation of all institution's data, the
+team decided to house Efficacy data in a central server, and leave the
+Efficiency data local. That way each institution accesses their own Efficiency
+data. 
+
+To manage these tables and conduct the activities of OLAP processing, ETL and
+Data Refreshment and managing a central and local Data Warehouse, it was decided
+that a background process would be conveniently needed. Unix Daemons were
+developed, being a common implementation in Open Source Operating Systems based
+on Unix, like Linux and FreeBSD. Theses Daemons act as Servers and gateways to
+access the Data Warehouse. The implementation consists of an OLAP module, an ETL
+module, a JSON- RPC communication module, a caching module, a performance
+profiler with logging and a Scheduling module, to trigger events such as Data
+Refreshment.
+
+While analyzing the EIS, there was the desire to create an interface that would
+implement client-side processing to reduce load on the servers and only rely on
+the Daemons for result delivery. Client-side processing was achieved using the
+jQuery Javascript library by implementing client-side templating, via the jQuery
+Tmpl plug-in, allowing us to generate HTML content from the Browser.
+Communication would be made by JSON-RPC strings and background HTTP requests
+like Ajax, with the specified Scenario management and query processing being
+made by the local Daemon. Communication with the central Daemon and it's
+database would be relayed by the local Daemon, directly delivering the result of
+the central database. 
+
+Being concerned with the accessibility guidelines, validation tools would be
+used to enforce such guidelines. For example, the use of AJAX techniques are
+accepted, but the user must be notified at all times of the shift of attention
+in the interface.
