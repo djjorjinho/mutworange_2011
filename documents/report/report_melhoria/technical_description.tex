@@ -100,12 +100,15 @@ processing, called Operational Data Stores (ODS). These tables hold historical
 data that can me mined for statistical information to be included in the Data
 Warehouse.
 
-For the P8-STATS package, the ETL process will be executed either by an event
-trigger - saving data in the ODS’s when a certain workflow phase is reached -
-and periodically - part of the data refreshment process to aggregate new
-information to the Data Warehouse.
+\fig{img/etl_workflow.png}{ETL Process Workflow}{img:etl_workflow}{0.8}
+
+For the P8-STATS package, the ETL process - Figure \ref{img:etl_workflow} - will
+be executed either by an event trigger - saving data in the ODS’s when a certain
+workflow phase is reached - and periodically - part of the data refreshment
+process to aggregate new information to the Data Warehouse.
 
 \subsubsection{Data Refreshment}
+
 This phase of the ETL process is comprised of design choices, like data
 structures, techniques to update and optimize the flow of information from the
 data sources to the Data Warehouse and update cycle.
@@ -120,6 +123,7 @@ The process begins with the loading of information from the Operational Data
 Stores.
 
 \paragraph{Loading}
+
 The information sent to the ETL component will be fetched from the application
 data sources while other subsets of information are already stored in the ODS’s
 or Metadata tables - these hold information previously gathered by the business
@@ -141,8 +145,118 @@ to aggregate and integrate new data into the central Data Mart.
 More on this discussion in the Deployment section, page
 \pageref{sec:deployment} of this report.
 
+\paragraph{Aggregation}
+
+The aggregation process of Student Application data fetches the information from
+the ODS database - Figure \ref{img:ods_tables} - and integrates those
+values in the Data Warehouse database.
+
+Some technical aspects have to be considered in the loading and aggregation of
+data sources:
+
+\begin{itemize}
+  \item Keep an historical record of information already loaded, so as not to
+  fetch the same data twice. This is a achieved with a caching mechanism, to
+  prevent repetitive DB queries for example.
+  \item The Data Warehouse Database Schema must be optimized for query
+  performance, that includes:
+  \begin{itemize}
+    \item Which indices are needed
+    \item The Index type vs the Data type
+    \item Which Database/Table engine
+   \end{itemize}
+\end{itemize}
+
+The technical considerations and decision are explained in detail on page
+\pageref{ssec:mysql_merge} - \nameref{ssec:mysql_merge}.
+
+\fig{img/ods_tables.png}{ODS and Metadata DB Schema}{img:ods_tables}{0.7}
+
+\newpage
 \subsection{Data Warehouse}
 
-\subsubsection{MySQL and Merge Tables}
+A Data Warehouse holds the processed information into a database designed
+properly for the retrieval of large amounts of data. The database structure is
+composed of fact tables and dimension tables, connected by their keys in a
+\textbf{Star} or \textbf{Snowflake} schema\cite{dwtk}.
+
+A Fact table holds facts - an aggregation of contextualized fields and numerical
+values for measurement\cite{dwtk}.
+
+A Dimension table holds the various combinations of a given dimension, often
+identified by a part of the composite key in the fact table and serves as a
+means to restrict and summarize the information contained in the fact table
+("roll-up" and "drill-down" operations)\cite{dwtk}.
+
+Figure \ref{img:dw_schema} shows the final Data Warehouse database schema used
+in the ErasmusLine P8-STATS package.
+
+This schema follows the Star schema concept, not as normalized as the Snowflake
+schema but with better performance\cite{dwtk} - Snowflake schemas are in third
+normal form - since it doesn't need the overhead of looking up additinal tables
+in the OLAP module.
+
+The following analysis breakdown in the next section describes which data can be
+mined given the project Specifications and the Erasmusline business information,
+and what Key Performance Indicators can be obtained, measured and stored in the
+Data Warehouse.
+
+\newpage
+\fig{img/dw_schema.png}{Data Warehouse Database Schema}{img:dw_schema}{0.7}
+\newpage
+
+\subsubsection{Data Warehouse Statistical Specifications}
+
+Given the initial instructions provided by the MUTW 2011 Student's Project
+Specification document, the main analytical objectives for the P8-STATS package
+are the following:
+
+\begin{itemize}
+  \item Efficiency
+  \item Efficacy
+\end{itemize}
+
+Given the state and final content of the main \emph{ErasmusLine} database, the
+following Key Performance Indicators can be established:
+
+\paragraph{Efficiency}
+\begin{itemize}
+  \item Student participation
+  \item Response time between Process phases
+  \item Lodging availability
+\end{itemize}
+
+\paragraph{Efficacy}
+\begin{itemize}
+  \item Student Applications
+  \item Student credits
+  \item Student grades
+\end{itemize}
+
+Taking these KPI's into account, Table \ref{tab:measures} details the
+Measures that could be determined.
+
+\tab{img/tab_measures.png}{Defined Measures for the Data
+Warehouse}{tab:measures}{0.6}
+
+A cross analysis between Measures and KPI's to determine which measures would
+be used more than once, shown in Table \ref{tab:kpi_measures}.
+
+\tab{img/tab_kpi_measures.png}{Cross referencing KPI's with
+Measures}{tab:kpi_measures}{0.7}
+
+In Table \ref{tab:dimensions} are the Dimensions gathered from the
+specifications document that cross reference with the final ErasmusLine
+application database.
+
+\tab{img/tab_dimensions.png}{The Dimension Classification, their levels of
+detail and examples}{tab:dimensions}{0.7}
+
+%TODO
+
+\tab{img/tab_kpi_dim.png}{Cross reference between KPI's and
+Dimensions}{tab:kpi_dim}{0.7}
+
+\subsubsection{MySQL and Merge Tables}\label{ssec:mysql_merge}
 
 
