@@ -2,7 +2,8 @@
 
 dir=$(cd `dirname $0` && pwd)
 dir="${dir}/../daemons/"
-cd ${dir}
+cd "${dir}"
+
 
 Dirlist=$(find . -type d)
 for direc in $Dirlist ; do

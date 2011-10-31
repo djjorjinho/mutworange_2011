@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 dir=$(cd `dirname $0` && pwd)
-cd ${dir}
+
+echo ${dir}
+
+cd "${dir}"
 
 echo "p8statsdw.sql:";
 mysql -uerasmusline -porange < p8statsdw.sql

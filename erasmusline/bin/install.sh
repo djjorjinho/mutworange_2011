@@ -7,7 +7,7 @@
 # main dir
 dir=$(cd `dirname $0` && pwd)
 dir="${dir}/../"
-cd ${dir}
+cd "${dir}"
 
 # main scripts
 cd scripts
